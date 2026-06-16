@@ -93,7 +93,7 @@ export function Subscriptions() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
+        <div className="articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
           {/* Monthly */}
           <article className="relative flex flex-col rounded-2xl border border-foreground/15 bg-cream p-7">
             <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70">

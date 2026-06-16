@@ -1,25 +1,24 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LoginDialog } from "./LoginDialog";
 import { PocketDragonLogo } from "./Logo";
 
 const NAV = [
   { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "About Us", href: "#playground" },
+  { label: "Contact Us", href: "#login" },
 ];
 
-export function Header() {
+export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-background/85 backdrop-blur-md md:bg-background/85 md:shadow-none md:border-0 max-md:bg-white/55 max-md:backdrop-blur-xl max-md:backdrop-saturate-150 max-md:border-b max-md:border-white/40 max-md:shadow-[0_1px_12px_rgba(20,51,34,0.06)]">
-        <div className="mx-auto flex h-12 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
-          {/* Mobile: logo on the left */}
-          <div className="md:hidden">
-            <PocketDragonLogo size="sm" />
-          </div>
+      <header className="sticky top-0 z-50 w-full bg-white/55 backdrop-blur-xl backdrop-saturate-150 border-b border-white/40 shadow-[0_1px_12px_rgba(20,51,34,0.06)]">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+          {/* Logo — always visible, clicks scroll to home */}
+          <a href="#home" aria-label="Go to home">
+            <PocketDragonLogo size="lg" />
+          </a>
 
           {/* Desktop nav */}
           <nav className="hidden items-center gap-8 md:flex ml-auto" aria-label="Primary">
@@ -32,17 +31,16 @@ export function Header() {
                 {item.label}
               </a>
             ))}
-            <LoginDialog>
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
-              >
-                Login
-              </button>
-            </LoginDialog>
+            <button
+              type="button"
+              onClick={onLoginClick}
+              className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
+            >
+              Login
+            </button>
           </nav>
 
-          {/* Mobile: hamburger only */}
+          {/* Mobile: hamburger */}
           <div className="flex items-center md:hidden">
             <button
               type="button"
@@ -125,15 +123,13 @@ export function Header() {
                 transition={{ delay: 0.35, duration: 0.28, ease: "easeOut" }}
                 className="mt-8 flex justify-center"
               >
-                <LoginDialog>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(false)}
-                    className="inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90"
-                  >
-                    Login
-                  </button>
-                </LoginDialog>
+                <button
+                  type="button"
+                  onClick={() => { setOpen(false); onLoginClick?.(); }}
+                  className="inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90"
+                >
+                  Login
+                </button>
               </motion.div>
             </nav>
           </motion.div>

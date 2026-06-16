@@ -4,27 +4,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Hero fonts (uploaded by client) */
+/* Hero fonts — TTF files in src/assets/fonts/TTF/ */
 @font-face {
   font-family: "Hero";
   font-weight: 300;
   font-style: normal;
   font-display: swap;
-  src: url("/__l5e/assets-v1/fd2684ef-ac83-40fc-ba33-b08f8219e355/Hero-Light.ttf") format("truetype");
+  src: url("/src/assets/fonts/TTF/Hero-Light.ttf") format("truetype"),
+       url("/__l5e/assets-v1/fd2684ef-ac83-40fc-ba33-b08f8219e355/Hero-Light.ttf") format("truetype");
 }
 @font-face {
   font-family: "Hero";
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("/__l5e/assets-v1/428ce0c9-a633-4705-ae4b-016c41aa982d/Hero-Regular.ttf") format("truetype");
+  src: url("/src/assets/fonts/TTF/Hero-Regular.ttf") format("truetype"),
+       url("/__l5e/assets-v1/428ce0c9-a633-4705-ae4b-016c41aa982d/Hero-Regular.ttf") format("truetype");
 }
 @font-face {
   font-family: "Hero";
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("/__l5e/assets-v1/c76ae83d-d6fe-4675-94df-db3ceb282229/Hero-Bold.ttf") format("truetype");
+  src: url("/src/assets/fonts/TTF/Hero-Bold.ttf") format("truetype"),
+       url("/__l5e/assets-v1/c76ae83d-d6fe-4675-94df-db3ceb282229/Hero-Bold.ttf") format("truetype");
 }
 
 @theme inline {
@@ -36,6 +39,8 @@
 
   --font-sans: "Hero", "Inter", system-ui, sans-serif;
   --font-display: "Hero", "Inter", system-ui, sans-serif;
+  --font-hero: "Hero", "Inter", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -133,6 +138,8 @@
   }
   body {
     background-color: var(--color-background);
+    background-image: radial-gradient(ellipse at 80% 0%, rgba(182, 90, 47, 0.12) 0%, transparent 55%),
+                      radial-gradient(ellipse at 20% 100%, rgba(182, 90, 47, 0.07) 0%, transparent 50%);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-weight: 400;
@@ -161,6 +168,169 @@
     --tw-text-opacity: 1;
     color: rgb(182 90 47 / var(--tw-text-opacity, 1));
 }
+/* ============================================================
+   ORBIT SHOWROOM — PLAYGROUND SECTION
+   ============================================================ */
+
+.playground-section {
+  background: #0d1f15;
+  padding: 5rem 0 8rem;
+  overflow: hidden;
+}
+
+.orbit-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Header */
+.orbit-header {
+  text-align: center;
+  margin-bottom: 4.5rem;
+}
+
+.section-overline {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 1rem;
+}
+
+.orbit-title {
+  font-family: var(--font-display, "Hero", "Inter", system-ui, sans-serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #f9f2e4;
+  margin-bottom: 0.9rem;
+}
+
+.orbit-title .text-rust {
+  color: var(--rust);
+}
+
+.orbit-subtitle {
+  font-size: 1rem;
+  color: rgba(249, 242, 228, 0.6);
+  max-width: 52ch;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Stage: 3-column grid */
+.orbit-stage {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  min-height: 640px;
+}
+
+/* Feature column */
+.orbit-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Feature card */
+.orbit-feature-card {
+  position: relative;
+  background: rgba(249, 242, 228, 0.04);
+  border: 1.5px solid rgba(249, 242, 228, 0.1);
+  border-radius: 14px;
+  padding: 1.25rem 1.4rem;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.orbit-feature-card:hover,
+.orbit-feature-card.active {
+  background: rgba(182, 90, 47, 0.08);
+  border-color: rgba(182, 90, 47, 0.5);
+  transform: translateY(-2px);
+}
+
+.ofc-overline {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.4rem;
+}
+
+.ofc-title {
+  font-family: var(--font-display, "Hero", "Inter", system-ui, sans-serif);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #f9f2e4;
+  margin: 0 0 0.4rem;
+}
+
+.ofc-desc {
+  font-size: 0.8rem;
+  color: rgba(249, 242, 228, 0.6);
+  line-height: 1.55;
+  margin: 0 0 0.75rem;
+}
+
+.ofc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ofc-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(249, 242, 228, 0.6);
+  border: 1px solid rgba(249, 242, 228, 0.18);
+  border-radius: 100px;
+  padding: 0.2rem 0.6rem;
+}
+
+.orbit-feature-card.active .ofc-tag,
+.orbit-feature-card:hover .ofc-tag {
+  border-color: rgba(182, 90, 47, 0.35);
+  color: rgba(249, 242, 228, 0.85);
+}
+
+/* Connector lines (decorative) */
+.ofc-connector {
+  display: none;
+}
+
+/* Responsive: stack on mobile */
+@media (max-width: 900px) {
+  .orbit-stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 2rem;
+  }
+
+  .orbit-left,
+  .orbit-right {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .orbit-feature-card {
+    flex: 1 1 calc(50% - 0.75rem);
+    min-width: 220px;
+  }
+}
+
 /* ============================================================
    ORBIT PHONE MOCKUP
    ============================================================ */
@@ -734,4 +904,70 @@
     padding: 3.5rem;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     gap: 1.75rem;
+}
+.text-pq-cream {
+    --tw-text-opacity: 1;
+    color: rgb(249 242 228 / var(--tw-text-opacity, 1));
+}
+.articleClass article{
+  border: 3px solid #b65a2f;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Video fills the entire section */
+.hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: opacity 0.45s ease;
+}
+
+/* Overall dark tint — lifts text readability across the whole section */
+.hero-bg-tint {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 19, 12, 0.45);
+  pointer-events: none;
+}
+
+/* THE KEY EFFECT:
+   Seamless fade from solid green (left) → transparent (right).
+   Left 40% = fully opaque section color → no line, no edge.
+   Fades out by 70% so video is visible on the right half. */
+.hero-bg-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    var(--color-green-dark)        0%,
+    var(--color-green-dark)        20%,
+    rgba(7, 19, 12, 0.92)          35%,
+    rgba(7, 19, 12, 0.65)          48%,
+    rgba(7, 19, 12, 0.25)          62%,
+    rgba(7, 19, 12, 0.06)          74%,
+    transparent                    85%
+  );
+  pointer-events: none;
+}
+
+/* Bottom fade so it dissolves into the next section */
+.hero-bg-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 28%;
+  background: linear-gradient(
+    to top,
+    var(--color-green-dark) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
