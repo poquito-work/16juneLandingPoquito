@@ -1,54 +1,55 @@
 import { motion } from "framer-motion";
-import appStoreLogo from "@/assets/appstore.png";
-import googlePlayLogo from "@/assets/googleplay.png";
-
-interface StoreBadgeProps {
-  icon: string;
-  label: string;
-  sub: string;
-}
-
-function StoreBadge({ icon, label, sub }: StoreBadgeProps) {
-  return (
-    <motion.a
-      href="#"
-      className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream"
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <img src={icon} alt={label} className="w-6 h-6 object-contain animate-none" />
-      <div className="flex flex-col">
-        <span className="text-pq-cream text-[9px] tracking-[0.12em] uppercase leading-none">{sub}</span>
-        <span className="text-pq-cream text-xs leading-tight mt-0.5">{label}</span>
-      </div>
-    </motion.a>
-  );
-}
+import appStoreBadge from "@/assets/download-apple-app-store.svg";
+import googlePlayBadge from "@/assets/download-google-play-store.svg";
 
 export function DownloadButtons({
   className = "",
   align = "start",
-  showDivider = false,
 }: {
   className?: string;
   align?: "start" | "center";
-  showDivider?: boolean;
 }) {
   const justify = align === "center" ? "justify-center" : "justify-start";
   return (
     <div className={className}>
       <div className={`flex flex-wrap items-center gap-3 ${justify}`}>
-        {/* Coming Soon label — left side inline */}
-        {/* {showDivider && (
-          <span className="text-[0.68rem] font-bold uppercase tracking-[0.28em] text-rust opacity-80 mr-2">
-            Coming Soon
-          </span>
-        )} */}
-
-        <StoreBadge icon={appStoreLogo} label="App Store" sub="Coming Soon on" />
-        <StoreBadge icon={googlePlayLogo} label="Google Play" sub="Coming Soon on" />
+        <motion.a
+          href="#"
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            display: "block",
+            borderRadius: 10,
+            overflow: "hidden",
+            background: "rgba(10,28,18,0.72)",
+            backdropFilter: "blur(16px) saturate(180%)",
+            WebkitBackdropFilter: "blur(16px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.14)",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+            padding: "4px 10px",
+          }}
+        >
+          <img src={appStoreBadge} alt="Download on the App Store" style={{ height: 36, width: "auto", display: "block" }} />
+        </motion.a>
+        <motion.a
+          href="#"
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            display: "block",
+            borderRadius: 10,
+            overflow: "hidden",
+            background: "rgba(10,28,18,0.72)",
+            backdropFilter: "blur(16px) saturate(180%)",
+            WebkitBackdropFilter: "blur(16px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.14)",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+            padding: "4px 10px",
+          }}
+        >
+          <img src={googlePlayBadge} alt="Get it on Google Play" style={{ height: 36, width: "auto", display: "block" }} />
+        </motion.a>
       </div>
     </div>
   );
 }
-

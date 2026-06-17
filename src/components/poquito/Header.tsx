@@ -25,7 +25,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
           <div className="flex-1" />
 
           {/* Right side */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-5">
 
             {/* Desktop only: inline nav links slide in when hamburger is open */}
             <AnimatePresence>
