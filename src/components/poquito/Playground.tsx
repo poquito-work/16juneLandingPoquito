@@ -3,6 +3,49 @@ import { SectionEyebrow } from "./SectionEyebrow";
 
 const SCREEN_IDS = ["practice", "salon", "match", "lobby", "league"] as const;
 
+// Synthesize a mahjong tile "tick" clack using Web Audio API — no audio file needed
+let audioCtx: AudioContext | null = null;
+
+function playTick() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+  }
+  if (audioCtx.state === "suspended") audioCtx.resume();
+
+  const now = audioCtx.currentTime;
+
+  const strike = (time: number, vol: number, pitch: number) => {
+    // Sharp transient snap
+    const snap = audioCtx!.createOscillator();
+    const snapGain = audioCtx!.createGain();
+    snap.type = "sine";
+    snap.frequency.setValueAtTime(pitch, time);
+    snap.frequency.exponentialRampToValueAtTime(pitch * 0.25, time + 0.005);
+    snapGain.gain.setValueAtTime(vol * 0.9, time);
+    snapGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.007);
+    snap.connect(snapGain);
+    snapGain.connect(audioCtx!.destination);
+    snap.start(time);
+    snap.stop(time + 0.01);
+
+    // Body resonance
+    const res = audioCtx!.createOscillator();
+    const resGain = audioCtx!.createGain();
+    res.type = "triangle";
+    res.frequency.setValueAtTime(pitch * 0.45, time);
+    resGain.gain.setValueAtTime(vol * 0.4, time);
+    resGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.035);
+    res.connect(resGain);
+    resGain.connect(audioCtx!.destination);
+    res.start(time);
+    res.stop(time + 0.04);
+  };
+
+  // Primary clack + micro-bounce 14ms later
+  strike(now, 0.42, 3000);
+  strike(now + 0.014, 0.18, 2600);
+}
+
 export function Playground() {
   useEffect(() => {
     const cards = document.querySelectorAll<HTMLElement>(".orbit-feature-card");
@@ -44,6 +87,7 @@ export function Playground() {
 
     cards.forEach((card) => {
       card.addEventListener("click", () => {
+        playTick();
         stopAuto();
         const screenId = card.dataset.screen ?? "";
         currentIndex = SCREEN_IDS.indexOf(screenId as typeof SCREEN_IDS[number]);
