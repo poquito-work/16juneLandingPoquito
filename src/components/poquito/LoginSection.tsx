@@ -11,7 +11,7 @@ export function LoginSection() {
   const [showPass, setShowPass] = useState(false)
 
   return (
-    <section id="login" className="relative overflow-hidden pt-15" style={{ minHeight: '100vh' }}>
+    <section id="login" className="relative overflow-hidden pt-15">
 
       {/* Gradient: beige top-left → rust mid → deep green bottom-right */}
       <div

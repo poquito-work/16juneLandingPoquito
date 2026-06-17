@@ -155,7 +155,7 @@ export function Hero() {
                 ))}
               </div>
               <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
-                Join <strong>10,000+</strong> players worldwide
+                 <strong>10,000+</strong> players waiting worldwide
               </span>
             </motion.div>
           </motion.div>
