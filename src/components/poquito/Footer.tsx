@@ -178,13 +178,13 @@ export function Footer() {
             <img
               src={logoSrc}
               alt="Poquito Mahjong"
-              width={100}
+              width={150}
               height={34}
               className="brightness-0 invert opacity-70"
             />
-            <p className="text-pq-cream text-xs leading-relaxed max-w-[180px] font-normal hover:font-bold hover:scale-[1.03] transition-all duration-200 text-center md:text-left">
+            {/* <p className="text-pq-cream text-xs leading-relaxed max-w-[180px] font-normal hover:font-bold hover:scale-[1.03] transition-all duration-200 text-center md:text-left">
               Traditional Mahjong, reimagined for the modern world.
-            </p>
+            </p> */}
           </div>
 
           {/* Links: Center Aligned & without "Legal" heading */}

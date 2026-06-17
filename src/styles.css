@@ -1259,8 +1259,8 @@
 }
 
 .plan-monthly-card {
-  background-color: #fff;
-  border: 1px solid rgba(20, 51, 34, .08);
+  /* background-color: #fff; */
+      border: 2px solid #b65a2f;
   color: #333;
 }
 
@@ -1291,4 +1291,7 @@
 
 .bg-pq-white {
   background-color: #f9f2e4;
+}
+.text-foreground{
+  color: #222222;
 }

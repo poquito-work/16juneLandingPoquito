@@ -128,7 +128,7 @@ export function Subscriptions() {
 
             <a
               href="#"
-              className="mt-8 inline-flex items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
+              className="mt-8 inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
             >
               Subscribe Now
             </a>
@@ -163,7 +163,7 @@ export function Subscriptions() {
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
-              <span className="font-display text-5xl font-bold leading-none">[x]</span>
+              <span className="font-display text-5xl font-bold leading-none">[x,xx]</span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
             <p className="mt-2 text-xs text-cream/75">Save Rs [x]/month </p>
@@ -187,7 +187,7 @@ export function Subscriptions() {
 
             <a
               href="#"
-              className="mt-8 inline-flex items-center justify-center rounded-full border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
+              className="mt-8 inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
             >
               Subscribe Now
             </a>

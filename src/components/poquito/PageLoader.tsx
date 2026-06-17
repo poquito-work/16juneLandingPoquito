@@ -77,7 +77,7 @@ export function PageLoader() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(false), 7000);
+    const t = setTimeout(() => setVisible(false), 9000);
     return () => clearTimeout(t);
   }, []);
 

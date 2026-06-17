@@ -63,7 +63,11 @@ export function Hero() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to right, #EDE5D0 0%, transparent 35%)",
+             background: `
+              linear-gradient(to right,  #EDE5D0 0%, #EDE5D0cc 15%, transparent 55%),
+              linear-gradient(to bottom, #F9F2E4 0%, transparent 18%),
+              linear-gradient(to top,    #E5DABB 0%, transparent 18%)
+            `,
           }}
         />
       </div>
