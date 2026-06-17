@@ -143,7 +143,7 @@ const $$splitComponentImporter$1 = () => import("./privacy-JT5S7jOn.mjs");
 const Route$1 = createFileRoute("/privacy")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-CrG1iu3U.mjs");
+const $$splitComponentImporter = () => import("./index-CJ2HyKs1.mjs");
 const Route = createFileRoute("/")({
   head: () => ({
     meta: [{
