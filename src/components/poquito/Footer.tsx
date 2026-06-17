@@ -1,4 +1,5 @@
 import { Instagram, Twitter, Facebook, Mail } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { PocketDragonLogo } from "./Logo";
 
 export function Footer() {
@@ -37,8 +38,8 @@ export function Footer() {
 
           {/* Legal */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[0.7rem] font-bold uppercase tracking-[0.22em] text-cream/95">
-            <a href="#" className="hover:opacity-80">Terms &amp; Conditions</a>
-            <a href="#" className="hover:opacity-80">Privacy Policy</a>
+            <Link to="/terms" className="hover:opacity-80">Terms &amp; Conditions</Link>
+            <Link to="/privacy" className="hover:opacity-80">Privacy Policy</Link>
           </div>
 
           {/* Copyright */}

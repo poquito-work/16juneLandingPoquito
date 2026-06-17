@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { SectionEyebrow } from "./SectionEyebrow";
 
 const SCREEN_IDS = ["practice", "salon", "match", "lobby", "league"] as const;
 
@@ -74,7 +75,12 @@ export function Playground() {
 
         {/* Section Header */}
         <div className="orbit-header">
-          <span className="section-overline">INSIDE THE APP</span>
+
+                  <div className="flex flex-col items-center gap-3 text-center mb-2">
+                    <SectionEyebrow>INSIDE THE APP</SectionEyebrow>
+                 
+                  </div>
+          {/* <span className="section-overline">INSIDE THE APP</span> */}
           <h2 className="orbit-title">
             THE COMPLETE MAHJONG <span className="text-rust">PLAYGROUND</span>
           </h2>
