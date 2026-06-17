@@ -145,7 +145,7 @@ export function Hero() {
             <motion.div variants={itemVariants} className="flex items-center gap-4 pt-1">
               <div className="flex -space-x-2">
                 {avatarGradients.map((g, i) => (
-                  <div
+                  <div 
                     key={i}
                     className="w-8 h-8 rounded-full border-2 border-white/80 flex items-center justify-center text-[10px] font-bold text-white"
                     style={{ background: g }}
