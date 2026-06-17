@@ -20,7 +20,7 @@ function PrivacyPage() {
     /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-3xl font-bold uppercase tracking-tight text-foreground mb-2", children: "Privacy Policy" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mb-2", children: "Work in Progress Notice" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs uppercase tracking-[0.18em] text-foreground/50 mb-6", children: "Last updated: 8th June 2026" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-10 text-sm leading-relaxed text-foreground/80", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "privacyDiv flex flex-col gap-10 text-sm leading-relaxed text-foreground/80", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "leading-relaxed text-foreground/80", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-md font-medium text-foreground mb-2", children: [
           "This Privacy Policy explains how ",

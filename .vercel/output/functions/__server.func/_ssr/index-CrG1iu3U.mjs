@@ -266,8 +266,8 @@ function Header({ onLoginClick }) {
     ) })
   ] });
 }
-const appStoreBadge = "/assets/download-apple-app-store-j8YisdTP.svg";
-const googlePlayBadge = "/assets/download-google-play-store-DQ9Cn_-F.svg";
+const appStoreBadge = "/assets/download-apple-app-store-BqueXrOt.svg";
+const googlePlayBadge = "/assets/download-google-play-store-Dij1jSIb.svg";
 function DownloadButtons({
   className = "",
   align = "start"
@@ -284,14 +284,13 @@ function DownloadButtons({
           display: "block",
           borderRadius: 10,
           overflow: "hidden",
-          background: "rgba(10,28,18,0.72)",
+          background: "#143322",
           backdropFilter: "blur(16px) saturate(180%)",
           WebkitBackdropFilter: "blur(16px) saturate(180%)",
-          border: "1px solid rgba(255,255,255,0.14)",
           boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
           padding: "4px 10px"
         },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: appStoreBadge, alt: "Download on the App Store", style: { height: 36, width: "auto", display: "block" } })
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: googlePlayBadge, alt: "Get it on Google Play", style: { height: 36, width: "auto", display: "block" } })
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -304,14 +303,13 @@ function DownloadButtons({
           display: "block",
           borderRadius: 10,
           overflow: "hidden",
-          background: "rgba(10,28,18,0.72)",
+          background: "#143322",
           backdropFilter: "blur(16px) saturate(180%)",
           WebkitBackdropFilter: "blur(16px) saturate(180%)",
-          border: "1px solid rgba(255,255,255,0.14)",
           boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
           padding: "4px 10px"
         },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: googlePlayBadge, alt: "Get it on Google Play", style: { height: 36, width: "auto", display: "block" } })
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: appStoreBadge, alt: "Download on the App Store", style: { height: 36, width: "auto", display: "block" } })
       }
     )
   ] }) });
@@ -414,10 +412,6 @@ function Hero() {
                 animate: "visible",
                 className: "flex flex-col gap-8 lg:gap-10",
                 children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-3", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-10", style: { background: "var(--rust)" } }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs uppercase tracking-[0.22em]", style: { color: "var(--rust)" }, children: "Traditional Mahjong · Reimagined" })
-                  ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(
                     motion.h1,
                     {
@@ -434,7 +428,7 @@ function Hero() {
                         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "your time" }),
                         ",",
                         " ",
-                        "anywhere you are."
+                        "anywhere you are!"
                       ]
                     }
                   ),
@@ -630,7 +624,7 @@ function Subscriptions() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70", children: "Monthly" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground/70", children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none text-foreground", children: "[x]" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none text-foreground", children: "xxx" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-foreground/65", children: "/ month" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Billed monthly. Cancel anytime." }),
@@ -638,8 +632,12 @@ function Subscriptions() {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
+              style: {
+                background: "linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)",
+                boxShadow: "0 8px 24px rgba(182,90,47,0.30)"
+              },
               href: "#",
-              className: "mt-8 inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
+              className: "inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
               children: "Subscribe Now"
             }
           )
@@ -649,7 +647,7 @@ function Subscriptions() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85", children: "Annual" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-cream/85", children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", children: "[x,xx]" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", children: "x,xxx" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-cream/75", children: "/ year" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save Rs [x]/month " }),
@@ -657,8 +655,12 @@ function Subscriptions() {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
+              style: {
+                background: "linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)",
+                boxShadow: "0 8px 24px rgba(182,90,47,0.30)"
+              },
               href: "#",
-              className: "mt-8 inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
+              className: "inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
               children: "Subscribe Now"
             }
           ),
@@ -700,6 +702,39 @@ function Subscriptions() {
   ] });
 }
 const SCREEN_IDS = ["practice", "salon", "match", "lobby", "league"];
+let audioCtx = null;
+function playTick() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === "suspended") audioCtx.resume();
+  const now = audioCtx.currentTime;
+  const strike = (time, vol, pitch) => {
+    const snap = audioCtx.createOscillator();
+    const snapGain = audioCtx.createGain();
+    snap.type = "sine";
+    snap.frequency.setValueAtTime(pitch, time);
+    snap.frequency.exponentialRampToValueAtTime(pitch * 0.25, time + 5e-3);
+    snapGain.gain.setValueAtTime(vol * 0.9, time);
+    snapGain.gain.exponentialRampToValueAtTime(1e-4, time + 7e-3);
+    snap.connect(snapGain);
+    snapGain.connect(audioCtx.destination);
+    snap.start(time);
+    snap.stop(time + 0.01);
+    const res = audioCtx.createOscillator();
+    const resGain = audioCtx.createGain();
+    res.type = "triangle";
+    res.frequency.setValueAtTime(pitch * 0.45, time);
+    resGain.gain.setValueAtTime(vol * 0.4, time);
+    resGain.gain.exponentialRampToValueAtTime(1e-4, time + 0.035);
+    res.connect(resGain);
+    resGain.connect(audioCtx.destination);
+    res.start(time);
+    res.stop(time + 0.04);
+  };
+  strike(now, 0.42, 3e3);
+  strike(now + 0.014, 0.18, 2600);
+}
 function Playground() {
   reactExports.useEffect(() => {
     const cards = document.querySelectorAll(".orbit-feature-card");
@@ -740,6 +775,7 @@ function Playground() {
     resumeTimer = setTimeout(startAuto, 2e3);
     cards.forEach((card) => {
       card.addEventListener("click", () => {
+        playTick();
         stopAuto();
         const screenId = card.dataset.screen ?? "";
         currentIndex = SCREEN_IDS.indexOf(screenId);
@@ -1603,14 +1639,11 @@ function CTASection() {
     }
   );
 }
+const tile3 = "/assets/Mpu1z-3l32z_2-.png";
 const EASE = [0.22, 0.61, 0.36, 1];
 const OUTER_PATH$1 = "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
 const INNER_PATH$1 = "M9,5.5 L51,5.5 Q54.5,5.5 54.5,9 L54.5,71 Q54.5,74.5 51,74.5 L9,74.5 Q5.5,74.5 5.5,71 L5.5,9 Q5.5,5.5 9,5.5 Z";
-const TILE_SRCS$1 = [
-  "src/assets/Mpt1z.png",
-  "src/assets/Mpt3z.png",
-  "src/assets/Mpu1z.png"
-];
+const TILE_SRCS$1 = [tile1, tile2, tile3];
 const CYCLE$1 = 8;
 function TileOutlineReveal$1({ delay, tileSrc }) {
   const base = {
@@ -1721,12 +1754,12 @@ function Footer() {
                     className: "brightness-0 invert opacity-70"
                   }
                 ) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-center gap-8 text-xs text-pq-cream md:justify-self-center", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex  items-center justify-center gap-6 text-xs text-pq-cream md:justify-self-center", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     Link,
                     {
                       to: "/privacy",
-                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal",
+                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap",
                       children: "Privacy Policy"
                     }
                   ),
@@ -1734,10 +1767,53 @@ function Footer() {
                     Link,
                     {
                       to: "/terms",
-                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal",
+                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap",
                       children: "Terms of Use"
                     }
-                  )
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "a",
+                    {
+                      href: "mailto:hello@pocketdragon.app",
+                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap",
+                      children: "hello@pocketdragon.app"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "a",
+                      {
+                        href: "https://facebook.com/pocketdragonapp",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        "aria-label": "Facebook",
+                        className: "hover:opacity-80 transition-opacity",
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" }) })
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "a",
+                      {
+                        href: "https://twitter.com/pocketdragonapp",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        "aria-label": "Twitter",
+                        className: "hover:opacity-80 transition-opacity",
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" }) })
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "a",
+                      {
+                        href: "https://instagram.com/pocketdragonapp",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        "aria-label": "Instagram",
+                        className: "hover:opacity-80 transition-opacity",
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" }) })
+                      }
+                    )
+                  ] })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center md:justify-end gap-3 md:justify-self-end w-full md:w-auto", children: TILE_SRCS$1.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                   TileOutlineReveal$1,
@@ -1789,11 +1865,7 @@ function BackToTop() {
 const OUTER_PATH = "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
 const INNER_PATH = "M9,5.5 L51,5.5 Q54.5,5.5 54.5,9 L54.5,71 Q54.5,74.5 51,74.5 L9,74.5 Q5.5,74.5 5.5,71 L5.5,9 Q5.5,5.5 9,5.5 Z";
 const CYCLE = 8;
-const TILE_SRCS = [
-  "src/assets/Mpt1z.png",
-  "src/assets/Mpt3z.png",
-  "src/assets/Mpu1z.png"
-];
+const TILE_SRCS = [tile1, tile2, tile3];
 function TileOutlineReveal({ delay, tileSrc }) {
   const base = {
     duration: CYCLE,
