@@ -13,7 +13,7 @@ function TermsPage() {
       </h1>
       <p className="text-md font-medium text-foreground mb-12">Pocket Dragon is built on skill, strategy, and the love of a game that has brought people together for centuries. These Terms exist not to intimidate you, but to ensure that every player at our table — from a first-time Firefly to a seasoned Dragon — plays in a fair, safe, and transparent environment. By creating an account or playing on Pocket Dragon you agree to these terms. If something doesn't sit right with you, please reach out to us before playing. We're a small team and we actually read our emails.</p>
 
-      <div className="flex flex-col gap-10 text-sm leading-relaxed text-foreground/80">
+      <div className="privacyDiv flex flex-col gap-10 text-sm leading-relaxed text-foreground/80">
 
         <section>
           <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">1. About Pocket Dragon</h2>

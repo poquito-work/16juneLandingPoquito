@@ -102,7 +102,7 @@ export function Subscriptions() {
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-foreground/70">Rs</span>
               <span className="font-display text-5xl font-bold leading-none text-foreground">
-                [x]
+                xxx
               </span>
               <span className="ml-1 text-sm text-foreground/65">/ month</span>
             </div>
@@ -127,8 +127,12 @@ export function Subscriptions() {
             </ul> */}
 
             <a
+             style={{
+                    background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
+                    boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
+                  }}
               href="#"
-              className="mt-8 inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
             >
               Subscribe Now
             </a>
@@ -163,7 +167,7 @@ export function Subscriptions() {
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
-              <span className="font-display text-5xl font-bold leading-none">[x,xx]</span>
+              <span className="font-display text-5xl font-bold leading-none">x,xxx</span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
             <p className="mt-2 text-xs text-cream/75">Save Rs [x]/month </p>
@@ -185,12 +189,23 @@ export function Subscriptions() {
               ))}
             </ul> */}
 
-            <a
+              <a
+               style={{
+                    background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
+                    boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
+                  }}
               href="#"
-              className="mt-8 inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
+              className="inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
             >
               Subscribe Now
             </a>
+
+            {/* <a
+              href="#"
+              className="inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
+            >
+              Subscribe Now
+            </a> */}
 
             <button
               type="button"

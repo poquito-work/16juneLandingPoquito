@@ -16,7 +16,7 @@ function PrivacyPage() {
         Last updated: 8th June 2026
       </p>
 
-      <div className="flex flex-col gap-10 text-sm leading-relaxed text-foreground/80">
+      <div className="privacyDiv flex flex-col gap-10 text-sm leading-relaxed text-foreground/80">
 
         <section className="leading-relaxed text-foreground/80">
           <p className="text-md font-medium text-foreground mb-2">

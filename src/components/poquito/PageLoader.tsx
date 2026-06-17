@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import tile1 from "@/assets/Mpt1z.png";
+import tile2 from "@/assets/Mpt3z.png";
+import tile3 from "@/assets/Mpu1z.png";
 
 const OUTER_PATH =
   "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
@@ -8,11 +11,7 @@ const INNER_PATH =
 
 const CYCLE = 8;
 
-const TILE_SRCS = [
-  "src/assets/Mpt1z.png",
-  "src/assets/Mpt3z.png",
-  "src/assets/Mpu1z.png",
-];
+const TILE_SRCS = [tile1, tile2, tile3];
 
 function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string }) {
   const base = {

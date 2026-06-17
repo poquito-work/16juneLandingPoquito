@@ -99,12 +99,12 @@ export function Hero() {
             className="flex flex-col gap-8 lg:gap-10"
           >
             {/* Overline */}
-            <motion.div variants={itemVariants} className="flex items-center gap-3">
+            {/* <motion.div variants={itemVariants} className="flex items-center gap-3">
               <span className="h-px w-10" style={{ background: "var(--rust)" }} />
               <span className="text-xs uppercase tracking-[0.22em]" style={{ color: "var(--rust)" }}>
                 Traditional Mahjong · Reimagined
               </span>
-            </motion.div>
+            </motion.div> */}
 
             {/* Headline */}
             <motion.h1
@@ -118,7 +118,7 @@ export function Hero() {
             >
               Mahjong on{" "}
               <span style={{ color: "var(--rust)" }}>your time</span>,{" "}
-              anywhere you are.
+              anywhere you are!
             </motion.h1>
 
             {/* Body */}
