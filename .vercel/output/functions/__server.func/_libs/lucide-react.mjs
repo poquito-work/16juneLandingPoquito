@@ -75,32 +75,11 @@ const createLucideIcon = (iconName, iconNode) => {
   Component.displayName = toPascalCase(iconName);
   return Component;
 };
-const __iconNode$3 = [
-  ["path", { d: "M12 6.528V3a1 1 0 0 1 1-1h0", key: "11qiee" }],
-  [
-    "path",
-    {
-      d: "M18.237 21A15 15 0 0 0 22 11a6 6 0 0 0-10-4.472A6 6 0 0 0 2 11a15.1 15.1 0 0 0 3.763 10 3 3 0 0 0 3.648.648 5.5 5.5 0 0 1 5.178 0A3 3 0 0 0 18.237 21",
-      key: "110c12"
-    }
-  ]
-];
-const Apple = createLucideIcon("apple", __iconNode$3);
-const __iconNode$2 = [
+const __iconNode$1 = [
   ["path", { d: "m5 12 7-7 7 7", key: "hav0vg" }],
   ["path", { d: "M12 19V5", key: "x0mq9r" }]
 ];
-const ArrowUp = createLucideIcon("arrow-up", __iconNode$2);
-const __iconNode$1 = [
-  [
-    "path",
-    {
-      d: "M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z",
-      key: "10ikf1"
-    }
-  ]
-];
-const Play = createLucideIcon("play", __iconNode$1);
+const ArrowUp = createLucideIcon("arrow-up", __iconNode$1);
 const __iconNode = [
   ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
   ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
@@ -108,7 +87,5 @@ const __iconNode = [
 const X = createLucideIcon("x", __iconNode);
 export {
   ArrowUp as A,
-  Play as P,
-  X,
-  Apple as a
+  X
 };

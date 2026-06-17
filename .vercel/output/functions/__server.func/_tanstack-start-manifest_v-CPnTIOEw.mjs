@@ -1,4 +1,0 @@
-const tsrStartManifest = () => ({ routes: { __root__: { filePath: "D:/project-poquito/repository/16juneLandingPoquito/src/routes/__root.tsx", children: ["/", "/privacy", "/terms"], preloads: ["/assets/index-DioK5FcB.js"], scripts: [{ attrs: { type: "module", async: true, src: "/assets/index-DioK5FcB.js" } }] }, "/": { filePath: "D:/project-poquito/repository/16juneLandingPoquito/src/routes/index.tsx", children: void 0, preloads: ["/assets/index-CrXHOjmT.js"] }, "/privacy": { filePath: "D:/project-poquito/repository/16juneLandingPoquito/src/routes/privacy.tsx", children: void 0, preloads: ["/assets/privacy-DENw79AG.js"] }, "/terms": { filePath: "D:/project-poquito/repository/16juneLandingPoquito/src/routes/terms.tsx", children: void 0, preloads: ["/assets/terms-CU8kZ0X3.js"] } } });
-export {
-  tsrStartManifest
-};

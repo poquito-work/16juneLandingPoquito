@@ -1,10 +1,11 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
+import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
 import { R as Root, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { L as Link } from "../_libs/tanstack__react-router.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
-import { A as ArrowUp, a as Apple, P as Play, X } from "../_libs/lucide-react.mjs";
+import { A as ArrowUp, X } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__primitive.mjs";
 import "../_libs/radix-ui__react-compose-refs.mjs";
 import "../_libs/radix-ui__react-context.mjs";
@@ -43,7 +44,6 @@ import "node:stream";
 import "../_libs/isbot.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-const logoSrc = "/assets/pocket-dragon-logo-iQJGCUVf.png";
 const sizeClasses = {
   sm: "h-14 w-auto",
   md: "h-14 w-auto",
@@ -127,93 +127,38 @@ const NAV = [
   { label: "About Us", href: "#playground" },
   { label: "Contact Us", href: "#login" }
 ];
-const OUTER_PATH$1 = "M4,8 Q4,4 8,4 L52,4 Q56,4 56,8 L56,72 Q56,76 52,76 L8,76 Q4,76 4,72 Z";
-const INNER_PATH$1 = "M7,10 Q7,7 10,7 L50,7 Q53,7 53,10 L53,70 Q53,73 50,73 L10,73 Q7,73 7,70 Z";
-const CYCLE$1 = 3.2;
-const TILE_SRCS$1 = ["/tiles/tile-zhong.png", "/tiles/tile-fa.png", "/tiles/tile-bai.png"];
-function TileOutlineReveal$1({ delay, tileSrc }) {
-  const base = {
-    duration: CYCLE$1,
-    repeat: Infinity,
-    repeatDelay: 0,
-    delay,
-    ease: "easeInOut"
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 32, height: 42 }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "svg",
-      {
-        width: "32",
-        height: "42",
-        viewBox: "0 0 60 80",
-        style: { position: "absolute", inset: 0, width: "100%", height: "100%" },
-        "aria-hidden": true,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.path,
-            {
-              d: OUTER_PATH$1,
-              fill: "none",
-              stroke: "rgba(20,51,34,0.55)",
-              strokeWidth: "1.5",
-              strokeLinecap: "round",
-              animate: {
-                pathLength: [0, 1, 1, 0, 0],
-                opacity: [0.85, 0.85, 0.4, 0, 0]
-              },
-              transition: { ...base, times: [0, 0.25, 0.42, 0.52, 1] }
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.path,
-            {
-              d: INNER_PATH$1,
-              fill: "none",
-              stroke: "rgba(20,51,34,0.32)",
-              strokeWidth: "1",
-              strokeLinecap: "round",
-              animate: {
-                pathLength: [0, 0, 1, 1, 0, 0],
-                opacity: [0, 0.7, 0.7, 0.35, 0, 0]
-              },
-              transition: { ...base, times: [0, 0.19, 0.4, 0.44, 0.52, 1] }
-            }
-          )
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      motion.div,
-      {
-        style: { position: "absolute", inset: 0, borderRadius: 3, overflow: "hidden" },
-        animate: { opacity: [0, 0, 1, 1, 0] },
-        transition: { ...base, times: [0, 0.44, 0.55, 0.78, 1] },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "img",
-          {
-            src: tileSrc,
-            alt: "Mahjong tile",
-            style: { objectFit: "cover", width: "100%", height: "100%" }
-          }
-        )
-      }
-    )
-  ] });
-}
 function Header({ onLoginClick }) {
   const [open, setOpen] = reactExports.useState(false);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "sticky top-0 z-50 w-full bg-white/55 backdrop-blur-xl backdrop-saturate-150 border-b border-white/40 shadow-[0_1px_12px_rgba(20,51,34,0.06)]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#home", "aria-label": "Go to home", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "lg" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hidden md:flex items-center gap-3", children: TILE_SRCS$1.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        TileOutlineReveal$1,
-        {
-          tileSrc: src,
-          delay: CYCLE$1 / 3 * i
-        },
-        src
-      )) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "sticky top-0 z-50 w-full bg-white/55 backdrop-blur-xl backdrop-saturate-150 border-b border-white/40 shadow-[0_1px_12px_rgba(20,51,34,0.06)]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#home", "aria-label": "Go to home", className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "lg" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          motion.nav,
+          {
+            initial: { opacity: 0, x: 20 },
+            animate: { opacity: 1, x: 0 },
+            exit: { opacity: 0, x: 20 },
+            transition: { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] },
+            className: "hidden md:flex items-center gap-6",
+            "aria-label": "Primary",
+            children: NAV.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              motion.a,
+              {
+                href: item.href,
+                onClick: () => setOpen(false),
+                initial: { opacity: 0, y: -4 },
+                animate: { opacity: 1, y: 0 },
+                transition: { delay: i * 0.05, duration: 0.18, ease: "easeOut" },
+                className: "text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap",
+                children: item.label
+              },
+              item.label
+            ))
+          },
+          "inline-nav"
+        ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
@@ -232,24 +177,9 @@ function Header({ onLoginClick }) {
             "aria-expanded": open,
             className: "relative flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-black/5",
             children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "relative block h-4 w-5", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "span",
-                {
-                  className: `absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "translate-y-[7px] rotate-45" : ""}`
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "span",
-                {
-                  className: `absolute left-0 top-1/2 -mt-[1px] block h-[2px] w-5 rounded-full bg-current transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"}`
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "span",
-                {
-                  className: `absolute bottom-0 left-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "-translate-y-[7px] -rotate-45" : ""}`
-                }
-              )
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "translate-y-[7px] rotate-45" : ""}` }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `absolute left-0 top-1/2 -mt-[1px] block h-[2px] w-5 rounded-full bg-current transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"}` }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `absolute bottom-0 left-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "-translate-y-[7px] -rotate-45" : ""}` })
             ] })
           }
         )
@@ -262,8 +192,8 @@ function Header({ onLoginClick }) {
         animate: { y: 0 },
         exit: { y: "-100%" },
         transition: { duration: 0.38, ease: [0.22, 0.61, 0.36, 1] },
-        className: "fixed inset-x-0 top-0 z-50 backdrop-blur-xl backdrop-saturate-150",
-        style: { background: "rgba(249, 242, 228, 0.92)" },
+        className: "md:hidden fixed inset-x-0 top-0 z-50 backdrop-blur-xl backdrop-saturate-150",
+        style: { background: "rgba(249, 242, 228, 0.95)" },
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-16 items-center justify-between px-6 border-b border-foreground/10", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "md" }),
@@ -329,133 +259,247 @@ function Header({ onLoginClick }) {
         animate: { opacity: 1 },
         exit: { opacity: 0 },
         transition: { duration: 0.25 },
-        className: "fixed inset-0 z-30 bg-black/20",
+        className: "md:hidden fixed inset-0 z-30 bg-black/20",
         onClick: () => setOpen(false)
       },
       "backdrop"
     ) })
   ] });
 }
-const heroVideo = "/assets/Studio_product_photography_vid-CwT2O4A8.mp4";
+const appStoreBadge = "/assets/download-apple-app-store-j8YisdTP.svg";
+const googlePlayBadge = "/assets/download-google-play-store-DQ9Cn_-F.svg";
 function DownloadButtons({
   className = "",
-  align = "start",
-  showDivider = false
+  align = "start"
 }) {
   const justify = align === "center" ? "justify-center" : "justify-start";
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `flex flex-wrap items-center gap-3 ${justify}`, children: [
-    showDivider && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.68rem] font-bold uppercase tracking-[0.28em] text-rust opacity-80", children: "Coming Soon" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "a",
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.a,
       {
         href: "#",
-        "aria-label": "Download Pocket Dragon on the App Store",
-        className: "inline-flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-bold tracking-tight transition-all duration-200 hover:scale-[1.03]",
+        whileHover: { scale: 1.04 },
+        whileTap: { scale: 0.97 },
         style: {
-          background: "rgba(182,90,47,0.15)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          border: "1.5px solid rgba(182,90,47,0.45)",
-          color: "var(--rust)",
-          boxShadow: "0 4px 20px rgba(182,90,47,0.12), inset 0 1px 0 rgba(255,255,255,0.08)"
+          display: "block",
+          borderRadius: 10,
+          overflow: "hidden",
+          background: "rgba(10,28,18,0.72)",
+          backdropFilter: "blur(16px) saturate(180%)",
+          WebkitBackdropFilter: "blur(16px) saturate(180%)",
+          border: "1px solid rgba(255,255,255,0.14)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+          padding: "4px 10px"
         },
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Apple, { size: 20, strokeWidth: 1.6, className: "-mt-0.5" }),
-          "App Store"
-        ]
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: appStoreBadge, alt: "Download on the App Store", style: { height: 36, width: "auto", display: "block" } })
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "a",
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.a,
       {
         href: "#",
-        "aria-label": "Get Pocket Dragon on Google Play",
-        className: "inline-flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-bold tracking-tight transition-all duration-200 hover:scale-[1.03]",
+        whileHover: { scale: 1.04 },
+        whileTap: { scale: 0.97 },
         style: {
-          background: "rgba(182,90,47,0.08)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          border: "1.5px solid rgba(182,90,47,0.28)",
-          color: "var(--rust)",
-          boxShadow: "0 4px 20px rgba(182,90,47,0.08), inset 0 1px 0 rgba(255,255,255,0.06)"
+          display: "block",
+          borderRadius: 10,
+          overflow: "hidden",
+          background: "rgba(10,28,18,0.72)",
+          backdropFilter: "blur(16px) saturate(180%)",
+          WebkitBackdropFilter: "blur(16px) saturate(180%)",
+          border: "1px solid rgba(255,255,255,0.14)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+          padding: "4px 10px"
         },
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 18, strokeWidth: 1.6, fill: "currentColor", className: "-mt-0.5" }),
-          "Google Play"
-        ]
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: googlePlayBadge, alt: "Get it on Google Play", style: { height: 36, width: "auto", display: "block" } })
       }
     )
   ] }) });
 }
+const heroVideo = "/assets/Studio_product_photography_vid-CwT2O4A8.mp4";
+const tile1 = "/assets/Mpt1z-CGcL1NCm.png";
+const tile2 = "/assets/Mpt3z-DsvuR2Rt.png";
+const EASE$4 = [0.22, 0.61, 0.36, 1];
+const bgTiles = [
+  { src: tile1, left: "4%", top: "14%", w: 54, rot: -12, op: 0.13, dur: 7.5, delay: 0 },
+  { src: tile2, left: "10%", top: "72%", w: 44, rot: 20, op: 0.1, dur: 8.5, delay: 1.2 },
+  { src: tile1, left: "32%", top: "91%", w: 38, rot: -22, op: 0.08, dur: 8, delay: 2.4 },
+  { src: tile2, left: "1%", top: "42%", w: 46, rot: 15, op: 0.12, dur: 9.5, delay: 0.3 }
+];
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } }
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE$4 } }
+};
+const avatarGradients = [
+  "linear-gradient(135deg, #143322, #2a6042)",
+  "linear-gradient(135deg, #B65A2F, #d4793e)",
+  "linear-gradient(135deg, #2a4a1a, #4a7a2a)"
+];
 function Hero() {
+  const ref = reactExports.useRef(null);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "section",
     {
       id: "home",
-      className: "relative overflow-hidden",
-      style: { minHeight: "100vh" },
+      ref,
+      className: "relative min-h-screen overflow-hidden",
+      style: { background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)" },
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-bg", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "video",
-            {
-              className: "hero-bg-video",
-              id: "hero-video",
-              src: heroVideo,
-              autoPlay: true,
-              muted: true,
-              playsInline: true,
-              loop: true
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: "absolute inset-0 pointer-events-none",
-              style: { background: "rgba(0,0,0,0.62)" }
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: "absolute bottom-0 left-0 w-full pointer-events-none",
-              style: {
-                height: "22%",
-                background: "linear-gradient(to top, #0a0a0a 0%, transparent 100%)"
-              }
-            }
-          )
-        ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
-            className: "relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-6 sm:px-10",
-            style: { minHeight: "100vh", paddingTop: "6rem", paddingBottom: "5rem" },
+            "aria-hidden": true,
+            className: "absolute top-0 right-0 h-full hidden lg:block",
+            style: { width: "50%", zIndex: 0 },
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                "h1",
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "video",
                 {
-                  className: "font-display font-bold uppercase leading-tight tracking-tight text-pq-cream mb-6",
-                  style: { fontSize: "clamp(2rem, 4vw, 5rem)", maxWidth: "14ch" },
-                  children: [
-                    "Mahjong on",
-                    " ",
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "your time" }),
-                    ",",
-                    " ",
-                    "anywhere you are!"
-                  ]
+                  src: heroVideo,
+                  autoPlay: true,
+                  muted: true,
+                  playsInline: true,
+                  loop: true,
+                  style: {
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block"
+                  }
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "p",
+                "div",
                 {
-                  className: "text-pq-cream leading-relaxed mb-10",
-                  style: { fontSize: "clamp(0.95rem, 1.4vw, 1.1rem)", maxWidth: "48ch" },
-                  children: "Practice, play, and compete your way to the top. Enjoy real-time Traditional Mahjong action at your fingertips — built for serious players who value the craft of the classic game."
+                  style: {
+                    position: "absolute",
+                    inset: 0,
+                    background: `
+              linear-gradient(to right,  #EDE5D0 0%, #EDE5D0cc 15%, transparent 55%),
+              linear-gradient(to bottom, #F9F2E4 0%, transparent 18%),
+              linear-gradient(to top,    #E5DABB 0%, transparent 18%)
+            `
+                  }
+                }
+              )
+            ]
+          }
+        ),
+        bgTiles.map((t, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          motion.div,
+          {
+            "aria-hidden": true,
+            className: "absolute pointer-events-none",
+            style: { left: t.left, top: t.top, zIndex: 1, opacity: t.op, rotate: t.rot },
+            animate: { y: [0, -10, 0], rotate: [t.rot, t.rot + 2.5, t.rot] },
+            transition: { duration: t.dur, repeat: Infinity, ease: "easeInOut", delay: t.delay },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: t.src, alt: "", width: t.w, style: { display: "block" } })
+          },
+          i
+        )),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "relative z-10 mx-auto flex min-h-screen items-center max-w-7xl",
+            style: { paddingTop: "6rem", paddingBottom: "5rem" },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-6 sm:px-10 lg:px-16 max-w-2xl", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              motion.div,
+              {
+                variants: containerVariants,
+                initial: "hidden",
+                animate: "visible",
+                className: "flex flex-col gap-8 lg:gap-10",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-10", style: { background: "var(--rust)" } }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs uppercase tracking-[0.22em]", style: { color: "var(--rust)" }, children: "Traditional Mahjong · Reimagined" })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    motion.h1,
+                    {
+                      variants: itemVariants,
+                      className: "font-display font-bold uppercase leading-tight tracking-tight",
+                      style: {
+                        fontSize: "clamp(2.4rem, 5.5vw, 5rem)",
+                        color: "var(--foreground)",
+                        lineHeight: 1.05
+                      },
+                      children: [
+                        "Mahjong on",
+                        " ",
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "your time" }),
+                        ",",
+                        " ",
+                        "anywhere you are."
+                      ]
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    motion.p,
+                    {
+                      variants: itemVariants,
+                      className: "leading-relaxed",
+                      style: {
+                        fontSize: "clamp(0.95rem, 1.4vw, 1.1rem)",
+                        color: "var(--foreground)",
+                        opacity: 0.75,
+                        maxWidth: "44ch"
+                      },
+                      children: "Practice, play, and compete your way to the top. Enjoy real-time Traditional Mahjong action at your fingertips."
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: itemVariants, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadButtons, { align: "start" }) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-4 pt-1", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex -space-x-2", children: avatarGradients.map((g, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        className: "w-8 h-8 rounded-full border-2 border-white/80 flex items-center justify-center text-[10px] font-bold text-white",
+                        style: { background: g },
+                        children: ["A", "M", "R"][i]
+                      },
+                      i
+                    )) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm", style: { color: "var(--foreground)", opacity: 0.7 }, children: [
+                      "Join ",
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "10,000+" }),
+                      " players worldwide"
+                    ] })
+                  ] })
+                ]
+              }
+            ) })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            transition: { delay: 2, duration: 0.8 },
+            className: "absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "span",
+                {
+                  className: "text-xs uppercase tracking-[0.2em]",
+                  style: { color: "var(--foreground)", opacity: 0.4 },
+                  children: "Scroll"
                 }
               ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadButtons, { align: "start", showDivider: true })
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                motion.div,
+                {
+                  className: "w-px h-8",
+                  style: { background: "linear-gradient(to bottom, rgba(20,51,34,0.35), transparent)" },
+                  animate: { scaleY: [0, 1, 0] },
+                  transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+                  "aria-hidden": true
+                }
+              )
             ]
           }
         )
@@ -595,7 +639,7 @@ function Subscriptions() {
             "a",
             {
               href: "#",
-              className: "mt-8 inline-flex items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
+              className: "mt-8 inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
               children: "Subscribe Now"
             }
           )
@@ -605,7 +649,7 @@ function Subscriptions() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85", children: "Annual" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-cream/85", children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", children: "[x]" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", children: "[x,xx]" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-cream/75", children: "/ year" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save Rs [x]/month " }),
@@ -614,7 +658,7 @@ function Subscriptions() {
             "a",
             {
               href: "#",
-              className: "mt-8 inline-flex items-center justify-center rounded-full border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
+              className: "mt-8 inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
               children: "Subscribe Now"
             }
           ),
@@ -1048,7 +1092,7 @@ function Playground() {
     ] })
   ] }) });
 }
-const EASE$4 = [0.22, 0.61, 0.36, 1];
+const EASE$3 = [0.22, 0.61, 0.36, 1];
 const faqs = [
   {
     q: "What is Poquito Mahjong?",
@@ -1104,7 +1148,7 @@ function FAQSection() {
             initial: { opacity: 0, y: 36 },
             whileInView: { opacity: 1, y: 0 },
             viewport: { once: true, margin: "-80px" },
-            transition: { duration: 0.7, ease: EASE$4 },
+            transition: { duration: 0.7, ease: EASE$3 },
             className: "mb-14",
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-5", children: [
@@ -1182,7 +1226,7 @@ function FAQItem({
       initial: { opacity: 0, y: 24 },
       whileInView: { opacity: 1, y: 0 },
       viewport: { once: true, margin: "-20px" },
-      transition: { duration: 0.6, ease: EASE$4, delay: index * 0.08 },
+      transition: { duration: 0.6, ease: EASE$3, delay: index * 0.08 },
       className: `border-b transition-colors duration-300 ${isOpen ? "border-pq-green/20" : "border-pq-green/10"}`,
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onToggle, className: "w-full text-medium flex items-center justify-between gap-6 py-6 text-left group", children: [
@@ -1198,7 +1242,7 @@ function FAQItem({
             motion.div,
             {
               animate: { rotate: isOpen ? 45 : 0 },
-              transition: { duration: 0.35, ease: EASE$4 },
+              transition: { duration: 0.35, ease: EASE$3 },
               className: `flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${isOpen ? "border-pq-rust/50 bg-pq-rust/10" : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"}`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "svg",
@@ -1220,7 +1264,7 @@ function FAQItem({
             initial: { height: 0, opacity: 0 },
             animate: { height: "auto", opacity: 1 },
             exit: { height: 0, opacity: 0 },
-            transition: { duration: 0.45, ease: EASE$4 },
+            transition: { duration: 0.45, ease: EASE$3 },
             style: { overflow: "hidden" },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200", children: faq.a })
           },
@@ -1230,7 +1274,7 @@ function FAQItem({
     }
   );
 }
-const EASE$3 = [0.22, 0.61, 0.36, 1];
+const EASE$2 = [0.22, 0.61, 0.36, 1];
 function LoginSection() {
   const [email, setEmail] = reactExports.useState("");
   const [password, setPassword] = reactExports.useState("");
@@ -1267,7 +1311,7 @@ function LoginSection() {
           initial: { opacity: 0, y: 48 },
           whileInView: { opacity: 1, y: 0 },
           viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.9, ease: EASE$3 },
+          transition: { duration: 0.9, ease: EASE$2 },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-white" }),
@@ -1299,7 +1343,7 @@ function LoginSection() {
           initial: { opacity: 0, x: 40 },
           whileInView: { opacity: 1, x: 0 },
           viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.9, ease: EASE$3, delay: 0.15 },
+          transition: { duration: 0.9, ease: EASE$2, delay: 0.15 },
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
@@ -1424,7 +1468,27 @@ function LoginSection() {
     ] }) })
   ] });
 }
-const EASE$2 = [0.22, 0.61, 0.36, 1];
+const appStoreLogo = "/assets/appstore-CNw0Xi8t.png";
+const googlePlayLogo = "/assets/googleplay-BxecJl1F.png";
+const EASE$1 = [0.22, 0.61, 0.36, 1];
+function StoreBadge({ icon, label, sub }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    motion.a,
+    {
+      href: "#",
+      className: "flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream",
+      whileHover: { scale: 1.03 },
+      whileTap: { scale: 0.98 },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: icon, alt: label, className: "w-6 h-6 object-contain animate-none" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-pq-cream text-[9px] tracking-[0.12em] uppercase leading-none", children: sub }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-pq-cream text-xs leading-tight mt-0.5", children: label })
+        ] })
+      ]
+    }
+  );
+}
 function CTASection() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "section",
@@ -1465,7 +1529,7 @@ function CTASection() {
               initial: { opacity: 0, y: 24 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.7, ease: EASE$2 },
+              transition: { duration: 0.7, ease: EASE$1 },
               className: "flex items-center justify-center gap-3 mb-6",
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-rust/60" }),
@@ -1480,7 +1544,7 @@ function CTASection() {
               initial: { opacity: 0, y: 32 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.85, ease: EASE$2, delay: 0.1 },
+              transition: { duration: 0.85, ease: EASE$1, delay: 0.1 },
               className: "font-hero font-bold text-pq-cream leading-tight tracking-tight text-balance mb-6",
               style: { fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)" },
               children: [
@@ -1496,10 +1560,24 @@ function CTASection() {
               initial: { opacity: 0, y: 24 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.7, ease: EASE$2, delay: 0.2 },
+              transition: { duration: 0.7, ease: EASE$1, delay: 0.2 },
               className: "text-pq-cream leading-relaxed max-w-xl mx-auto mb-12",
               style: { fontSize: "1.1rem" },
               children: "Thousands of tables are live right now. Download Poquito and make your first move."
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            motion.div,
+            {
+              initial: { opacity: 0, y: 24, scale: 0.96 },
+              whileInView: { opacity: 1, y: 0, scale: 1 },
+              viewport: { once: true, margin: "-60px" },
+              transition: { duration: 0.7, ease: EASE$1, delay: 0.3 },
+              className: "flex flex-col sm:flex-row items-center justify-center gap-4",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: googlePlayLogo, label: "Google Play", sub: "Coming Soon on" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: appStoreLogo, label: "App Store", sub: "Coming Soon on" })
+              ] })
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1525,24 +1603,18 @@ function CTASection() {
     }
   );
 }
-const EASE$1 = [0.22, 0.61, 0.36, 1];
-const footerLinks = {
-  Legal: [
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Use", href: "/terms" }
-  ]
-};
-const OUTER_PATH = "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
-const INNER_PATH = "M9,5.5 L51,5.5 Q54.5,5.5 54.5,9 L54.5,71 Q54.5,74.5 51,74.5 L9,74.5 Q5.5,74.5 5.5,71 L5.5,9 Q5.5,5.5 9,5.5 Z";
-const TILE_SRCS = [
+const EASE = [0.22, 0.61, 0.36, 1];
+const OUTER_PATH$1 = "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
+const INNER_PATH$1 = "M9,5.5 L51,5.5 Q54.5,5.5 54.5,9 L54.5,71 Q54.5,74.5 51,74.5 L9,74.5 Q5.5,74.5 5.5,71 L5.5,9 Q5.5,5.5 9,5.5 Z";
+const TILE_SRCS$1 = [
   "src/assets/Mpt1z.png",
   "src/assets/Mpt3z.png",
   "src/assets/Mpu1z.png"
 ];
-const CYCLE = 8;
-function TileOutlineReveal({ delay, tileSrc }) {
+const CYCLE$1 = 8;
+function TileOutlineReveal$1({ delay, tileSrc }) {
   const base = {
-    duration: CYCLE,
+    duration: CYCLE$1,
     repeat: Infinity,
     repeatDelay: 0,
     delay,
@@ -1561,7 +1633,7 @@ function TileOutlineReveal({ delay, tileSrc }) {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             motion.path,
             {
-              d: OUTER_PATH,
+              d: OUTER_PATH$1,
               fill: "none",
               stroke: "rgba(249,242,228,0.55)",
               strokeWidth: "1.5",
@@ -1576,7 +1648,7 @@ function TileOutlineReveal({ delay, tileSrc }) {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             motion.path,
             {
-              d: INNER_PATH,
+              d: INNER_PATH$1,
               fill: "none",
               stroke: "rgba(249,242,228,0.32)",
               strokeWidth: "1",
@@ -1636,38 +1708,42 @@ function Footer() {
               initial: { opacity: 0, y: 24 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.8, ease: EASE$1 },
-              className: "grid grid-cols-2 md:grid-cols-[1fr_auto_auto_auto_auto] gap-x-10 gap-y-8 py-10 border-b border-white/5 items-start",
+              transition: { duration: 0.8, ease: EASE },
+              className: "grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-8 py-10 border-b border-white/5 items-center justify-items-center text-center md:text-left",
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "col-span-2 md:col-span-1 flex flex-col gap-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col items-center md:items-start gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "img",
+                  {
+                    src: logoSrc,
+                    alt: "Poquito Mahjong",
+                    width: 150,
+                    height: 34,
+                    className: "brightness-0 invert opacity-70"
+                  }
+                ) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-center gap-8 text-xs text-pq-cream md:justify-self-center", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "img",
-                    {
-                      src: logoSrc,
-                      alt: "Poquito Mahjong",
-                      width: 100,
-                      height: 34,
-                      className: "brightness-0 invert opacity-70"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-cream text-xs leading-relaxed max-w-[180px] font-normal hover:font-bold hover:scale-[1.03] transition-all duration-200", children: "Traditional Mahjong, reimagined for the modern world." })
-                ] }),
-                Object.entries(footerLinks).map(([heading, links]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-3", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-pq-cream text-[9px] tracking-[0.22em] uppercase font-normal hover:font-bold hover:scale-[1.03] transition-all duration-200", children: heading }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "flex flex-col gap-2.5", children: links.map(({ label, href }) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                     Link,
                     {
-                      to: href,
-                      className: "text-pq-cream text-xs hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal inline-block",
-                      children: label
+                      to: "/privacy",
+                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal",
+                      children: "Privacy Policy"
                     }
-                  ) }, label)) })
-                ] }, heading)),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-span-2 md:col-span-1 flex items-center gap-3 md:pt-0.5", children: TILE_SRCS.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  TileOutlineReveal,
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    Link,
+                    {
+                      to: "/terms",
+                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal",
+                      children: "Terms of Use"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center md:justify-end gap-3 md:justify-self-end w-full md:w-auto", children: TILE_SRCS$1.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TileOutlineReveal$1,
                   {
                     tileSrc: src,
-                    delay: CYCLE / 3 * i
+                    delay: CYCLE$1 / 3 * i
                   },
                   src
                 )) })
@@ -1710,14 +1786,90 @@ function BackToTop() {
     }
   );
 }
-const EASE = [0.22, 0.61, 0.36, 1];
+const OUTER_PATH = "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
+const INNER_PATH = "M9,5.5 L51,5.5 Q54.5,5.5 54.5,9 L54.5,71 Q54.5,74.5 51,74.5 L9,74.5 Q5.5,74.5 5.5,71 L5.5,9 Q5.5,5.5 9,5.5 Z";
+const CYCLE = 8;
+const TILE_SRCS = [
+  "src/assets/Mpt1z.png",
+  "src/assets/Mpt3z.png",
+  "src/assets/Mpu1z.png"
+];
+function TileOutlineReveal({ delay, tileSrc }) {
+  const base = {
+    duration: CYCLE,
+    repeat: Infinity,
+    repeatDelay: 0,
+    delay,
+    ease: "easeInOut"
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 64, height: 84 }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "svg",
+      {
+        width: "64",
+        height: "84",
+        viewBox: "0 0 60 80",
+        style: { position: "absolute", inset: 0, width: "100%", height: "100%" },
+        "aria-hidden": true,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            motion.path,
+            {
+              d: OUTER_PATH,
+              fill: "none",
+              stroke: "rgba(249,242,228,0.55)",
+              strokeWidth: "1.5",
+              strokeLinecap: "round",
+              animate: {
+                pathLength: [0, 1, 1, 0, 0],
+                opacity: [0.85, 0.85, 0.4, 0, 0]
+              },
+              transition: { ...base, times: [0, 0.25, 0.42, 0.52, 1] }
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            motion.path,
+            {
+              d: INNER_PATH,
+              fill: "none",
+              stroke: "rgba(249,242,228,0.32)",
+              strokeWidth: "1",
+              strokeLinecap: "round",
+              animate: {
+                pathLength: [0, 0, 1, 1, 0, 0],
+                opacity: [0, 0.7, 0.7, 0.35, 0, 0]
+              },
+              transition: { ...base, times: [0, 0.19, 0.4, 0.44, 0.52, 1] }
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.div,
+      {
+        style: { position: "absolute", inset: 0, borderRadius: 5, overflow: "hidden" },
+        animate: { opacity: [0, 0, 1, 1, 0] },
+        transition: { ...base, times: [0, 0.44, 0.55, 0.78, 1] },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "img",
+          {
+            src: tileSrc,
+            alt: "Mahjong tile",
+            style: { objectFit: "cover", width: "100%", height: "100%" }
+          }
+        )
+      }
+    )
+  ] });
+}
 function PageLoader() {
   const [visible, setVisible] = reactExports.useState(true);
   reactExports.useEffect(() => {
-    const t = setTimeout(() => setVisible(false), 2200);
+    const t = setTimeout(() => setVisible(false), 9e3);
     return () => clearTimeout(t);
   }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: visible && /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: visible && /* @__PURE__ */ jsxRuntimeExports.jsxs(
     motion.div,
     {
       initial: { opacity: 1 },
@@ -1727,57 +1879,39 @@ function PageLoader() {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "var(--cream)",
+        background: "linear-gradient(180deg, #0c2318 0%, #071610 100%)",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        gap: "2rem"
       },
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: "min(340px, 72vw)", height: "auto" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "img",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: "1.25rem" }, children: TILE_SRCS.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TileOutlineReveal,
           {
-            src: logoSrc,
-            alt: "",
-            "aria-hidden": true,
-            draggable: false,
-            style: { width: "100%", height: "auto", opacity: 0.08, display: "block", userSelect: "none" }
-          }
-        ),
+            tileSrc: src,
+            delay: CYCLE / 3 * i
+          },
+          src
+        )) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.div,
+          motion.p,
           {
-            "aria-hidden": true,
-            style: { position: "absolute", inset: 0, overflow: "hidden" },
-            initial: { clipPath: "inset(100% 0% 0% 0%)" },
-            animate: { clipPath: "inset(0% 0% 0% 0%)" },
-            transition: { duration: 1.1, ease: EASE, delay: 0.15 },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: logoSrc,
-                alt: "Pocket Dragon",
-                draggable: false,
-                style: { width: "100%", height: "auto", display: "block", userSelect: "none" }
-              }
-            )
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.div,
-          {
-            "aria-hidden": true,
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            transition: { delay: 0.4, duration: 0.6 },
             style: {
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-              background: "linear-gradient(105deg, transparent 30%, rgba(249,242,228,0.75) 50%, transparent 70%)"
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "rgba(249,242,228,0.35)"
             },
-            initial: { opacity: 0, x: "-110%" },
-            animate: { opacity: [0, 0.6, 0], x: ["-110%", "210%"] },
-            transition: { duration: 0.55, delay: 1.3, ease: "easeInOut" }
+            children: "Pocket Dragon"
           }
         )
-      ] })
+      ]
     },
     "page-loader"
   ) });

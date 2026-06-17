@@ -15,7 +15,7 @@ import "crypto";
 import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
-const appCss = "/assets/styles-CIx5uWgc.css";
+const appCss = "/assets/styles-oCieh4-m.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -135,15 +135,15 @@ function RootComponent() {
   const { queryClient } = Route$3.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter$2 = () => import("./terms-YunR_LPJ.mjs");
+const $$splitComponentImporter$2 = () => import("./terms-Cu0AMY1c.mjs");
 const Route$2 = createFileRoute("/terms")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./privacy-wX0TGWcw.mjs");
+const $$splitComponentImporter$1 = () => import("./privacy-D0Ioorog.mjs");
 const Route$1 = createFileRoute("/privacy")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-RR_bJPWo.mjs");
+const $$splitComponentImporter = () => import("./index-DCFsrWV2.mjs");
 const Route = createFileRoute("/")({
   head: () => ({
     meta: [{
