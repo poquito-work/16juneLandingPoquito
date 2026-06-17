@@ -17,23 +17,21 @@ export function LoginSection() {
       <div
         className="absolute inset-0"
         style={{
-          background:
-            'linear-gradient(135deg, #F9F2E4 0%, #EDE5D0 25%, #C97040 55%, #8B3A18 75%, #143322 100%)',
-        }}
+    background:
+      'linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)',
+  }}
       />
 
       {/* Radial cream highlight top-left */}
       <div
         aria-hidden
         className="absolute top-0 left-0 w-[600px] h-[600px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(249,242,228,0.35) 0%, transparent 60%)' }}
       />
 
       {/* Radial rust highlight center */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 60% 50%, rgba(182,90,47,0.20) 0%, transparent 55%)' }}
       />
 
       {/* Content */}
@@ -49,19 +47,19 @@ export function LoginSection() {
           >
             {/* Eyebrow */}
             <div className="flex items-center gap-3 mb-6">
-              <span className="h-[1px] w-8 bg-pq-rust/60" />
-              <span className="text-pq-rust text-xs tracking-[0.22em] uppercase font-normal">Member Access</span>
+              <span className="h-[1px] w-8 bg-pq-white" />
+              <span className="text-offwhite text-xs tracking-[0.22em] uppercase font-normal">Member Access</span>
             </div>
 
             {/* Headline */}
             <h2
-              className="font-hero font-bold text-pq-green leading-tight tracking-tight text-balance mb-6"
+              className="font-hero font-bold text-offwhite leading-tight tracking-tight text-balance mb-6"
               style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}
             >
               WELCOME BACK TO THE TABLE.
             </h2>
 
-            <p className="text-pq-green/75 leading-relaxed mb-10 max-w-sm font-normal">
+            <p className="text-offwhite leading-relaxed mb-10 max-w-sm font-normal">
               Your rank, your history, your rivals — all waiting. Sign in to pick up exactly where you left off.
             </p>
 
@@ -73,8 +71,8 @@ export function LoginSection() {
                 { label: 'Avg. Game',   value: '22 min' },
               ].map(({ label, value }) => (
                 <div key={label} className="flex flex-col gap-1">
-                  <span className="font-hero font-bold text-pq-green text-2xl">{value}</span>
-                  <span className="text-pq-green/60 text-[10px] tracking-[0.14em] uppercase font-normal">{label}</span>
+                  <span className="font-hero font-bold text-offwhite text-2xl">{value}</span>
+                  <span className="text-offwhite text-[10px] tracking-[0.14em] uppercase font-normal">{label}</span>
                 </div>
               ))}
             </div>

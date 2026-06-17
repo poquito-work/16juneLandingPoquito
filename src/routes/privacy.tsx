@@ -25,18 +25,18 @@ function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="mb-2">Work in Progress Notice </p>
-        <p className="text-xs uppercase tracking-[0.18em] text-foreground/50 mb-12">
+        <p className="text-xs uppercase tracking-[0.18em] text-foreground/50 mb-6">
           Last updated: 8th June 2026
         </p>
 
         <div className="flex flex-col gap-10 text-sm leading-relaxed text-foreground/80">
-          <section className="flex flex-col gap-2 text-sm leading-relaxed text-foreground/80">
-            <p>
+          <section className="leading-relaxed text-foreground/80">
+            <p className="text-md font-medium  text-foreground mb-2">
               This Privacy Policy explains how <b>Pocket Dragon</b> (“we,” “our,” or “us”) collects,
               uses, stores, and protects information when you use our Mahjong app and related
               services (the “App”).{" "}
             </p>
-            <p>
+            <p className="text-md font-medium  text-foreground mb-2">
               This Privacy Policy is a <b>work in progress.</b> We are developing the App alongside
               this document, and we may update this Privacy Policy from time to time as features,
               services, and data practices evolve. When we make changes, we will revise the “Last
@@ -59,7 +59,7 @@ function PrivacyPage() {
               When you register, create an account, subscribe, contact support, or use features in
               the App, we may collect:
             </p>
-            <ul className="mt-3 list-disc pl-5 flex flex-col gap-2 text-foreground/70">
+            <ul className="listUl flex flex-col gap-2">
               <li>Name </li>
               <li>City </li>
               <li>Email address </li>
@@ -79,7 +79,7 @@ function PrivacyPage() {
               2. Gameplay and usage data{" "}
             </h2>
             <p>When you play the App, we may collect: :</p>
-            <ul className="mt-3 list-disc pl-5 flex flex-col gap-2 text-foreground/70">
+            <ul className="listUl flex flex-col gap-2">
               <li>Game results and room outcomes </li>
               <li>Ranked points / RP-related activity </li>
               <li>Match history </li>
@@ -97,7 +97,7 @@ function PrivacyPage() {
               3. Device and technical information{" "}
             </h2>
             <p>We may automatically collect certain device and technical data, such as:</p>
-            <ul className="mt-3 list-disc pl-5 flex flex-col gap-2 text-foreground/70">
+            <ul className="listUl flex flex-col gap-2">
               <li>Device model and operating system </li>
               <li>App version </li>
               <li>Device identifiers or similar technical identifiers </li>
@@ -112,10 +112,10 @@ function PrivacyPage() {
           <section>
             <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
               {" "}
-              Why We Collect This Information{" "}
+             4. Why We Collect This Information{" "}
             </h2>
             <p>We collect this information to: </p>
-            <ul className="mt-3 list-disc pl-5 flex flex-col gap-2 text-foreground/70">
+            <ul className="listUl flex flex-col gap-2">
               <li>Create and manage your account </li>
               <li>Enable login and account synchronization across app and website </li>
               <li>Provide access to gameplay, practice mode, and subscription features </li>
@@ -134,10 +134,10 @@ function PrivacyPage() {
 
           <section>
             <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
-             How We Use the Information 
+             5.How We Use the Information 
             </h2>
            <p>We may use your data to:  </p>
-            <ul className="mt-3 list-disc pl-5 flex flex-col gap-2 text-foreground/70">
+            <ul className="listUl flex flex-col gap-2">
               <li>Authenticate your account </li>
               <li>Allow you to play and continue your game progress  </li>
               <li>Match you with other players based on gameplay rules and ranking logic  </li>
@@ -154,10 +154,10 @@ function PrivacyPage() {
 
           <section>
            <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
-            What We Will Not Do 
+            6.What We Will Not Do 
             </h2>
            <p>We want to be clear about what we <b>will not</b> do with your data: </p>
-            <ul className="mt-3 list-disc pl-5 flex flex-col gap-2 text-foreground/70">
+            <ul className="listUl flex flex-col gap-2">
               <li>We will <b>not sell</b> your personal data.  </li>
               <li>We will <b>not share</b> your personal data with advertisers for ad targeting. </li>
               <li>We will <b>not publicly display</b> your private contact details such as email address or phone number.  </li>
@@ -173,37 +173,57 @@ function PrivacyPage() {
 
           <section>
            <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
-            Data Sharing 
+           7. Data Sharing 
             </h2>
            <p>We may share limited information only when necessary to operate the App, such as with: </p>
-            <ul className="mt-3 list-disc pl-5 flex flex-col gap-2 text-foreground/70">
-              <li>We will <b>not sell</b> your personal data.  </li>
-              <li>We will <b>not share</b> your personal data with advertisers for ad targeting. </li>
-              <li>We will <b>not publicly display</b> your private contact details such as email address or phone number.  </li>
-              <li>We will <b>not use</b> your data for unrelated purposes outside the App experience, account management, support, or service operations.  </li>
-              <li>
-              We will <b>not intentionally collect</b> more personal information than is reasonably needed for the App to function. 
-              </li>
-              <li>We will <b>not knowingly allow</b> unauthorized access to your information.  </li>
+            <ul className="listUl flex flex-col gap-2">
+              <li>Service providers who help us host, maintain, analyze, or support the App  </li>
+              <li>Payment providers who process subscription payments  </li>
+              <li>Cloud and infrastructure providers that store or secure app data  </li>
+              <li>Legal authorities, if required by law or to protect our rights, users, or systems </li>
+              
              
                
             </ul>
+            <p>Any service provider we use is expected to handle your information securely and only for the purpose of providing services to us. </p>
           </section>
 
           <section>
-            <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
-              8. Updates to This Policy
+               <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
+            8.Data Retention 
             </h2>
-            <p>
-              We may update this Privacy Policy from time to time. We will notify you of significant
-              changes via email or in-app notification. Continued use of the app constitutes
-              acceptance of the updated policy.
-            </p>
+            <p>We keep your personal information only for as long as needed to:  </p>
+            <ul className="listUl flex flex-col gap-2">
+              <li>Provide the App and related services </li>
+              <li>Maintain your account and subscription status </li>
+              <li>Preserve gameplay records and progress </li>
+              <li>Comply with legal, accounting, or operational requirements </li>
+            <li>Resolve disputes and enforce our terms </li>
+
+              
+             
+               
+            </ul>
+            <p>If you delete your account or request deletion, we will delete or anonymize your data where required or reasonably possible, except where we must retain it for legal, security, or operational reasons. </p>
           </section>
 
           <section>
+           <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
+           9.Security 
+            </h2>
+           <p>We use reasonable administrative, technical, and organizational measures to protect your information from unauthorized access, misuse, loss, or alteration. However, no method of transmission or storage is completely secure, and we cannot guarantee absolute security. </p>
+            </section>
+
+                    <section>
+           <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
+           10.Changes to This Policy  
+            </h2>
+           <p>Because the App is still in development, this Privacy Policy may change as the App grows and new features are added. We will update this page whenever we make meaningful changes. Please check this page periodically to stay informed.  </p>
+            </section>
+
+          <section>
             <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">
-              9. Contact
+              11. Contact
             </h2>
             <p>
               For privacy-related questions, reach us at{" "}

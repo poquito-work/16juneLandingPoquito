@@ -46,8 +46,9 @@ function Index() {
         <Hero />
         <Playground />
         <Subscriptions />
+         <LoginSection />
         <FAQ />
-        <LoginSection />
+       
         <CTASection />
       </main>
       <Footer />

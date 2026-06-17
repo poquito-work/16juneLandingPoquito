@@ -89,20 +89,20 @@ export function Subscriptions() {
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionEyebrow>Membership</SectionEyebrow>
           <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]">
-            Choose your plan
+            Choose your <span style={{ color: 'var(--rust)',fontStyle:"italic" }}>plan</span>
           </h2>
         </div>
 
         <div className="articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
           {/* Monthly */}
-          <article className="relative flex flex-col rounded-2xl border border-foreground/15 bg-cream p-7">
+          <article className="plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15 bg-cream p-7">
             <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70">
               Monthly
             </span>
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-foreground/70">Rs</span>
               <span className="font-display text-5xl font-bold leading-none text-foreground">
-                499
+                [x]
               </span>
               <span className="ml-1 text-sm text-foreground/65">/ month</span>
             </div>
@@ -112,7 +112,7 @@ export function Subscriptions() {
 
             <div className="my-6 h-px w-full bg-foreground/10" />
 
-            <ul className="space-y-2.5 text-sm text-foreground/80">
+            {/* <ul className="space-y-2.5 text-sm text-foreground/80">
               {[
                 "Unlimited ranked games",
                 "All game modes included",
@@ -124,7 +124,7 @@ export function Subscriptions() {
                   <span>{f}</span>
                 </li>
               ))}
-            </ul>
+            </ul> */}
 
             <a
               href="#"
@@ -148,8 +148,8 @@ export function Subscriptions() {
           </article>
 
           {/* Annual — Featured */}
-          <article className="relative flex flex-col rounded-2xl bg-green p-7 text-cream">
-            <div className="absolute right-0 -top-3">
+          <article className="relative flex flex-col rounded-2xl bg-green-new p-7 text-cream">
+            <div className="absolute right-5 -top-3">
               <span className="rounded-full bg-rust px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">
                 Best Value
               </span>
@@ -163,14 +163,14 @@ export function Subscriptions() {
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
-              <span className="font-display text-5xl font-bold leading-none">3,999</span>
+              <span className="font-display text-5xl font-bold leading-none">[x]</span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
-            <p className="mt-2 text-xs text-cream/75">Rs 333 / month</p>
+            <p className="mt-2 text-xs text-cream/75">Save Rs [x]/month </p>
 
             <div className="my-6 h-px w-full bg-cream/15" />
 
-            <ul className="space-y-2.5 text-sm text-cream/90">
+            {/* <ul className="space-y-2.5 text-sm text-cream/90">
               {[
                 "Everything in Monthly",
                 "Exclusive annual tile border",
@@ -183,7 +183,7 @@ export function Subscriptions() {
                   <span>{f}</span>
                 </li>
               ))}
-            </ul>
+            </ul> */}
 
             <a
               href="#"

@@ -1,7 +1,32 @@
 import { motion } from 'framer-motion'
 import { Apple, Play } from 'lucide-react'
+import appStoreLogo from '@/assets/appstore.png'
+import googlePlayLogo from '@/assets/googleplay.png'
 
 const EASE = [0.22, 0.61, 0.36, 1] as const
+
+interface StoreBadgeProps {
+  icon: string
+  label: string
+  sub: string
+}
+
+function StoreBadge({ icon, label, sub }: StoreBadgeProps) {
+  return (
+    <motion.a
+      href="#"
+      className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream"
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <img src={icon} alt={label} className="w-6 h-6 object-contain animate-none" />
+      <div className="flex flex-col">
+        <span className="text-pq-cream text-[9px] tracking-[0.12em] uppercase leading-none">{sub}</span>
+        <span className="text-pq-cream text-xs leading-tight mt-0.5">{label}</span>
+      </div>
+    </motion.a>
+  )
+}
 
 export function CTASection() {
   return (
@@ -72,7 +97,40 @@ export function CTASection() {
         >
           Thousands of tables are live right now. Download Poquito and make your first move.
         </motion.p>
-        <motion.p
+
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: EASE, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          {/* <motion.a
+            href="#"
+            className="inline-flex items-center gap-3 text-pq-green px-8 py-4 rounded-full text-sm tracking-[0.1em] uppercase shadow-xl shadow-pq-cream/10"
+            style={{ background: 'linear-gradient(135deg, #F9F2E4 0%, #EDE5D0 100%)' }}
+            whileHover={{ scale: 1.04, boxShadow: '0 20px 60px rgba(249,242,228,0.18)' }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Download Free
+          </motion.a> */}
+
+          <div className="flex items-center gap-3">
+            <StoreBadge icon={googlePlayLogo} label="Google Play" sub="Coming Soon on" />
+
+            <StoreBadge icon={appStoreLogo} label="App Store" sub="Coming Soon on" />
+          </div>
+        </motion.div>
+
+        {/* <div className="flex items-center gap-3">
+            <StoreBadge icon="/assets/appstore.png"   label="App Store"   sub="Coming Soon on" />
+            <StoreBadge icon="/assets/googleplay.png" label="Google Play" sub="Coming Soon on" />
+          </div> */}
+
+        {/* <motion.p
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
@@ -81,9 +139,9 @@ export function CTASection() {
           style={{ fontSize: '1.1rem' }}
         >
           Coming Soon On
-          </motion.p>
+          </motion.p> */}
         {/* CTAs */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 24, scale: 0.96 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '-60px' }}
@@ -125,7 +183,7 @@ export function CTASection() {
             <Play size={16} strokeWidth={1.6} fill="currentColor" />
             Google Play
           </motion.a>
-        </motion.div>
+        </motion.div> */}
 
         {/* Stats */}
         <motion.div
@@ -137,8 +195,8 @@ export function CTASection() {
         >
           {[
             { label: '10,000+', sub: 'Active Players' },
-            { label: '4.8★',    sub: 'App Store Rating' },
-            { label: '120+',    sub: 'Countries' },
+            { label: '4.8★', sub: 'App Store Rating' },
+            { label: '120+', sub: 'Countries' },
           ].map(({ label, sub }) => (
             <div key={sub} className="text-center">
               <p className="font-hero font-bold text-pq-cream text-2xl">{label}</p>

@@ -14,23 +14,48 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   return (
     <>
       <header className="sticky top-0 z-50 w-full bg-white/55 backdrop-blur-xl backdrop-saturate-150 border-b border-white/40 shadow-[0_1px_12px_rgba(20,51,34,0.06)]">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
-          {/* Logo — always visible, clicks scroll to home */}
-          <a href="#home" aria-label="Go to home">
+        <div className="mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8">
+
+          {/* Logo */}
+          <a href="#home" aria-label="Go to home" className="shrink-0">
             <PocketDragonLogo size="lg" />
           </a>
 
-          {/* Desktop nav */}
-          <nav className="hidden items-center gap-8 md:flex ml-auto" aria-label="Primary">
-            {NAV.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-sm font-normal text-foreground/80 transition-colors hover:text-rust"
-              >
-                {item.label}
-              </a>
-            ))}
+          {/* Spacer */}
+          <div className="flex-1" />
+
+          {/* Right side */}
+          <div className="flex items-center gap-3">
+
+            {/* Desktop only: inline nav links slide in when hamburger is open */}
+            <AnimatePresence>
+              {open && (
+                <motion.nav
+                  key="inline-nav"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.22, ease: [0.22, 0.61, 0.36, 1] }}
+                  className="hidden md:flex items-center gap-6"
+                  aria-label="Primary"
+                >
+                  {NAV.map((item, i) => (
+                    <motion.a
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.18, ease: "easeOut" }}
+                      className="text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap"
+                    >
+                      {item.label}
+                    </motion.a>
+                  ))}
+                </motion.nav>
+              )}
+            </AnimatePresence>
+
             <button
               type="button"
               onClick={onLoginClick}
@@ -38,10 +63,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             >
               Login
             </button>
-          </nav>
 
-          {/* Mobile: hamburger */}
-          <div className="flex items-center md:hidden">
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -50,40 +72,27 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
               className="relative flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-black/5"
             >
               <span className="relative block h-4 w-5">
-                <span
-                  className={`absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${
-                    open ? "translate-y-[7px] rotate-45" : ""
-                  }`}
-                />
-                <span
-                  className={`absolute left-0 top-1/2 -mt-[1px] block h-[2px] w-5 rounded-full bg-current transition-opacity duration-200 ${
-                    open ? "opacity-0" : "opacity-100"
-                  }`}
-                />
-                <span
-                  className={`absolute bottom-0 left-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${
-                    open ? "-translate-y-[7px] -rotate-45" : ""
-                  }`}
-                />
+                <span className={`absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "translate-y-[7px] rotate-45" : ""}`} />
+                <span className={`absolute left-0 top-1/2 -mt-[1px] block h-[2px] w-5 rounded-full bg-current transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
+                <span className={`absolute bottom-0 left-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "-translate-y-[7px] -rotate-45" : ""}`} />
               </span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile menu — slides down from top */}
+      {/* Mobile only: slide-down menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            key="mobile-menu"
+            key="menu"
             initial={{ y: "-100%" }}
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
             transition={{ duration: 0.38, ease: [0.22, 0.61, 0.36, 1] }}
-            className="fixed inset-x-0 top-0 z-50 md:hidden backdrop-blur-xl backdrop-saturate-150"
-            style={{ background: "rgba(249, 242, 228, 0.48)" }}
+            className="md:hidden fixed inset-x-0 top-0 z-50 backdrop-blur-xl backdrop-saturate-150"
+            style={{ background: "rgba(249, 242, 228, 0.95)" }}
           >
-            {/* Top bar: logo + close */}
             <div className="flex h-16 items-center justify-between px-6 border-b border-foreground/10">
               <PocketDragonLogo size="md" />
               <button
@@ -99,7 +108,6 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
               </button>
             </div>
 
-            {/* Nav items */}
             <nav className="flex flex-col px-6 pt-2 pb-6">
               {NAV.map((item, i) => (
                 <motion.a
@@ -109,14 +117,13 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                   initial={{ opacity: 0, x: -18 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.12 + i * 0.07, duration: 0.28, ease: "easeOut" }}
-                  className="border-b border-foreground/8 py-4 font-display font-medium uppercase tracking-widest text-foreground"
+                  className="border-b border-foreground/8 py-4 font-display font-medium uppercase tracking-widest text-foreground hover:text-rust transition-colors"
                   style={{ fontSize: "0.95rem", letterSpacing: "0.14em" }}
                 >
                   {item.label}
                 </motion.a>
               ))}
 
-              {/* Login button */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -136,7 +143,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
         )}
       </AnimatePresence>
 
-      {/* Backdrop */}
+      {/* Mobile only: backdrop */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -145,7 +152,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-30 bg-black/20 md:hidden"
+            className="md:hidden fixed inset-0 z-30 bg-black/20"
             onClick={() => setOpen(false)}
           />
         )}

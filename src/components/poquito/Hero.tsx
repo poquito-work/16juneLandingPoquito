@@ -19,28 +19,18 @@ export function Hero() {
           playsInline
           loop
         />
-        {/* Dark overlay — near-black for strong text contrast */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'rgba(0,0,0,0.62)' }}
-        />
-        {/* Bottom fade into next section */}
-        <div
-          className="absolute bottom-0 left-0 w-full pointer-events-none"
-          style={{
-            height: '22%',
-            background: 'linear-gradient(to top, #0a0a0a 0%, transparent 100%)',
-          }}
-        />
+        <div className="hero-bg-tint" />
+        <div className="hero-bg-fade" />
+        <div className="hero-bg-bottom" />
       </div>
 
       {/* Content */}
       <div
-        className="relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-6 sm:px-10"
+        className="heroSec relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-6 sm:px-10"
         style={{ minHeight: '100vh', paddingTop: '6rem', paddingBottom: '5rem' }}
       >
         {/* Eyebrow */}
-        <div className="flex items-center gap-3 mb-6">
+        {/* <div className="flex items-center gap-3 mb-6">
           <span className="h-px w-8" style={{ background: 'var(--rust)' }} />
           <span
             className="font-bold uppercase"
@@ -48,7 +38,7 @@ export function Hero() {
           >
             Introducing Pocket Dragon
           </span>
-        </div>
+        </div> */}
 
         {/* Headline */}
         <h1
