@@ -128,9 +128,9 @@ export function Playground() {
           <h2 className="orbit-title">
             THE COMPLETE MAHJONG <span className="text-rust">PLAYGROUND</span>
           </h2>
-          <p className="orbit-subtitle">
+          {/* <p className="orbit-subtitle">
             Every mode, built for serious players. Tap a feature to see it live.
-          </p>
+          </p> */}
         </div>
 
         {/* Orbit Layout */}

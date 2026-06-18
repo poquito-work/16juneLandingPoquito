@@ -20,7 +20,7 @@ function CancellationDialog({
 }) {
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-cream/60 [&>button]:hover:text-cream" style={{ background: "var(--green)" }}>
+      <DialogContent className="modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-foreground [&>button]:hover:text-foreground/70" style={{ background: "var(--green)" }}>
         <div className=" flex flex-col gap-5">
           {/* Title */}
           <DialogHeader>
@@ -68,7 +68,7 @@ function CancellationDialog({
           <button
             type="button"
             onClick={onClose}
-            className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
+            className="cursor-pointer mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
           >
             Understood
           </button>
@@ -89,7 +89,7 @@ export function Subscriptions() {
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionEyebrow>Membership</SectionEyebrow>
           <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]">
-            Choose your <span style={{ color: 'var(--rust)',fontStyle:"italic" }}>plan</span>
+            Choose your <span style={{ color: 'var(--rust)',fontStyle:"italic" }}>Subscription</span>
           </h2>
         </div>
 
@@ -128,11 +128,11 @@ export function Subscriptions() {
 
             <a
              style={{
-                    background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
+                    // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
                     boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
                   }}
               href="#"
-              className="inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white"
             >
               Subscribe Now
             </a>
@@ -154,7 +154,7 @@ export function Subscriptions() {
           {/* Annual — Featured */}
           <article className="relative flex flex-col rounded-2xl bg-green-new p-7 text-cream">
             <div className="absolute right-5 -top-3">
-              <span className="rounded-full bg-rust px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">
+              <span className="rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">
                 Best Value
               </span>
             </div>
@@ -191,11 +191,11 @@ export function Subscriptions() {
 
               <a
                style={{
-                    background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
+                    // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
                     boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
                   }}
               href="#"
-              className="inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
             >
               Subscribe Now
             </a>

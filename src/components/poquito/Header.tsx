@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PocketDragonLogo } from "./Logo";
 
@@ -10,10 +10,34 @@ const NAV = [
 
 export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-white/55 backdrop-blur-xl backdrop-saturate-150 border-b border-white/40 shadow-[0_1px_12px_rgba(20,51,34,0.06)]">
+      <header
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        style={scrolled ? {
+          background: "rgba(249, 242, 228, 0.82)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
+          boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
+          opacity: 1,
+          transform: "none",
+        } : {
+          background: "transparent",
+          backdropFilter: "none",
+          borderBottom: "none",
+          boxShadow: "none",
+          opacity: 1,
+          transform: "none",
+        }}
+      >
         <div className="mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8">
 
           {/* Logo */}
@@ -36,7 +60,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.22, ease: [0.22, 0.61, 0.36, 1] }}
-                  className="hidden md:flex items-center gap-6"
+                  className="hidden md:flex items-center gap-6 headerNav"
                   aria-label="Primary"
                 >
                   {NAV.map((item, i) => (
@@ -63,20 +87,32 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             >
               Login
             </button>
-
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-label="Toggle menu"
-              aria-expanded={open}
-              className="relative flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-black/5"
-            >
-              <span className="relative block h-4 w-5">
-                <span className={`absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "translate-y-[7px] rotate-45" : ""}`} />
-                <span className={`absolute left-0 top-1/2 -mt-[1px] block h-[2px] w-5 rounded-full bg-current transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
-                <span className={`absolute bottom-0 left-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "-translate-y-[7px] -rotate-45" : ""}`} />
-              </span>
-            </button>
+              
+          <button
+  type="button"
+  onClick={() => setOpen((v) => !v)}
+  aria-label="Toggle menu"
+  aria-expanded={open}
+  className="relative flex h-8 w-8 items-center justify-center p-1"
+>
+  <span className="relative block w-4 h-3">
+    <span
+      className={`absolute left-0 top-0 block h-px w-4 bg-foreground origin-center transition-all duration-300 ${
+        open ? "top-[5px] rotate-45" : ""
+      }`}
+    />
+    <span
+      className={`absolute left-0 top-[5px] block h-px w-4 bg-foreground transition-all duration-200 ${
+        open ? "opacity-0" : "opacity-100"
+      }`}
+    />
+    <span
+      className={`absolute left-0 bottom-0 block h-px w-4 bg-foreground origin-center transition-all duration-300 ${
+        open ? "bottom-[5px] -rotate-45" : ""
+      }`}
+    />
+  </span>
+</button>
           </div>
         </div>
       </header>
@@ -99,12 +135,11 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
-                className="flex h-9 w-9 items-center justify-center rounded-full text-foreground hover:bg-black/5 transition-colors"
+                className="flex flex-col gap-1.5 p-2 z-50"
               >
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <line x1="3" y1="3" x2="15" y2="15" />
-                  <line x1="15" y1="3" x2="3" y2="15" />
-                </svg>
+                <span className="block w-6 h-[1.5px] origin-center bg-foreground" style={{ transform: "translateY(5px) rotate(45deg)" }} />
+                <span className="block w-6 h-[1.5px] origin-center bg-foreground" style={{ opacity: 0 }} />
+                <span className="block w-6 h-[1.5px] origin-center bg-foreground" style={{ transform: "translateY(-5px) rotate(-45deg)" }} />
               </button>
             </div>
 

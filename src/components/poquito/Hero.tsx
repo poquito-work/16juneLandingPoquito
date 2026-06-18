@@ -73,7 +73,7 @@ export function Hero() {
       </div>
 
       {/* Ambient background tiles — left side only */}
-      {bgTiles.map((t, i) => (
+      {/* {bgTiles.map((t, i) => (
         <motion.div
           key={i}
           aria-hidden
@@ -84,7 +84,7 @@ export function Hero() {
         >
           <img src={t.src} alt="" width={t.w} style={{ display: "block" }} />
         </motion.div>
-      ))}
+      ))} */}
 
       {/* Text content — left half */}
       <div
@@ -99,19 +99,19 @@ export function Hero() {
             className="flex flex-col gap-8 lg:gap-10"
           >
             {/* Overline */}
-            {/* <motion.div variants={itemVariants} className="flex items-center gap-3">
+            <motion.div variants={itemVariants} className="flex items-center gap-3">
               <span className="h-px w-10" style={{ background: "var(--rust)" }} />
               <span className="text-xs uppercase tracking-[0.22em]" style={{ color: "var(--rust)" }}>
-                Traditional Mahjong · Reimagined
+                Play Offline
               </span>
-            </motion.div> */}
+            </motion.div>
 
             {/* Headline */}
             <motion.h1
               variants={itemVariants}
               className="font-display font-bold uppercase leading-tight tracking-tight"
               style={{
-                fontSize: "clamp(2.4rem, 5.5vw, 5rem)",
+                fontSize: "clamp(2.4rem, 5.5vw, 4rem)",
                 color: "var(--foreground)",
                 lineHeight: 1.05,
               }}
@@ -132,8 +132,8 @@ export function Hero() {
                 maxWidth: "44ch",
               }}
             >
-              Practice, play, and compete your way to the top.
-              Enjoy real-time Traditional Mahjong action at your fingertips.
+              Practice, play, and complete your way to the top!
+              Enjoy real-time Traditional Mahjong action at your fingertips
             </motion.p>
 
             {/* Download buttons */}

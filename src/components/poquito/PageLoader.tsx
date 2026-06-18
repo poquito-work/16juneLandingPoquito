@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import tile1 from "@/assets/Mpt1z.png";
-import tile2 from "@/assets/Mpt3z.png";
-import tile3 from "@/assets/Mpu1z.png";
+import tile1 from "@/assets/White Dragon.png";
+import tile2 from "@/assets/red Dragon.png";
+import tile3 from "@/assets/green Dragon.png";
+import logoSrc from '@/assets/pocket-dragon-logo.png'
+import { PocketDragonLogo } from "./Logo";
 
 const OUTER_PATH =
   "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
@@ -34,7 +36,7 @@ function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string 
         <motion.path
           d={OUTER_PATH}
           fill="none"
-          stroke="rgba(249,242,228,0.55)"
+          stroke="#b65a2f"
           strokeWidth="1.5"
           strokeLinecap="round"
           animate={{
@@ -46,7 +48,7 @@ function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string 
         <motion.path
           d={INNER_PATH}
           fill="none"
-          stroke="rgba(249,242,228,0.32)"
+          stroke="#d9a38a"
           strokeWidth="1"
           strokeLinecap="round"
           animate={{
@@ -76,7 +78,7 @@ export function PageLoader() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(false), 9000);
+    const t = setTimeout(() => setVisible(false), 8000);
     return () => clearTimeout(t);
   }, []);
 
@@ -92,7 +94,7 @@ export function PageLoader() {
             position: "fixed",
             inset: 0,
             zIndex: 9999,
-            background: "linear-gradient(180deg, #0c2318 0%, #071610 100%)",
+            background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -101,31 +103,46 @@ export function PageLoader() {
           }}
         >
           {/* Three tiles side by side */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
-            {TILE_SRCS.map((src, i) => (
-              <TileOutlineReveal
-                key={src}
-                tileSrc={src}
-                delay={(CYCLE / 3) * i}
-              />
-            ))}
-          </div>
+          {/* Logo */}
+<motion.div
+  initial={{ opacity: 0, y: -10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+>
+    <div className="mb-4 scale-[2]">
+  <PocketDragonLogo />
+</div>
+ {/* <motion.img
+  src={logoSrc}
+  className="brightness-0 invert opacity-70"
+  alt="Pocket Dragon"
+  initial={{ opacity: 0, y: -10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  style={{
+    width: "220px",
+    height: "auto",
+    marginBottom: "1rem",
+  }}
+/> */}
+</motion.div>
 
-          {/* Subtle label */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            style={{
-              fontSize: "0.65rem",
-              fontWeight: 700,
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: "rgba(249,242,228,0.35)",
-            }}
-          >
-            Pocket Dragon
-          </motion.p>
+{/* Three tiles side by side */}
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "1.25rem",
+  }}
+>
+  {TILE_SRCS.map((src, i) => (
+    <TileOutlineReveal
+      key={src}
+      tileSrc={src}
+      delay={(CYCLE / 3) * i}
+    />
+  ))}
+</div>
         </motion.div>
       )}
     </AnimatePresence>

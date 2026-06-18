@@ -18,6 +18,7 @@ export function LoginSection() {
         className="absolute inset-0"
         style={{
     background:
+          // 'linear-gradient(110deg, #E7B59B 0%, #D48A63 30%, #B65A2F 65%, #8F3F1E 100%)'
       'linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)',
   }}
       />
@@ -88,7 +89,7 @@ export function LoginSection() {
             <div
               className="rounded-2xl p-8 lg:p-10 border"
               style={{
-                background: 'rgba(255,255,255,0.65)',
+                background: '#f9f2e4',
                 borderColor: 'rgba(20,51,34,0.10)',
                 backdropFilter: 'blur(24px)',
                 boxShadow: '0 24px 64px rgba(20,51,34,0.10)',
@@ -187,7 +188,7 @@ export function LoginSection() {
                   type="submit"
                   className="w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal"
                   style={{
-                    background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
+                    background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 88%)',
                     boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
                   }}
                   whileHover={{ scale: 1.01, boxShadow: '0 12px 36px rgba(182,90,47,0.45)' }}

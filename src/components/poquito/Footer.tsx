@@ -59,9 +59,9 @@
 import { motion } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
 import logoSrc from '@/assets/pocket-dragon-logo.png'
-import tile1 from '@/assets/Mpt1z.png'
-import tile2 from '@/assets/Mpt3z.png'
-import tile3 from '@/assets/Mpu1z.png'
+import tile1 from "@/assets/White Dragon.png";
+import tile2 from "@/assets/red Dragon.png";
+import tile3 from "@/assets/green Dragon.png";
 
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
@@ -170,10 +170,10 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-8 py-10 border-b border-white/5 items-center justify-items-center text-center md:text-left"
+          className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 py-10 border-b border-white/5 items-center md:justify-items-center md:text-left"
         >
-          {/* Brand */}
-          <div className="flex flex-col items-center md:items-start gap-3">
+          {/* Brand — left on both mobile and desktop */}
+          <div className="flex flex-col items-start md:items-start gap-3">
             <img
               src={logoSrc}
               alt="Poquito Mahjong"
@@ -181,21 +181,17 @@ export function Footer() {
               height={34}
               className="brightness-0 invert opacity-70"
             />
-            {/* <p className="text-pq-cream text-xs leading-relaxed max-w-[180px] font-normal hover:font-bold hover:scale-[1.03] transition-all duration-200 text-center md:text-left">
-              Traditional Mahjong, reimagined for the modern world.
-            </p> */}
           </div>
 
-          {/* Links: Privacy · Terms · Contact · Follow */}
-          <div className="flex  items-center justify-center gap-6 text-xs text-pq-cream md:justify-self-center">
-            
-             <a
+          {/* Links: email · socials · Privacy · Terms — stacked on mobile, single row on desktop */}
+          <div className="flex flex-col items-end gap-3 text-xs text-pq-cream md:col-start-2 md:flex-row md:items-center md:gap-6 md:justify-self-center">
+            <a
               href="mailto:hello@pocketdragon.app"
-              className="hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap"
+              className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
             >
               hello@pocketdragon.app
             </a>
-               <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <a
                 href="https://facebook.com/pocketdragonapp"
                 target="_blank"
@@ -223,25 +219,26 @@ export function Footer() {
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               </a>
-            </div> |
-            <Link
-              to="/privacy"
-              className="hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="/terms"
-              className="hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap"
-            >
-              Terms of Use
-            </Link>
-           
-         
+            </div>
+            <span className="hidden md:inline text-pq-cream/40">|</span>
+            <div className="flex items-center gap-4">
+              <Link
+                to="/privacy"
+                className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                to="/terms"
+                className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
+              >
+                Terms of Use
+              </Link>
+            </div>
           </div>
 
-          {/* Animated tiles column */}
-          <div className="flex items-center justify-center md:justify-end gap-3 md:justify-self-end w-full md:w-auto">
+          {/* Animated tiles column — centered on mobile, right-aligned on desktop */}
+          <div className="col-span-2 md:col-span-1 flex items-center justify-center md:justify-end gap-3 md:justify-self-end w-full md:w-auto">
             {TILE_SRCS.map((src, i) => (
               <TileOutlineReveal
                 key={src}

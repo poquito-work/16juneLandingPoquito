@@ -54,7 +54,7 @@ export default function FAQSection() {
   return (
     <section
       id="faq"
-      className="section-pad mt-15"
+      className="section-pad mt-15 faqWrap"
       style={{ background: "linear-gradient(180deg, #F9F2E4 0%, #EDE5D0 100%)" }}
     >
       <div className="max-w-3xl mx-auto px-6 lg:px-10">
@@ -157,7 +157,7 @@ function FAQItem({
         <motion.div
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.35, ease: EASE }}
-          className={`flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${
+          className={`faqbtn flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${
             isOpen
               ? "border-pq-rust/50 bg-pq-rust/10"
               : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"

@@ -40,7 +40,7 @@ export function CTASection() {
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(160deg, #143322 0%, #1a4530 35%, #0e2a1c 65%, #091a12 100%)',
+            'linear-gradient(180deg, #143322 0%, #1a4530 21%, #0e2a1c 77%, #091a12 119%)',
         }}
       />
 
