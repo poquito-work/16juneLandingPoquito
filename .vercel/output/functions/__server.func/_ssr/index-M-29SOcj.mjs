@@ -129,62 +129,104 @@ const NAV = [
 ];
 function Header({ onLoginClick }) {
   const [open, setOpen] = reactExports.useState(false);
+  const [scrolled, setScrolled] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "sticky top-0 z-50 w-full bg-white/55 backdrop-blur-xl backdrop-saturate-150 border-b border-white/40 shadow-[0_1px_12px_rgba(20,51,34,0.06)]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#home", "aria-label": "Go to home", className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "lg" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-5", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.nav,
-          {
-            initial: { opacity: 0, x: 20 },
-            animate: { opacity: 1, x: 0 },
-            exit: { opacity: 0, x: 20 },
-            transition: { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] },
-            className: "hidden md:flex items-center gap-6",
-            "aria-label": "Primary",
-            children: NAV.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              motion.a,
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "header",
+      {
+        className: "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        style: scrolled ? {
+          background: "rgba(249, 242, 228, 0.82)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
+          boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
+          opacity: 1,
+          transform: "none"
+        } : {
+          background: "transparent",
+          backdropFilter: "none",
+          borderBottom: "none",
+          boxShadow: "none",
+          opacity: 1,
+          transform: "none"
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#home", "aria-label": "Go to home", className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "lg" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsx(
+              motion.nav,
               {
-                href: item.href,
-                onClick: () => setOpen(false),
-                initial: { opacity: 0, y: -4 },
-                animate: { opacity: 1, y: 0 },
-                transition: { delay: i * 0.05, duration: 0.18, ease: "easeOut" },
-                className: "text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap",
-                children: item.label
+                initial: { opacity: 0, x: 20 },
+                animate: { opacity: 1, x: 0 },
+                exit: { opacity: 0, x: 20 },
+                transition: { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] },
+                className: "hidden md:flex items-center gap-6 headerNav",
+                "aria-label": "Primary",
+                children: NAV.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  motion.a,
+                  {
+                    href: item.href,
+                    onClick: () => setOpen(false),
+                    initial: { opacity: 0, y: -4 },
+                    animate: { opacity: 1, y: 0 },
+                    transition: { delay: i * 0.05, duration: 0.18, ease: "easeOut" },
+                    className: "text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap",
+                    children: item.label
+                  },
+                  item.label
+                ))
               },
-              item.label
-            ))
-          },
-          "inline-nav"
-        ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            type: "button",
-            onClick: onLoginClick,
-            className: "inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90",
-            children: "Login"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            type: "button",
-            onClick: () => setOpen((v) => !v),
-            "aria-label": "Toggle menu",
-            "aria-expanded": open,
-            className: "relative flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-black/5",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "relative block h-4 w-5", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "translate-y-[7px] rotate-45" : ""}` }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `absolute left-0 top-1/2 -mt-[1px] block h-[2px] w-5 rounded-full bg-current transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"}` }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `absolute bottom-0 left-0 block h-[2px] w-5 rounded-full bg-current transition-transform duration-300 ease-out ${open ? "-translate-y-[7px] -rotate-45" : ""}` })
-            ] })
-          }
-        )
-      ] })
-    ] }) }),
+              "inline-nav"
+            ) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                onClick: onLoginClick,
+                className: "inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90",
+                children: "Login"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                onClick: () => setOpen((v) => !v),
+                "aria-label": "Toggle menu",
+                "aria-expanded": open,
+                className: "relative flex h-8 w-8 items-center justify-center p-1",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "relative block w-4 h-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: `absolute left-0 top-0 block h-px w-4 bg-foreground origin-center transition-all duration-300 ${open ? "top-[5px] rotate-45" : ""}`
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: `absolute left-0 top-[5px] block h-px w-4 bg-foreground transition-all duration-200 ${open ? "opacity-0" : "opacity-100"}`
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: `absolute left-0 bottom-0 block h-px w-4 bg-foreground origin-center transition-all duration-300 ${open ? "bottom-[5px] -rotate-45" : ""}`
+                    }
+                  )
+                ] })
+              }
+            )
+          ] })
+        ] })
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       motion.div,
       {
@@ -197,17 +239,18 @@ function Header({ onLoginClick }) {
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-16 items-center justify-between px-6 border-b border-foreground/10", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "md" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "button",
               {
                 type: "button",
                 onClick: () => setOpen(false),
                 "aria-label": "Close menu",
-                className: "flex h-9 w-9 items-center justify-center rounded-full text-foreground hover:bg-black/5 transition-colors",
-                children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "18", height: "18", viewBox: "0 0 18 18", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "3", y1: "3", x2: "15", y2: "15" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "15", y1: "3", x2: "3", y2: "15" })
-                ] })
+                className: "flex flex-col gap-1.5 p-2 z-50",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block w-6 h-[1.5px] origin-center bg-foreground", style: { transform: "translateY(5px) rotate(45deg)" } }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block w-6 h-[1.5px] origin-center bg-foreground", style: { opacity: 0 } }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block w-6 h-[1.5px] origin-center bg-foreground", style: { transform: "translateY(-5px) rotate(-45deg)" } })
+                ]
               }
             )
           ] }),
@@ -315,15 +358,7 @@ function DownloadButtons({
   ] }) });
 }
 const heroVideo = "/assets/Studio_product_photography_vid-CwT2O4A8.mp4";
-const tile1 = "/assets/Mpt1z-CGcL1NCm.png";
-const tile2 = "/assets/Mpt3z-DsvuR2Rt.png";
 const EASE$4 = [0.22, 0.61, 0.36, 1];
-const bgTiles = [
-  { src: tile1, left: "4%", top: "14%", w: 54, rot: -12, op: 0.13, dur: 7.5, delay: 0 },
-  { src: tile2, left: "10%", top: "72%", w: 44, rot: 20, op: 0.1, dur: 8.5, delay: 1.2 },
-  { src: tile1, left: "32%", top: "91%", w: 38, rot: -22, op: 0.08, dur: 8, delay: 2.4 },
-  { src: tile2, left: "1%", top: "42%", w: 46, rot: 15, op: 0.12, dur: 9.5, delay: 0.3 }
-];
 const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } }
@@ -387,18 +422,6 @@ function Hero() {
             ]
           }
         ),
-        bgTiles.map((t, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.div,
-          {
-            "aria-hidden": true,
-            className: "absolute pointer-events-none",
-            style: { left: t.left, top: t.top, zIndex: 1, opacity: t.op, rotate: t.rot },
-            animate: { y: [0, -10, 0], rotate: [t.rot, t.rot + 2.5, t.rot] },
-            transition: { duration: t.dur, repeat: Infinity, ease: "easeInOut", delay: t.delay },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: t.src, alt: "", width: t.w, style: { display: "block" } })
-          },
-          i
-        )),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -412,13 +435,17 @@ function Hero() {
                 animate: "visible",
                 className: "flex flex-col gap-8 lg:gap-10",
                 children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-10", style: { background: "var(--rust)" } }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs uppercase tracking-[0.22em]", style: { color: "var(--rust)" }, children: "Play Offline" })
+                  ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(
                     motion.h1,
                     {
                       variants: itemVariants,
                       className: "font-display font-bold uppercase leading-tight tracking-tight",
                       style: {
-                        fontSize: "clamp(2.4rem, 5.5vw, 5rem)",
+                        fontSize: "clamp(2.4rem, 5.5vw, 4rem)",
                         color: "var(--foreground)",
                         lineHeight: 1.05
                       },
@@ -443,7 +470,7 @@ function Hero() {
                         opacity: 0.75,
                         maxWidth: "44ch"
                       },
-                      children: "Practice, play, and compete your way to the top. Enjoy real-time Traditional Mahjong action at your fingertips."
+                      children: "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips"
                     }
                   ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: itemVariants, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadButtons, { align: "start" }) }),
@@ -571,7 +598,7 @@ function CancellationDialog({
   onClose,
   plan
 }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Dialog, { open, onOpenChange: (v) => !v && onClose(), children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent, { className: "modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-cream/60 [&>button]:hover:text-cream", style: { background: "var(--green)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: " flex flex-col gap-5", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Dialog, { open, onOpenChange: (v) => !v && onClose(), children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent, { className: "modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-foreground [&>button]:hover:text-foreground/70", style: { background: "var(--green)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: " flex flex-col gap-5", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogHeader, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         DialogTitle,
@@ -600,7 +627,7 @@ function CancellationDialog({
       {
         type: "button",
         onClick: onClose,
-        className: "mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
+        className: "cursor-pointer mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
         children: "Understood"
       }
     )
@@ -615,7 +642,7 @@ function Subscriptions() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(SectionEyebrow, { children: "Membership" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]", children: [
           "Choose your ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)", fontStyle: "italic" }, children: "plan" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)", fontStyle: "italic" }, children: "Subscription" })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2", children: [
@@ -632,17 +659,17 @@ function Subscriptions() {
             "a",
             {
               style: {
-                background: "linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)",
+                // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
                 boxShadow: "0 8px 24px rgba(182,90,47,0.30)"
               },
               href: "#",
-              className: "inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
+              className: "inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white",
               children: "Subscribe Now"
             }
           )
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "relative flex flex-col rounded-2xl bg-green-new p-7 text-cream", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute right-5 -top-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-rust px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm", children: "Best Value" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute right-5 -top-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm", children: "Best Value" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85", children: "Annual" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-cream/85", children: "Rs" }),
@@ -655,11 +682,11 @@ function Subscriptions() {
             "a",
             {
               style: {
-                background: "linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)",
+                // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
                 boxShadow: "0 8px 24px rgba(182,90,47,0.30)"
               },
               href: "#",
-              className: "inline-flex items-center justify-center rounded-xl bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
+              className: "inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
               children: "Subscribe Now"
             }
           ),
@@ -802,8 +829,7 @@ function Playground() {
       /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "orbit-title", children: [
         "THE COMPLETE MAHJONG ",
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rust", children: "PLAYGROUND" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "orbit-subtitle", children: "Every mode, built for serious players. Tap a feature to see it live." })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-stage", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-features orbit-left", children: [
@@ -1174,7 +1200,7 @@ function FAQSection() {
     "section",
     {
       id: "faq",
-      className: "section-pad mt-15",
+      className: "section-pad mt-15 faqWrap",
       style: { background: "linear-gradient(180deg, #F9F2E4 0%, #EDE5D0 100%)" },
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-3xl mx-auto px-6 lg:px-10", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -1278,7 +1304,7 @@ function FAQItem({
             {
               animate: { rotate: isOpen ? 45 : 0 },
               transition: { duration: 0.35, ease: EASE$3 },
-              className: `flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${isOpen ? "border-pq-rust/50 bg-pq-rust/10" : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"}`,
+              className: `faqbtn flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${isOpen ? "border-pq-rust/50 bg-pq-rust/10" : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"}`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "svg",
                 {
@@ -1321,7 +1347,10 @@ function LoginSection() {
       {
         className: "absolute inset-0",
         style: {
-          background: "linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)"
+          background: (
+            // 'linear-gradient(110deg, #E7B59B 0%, #D48A63 30%, #B65A2F 65%, #8F3F1E 100%)'
+            "linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)"
+          )
         }
       }
     ),
@@ -1384,7 +1413,7 @@ function LoginSection() {
             {
               className: "rounded-2xl p-8 lg:p-10 border",
               style: {
-                background: "rgba(255,255,255,0.65)",
+                background: "#f9f2e4",
                 borderColor: "rgba(20,51,34,0.10)",
                 backdropFilter: "blur(24px)",
                 boxShadow: "0 24px 64px rgba(20,51,34,0.10)"
@@ -1476,7 +1505,7 @@ function LoginSection() {
                       type: "submit",
                       className: "w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal",
                       style: {
-                        background: "linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)",
+                        background: "linear-gradient(135deg, #B65A2F 0%, #943f1e 88%)",
                         boxShadow: "0 8px 24px rgba(182,90,47,0.30)"
                       },
                       whileHover: { scale: 1.01, boxShadow: "0 12px 36px rgba(182,90,47,0.45)" },
@@ -1537,7 +1566,7 @@ function CTASection() {
           {
             className: "absolute inset-0",
             style: {
-              background: "linear-gradient(160deg, #143322 0%, #1a4530 35%, #0e2a1c 65%, #091a12 100%)"
+              background: "linear-gradient(180deg, #143322 0%, #1a4530 21%, #0e2a1c 77%, #091a12 119%)"
             }
           }
         ),
@@ -1638,7 +1667,9 @@ function CTASection() {
     }
   );
 }
-const tile3 = "/assets/Mpu1z-3l32z_2-.png";
+const tile1 = "/assets/White%20Dragon-CK92c6Sd.png";
+const tile2 = "/assets/Red%20Dragon-75AvbVbU.png";
+const tile3 = "/assets/Green%20Dragon-SwrH8Vri.png";
 const EASE = [0.22, 0.61, 0.36, 1];
 const OUTER_PATH$1 = "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
 const INNER_PATH$1 = "M9,5.5 L51,5.5 Q54.5,5.5 54.5,9 L54.5,71 Q54.5,74.5 51,74.5 L9,74.5 Q5.5,74.5 5.5,71 L5.5,9 Q5.5,5.5 9,5.5 Z";
@@ -1741,9 +1772,9 @@ function Footer() {
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
               transition: { duration: 0.8, ease: EASE },
-              className: "grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-8 py-10 border-b border-white/5 items-center justify-items-center text-center md:text-left",
+              className: "grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 py-10 border-b border-white/5 items-center md:justify-items-center md:text-left",
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col items-center md:items-start gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col items-start md:items-start gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "img",
                   {
                     src: logoSrc,
@@ -1753,12 +1784,12 @@ function Footer() {
                     className: "brightness-0 invert opacity-70"
                   }
                 ) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex  items-center justify-center gap-6 text-xs text-pq-cream md:justify-self-center", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-end gap-3 text-xs text-pq-cream md:col-start-2 md:flex-row md:items-center md:gap-6 md:justify-self-center", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "a",
                     {
                       href: "mailto:hello@pocketdragon.app",
-                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap",
+                      className: "hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap",
                       children: "hello@pocketdragon.app"
                     }
                   ),
@@ -1797,25 +1828,27 @@ function Footer() {
                       }
                     )
                   ] }),
-                  " |",
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    Link,
-                    {
-                      to: "/privacy",
-                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap",
-                      children: "Privacy Policy"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    Link,
-                    {
-                      to: "/terms",
-                      className: "hover:text-pq-cream hover:font-bold hover:scale-[1.03] transition-all duration-200 font-normal whitespace-nowrap",
-                      children: "Terms of Use"
-                    }
-                  )
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "hidden md:inline text-pq-cream/40", children: "|" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      Link,
+                      {
+                        to: "/privacy",
+                        className: "hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap",
+                        children: "Privacy Policy"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      Link,
+                      {
+                        to: "/terms",
+                        className: "hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap",
+                        children: "Terms of Use"
+                      }
+                    )
+                  ] })
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center md:justify-end gap-3 md:justify-self-end w-full md:w-auto", children: TILE_SRCS$1.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-span-2 md:col-span-1 flex items-center justify-center md:justify-end gap-3 md:justify-self-end w-full md:w-auto", children: TILE_SRCS$1.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                   TileOutlineReveal$1,
                   {
                     tileSrc: src,
@@ -1889,7 +1922,7 @@ function TileOutlineReveal({ delay, tileSrc }) {
             {
               d: OUTER_PATH,
               fill: "none",
-              stroke: "rgba(249,242,228,0.55)",
+              stroke: "#b65a2f",
               strokeWidth: "1.5",
               strokeLinecap: "round",
               animate: {
@@ -1904,7 +1937,7 @@ function TileOutlineReveal({ delay, tileSrc }) {
             {
               d: INNER_PATH,
               fill: "none",
-              stroke: "rgba(249,242,228,0.32)",
+              stroke: "#d9a38a",
               strokeWidth: "1",
               strokeLinecap: "round",
               animate: {
@@ -1938,7 +1971,7 @@ function TileOutlineReveal({ delay, tileSrc }) {
 function PageLoader() {
   const [visible, setVisible] = reactExports.useState(true);
   reactExports.useEffect(() => {
-    const t = setTimeout(() => setVisible(false), 9e3);
+    const t = setTimeout(() => setVisible(false), 8e3);
     return () => clearTimeout(t);
   }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: visible && /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -1951,7 +1984,7 @@ function PageLoader() {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "linear-gradient(180deg, #0c2318 0%, #071610 100%)",
+        background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -1959,28 +1992,31 @@ function PageLoader() {
         gap: "2rem"
       },
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", gap: "1.25rem" }, children: TILE_SRCS.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          TileOutlineReveal,
-          {
-            tileSrc: src,
-            delay: CYCLE / 3 * i
-          },
-          src
-        )) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.p,
+          motion.div,
           {
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            transition: { delay: 0.4, duration: 0.6 },
+            initial: { opacity: 0, y: -10 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8 },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 scale-[2]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, {}) })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
             style: {
-              fontSize: "0.65rem",
-              fontWeight: 700,
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: "rgba(249,242,228,0.35)"
+              display: "flex",
+              alignItems: "center",
+              gap: "1.25rem"
             },
-            children: "Pocket Dragon"
+            children: TILE_SRCS.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              TileOutlineReveal,
+              {
+                tileSrc: src,
+                delay: CYCLE / 3 * i
+              },
+              src
+            ))
           }
         )
       ]
