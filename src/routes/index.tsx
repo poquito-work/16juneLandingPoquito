@@ -14,17 +14,17 @@ import { PageLoader } from "@/components/poquito/PageLoader";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pocket Dragon — Traditional Mahjong On Your Time, Anywhere" },
+      { title: "Pocket Dragon — Mahjong on your time, anywhere you are!" },
       {
         name: "description",
         content:
-          "Pocket Dragon is a subscription Traditional Mahjong app for mobile. Practice, play, and compete in real-time matches. Now on iOS & Android.",
+          "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips",
       },
-      { property: "og:title", content: "Pocket Dragon — Traditional Mahjong, Anywhere" },
+      { property: "og:title", content: "Pocket Dragon — Mahjong on your time, anywhere you are!" },
       {
         property: "og:description",
         content:
-          "Real-time Traditional Mahjong on iOS & Android. Practice with bots, play private tables, climb ranked tiers.",
+          "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

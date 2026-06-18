@@ -89,7 +89,7 @@ export function Subscriptions() {
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionEyebrow>Membership</SectionEyebrow>
           <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]">
-            Choose your <span style={{ color: 'var(--rust)',fontStyle:"italic" }}>Subscription</span>
+            Choose your <span style={{ color: 'var(--rust)' }}>Subscription</span>
           </h2>
         </div>
 

@@ -1338,3 +1338,7 @@
     border-radius: 50%;
   
 }
+.headerNav a:hover{
+  font-weight: 600;
+  transform: scale(1.2);
+}

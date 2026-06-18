@@ -71,7 +71,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05, duration: 0.18, ease: "easeOut" }}
-                      className="text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap"
+                      className="text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]"
                     >
                       {item.label}
                     </motion.a>
@@ -89,30 +89,28 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             </button>
               
           <button
-  type="button"
-  onClick={() => setOpen((v) => !v)}
-  aria-label="Toggle menu"
-  aria-expanded={open}
-  className="relative flex h-8 w-8 items-center justify-center p-1"
->
-  <span className="relative block w-4 h-3">
-    <span
-      className={`absolute left-0 top-0 block h-px w-4 bg-foreground origin-center transition-all duration-300 ${
-        open ? "top-[5px] rotate-45" : ""
-      }`}
-    />
-    <span
-      className={`absolute left-0 top-[5px] block h-px w-4 bg-foreground transition-all duration-200 ${
-        open ? "opacity-0" : "opacity-100"
-      }`}
-    />
-    <span
-      className={`absolute left-0 bottom-0 block h-px w-4 bg-foreground origin-center transition-all duration-300 ${
-        open ? "bottom-[5px] -rotate-45" : ""
-      }`}
-    />
-  </span>
-</button>
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Toggle menu"
+              aria-expanded={open}
+              className="flex items-center justify-center w-8 h-8 cursor-pointer"
+            >
+              {open ? (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* X with center at (14,10) — left arms long, right arms short */}
+                  <line x1="2" y1="3" x2="14" y2="10" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="14" y1="10" x2="18" y2="5" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="3" y1="17" x2="14" y2="10" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="14.5" y1="11" x2="22" y2="15" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              ) : (
+                <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="0" y1="1" x2="20" y2="1" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="0" y1="7" x2="20" y2="7" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="0" y1="13" x2="20" y2="13" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </header>
