@@ -1342,3 +1342,12 @@
   font-weight: 600;
   transform: scale(1.2);
 }
+.socialRound .rounded-full{
+  border-radius: 50%;
+}
+.border15{
+   border-radius: 50%;
+}
+/* .border-100{
+  border-radius: 50%;
+} */

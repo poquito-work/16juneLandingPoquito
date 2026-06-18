@@ -143,7 +143,7 @@ export function Hero() {
 
             {/* Social proof */}
             <motion.div variants={itemVariants} className="flex items-center gap-4 pt-1">
-              <div className="flex -space-x-2">
+              <div className="flex -space-x-2 socialRound">
                 {avatarGradients.map((g, i) => (
                   <div 
                     key={i}

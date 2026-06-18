@@ -48,8 +48,10 @@ export function LoginSection() {
           >
             {/* Eyebrow */}
             <div className="flex items-center gap-3 mb-6">
-              <span className="h-[1px] w-8 bg-pq-white" />
-              <span className="text-offwhite text-xs tracking-[0.22em] uppercase font-normal">Member Access</span>
+              <span className="h-px w-8 bg-rust/70" />
+              <span className="text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust">Member Access</span>
+              <span className="h-px w-8 bg-rust/70" />
+
             </div>
 
             {/* Headline */}
