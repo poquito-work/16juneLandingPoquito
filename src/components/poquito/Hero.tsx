@@ -117,8 +117,8 @@ export function Hero() {
               }}
             >
               Mahjong on{" "}
-              <span style={{ color: "var(--rust)" }}>your time</span>,{" "}
-              anywhere you are!
+              <span style={{ color: "var(--rust)" }}>your time,</span>{" "}
+             <span style={{ color: "var(--rust)" }}>anywhere</span>  you are!
             </motion.h1>
 
             {/* Body */}
