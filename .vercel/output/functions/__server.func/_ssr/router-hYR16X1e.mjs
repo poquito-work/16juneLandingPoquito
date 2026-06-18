@@ -15,7 +15,7 @@ import "crypto";
 import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
-const appCss = "/assets/styles-KJjn5fnI.css";
+const appCss = "/assets/styles-pcpG9yKu.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -99,6 +99,23 @@ const Route$3 = createRootRouteWithContext()({
     ],
     links: [
       {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.ico"
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: "/favicon-16x16.png"
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon-32x32.png"
+      },
+      {
         rel: "preconnect",
         href: "https://fonts.googleapis.com"
       },
@@ -143,20 +160,20 @@ const $$splitComponentImporter$1 = () => import("./privacy-JT5S7jOn.mjs");
 const Route$1 = createFileRoute("/privacy")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-M-29SOcj.mjs");
+const $$splitComponentImporter = () => import("./index-EicqaB_D.mjs");
 const Route = createFileRoute("/")({
   head: () => ({
     meta: [{
-      title: "Pocket Dragon — Traditional Mahjong On Your Time, Anywhere"
+      title: "Pocket Dragon — Mahjong on your time, anywhere you are!"
     }, {
       name: "description",
-      content: "Pocket Dragon is a subscription Traditional Mahjong app for mobile. Practice, play, and compete in real-time matches. Now on iOS & Android."
+      content: "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips"
     }, {
       property: "og:title",
-      content: "Pocket Dragon — Traditional Mahjong, Anywhere"
+      content: "Pocket Dragon — Mahjong on your time, anywhere you are!"
     }, {
       property: "og:description",
-      content: "Real-time Traditional Mahjong on iOS & Android. Practice with bots, play private tables, climb ranked tiers."
+      content: "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips"
     }, {
       property: "og:type",
       content: "website"
