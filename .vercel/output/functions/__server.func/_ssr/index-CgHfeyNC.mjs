@@ -425,10 +425,10 @@ function Hero() {
                       children: [
                         "Mahjong on",
                         " ",
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "your time" }),
-                        ",",
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "your time," }),
                         " ",
-                        "anywhere you are!"
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "anywhere" }),
+                        "  you are!"
                       ]
                     }
                   ),
