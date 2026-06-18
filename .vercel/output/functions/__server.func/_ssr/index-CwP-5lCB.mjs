@@ -465,7 +465,7 @@ function Hero() {
                   ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: itemVariants, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadButtons, { align: "start" }) }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-4 pt-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex -space-x-2", children: avatarGradients.map((g, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex -space-x-2 socialRound", children: avatarGradients.map((g, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "div",
                       {
                         className: "w-8 h-8 rounded-full border-2 border-white/80 flex items-center justify-center text-[10px] font-bold text-white",
@@ -1368,8 +1368,9 @@ function LoginSection() {
           transition: { duration: 0.9, ease: EASE$2 },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-white" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-offwhite text-xs tracking-[0.22em] uppercase font-normal", children: "Member Access" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8 bg-rust/70" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust", children: "Member Access" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8 bg-rust/70" })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "h2",
@@ -1880,7 +1881,7 @@ function BackToTop() {
       type: "button",
       onClick: () => window.scrollTo({ top: 0, behavior: "smooth" }),
       "aria-label": "Back to top",
-      className: "fixed bottom-6 right-6 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full bg-rust text-cream shadow-lg transition-opacity hover:opacity-90",
+      className: "border15 fixed bottom-6 right-6 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full bg-rust text-cream shadow-lg transition-opacity hover:opacity-90",
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowUp, { size: 18 })
     }
   );
