@@ -7,33 +7,48 @@ const EASE = [0.22, 0.61, 0.36, 1] as const;
 
 const faqs = [
   {
-    q: "What is Poquito Mahjong?",
-    a: "Poquito Mahjong is a premium mobile app that brings Traditional Mahjong to your fingertips. Play in real-time against players worldwide, practice against intelligent bots, or challenge friends in private tables. Every element — from matchmaking to ranked progression — is designed to honour the depth of Traditional Mahjong while making it effortless to enjoy anywhere.",
+    q: "Do I need to create a new account on the website?",
+    a: "No. Log in with the same username and password as the App ",
     defaultOpen: true,
   },
   {
-    q: "What Mahjong variant does Poquito support?",
-    a: "Poquito focuses exclusively on Traditional Mahjong — the authentic four-player tile game rooted in centuries of heritage. We've implemented rigorous rules covering draws, discards, winning hands, and scoring to ensure the experience feels true to the game you know and love, with modern clarity and interface polish.",
+    q: "Can I still play without subscribing?",
+    a: "Yes! New accounts receive a free 2-week trial with full access to the app. After the trial ends, you can continue playing by subscribing to our monthly or annual plans",
     defaultOpen: true,
   },
   {
-    q: "Can I cancel my monthly subscription at any time?",
-    a: "Yes. Monthly subscriptions can be cancelled at any time before your next billing date — no fees, no friction. Annual subscriptions are non-refundable, but all your benefits remain fully active until the end of the subscription term.",
+    q: "What is Traditional Mahjong? ",
+    a: "Traditional Mahjong is a four-player tile-based game where players build a complete winning hand (of 14 tiles) by forming specific tile combinations. The traditional format includes variations such as Passport (East Wind Round), Goulash (West Wind Round), and more.",
     defaultOpen: false,
   },
   {
-    q: "How does Smart Matchmaking work?",
-    a: "Our matchmaking engine considers your current Ranked Points, recent win-rate, average game duration, and preferred play times to assemble tables where every seat is competitive. The goal is simple: every game should feel like it could go either way right until the final tile.",
+    q: "What happens if a table doesn’t fill up? ",
+    a: "If a player has joined a table and there are one or more seats still open, the host may choose to begin the game with bots ",
     defaultOpen: false,
   },
   {
-    q: "Is there a free trial available?",
-    a: "We're actively working on a trial period for new players. Currently, the monthly plan at $9.99 offers full access with the freedom to cancel before your next billing date — making it a low-commitment way to experience everything Poquito has to offer.",
+    q: "Will my subscription auto-renew?",
+    a: "Yes — subscriptions are set to auto-renew by default, but you can turn off auto-renewal at any time through your account settings",
     defaultOpen: false,
   },
   {
-    q: "How many players are needed to start a game?",
-    a: "Traditional Mahjong requires four players. In Practice Mode, intelligent bots fill any open seats instantly so you can always get a full table. In Public Lobby, the matchmaking system fills your table within seconds. Private Tables allow you to wait for friends or let bots fill empty seats.",
+    q: "Can I switch between monthly and annual plans?",
+    a: "Yes — you can switch from a monthly plan to an annual plan at any time. Your annual subscription will begin once your current monthly billing period ends ",
+    defaultOpen: false,
+  },
+   {
+    q: "Can I customize my gameplay experience?",
+    a: "Yes. In Practice Mode and Create a Table Mode, you can customize game variants, number of games, and turn timer settings to match your preferred style of play",
+    defaultOpen: false,
+  },
+   {
+    q: "How do I report bugs or unfair behavior?",
+    a: "You may contact us at <a href='mailto:hello@pocketdragon.app' class='text-rust hover:opacity-75 transition-opacity'>hello@pocketdragon.app</a>",
+    defaultOpen: false,
+  },
+   {
+    q: "What happens to my progress if I switch devices? ",
+    a: "No problem! Simply log in with the same account credentials on your new device to continue with your current rank, stats, and progress. ",
     defaultOpen: false,
   },
 ];
@@ -69,6 +84,7 @@ export default function FAQSection() {
           <div className="flex items-center gap-3 mb-5">
             <span className="h-[1px] w-8 bg-pq-rust/60" />
             <span className="text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust">Questions</span>
+            <span className="h-[1px] w-8 bg-pq-rust/60" />
           </div>
           <h2
             className="font-hero font-bold text-pq leading-tight tracking-tight text-balance"
@@ -102,10 +118,10 @@ export default function FAQSection() {
           >
             <motion.button
               onClick={() => setExpanded(true)}
-              className="inline-flex text-bold items-center gap-3 text-pq text-sm tracking-[0.14em] uppercase font-normal border-b border-pq-green/20 pb-0.5 hover:border-pq-green/50 transition-all duration-300 group"
+              className="cursor-pointer inline-flex text-bold items-center gap-3 text-pq text-sm tracking-[0.14em] uppercase font-normal border-b border-pq-green/20 pb-0.5 hover:border-pq-green/50 transition-all duration-300 group"
               whileHover={{ letterSpacing: "0.18em" }}
             >
-              <span>View More Questions</span>
+              <span>View More</span>
               <motion.svg
                 className="w-4 h-4 text-pq-rust"
                 fill="none"
@@ -157,7 +173,7 @@ function FAQItem({
         <motion.div
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.35, ease: EASE }}
-          className={`faqbtn flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${
+          className={`cursor-pointer faqbtn flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${
             isOpen
               ? "border-pq-rust/50 bg-pq-rust/10"
               : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"
@@ -185,9 +201,10 @@ function FAQItem({
             transition={{ duration: 0.45, ease: EASE }}
             style={{ overflow: "hidden" }}
           >
-            <p className="text-pq text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200">
-              {faq.a}
-            </p>
+            <p
+              className="text-pq text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200"
+              dangerouslySetInnerHTML={{ __html: faq.a }}
+            />
           </motion.div>
         )}
       </AnimatePresence>

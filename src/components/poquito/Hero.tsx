@@ -102,8 +102,9 @@ export function Hero() {
             <motion.div variants={itemVariants} className="flex items-center gap-3">
               <span className="h-px w-10" style={{ background: "var(--rust)" }} />
               <span className="text-xs uppercase tracking-[0.22em]" style={{ color: "var(--rust)" }}>
-                Play Offline
+                 Play through tunnels, clouds, and signal tantrums
               </span>
+              {/* <span className="h-px w-10" style={{ background: "var(--rust)" }} /> */}
             </motion.div>
 
             {/* Headline */}

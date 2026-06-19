@@ -8,35 +8,74 @@ const NAV = [
   { label: "Contact Us", href: "#login" },
 ];
 
+// Sections with DARK backgrounds (cream/light sections are everything else)
+const DARK_SECTION_IDS = ["playground", "login", "download", "contact"];
+
+function getCurrentSectionId(): string {
+  const headerHeight = 64;
+  const scrollY = window.scrollY + headerHeight + 1;
+
+  const ids = ["home", "playground", "plans", "login", "faq", "download", "contact"];
+  let current = ids[0];
+
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) {
+      current = id;
+    }
+  }
+  return current;
+}
+
 export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(false); // hero is cream, so start light
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    function update() {
+      const y = window.scrollY;
+      setScrolled(y > 10);
+      const id = getCurrentSectionId();
+      setIsDark(DARK_SECTION_IDS.includes(id));
+    }
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
+
+  const lightStyle = {
+    background: "rgba(249, 242, 228, 0.92)",
+    backdropFilter: "blur(20px) saturate(180%)",
+    borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
+    boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
+  };
+
+  const darkStyle = {
+    background: "rgba(13, 31, 21, 0.88)",
+    backdropFilter: "blur(20px) saturate(180%)",
+    borderBottom: "1px solid rgba(249, 242, 228, 0.06)",
+    boxShadow: "rgba(0, 0, 0, 0.3) 0px 4px 20px",
+  };
+
+  const atTopStyle = {
+    background: "transparent",
+    backdropFilter: "none",
+    borderBottom: "none",
+    boxShadow: "none",
+  };
+
+  const headerStyle = !scrolled ? atTopStyle : isDark ? darkStyle : lightStyle;
+  // At top of page hero is cream, so hamburger/text must be dark green
+  const textColor = scrolled && isDark ? "rgba(249,242,228,0.85)" : "rgba(20,51,34,0.8)";
+  const hamburgerColor = scrolled && isDark ? "#f9f2e4" : "#2d4a36";
 
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-        style={scrolled ? {
-          background: "rgba(249, 242, 228, 0.82)",
-          backdropFilter: "blur(20px) saturate(180%)",
-          borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
-          boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
-          opacity: 1,
-          transform: "none",
-        } : {
-          background: "transparent",
-          backdropFilter: "none",
-          borderBottom: "none",
-          boxShadow: "none",
-          opacity: 1,
-          transform: "none",
-        }}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
+        style={{ ...headerStyle, opacity: 1, transform: "none" }}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8">
 
@@ -45,13 +84,11 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             <PocketDragonLogo size="lg" />
           </a>
 
-          {/* Spacer */}
           <div className="flex-1" />
 
-          {/* Right side */}
           <div className="flex items-center gap-5">
 
-            {/* Desktop only: inline nav links slide in when hamburger is open */}
+            {/* Desktop nav — slides in when hamburger open */}
             <AnimatePresence>
               {open && (
                 <motion.nav
@@ -71,7 +108,8 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05, duration: 0.18, ease: "easeOut" }}
-                      className="text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]"
+                      className="text-sm font-normal transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]"
+                      style={{ color: textColor }}
                     >
                       {item.label}
                     </motion.a>
@@ -87,8 +125,8 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             >
               Login
             </button>
-              
-          <button
+
+            <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
@@ -97,17 +135,16 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             >
               {open ? (
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* X with center at (14,10) — left arms long, right arms short */}
-                  <line x1="2" y1="3" x2="14" y2="10" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1="14" y1="10" x2="18" y2="5" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1="3" y1="17" x2="14" y2="10" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1="14.5" y1="11" x2="22" y2="15" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="2" y1="3" x2="14" y2="10" stroke={hamburgerColor} strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="14" y1="10" x2="18" y2="5" stroke={hamburgerColor} strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="3" y1="17" x2="14" y2="10" stroke={hamburgerColor} strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="14.5" y1="11" x2="22" y2="15" stroke={hamburgerColor} strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               ) : (
                 <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="1" x2="20" y2="1" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1="0" y1="7" x2="20" y2="7" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1="0" y1="13" x2="20" y2="13" stroke="#494949" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="0" y1="1" x2="20" y2="1" stroke={hamburgerColor} strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="0" y1="7" x2="20" y2="7" stroke={hamburgerColor} strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="0" y1="13" x2="20" y2="13" stroke={hamburgerColor} strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               )}
             </button>
@@ -115,7 +152,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
         </div>
       </header>
 
-      {/* Mobile only: slide-down menu */}
+      {/* Mobile slide-down menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -176,7 +213,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
         )}
       </AnimatePresence>
 
-      {/* Mobile only: backdrop */}
+      {/* Mobile backdrop */}
       <AnimatePresence>
         {open && (
           <motion.div

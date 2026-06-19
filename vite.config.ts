@@ -15,4 +15,15 @@ export default defineConfig({
   nitro: {
     preset: "vercel",
   },
+  vite: {
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://13.207.123.199:8080",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, "/api"),
+        },
+      },
+    },
+  },
 });

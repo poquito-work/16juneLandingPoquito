@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import logoSrc from '@/assets/pocket-dragon-logo.png'
 import { useState } from 'react'
+import { loginUser } from "@/services/auth";
 
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
@@ -9,6 +10,54 @@ export function LoginSection() {
   const [password, setPassword] = useState('')
   const [focused, setFocused]   = useState<string | null>(null)
   const [showPass, setShowPass] = useState(false)
+
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+  const handleLogin = async () => {
+  setError("");
+
+  if (!email.trim()) {
+    setError("Please enter your email");
+    return;
+  }
+
+  if (!password.trim()) {
+    setError("Please enter your password");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const response = await loginUser(
+      email.trim(),
+      password
+    );
+
+    console.log("Login Success:", response);
+
+    if (response?.access_token) {
+      localStorage.setItem(
+        "access_token",
+        response.access_token
+      );
+    }
+
+    // redirect if needed
+    // navigate({ to: "/dashboard" });
+
+  } catch (err: any) {
+    console.error("Login Error:", err);
+
+    setError(
+      err?.response?.data?.message ||
+      err?.response?.data?.error ||
+      "Invalid email or password"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <section id="login" className="relative overflow-hidden pt-15">
@@ -19,8 +68,10 @@ export function LoginSection() {
         style={{
     background:
           // 'linear-gradient(110deg, #E7B59B 0%, #D48A63 30%, #B65A2F 65%, #8F3F1E 100%)'
-      'linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)',
-  }}
+      // 'linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)',
+        'linear-gradient(110deg,rgba(94, 45, 23, 0.98) 0%,rgba(122, 59, 31, 0.95) 25%,rgba(154, 76, 40, 0.90) 50%,rgba(182, 90, 47, 0.85) 75%,rgba(214, 122, 76, 0.80) 100%)',
+          
+    }}
       />
 
       {/* Radial cream highlight top-left */}
@@ -59,11 +110,11 @@ export function LoginSection() {
               className="font-hero font-bold text-offwhite leading-tight tracking-tight text-balance mb-6"
               style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}
             >
-              WELCOME BACK TO THE TABLE.
+              READY WHEN YOU ARE.
             </h2>
 
             <p className="text-offwhite leading-relaxed mb-10 max-w-sm font-normal">
-              Your rank, your history, your rivals — all waiting. Sign in to pick up exactly where you left off.
+              Connect with friends and to-be friends. Enjoy the game at your pace. 
             </p>
 
             {/* Stats */}
@@ -71,7 +122,7 @@ export function LoginSection() {
               {[
                 { label: 'Players',     value: '10K+' },
                 { label: 'Tables Live', value: '340+' },
-                { label: 'Avg. Game',   value: '22 min' },
+                // { label: 'Avg. Game',   value: '22 min' },
               ].map(({ label, value }) => (
                 <div key={label} className="flex flex-col gap-1">
                   <span className="font-hero font-bold text-offwhite text-2xl">{value}</span>
@@ -112,7 +163,10 @@ export function LoginSection() {
                 Access your Poquito account to continue playing.
               </p>
 
-              <form className="flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+              <form className="flex flex-col gap-5"  onSubmit={async (e) => {
+    e.preventDefault();
+    // await handleLogin();
+  }}>
 
                 {/* Email */}
                 <div className="flex flex-col gap-2">
@@ -137,7 +191,9 @@ export function LoginSection() {
                       className="w-full px-4 py-3.5 bg-transparent text-pq-green text-sm placeholder:text-pq-green/30 outline-none font-hero"
                     />
                   </div>
+                  
                 </div>
+                
 
                 {/* Password */}
                 <div className="flex flex-col gap-2">
@@ -184,6 +240,19 @@ export function LoginSection() {
                     </button>
                   </div>
                 </div>
+
+                {error && (
+  <div
+    className="rounded-lg px-4 py-3 text-sm"
+    style={{
+      background: "#FEE2E2",
+      color: "#DC2626",
+      border: "1px solid #FCA5A5",
+    }}
+  >
+    {error}
+  </div>
+)}
 
                 {/* Submit */}
                 <motion.button

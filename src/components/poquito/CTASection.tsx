@@ -82,8 +82,8 @@ export function CTASection() {
           className="font-hero font-bold text-pq-cream leading-tight tracking-tight text-balance mb-6"
           style={{ fontSize: 'clamp(2.8rem, 6.5vw, 5.8rem)' }}
         >
-          YOUR SEAT IS{' '}
-          <span className="text-pq-rust">WAITING.</span>
+          YOUR  {''}
+           <span className="text-pq-rust">MOVE.</span>
         </motion.h2>
 
         {/* Subtext */}
@@ -95,7 +95,7 @@ export function CTASection() {
           className="text-pq-cream leading-relaxed max-w-xl mx-auto mb-12"
           style={{ fontSize: '1.1rem' }}
         >
-          Thousands of tables are live right now. Download Poquito and make your first move.
+          A seat. A table. A game waiting to begin. 
         </motion.p>
 
         <motion.div
@@ -119,9 +119,10 @@ export function CTASection() {
           </motion.a> */}
 
           <div className="flex items-center gap-3">
+                        <StoreBadge icon={appStoreLogo} label="App Store" sub="Coming Soon on" />
+
             <StoreBadge icon={googlePlayLogo} label="Google Play" sub="Coming Soon on" />
 
-            <StoreBadge icon={appStoreLogo} label="App Store" sub="Coming Soon on" />
           </div>
         </motion.div>
 
@@ -186,7 +187,7 @@ export function CTASection() {
         </motion.div> */}
 
         {/* Stats */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -203,7 +204,7 @@ export function CTASection() {
               <p className="text-pq-cream text-xs tracking-[0.12em] uppercase mt-0.5">{sub}</p>
             </div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   )

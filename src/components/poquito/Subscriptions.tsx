@@ -40,25 +40,24 @@ function CancellationDialog({
             {plan === "monthly" ? (
               <>
                 <p>
-                  Monthly subscriptions can be cancelled at any time before your next billing date — no fees, no friction.
+                 Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter.  
                 </p>
                 <p>
-                  Once cancelled, your access remains active until the end of the current billing period. You will not be charged again after cancellation.
+                  No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
                 </p>
-                <p className="text-cream/55 text-[0.75rem]">
+                <p className="text-cream/55 text-[0.95rem]">
                   To cancel, go to account settings in the Pocket Dragon app and select "Manage Subscription."
                 </p>
               </>
             ) : (
               <>
                 <p>
-                  Annual subscriptions are non-refundable. Upon cancellation, all benefits remain fully active until the end of the current subscription term.
-                </p>
+Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter.                  </p>
                 <p>
-                  You will not be billed again after cancellation, but no partial refunds are issued for unused months.
+                 No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
                 </p>
                 <p className="text-cream/55 text-[0.95rem]">
-                  To cancel, go to account settings in the Pocket Dragon app and select "Manage Subscription."
+                  To cancel, go to Account Settings in the Pocket Dragon app and select ‘Manage Subscription’ 
                 </p>
               </>
             )}
@@ -89,7 +88,7 @@ export function Subscriptions() {
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionEyebrow>Membership</SectionEyebrow>
           <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]">
-            Choose your <span style={{ color: 'var(--rust)' }}>Subscription</span>
+            Choose your <span style={{ color: 'var(--rust)' }}>Plan</span>
           </h2>
         </div>
 
@@ -97,15 +96,18 @@ export function Subscriptions() {
           {/* Monthly */}
           <article className="plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15 bg-cream p-7">
             <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70">
-              Monthly
+              Monthly Plan
             </span>
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-foreground/70">Rs</span>
               <span className="font-display text-5xl font-bold leading-none text-foreground">
-                xxx
+                500
               </span>
               <span className="ml-1 text-sm text-foreground/65">/ month</span>
             </div>
+             <p className="mt-2 text-xs text-foreground/65">
+              Excl GST
+            </p>
             <p className="mt-2 text-xs text-foreground/65">
               Billed monthly. Cancel anytime.
             </p>
@@ -129,7 +131,7 @@ export function Subscriptions() {
             <a
              style={{
                     // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
-                    boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
+                    // boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
                   }}
               href="#"
               className="inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white"
@@ -137,10 +139,10 @@ export function Subscriptions() {
               Subscribe Now
             </a>
 
-            {/* <button
+            <button
               type="button"
               onClick={() => setMonthlyDialog(true)}
-              className="mt-3 inline-flex items-center justify-center gap-1.5 text-[0.68rem] text-foreground/50 underline underline-offset-2 hover:text-foreground/75 transition-colors"
+              className="cursor-pointer mt-3 inline-flex items-center justify-center gap-1.5 text-[0.80rem] text-foreground/50  underline-offset-2 hover:text-foreground/75 transition-colors"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
@@ -148,7 +150,7 @@ export function Subscriptions() {
                 <line x1="12" y1="8" x2="12.01" y2="8" />
               </svg>
               Terms of cancellation
-            </button> */}
+            </button>
           </article>
 
           {/* Annual — Featured */}
@@ -167,10 +169,11 @@ export function Subscriptions() {
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
-              <span className="font-display text-5xl font-bold leading-none">x,xxx</span>
+              <span className="font-display text-5xl font-bold leading-none">4,500</span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
-            <p className="mt-2 text-xs text-cream/75">Save Rs [x]/month </p>
+            <p className="mt-2 text-xs text-cream/75">Save Rs 25% | Rs 375/month </p>
+            <p className="mt-2 text-xs text-cream/75">Excl GST</p>
 
             <div className="my-6 h-px w-full bg-cream/15" />
 
@@ -190,12 +193,9 @@ export function Subscriptions() {
             </ul> */}
 
               <a
-               style={{
-                    // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
-                    boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
-                  }}
+               
               href="#"
-              className="inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
+              className="inline-flex  items-center justify-center rounded-xl border-2 bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
             >
               Subscribe Now
             </a>

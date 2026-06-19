@@ -121,7 +121,7 @@ export function Playground() {
         <div className="orbit-header">
 
                   <div className="flex flex-col items-center gap-3 text-center mb-2">
-                    <SectionEyebrow>INSIDE THE APP</SectionEyebrow>
+                    <SectionEyebrow>IN THE APP</SectionEyebrow>
                  
                   </div>
           {/* <span className="section-overline">INSIDE THE APP</span> */}
@@ -144,7 +144,7 @@ export function Playground() {
               <div className="ofc-text">
                 <span className="ofc-overline">SOLO PLAY</span>
                 <h3 className="ofc-title">Practice Mode with Bots</h3>
-                <p className="ofc-desc">Sharpen your skills with endless practice rounds against intelligent AI.</p>
+                <p className="ofc-desc">Sharpen your skills with endless practice rounds  </p>
                 <div className="ofc-tags">
                   <span className="ofc-tag">EASY</span>
                   <span className="ofc-tag">MEDIUM</span>
@@ -158,7 +158,7 @@ export function Playground() {
               <div className="ofc-text">
                 <span className="ofc-overline">SOCIAL</span>
                 <h3 className="ofc-title">Private Tables with Friends</h3>
-                <p className="ofc-desc">Round up your crew and deal in. Your table, your rules.</p>
+                <p className="ofc-desc">Round up your crew and deal in</p>
                 <div className="ofc-tags">
                   <span className="ofc-tag">INVITE LINK</span>
                   <span className="ofc-tag">UP TO 4</span>
@@ -171,7 +171,7 @@ export function Playground() {
               <div className="ofc-text">
                 <span className="ofc-overline">INTELLIGENCE</span>
                 <h3 className="ofc-title">Smart Matchmaking</h3>
-                <p className="ofc-desc">The right table, right away. Skill-based matching finds your perfect game in seconds.</p>
+                <p className="ofc-desc">The right table, right away. Skill-based matching finds your perfect game in seconds </p>
                 <div className="ofc-tags">
                   <span className="ofc-tag">SKILL-BASED</span>
                   <span className="ofc-tag">INSTANT</span>
@@ -388,7 +388,7 @@ export function Playground() {
               <div className="ofc-text">
                 <span className="ofc-overline">LIVE</span>
                 <h3 className="ofc-title">Public Lobby Tables</h3>
-                <p className="ofc-desc">The lobby's buzzing — grab a seat and jump straight into a live global game.</p>
+                <p className="ofc-desc">The lobby’s buzzing — grab a seat </p>
                 <div className="ofc-tags">
                   <span className="ofc-tag">REAL-TIME</span>
                   <span className="ofc-tag">GLOBAL</span>
@@ -401,7 +401,7 @@ export function Playground() {
               <div className="ofc-text">
                 <span className="ofc-overline">COMPETITIVE</span>
                 <h3 className="ofc-title">Ranked Points &amp; Tiers</h3>
-                <p className="ofc-desc">Earn points, reach new tiers, and unlock exclusive rewards with every win.</p>
+                <p className="ofc-desc">Earn points, reach new tiers and unlock exclusive rewards </p>
                 <div className="ofc-tags">
                   <span className="ofc-tag">🐉 GRAND MASTER</span>
                   <span className="ofc-tag">REWARDS</span>
