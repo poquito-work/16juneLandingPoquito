@@ -352,7 +352,9 @@ function DownloadButtons({
         href: "#",
         whileHover: { scale: 1.04 },
         whileTap: { scale: 0.97 },
+        className: "cursor-none",
         style: {
+          cursor: "auto",
           display: "block",
           borderRadius: 10,
           overflow: "hidden",
@@ -369,9 +371,11 @@ function DownloadButtons({
       motion.a,
       {
         href: "#",
+        className: "cursor-none",
         whileHover: { scale: 1.04 },
         whileTap: { scale: 0.97 },
         style: {
+          cursor: "auto",
           display: "block",
           borderRadius: 10,
           overflow: "hidden",
@@ -1624,7 +1628,7 @@ function StoreBadge({ icon, label, sub }) {
     motion.a,
     {
       href: "#",
-      className: "flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream",
+      className: "cursor-none flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream",
       whileHover: { scale: 1.03 },
       whileTap: { scale: 0.98 },
       children: [
