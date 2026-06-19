@@ -100,11 +100,11 @@ export function Hero() {
           >
             {/* Overline */}
             <motion.div variants={itemVariants} className="flex items-center gap-3">
-              <span className="h-px w-10" style={{ background: "var(--rust)" }} />
-              <span className="text-xs uppercase tracking-[0.22em]" style={{ color: "var(--rust)" }}>
+              <span className="h-px w-8" style={{ background: "var(--rust)" }} />
+              <span className="text-[0.72rem] uppercase tracking-[0.22em]" style={{ color: "var(--rust)" }}>
                  Play through tunnels, clouds, and signal tantrums
               </span>
-              {/* <span className="h-px w-10" style={{ background: "var(--rust)" }} /> */}
+              <span className="h-px w-8" style={{ background: "var(--rust)" }} />
             </motion.div>
 
             {/* Headline */}

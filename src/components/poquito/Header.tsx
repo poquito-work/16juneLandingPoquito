@@ -8,21 +8,19 @@ const NAV = [
   { label: "Contact Us", href: "#login" },
 ];
 
-// Sections with DARK backgrounds (cream/light sections are everything else)
-const DARK_SECTION_IDS = ["playground", "login", "download", "contact"];
+// dark green sections
+const DARK_SECTION_IDS = ["playground", "download", "contact"];
+// rust/brown section
+const RUST_SECTION_IDS = ["login"];
 
 function getCurrentSectionId(): string {
   const headerHeight = 64;
   const scrollY = window.scrollY + headerHeight + 1;
-
   const ids = ["home", "playground", "plans", "login", "faq", "download", "contact"];
   let current = ids[0];
-
   for (const id of ids) {
     const el = document.getElementById(id);
-    if (el && el.offsetTop <= scrollY) {
-      current = id;
-    }
+    if (el && el.offsetTop <= scrollY) current = id;
   }
   return current;
 }
@@ -30,35 +28,39 @@ function getCurrentSectionId(): string {
 export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(false); // hero is cream, so start light
+  const [sectionId, setSectionId] = useState("home");
+
+  const isDark = DARK_SECTION_IDS.includes(sectionId);
+  const isRust = RUST_SECTION_IDS.includes(sectionId);
 
   useEffect(() => {
     function update() {
-      const y = window.scrollY;
-      setScrolled(y > 10);
-      const id = getCurrentSectionId();
-      setIsDark(DARK_SECTION_IDS.includes(id));
+      setScrolled(window.scrollY > 0);
+      setSectionId(getCurrentSectionId());
     }
-
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
 
   const lightStyle = {
-    background: "rgba(249, 242, 228, 0.92)",
+    background: "rgba(249, 242, 228, 0.85)",
     backdropFilter: "blur(20px) saturate(180%)",
     borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
-    boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
+    // boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
   };
-
   const darkStyle = {
     background: "rgba(13, 31, 21, 0.88)",
     backdropFilter: "blur(20px) saturate(180%)",
     borderBottom: "1px solid rgba(249, 242, 228, 0.06)",
     boxShadow: "rgba(0, 0, 0, 0.3) 0px 4px 20px",
   };
-
+  const rustStyle = {
+    background: "rgba(122, 50, 20, 0.88)",
+    backdropFilter: "blur(20px) saturate(180%)",
+    borderBottom: "1px solid rgba(249, 242, 228, 0.08)",
+    boxShadow: "rgba(0, 0, 0, 0.25) 0px 4px 20px",
+  };
   const atTopStyle = {
     background: "transparent",
     backdropFilter: "none",
@@ -66,10 +68,19 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
     boxShadow: "none",
   };
 
-  const headerStyle = !scrolled ? atTopStyle : isDark ? darkStyle : lightStyle;
-  // At top of page hero is cream, so hamburger/text must be dark green
-  const textColor = scrolled && isDark ? "rgba(249,242,228,0.85)" : "rgba(20,51,34,0.8)";
-  const hamburgerColor = scrolled && isDark ? "#f9f2e4" : "#2d4a36";
+  const headerStyle = !scrolled
+    ? atTopStyle
+    : isDark
+    ? darkStyle
+    : isRust
+    ? rustStyle
+    : lightStyle;
+
+  const onDarkBg = scrolled && (isDark || isRust);
+  const textColor = onDarkBg ? "rgba(249,242,228,0.85)" : "#494949";
+  const hamburgerColor = onDarkBg ? "#f9f2e4" : "#494949";
+  // logo turns white on dark/rust bg; hero is cream so stays dark at top
+  const logoLight = onDarkBg;
 
   return (
     <>
@@ -81,7 +92,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
 
           {/* Logo */}
           <a href="#home" aria-label="Go to home" className="shrink-0">
-            <PocketDragonLogo size="lg" />
+            <PocketDragonLogo size="lg" light={logoLight} />
           </a>
 
           <div className="flex-1" />

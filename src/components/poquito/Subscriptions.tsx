@@ -163,7 +163,7 @@ export function Subscriptions() {
 
             <div className="flex items-center justify-between">
               <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85">
-                Annual
+                Annual Plan
               </span>
             </div>
 

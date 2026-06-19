@@ -26,11 +26,15 @@ export function PocketDragonLogo({
   className = "",
   size = "sm",
   animate = false,
+  light = false,
 }: {
   className?: string;
   size?: Size;
   animate?: boolean;
+  light?: boolean;
 }) {
+  const lightFilter = "brightness(0) invert(1)";
+
   if (!animate) {
     return (
       <img
@@ -39,7 +43,8 @@ export function PocketDragonLogo({
         width={1024}
         height={768}
         decoding="async"
-        className={`${sizeClasses[size]} object-contain shrink-0 select-none ${className}`}
+        className={`${sizeClasses[size]} object-contain shrink-0 select-none transition-all duration-500 ${className}`}
+        style={light ? { filter: lightFilter } : undefined}
         draggable={false}
       />
     );

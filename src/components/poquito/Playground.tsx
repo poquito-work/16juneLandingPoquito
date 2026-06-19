@@ -142,6 +142,7 @@ export function Playground() {
             <div className="orbit-feature-card active" id="ofc-practice" data-screen="practice">
               <div className="ofc-connector ofc-connector-right"></div>
               <div className="ofc-text">
+                {/* <span className="flex h-12 w-12 items-center justify-center rounded-full bg-cream/10 transition-colors duration-300 group-hover:bg-rust/15 group-focus-visible:bg-rust/15"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-graduation-cap text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></span> */}
                 <span className="ofc-overline">SOLO PLAY</span>
                 <h3 className="ofc-title">Practice Mode with Bots</h3>
                 <p className="ofc-desc">Sharpen your skills with endless practice rounds  </p>

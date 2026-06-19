@@ -258,7 +258,7 @@ export function Footer() {
           className="flex items-center justify-center py-5"
         >
           <p className="text-pq-cream text-xs font-normal tracking-wide hover:font-bold hover:scale-[1.03] transition-all duration-200">
-            © 2026 Poquito Mahjong. All Rights Reserved.
+            © 2026 [Pocket Dragon/Poquito]. All Rights Reserved.
           </p>
         </motion.div>
 
