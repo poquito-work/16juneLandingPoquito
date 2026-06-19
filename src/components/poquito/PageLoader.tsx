@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import tile1 from "@/assets/White Dragon.png";
-import tile2 from "@/assets/red Dragon.png";
-import tile3 from "@/assets/green Dragon.png";
+import tile2 from "@/assets/Red Dragon.png";
+import tile3 from "@/assets/Green Dragon.png";
 import logoSrc from '@/assets/pocket-dragon-logo.png'
 import { PocketDragonLogo } from "./Logo";
 

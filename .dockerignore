@@ -1,0 +1,10 @@
+.git
+.github
+.agents
+.vercel
+node_modules
+logs
+.deploy
+npm-debug.log
+Dockerfile
+docker-compose.yml
