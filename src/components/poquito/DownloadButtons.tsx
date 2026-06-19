@@ -17,7 +17,9 @@ export function DownloadButtons({
           href="#"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
+          className="cursor-none"
           style={{
+            cursor:"auto",
             display: "block",
             borderRadius: 10,
             overflow: "hidden",
@@ -32,9 +34,11 @@ export function DownloadButtons({
         </motion.a>
           <motion.a
           href="#"
+           className="cursor-none"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
           style={{
+            cursor:"auto",
             display: "block",
             borderRadius: 10,
             overflow: "hidden",

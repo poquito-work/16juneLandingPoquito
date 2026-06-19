@@ -1348,6 +1348,9 @@
 .border15{
    border-radius: 50%;
 }
+.cursor-none{
+  cursor: auto!important;
+}
 /* .border-100{
   border-radius: 50%;
 } */
