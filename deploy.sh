@@ -7,15 +7,10 @@ BRANCH="${2:-staging}"
 
 case "$BRANCH" in
   staging)
-    NGINX_SRC="$REPO/nginx/poquito"
+    NGINX_SRC="$REPO/nginx/poquito.conf"
     ;;
   main|production|prod)
-    NGINX_SRC="$REPO/nginx/poquito-prod"
-    ;;
-  *)
-    echo "Unsupported branch: $BRANCH"
-    echo "Use staging or main."
-    exit 1
+    NGINX_SRC="$REPO/nginx/poquito-prod.conf"
     ;;
 esac
 
@@ -34,8 +29,7 @@ docker compose up --build -d --remove-orphans
 echo "OK Container started"
 
 echo "Update nginx config"
-sudo cp "$NGINX_SRC" /etc/nginx/sites-available/poquito
-sudo ln -sf /etc/nginx/sites-available/poquito /etc/nginx/sites-enabled/poquito
+sudo cp "$NGINX_SRC" /etc/nginx/conf.d/poquito.conf
 sudo nginx -t && sudo systemctl reload nginx
 echo "OK Nginx updated"
 
