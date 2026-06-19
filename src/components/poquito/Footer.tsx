@@ -60,8 +60,8 @@ import { motion } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
 import logoSrc from '@/assets/pocket-dragon-logo.png'
 import tile1 from "@/assets/White Dragon.png";
-import tile2 from "@/assets/red Dragon.png";
-import tile3 from "@/assets/green Dragon.png";
+import tile2 from "@/assets/Red Dragon.png";
+import tile3 from "@/assets/Green Dragon.png";
 
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
