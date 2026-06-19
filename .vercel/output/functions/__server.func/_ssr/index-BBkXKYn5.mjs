@@ -62,8 +62,10 @@ const EASE$5 = [0.22, 0.61, 0.36, 1];
 function PocketDragonLogo({
   className = "",
   size = "sm",
-  animate = false
+  animate = false,
+  light = false
 }) {
+  const lightFilter = "brightness(0) invert(1)";
   if (!animate) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "img",
@@ -73,7 +75,8 @@ function PocketDragonLogo({
         width: 1024,
         height: 768,
         decoding: "async",
-        className: `${sizeClasses[size]} object-contain shrink-0 select-none ${className}`,
+        className: `${sizeClasses[size]} object-contain shrink-0 select-none transition-all duration-500 ${className}`,
+        style: light ? { filter: lightFilter } : void 0,
         draggable: false
       }
     );
@@ -127,36 +130,71 @@ const NAV = [
   { label: "About Us", href: "#playground" },
   { label: "Contact Us", href: "#login" }
 ];
+const DARK_SECTION_IDS = ["playground", "download", "contact"];
+const RUST_SECTION_IDS = ["login"];
+function getCurrentSectionId() {
+  const headerHeight = 64;
+  const scrollY = window.scrollY + headerHeight + 1;
+  const ids = ["home", "playground", "plans", "login", "faq", "download", "contact"];
+  let current = ids[0];
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) current = id;
+  }
+  return current;
+}
 function Header({ onLoginClick }) {
   const [open, setOpen] = reactExports.useState(false);
   const [scrolled, setScrolled] = reactExports.useState(false);
+  const [sectionId, setSectionId] = reactExports.useState("home");
+  const isDark = DARK_SECTION_IDS.includes(sectionId);
+  const isRust = RUST_SECTION_IDS.includes(sectionId);
   reactExports.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    function update() {
+      setScrolled(window.scrollY > 0);
+      setSectionId(getCurrentSectionId());
+    }
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
+  const lightStyle = {
+    background: "rgba(249, 242, 228, 0.85)",
+    backdropFilter: "blur(20px) saturate(180%)",
+    borderBottom: "1px solid rgba(20, 51, 34, 0.09)"
+    // boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
+  };
+  const darkStyle = {
+    background: "rgba(13, 31, 21, 0.88)",
+    backdropFilter: "blur(20px) saturate(180%)",
+    borderBottom: "1px solid rgba(249, 242, 228, 0.06)",
+    boxShadow: "rgba(0, 0, 0, 0.3) 0px 4px 20px"
+  };
+  const rustStyle = {
+    background: "rgba(122, 50, 20, 0.88)",
+    backdropFilter: "blur(20px) saturate(180%)",
+    borderBottom: "1px solid rgba(249, 242, 228, 0.08)",
+    boxShadow: "rgba(0, 0, 0, 0.25) 0px 4px 20px"
+  };
+  const atTopStyle = {
+    background: "transparent",
+    backdropFilter: "none",
+    borderBottom: "none",
+    boxShadow: "none"
+  };
+  const headerStyle = !scrolled ? atTopStyle : isDark ? darkStyle : isRust ? rustStyle : lightStyle;
+  const onDarkBg = scrolled && (isDark || isRust);
+  const textColor = onDarkBg ? "rgba(249,242,228,0.85)" : "#494949";
+  const hamburgerColor = onDarkBg ? "#f9f2e4" : "#494949";
+  const logoLight = onDarkBg;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "header",
       {
-        className: "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        style: scrolled ? {
-          background: "rgba(249, 242, 228, 0.82)",
-          backdropFilter: "blur(20px) saturate(180%)",
-          borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
-          boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
-          opacity: 1,
-          transform: "none"
-        } : {
-          background: "transparent",
-          backdropFilter: "none",
-          borderBottom: "none",
-          boxShadow: "none",
-          opacity: 1,
-          transform: "none"
-        },
+        className: "fixed top-0 left-0 right-0 z-50 transition-all duration-400",
+        style: { ...headerStyle, opacity: 1, transform: "none" },
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#home", "aria-label": "Go to home", className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "lg" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#home", "aria-label": "Go to home", className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "lg", light: logoLight }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-5", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -176,7 +214,8 @@ function Header({ onLoginClick }) {
                     initial: { opacity: 0, y: -4 },
                     animate: { opacity: 1, y: 0 },
                     transition: { delay: i * 0.05, duration: 0.18, ease: "easeOut" },
-                    className: "text-sm font-normal text-foreground/80 transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]",
+                    className: "text-sm font-normal transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]",
+                    style: { color: textColor },
                     children: item.label
                   },
                   item.label
@@ -202,14 +241,14 @@ function Header({ onLoginClick }) {
                 "aria-expanded": open,
                 className: "flex items-center justify-center w-8 h-8 cursor-pointer",
                 children: open ? /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "2", y1: "3", x2: "14", y2: "10", stroke: "#494949", strokeWidth: "2", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "14", y1: "10", x2: "18", y2: "5", stroke: "#494949", strokeWidth: "2", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "3", y1: "17", x2: "14", y2: "10", stroke: "#494949", strokeWidth: "2", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "14.5", y1: "11", x2: "22", y2: "15", stroke: "#494949", strokeWidth: "2", strokeLinecap: "round" })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "2", y1: "3", x2: "14", y2: "10", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "14", y1: "10", x2: "18", y2: "5", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "3", y1: "17", x2: "14", y2: "10", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "14.5", y1: "11", x2: "22", y2: "15", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" })
                 ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "20", height: "14", viewBox: "0 0 20 14", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "1", x2: "20", y2: "1", stroke: "#494949", strokeWidth: "2", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "7", x2: "20", y2: "7", stroke: "#494949", strokeWidth: "2", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "13", x2: "20", y2: "13", stroke: "#494949", strokeWidth: "2", strokeLinecap: "round" })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "1", x2: "20", y2: "1", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "7", x2: "20", y2: "7", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "13", x2: "20", y2: "13", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" })
                 ] })
               }
             )
@@ -323,7 +362,7 @@ function DownloadButtons({
           boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
           padding: "4px 10px"
         },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: googlePlayBadge, alt: "Get it on Google Play", style: { height: 36, width: "auto", display: "block" } })
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: appStoreBadge, alt: "Download on the App Store", style: { height: 36, width: "auto", display: "block" } })
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -342,7 +381,7 @@ function DownloadButtons({
           boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
           padding: "4px 10px"
         },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: appStoreBadge, alt: "Download on the App Store", style: { height: 36, width: "auto", display: "block" } })
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: googlePlayBadge, alt: "Get it on Google Play", style: { height: 36, width: "auto", display: "block" } })
       }
     )
   ] }) });
@@ -426,8 +465,9 @@ function Hero() {
                 className: "flex flex-col gap-8 lg:gap-10",
                 children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-3", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-10", style: { background: "var(--rust)" } }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs uppercase tracking-[0.22em]", style: { color: "var(--rust)" }, children: "Play Offline" })
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8", style: { background: "var(--rust)" } }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] uppercase tracking-[0.22em]", style: { color: "var(--rust)" }, children: "Play through tunnels, clouds, and signal tantrums" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8", style: { background: "var(--rust)" } })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(
                     motion.h1,
@@ -604,13 +644,13 @@ function CancellationDialog({
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: " space-y-3 text-[0.95rem] text-cream/85 leading-relaxed", children: plan === "monthly" ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Monthly subscriptions can be cancelled at any time before your next billing date — no fees, no friction." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Once cancelled, your access remains active until the end of the current billing period. You will not be charged again after cancellation." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cream/55 text-[0.75rem]", children: 'To cancel, go to account settings in the Pocket Dragon app and select "Manage Subscription."' })
-    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Annual subscriptions are non-refundable. Upon cancellation, all benefits remain fully active until the end of the current subscription term." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "You will not be billed again after cancellation, but no partial refunds are issued for unused months." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cream/55 text-[0.95rem]", children: 'To cancel, go to account settings in the Pocket Dragon app and select "Manage Subscription."' })
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter.                  " }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cream/55 text-[0.95rem]", children: "To cancel, go to Account Settings in the Pocket Dragon app and select ‘Manage Subscription’" })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "button",
@@ -632,17 +672,18 @@ function Subscriptions() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(SectionEyebrow, { children: "Membership" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]", children: [
           "Choose your ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "Subscription" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "Plan" })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15 bg-cream p-7", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70", children: "Monthly" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70", children: "Monthly Plan" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground/70", children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none text-foreground", children: "xxx" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none text-foreground", children: "500" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-foreground/65", children: "/ month" })
           ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Excl GST" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Billed monthly. Cancel anytime." }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "my-6 h-px w-full bg-foreground/10" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -650,33 +691,46 @@ function Subscriptions() {
             {
               style: {
                 // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
-                boxShadow: "0 8px 24px rgba(182,90,47,0.30)"
+                // boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
               },
               href: "#",
               className: "inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white",
               children: "Subscribe Now"
             }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: () => setMonthlyDialog(true),
+              className: "cursor-pointer mt-3 inline-flex items-center justify-center gap-1.5 text-[0.80rem] text-foreground/50  underline-offset-2 hover:text-foreground/75 transition-colors",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "12", cy: "12", r: "10" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "12", y1: "16", x2: "12", y2: "12" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "12", y1: "8", x2: "12.01", y2: "8" })
+                ] }),
+                "Terms of cancellation"
+              ]
+            }
           )
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "relative flex flex-col rounded-2xl bg-green-new p-7 text-cream", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute right-5 -top-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm", children: "Best Value" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85", children: "Annual" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85", children: "Annual Plan" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-cream/85", children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", children: "x,xxx" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", children: "4,500" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-cream/75", children: "/ year" })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save Rs [x]/month " }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save Rs 25% | Rs 375/month " }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Excl GST" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "my-6 h-px w-full bg-cream/15" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
-              style: {
-                // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
-                boxShadow: "0 8px 24px rgba(182,90,47,0.30)"
-              },
               href: "#",
-              className: "inline-flex items-center justify-center rounded-xl border-2 border-cream bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
+              className: "inline-flex  items-center justify-center rounded-xl border-2 bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
               children: "Subscribe Now"
             }
           ),
@@ -815,7 +869,7 @@ function Playground() {
   }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "playground-section", id: "playground", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-container", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-header", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col items-center gap-3 text-center mb-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SectionEyebrow, { children: "INSIDE THE APP" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col items-center gap-3 text-center mb-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SectionEyebrow, { children: "IN THE APP" }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "orbit-title", children: [
         "THE COMPLETE MAHJONG ",
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rust", children: "PLAYGROUND" })
@@ -828,7 +882,7 @@ function Playground() {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "SOLO PLAY" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Practice Mode with Bots" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Sharpen your skills with endless practice rounds against intelligent AI." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Sharpen your skills with endless practice rounds  " }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "EASY" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "MEDIUM" }),
@@ -841,7 +895,7 @@ function Playground() {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "SOCIAL" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Private Tables with Friends" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Round up your crew and deal in. Your table, your rules." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Round up your crew and deal in" }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "INVITE LINK" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "UP TO 4" })
@@ -853,7 +907,7 @@ function Playground() {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "INTELLIGENCE" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Smart Matchmaking" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The right table, right away. Skill-based matching finds your perfect game in seconds." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The right table, right away. Skill-based matching finds your perfect game in seconds " }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "SKILL-BASED" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "INSTANT" })
@@ -1120,7 +1174,7 @@ function Playground() {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "LIVE" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Public Lobby Tables" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The lobby's buzzing — grab a seat and jump straight into a live global game." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The lobby’s buzzing — grab a seat " }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "REAL-TIME" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "GLOBAL" })
@@ -1132,7 +1186,7 @@ function Playground() {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "COMPETITIVE" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Ranked Points & Tiers" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Earn points, reach new tiers, and unlock exclusive rewards with every win." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Earn points, reach new tiers and unlock exclusive rewards " }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "🐉 GRAND MASTER" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "REWARDS" })
@@ -1146,33 +1200,48 @@ function Playground() {
 const EASE$3 = [0.22, 0.61, 0.36, 1];
 const faqs = [
   {
-    q: "What is Poquito Mahjong?",
-    a: "Poquito Mahjong is a premium mobile app that brings Traditional Mahjong to your fingertips. Play in real-time against players worldwide, practice against intelligent bots, or challenge friends in private tables. Every element — from matchmaking to ranked progression — is designed to honour the depth of Traditional Mahjong while making it effortless to enjoy anywhere.",
+    q: "Do I need to create a new account on the website?",
+    a: "No. Log in with the same username and password as the App ",
     defaultOpen: true
   },
   {
-    q: "What Mahjong variant does Poquito support?",
-    a: "Poquito focuses exclusively on Traditional Mahjong — the authentic four-player tile game rooted in centuries of heritage. We've implemented rigorous rules covering draws, discards, winning hands, and scoring to ensure the experience feels true to the game you know and love, with modern clarity and interface polish.",
+    q: "Can I still play without subscribing?",
+    a: "Yes! New accounts receive a free 2-week trial with full access to the app. After the trial ends, you can continue playing by subscribing to our monthly or annual plans",
     defaultOpen: true
   },
   {
-    q: "Can I cancel my monthly subscription at any time?",
-    a: "Yes. Monthly subscriptions can be cancelled at any time before your next billing date — no fees, no friction. Annual subscriptions are non-refundable, but all your benefits remain fully active until the end of the subscription term.",
+    q: "What is Traditional Mahjong? ",
+    a: "Traditional Mahjong is a four-player tile-based game where players build a complete winning hand (of 14 tiles) by forming specific tile combinations. The traditional format includes variations such as Passport (East Wind Round), Goulash (West Wind Round), and more.",
     defaultOpen: false
   },
   {
-    q: "How does Smart Matchmaking work?",
-    a: "Our matchmaking engine considers your current Ranked Points, recent win-rate, average game duration, and preferred play times to assemble tables where every seat is competitive. The goal is simple: every game should feel like it could go either way right until the final tile.",
+    q: "What happens if a table doesn’t fill up? ",
+    a: "If a player has joined a table and there are one or more seats still open, the host may choose to begin the game with bots ",
     defaultOpen: false
   },
   {
-    q: "Is there a free trial available?",
-    a: "We're actively working on a trial period for new players. Currently, the monthly plan at $9.99 offers full access with the freedom to cancel before your next billing date — making it a low-commitment way to experience everything Poquito has to offer.",
+    q: "Will my subscription auto-renew?",
+    a: "Yes — subscriptions are set to auto-renew by default, but you can turn off auto-renewal at any time through your account settings",
     defaultOpen: false
   },
   {
-    q: "How many players are needed to start a game?",
-    a: "Traditional Mahjong requires four players. In Practice Mode, intelligent bots fill any open seats instantly so you can always get a full table. In Public Lobby, the matchmaking system fills your table within seconds. Private Tables allow you to wait for friends or let bots fill empty seats.",
+    q: "Can I switch between monthly and annual plans?",
+    a: "Yes — you can switch from a monthly plan to an annual plan at any time. Your annual subscription will begin once your current monthly billing period ends ",
+    defaultOpen: false
+  },
+  {
+    q: "Can I customize my gameplay experience?",
+    a: "Yes. In Practice Mode and Create a Table Mode, you can customize game variants, number of games, and turn timer settings to match your preferred style of play",
+    defaultOpen: false
+  },
+  {
+    q: "How do I report bugs or unfair behavior?",
+    a: "You may contact us at <a href='mailto:hello@pocketdragon.app' class='text-rust hover:opacity-75 transition-opacity'>hello@pocketdragon.app</a>",
+    defaultOpen: false
+  },
+  {
+    q: "What happens to my progress if I switch devices? ",
+    a: "No problem! Simply log in with the same account credentials on your new device to continue with your current rank, stats, and progress. ",
     defaultOpen: false
   }
 ];
@@ -1204,7 +1273,8 @@ function FAQSection() {
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-5", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-rust/60" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust", children: "Questions" })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust", children: "Questions" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-rust/60" })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "h2",
@@ -1239,10 +1309,10 @@ function FAQSection() {
               motion.button,
               {
                 onClick: () => setExpanded(true),
-                className: "inline-flex text-bold items-center gap-3 text-pq text-sm tracking-[0.14em] uppercase font-normal border-b border-pq-green/20 pb-0.5 hover:border-pq-green/50 transition-all duration-300 group",
+                className: "cursor-pointer inline-flex text-bold items-center gap-3 text-pq text-sm tracking-[0.14em] uppercase font-normal border-b border-pq-green/20 pb-0.5 hover:border-pq-green/50 transition-all duration-300 group",
                 whileHover: { letterSpacing: "0.18em" },
                 children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "View More Questions" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "View More" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     motion.svg,
                     {
@@ -1294,7 +1364,7 @@ function FAQItem({
             {
               animate: { rotate: isOpen ? 45 : 0 },
               transition: { duration: 0.35, ease: EASE$3 },
-              className: `faqbtn flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${isOpen ? "border-pq-rust/50 bg-pq-rust/10" : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"}`,
+              className: `cursor-pointer faqbtn flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${isOpen ? "border-pq-rust/50 bg-pq-rust/10" : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"}`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "svg",
                 {
@@ -1317,7 +1387,13 @@ function FAQItem({
             exit: { height: 0, opacity: 0 },
             transition: { duration: 0.45, ease: EASE$3 },
             style: { overflow: "hidden" },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200", children: faq.a })
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "p",
+              {
+                className: "text-pq text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200",
+                dangerouslySetInnerHTML: { __html: faq.a }
+              }
+            )
           },
           "content"
         ) })
@@ -1331,6 +1407,8 @@ function LoginSection() {
   const [password, setPassword] = reactExports.useState("");
   const [focused, setFocused] = reactExports.useState(null);
   const [showPass, setShowPass] = reactExports.useState(false);
+  const [loading, setLoading] = reactExports.useState(false);
+  const [error, setError] = reactExports.useState("");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "login", className: "relative overflow-hidden pt-15", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
@@ -1339,7 +1417,8 @@ function LoginSection() {
         style: {
           background: (
             // 'linear-gradient(110deg, #E7B59B 0%, #D48A63 30%, #B65A2F 65%, #8F3F1E 100%)'
-            "linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)"
+            // 'linear-gradient(110deg, rgba(10, 28, 18, 0.95) 0%, rgba(12, 35, 24, 0.90) 35%, rgba(20, 51, 34, 0.75) 65%, rgba(20, 51, 34, 0.55) 100%)',
+            "linear-gradient(110deg,rgba(94, 45, 23, 0.98) 0%,rgba(122, 59, 31, 0.95) 25%,rgba(154, 76, 40, 0.90) 50%,rgba(182, 90, 47, 0.85) 75%,rgba(214, 122, 76, 0.80) 100%)"
           )
         }
       }
@@ -1377,14 +1456,14 @@ function LoginSection() {
               {
                 className: "font-hero font-bold text-offwhite leading-tight tracking-tight text-balance mb-6",
                 style: { fontSize: "clamp(2.4rem, 4.5vw, 4rem)" },
-                children: "WELCOME BACK TO THE TABLE."
+                children: "READY WHEN YOU ARE."
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-offwhite leading-relaxed mb-10 max-w-sm font-normal", children: "Your rank, your history, your rivals — all waiting. Sign in to pick up exactly where you left off." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-offwhite leading-relaxed mb-10 max-w-sm font-normal", children: "Connect with friends and to-be friends. Enjoy the game at your pace." }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-8", children: [
               { label: "Players", value: "10K+" },
-              { label: "Tables Live", value: "340+" },
-              { label: "Avg. Game", value: "22 min" }
+              { label: "Tables Live", value: "340+" }
+              // { label: 'Avg. Game',   value: '22 min' },
             ].map(({ label, value }) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-1", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-hero font-bold text-offwhite text-2xl", children: value }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-offwhite text-[10px] tracking-[0.14em] uppercase font-normal", children: label })
@@ -1420,7 +1499,9 @@ function LoginSection() {
                   }
                 ),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-green/70 text-sm mb-8 font-normal", children: "Access your Poquito account to continue playing." }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "flex flex-col gap-5", onSubmit: (e) => e.preventDefault(), children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "flex flex-col gap-5", onSubmit: async (e) => {
+                  e.preventDefault();
+                }, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-pq-green/70 text-xs tracking-[0.14em] uppercase font-normal", children: "Email Address" }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1490,6 +1571,18 @@ function LoginSection() {
                       }
                     )
                   ] }),
+                  error && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      className: "rounded-lg px-4 py-3 text-sm",
+                      style: {
+                        background: "#FEE2E2",
+                        color: "#DC2626",
+                        border: "1px solid #FCA5A5"
+                      },
+                      children: error
+                    }
+                  ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     motion.button,
                     {
@@ -1603,9 +1696,9 @@ function CTASection() {
               className: "font-hero font-bold text-pq-cream leading-tight tracking-tight text-balance mb-6",
               style: { fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)" },
               children: [
-                "YOUR SEAT IS",
-                " ",
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-pq-rust", children: "WAITING." })
+                "YOUR  ",
+                "",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-pq-rust", children: "MOVE." })
               ]
             }
           ),
@@ -1618,7 +1711,7 @@ function CTASection() {
               transition: { duration: 0.7, ease: EASE$1, delay: 0.2 },
               className: "text-pq-cream leading-relaxed max-w-xl mx-auto mb-12",
               style: { fontSize: "1.1rem" },
-              children: "Thousands of tables are live right now. Download Poquito and make your first move."
+              children: "A seat. A table. A game waiting to begin."
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1630,27 +1723,9 @@ function CTASection() {
               transition: { duration: 0.7, ease: EASE$1, delay: 0.3 },
               className: "flex flex-col sm:flex-row items-center justify-center gap-4",
               children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: googlePlayLogo, label: "Google Play", sub: "Coming Soon on" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: appStoreLogo, label: "App Store", sub: "Coming Soon on" })
+                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: appStoreLogo, label: "App Store", sub: "Coming Soon on" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: googlePlayLogo, label: "Google Play", sub: "Coming Soon on" })
               ] })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.div,
-            {
-              initial: { opacity: 0 },
-              whileInView: { opacity: 1 },
-              viewport: { once: true },
-              transition: { delay: 0.55, duration: 0.8 },
-              className: "flex items-center justify-center gap-10 mt-16 flex-wrap",
-              children: [
-                { label: "10,000+", sub: "Active Players" },
-                { label: "4.8★", sub: "App Store Rating" },
-                { label: "120+", sub: "Countries" }
-              ].map(({ label, sub }) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-hero font-bold text-pq-cream text-2xl", children: label }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-cream text-xs tracking-[0.12em] uppercase mt-0.5", children: sub })
-              ] }, sub))
             }
           )
         ] })
@@ -1858,7 +1933,7 @@ function Footer() {
               viewport: { once: true },
               transition: { delay: 0.2, duration: 0.6 },
               className: "flex items-center justify-center py-5",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-cream text-xs font-normal tracking-wide hover:font-bold hover:scale-[1.03] transition-all duration-200", children: "© 2026 Poquito Mahjong. All Rights Reserved." })
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-cream text-xs font-normal tracking-wide hover:font-bold hover:scale-[1.03] transition-all duration-200", children: "© 2026 [Pocket Dragon/Poquito]. All Rights Reserved." })
             }
           )
         ] })
