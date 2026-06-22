@@ -43,11 +43,63 @@ export const sendOtp = async (
     otp_type: "EMAIL_OTP",
   };
 
-  console.log("Login Payload:", payload);
-  console.log("API URL:", `${API_BASE_URL}/api/v1/auth/login/password`);
-
   const response = await axios.post(
     `${API_BASE_URL}/api/v1/auth/send-otp`,
+    payload,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const registerUser = async (data: {
+  username: string;
+  email: string;
+  phone_number: string;
+  password: string;
+  city: string;
+  otp:string
+}) => {
+  const payload = {
+    username: data.username,
+    email: data.email,
+    phone_number: data.phone_number,
+    password: data.password,
+    city: data.city,
+    email_otp:data.otp
+    // device_id: "web",
+  };
+
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/register`,
+    payload,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const verifyOtp = async (data: {
+  identifier: string;
+  otp: string;
+  otp_type: string;
+}) => {
+  const payload = {
+    identifier: data.identifier,
+    otp: data.otp,
+    otp_type: data.otp_type,
+  };
+
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/verify-otp`,
     payload,
     {
       headers: {
