@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import logoSrc from '@/assets/pocket-dragon-logo.png'
 import { useState } from 'react'
 import { loginUser } from "@/services/auth";
-
+import { Link, useNavigate } from '@tanstack/react-router'
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
 export function LoginSection() {
@@ -10,6 +10,7 @@ export function LoginSection() {
   const [password, setPassword] = useState('')
   const [focused, setFocused]   = useState<string | null>(null)
   const [showPass, setShowPass] = useState(false)
+  const navigate = useNavigate()
 
 const [loading, setLoading] = useState(false);
 const [error, setError] = useState("");
@@ -41,10 +42,8 @@ const [error, setError] = useState("");
         "access_token",
         response.access_token
       );
+      navigate({ to: "/MyAccount" });
     }
-
-    // redirect if needed
-    // navigate({ to: "/dashboard" });
 
   } catch (err: any) {
     console.error("Login Error:", err);
@@ -277,9 +276,9 @@ const [error, setError] = useState("");
 
               <p className="text-center text-pq-green/70 text-sm font-normal">
                 New to Poquito?{' '}
-                <a href="#" className="text-pq-rust font-normal hover:underline underline-offset-2">
+                <Link   to="/register" className="text-pq-rust font-normal hover:underline underline-offset-2">
                   Create an account
-                </a>
+                </Link>
               </p>
             </div>
           </motion.div>
