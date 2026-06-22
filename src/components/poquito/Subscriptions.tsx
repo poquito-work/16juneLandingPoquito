@@ -69,7 +69,7 @@ Subscriptions are non-refundable. Upon cancellation, benefits will remain active
             onClick={onClose}
             className="cursor-pointer mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
           >
-            Understood
+            Got It
           </button>
         </div>
       </DialogContent>
