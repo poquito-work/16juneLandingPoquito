@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - staging
-      - main
+      - production
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name }}
+    environment: main
 
     steps:
       - name: Deploy via SSH
