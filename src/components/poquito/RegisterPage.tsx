@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import { checkEmailExists, checkUserExists, getPredefinedListByType, getPrivacyPolicy, getTermsCondition, registerUser, sendOtp, verifyOtp } from "@/services/auth";
 import { PocketDragonLogo } from "./Logo";
 
 // ─── City list ───────────────────────────────────────────────────────────────
@@ -124,6 +125,7 @@ function EyeIcon({ visible }: { visible: boolean }) {
 interface RegisterFormData {
   fullName: string;
   city: string;
+  cityId: number;
   email: string;
   phone: string;
   password: string;
@@ -145,14 +147,35 @@ function StepDetails({
   data,
   onChange,
   onNext,
+  apiError,
+  isLoading,
+  termsUrl,
+  privacyUrl,
 }: {
   data: RegisterFormData;
-  onChange: (field: keyof RegisterFormData, value: string | boolean) => void;
+  onChange: (field: keyof RegisterFormData, value: string | boolean | number) => void;
   onNext: () => void;
+  apiError: string;
+  isLoading: boolean;
+  termsUrl: string;
+  privacyUrl: string;
 }) {
   const [errors, setErrors] = useState<RegisterFormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [cityList, setCityList] = useState([]);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await getPredefinedListByType("city");
+        setCityList(response.data.content);
+      } catch (error) {
+        console.error("Error fetching city list:", error);
+      }
+    };
+    fetchCities();
+  }, []);
 
   function validate(): RegisterFormErrors {
     const e: RegisterFormErrors = {};
@@ -162,7 +185,11 @@ function StepDetails({
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) e.email = "Please enter a valid email.";
     if (data.phone.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())) e.phone = "Please enter a valid phone number.";
     if (!data.password) e.password = "Password is required.";
-    else if (data.password.length < 8) e.password = "Password must be at least 8 characters.";
+    else if (data.password.length < 8) e.password = "Must be at least 8 characters.";
+    else if (!/[A-Z]/.test(data.password)) e.password = "Must include at least one uppercase letter.";
+    else if (!/[a-z]/.test(data.password)) e.password = "Must include at least one lowercase letter.";
+    else if (!/[0-9]/.test(data.password)) e.password = "Must include at least one digit.";
+    else if (!/[^A-Za-z0-9]/.test(data.password)) e.password = "Must include at least one special character.";
     if (!data.confirmPassword) e.confirmPassword = "Please confirm your password.";
     else if (data.password !== data.confirmPassword) e.confirmPassword = "Passwords do not match.";
     if (!data.agreed) e.agreed = "You must agree to the Terms & Privacy Policy to continue.";
@@ -207,6 +234,7 @@ function StepDetails({
             value={data.phone}
             onChange={(e) => onChange("phone", e.target.value)}
             autoComplete="tel"
+            maxLength={10}
           />
           {errors.phone && <span className="reg-error">{errors.phone}</span>}
         </div>
@@ -234,11 +262,15 @@ function StepDetails({
               id="reg-city"
               className={`reg-input reg-select ${errors.city ? "reg-input-error" : ""} ${!data.city ? "reg-select-placeholder" : ""}`}
               value={data.city}
-              onChange={(e) => onChange("city", e.target.value)}
+              onChange={(e) => {
+                const selected = cityList.find((c: any) => c.name === e.target.value) as any;
+                onChange("city", e.target.value);
+                onChange("cityId", selected?.id ?? 0);
+              }}
             >
               <option value="" disabled>Select your city</option>
-              {CITIES.map((c) => (
-                <option key={c} value={c}>{c}</option>
+              {cityList?.map((c: any) => (
+                <option key={c.uuid} value={c.name}>{c.name}</option>
               ))}
             </select>
             <span className="reg-select-arrow">
@@ -259,7 +291,7 @@ function StepDetails({
               id="reg-password"
               type={showPassword ? "text" : "password"}
               className={`reg-input reg-input-padded ${errors.password ? "reg-input-error" : ""}`}
-              placeholder="Min. 8 characters"
+              placeholder="Min. 8 chars, A-Z, a-z, 0-9, @#$…"
               value={data.password}
               onChange={(e) => onChange("password", e.target.value)}
               autoComplete="new-password"
@@ -304,19 +336,30 @@ function StepDetails({
           />
           <span className="reg-checkbox-text">
             I agree to the{" "}
-            <Link to="/terms" className="reg-signin-link" target="_blank">Terms of Use</Link>
+            <a href={termsUrl || "/terms"} className="reg-signin-link" target="_blank" rel="noreferrer">Terms of Use</a>
             {" "}and{" "}
-            <Link to="/privacy" className="reg-signin-link" target="_blank">Privacy Policy</Link>
+            <a href={privacyUrl || "/privacy"} className="reg-signin-link" target="_blank" rel="noreferrer">Privacy Policy</a>
           </span>
         </label>
         {errors.agreed && <span className="reg-error reg-error-checkbox">{errors.agreed}</span>}
       </div>
 
-      <button type="submit" className="reg-next-btn">
-        Continue
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
-        </svg>
+      {apiError && (
+        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
+          {apiError}
+        </div>
+      )}
+
+      <button type="submit" className="reg-next-btn" disabled={isLoading}>
+        {isLoading ? (
+          <><span className="reg-spinner" />Registering…</>
+        ) : (
+          <>Continue
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
+            </svg>
+          </>
+        )}
       </button>
 
       <p className="reg-signin-hint">
@@ -325,22 +368,26 @@ function StepDetails({
       </p>
     </form>
   );
+  
 }
 
 // ─── Step 2: OTP Verification ────────────────────────────────────────────────
 
 function StepOTP({
   email,
+  formData,
   onBack,
   onVerified,
 }: {
   email: string;
+  formData: RegisterFormData;
   onBack: () => void;
   onVerified: () => void;
 }) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
   const [verifying, setVerifying] = useState(false);
+  const [resending, setResending] = useState(false);
   const [resendSeconds, setResendSeconds] = useState(30);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -350,6 +397,10 @@ function StepOTP({
     const t = setTimeout(() => setResendSeconds((s) => s - 1), 1000);
     return () => clearTimeout(t);
   }, [resendSeconds]);
+
+
+
+
 
   function handleOtpChange(i: number, val: string) {
     const digit = val.replace(/\D/g, "").slice(-1);
@@ -381,19 +432,48 @@ function StepOTP({
     if (code.length < 6) { setError("Please enter the 6-digit OTP."); return; }
     setVerifying(true);
     setError("");
-    // TODO: call verify-OTP API
-    await new Promise((r) => setTimeout(r, 900));
-    setVerifying(false);
-    onVerified();
+    try {
+      await verifyOtp({ identifier: email, otp: code, otp_type: "EMAIL_OTP" });
+      await registerUser({
+        username: formData.fullName,
+        email: formData.email,
+        phone_number: formData.phone.trim() || null,
+        password: formData.password,
+        city_id: formData.cityId,
+        otp: code,
+        role_name: "user",
+        is_terms_condition_accepted: true,
+        is_privacy_policy: true,
+      });
+      onVerified();
+    } catch (err: any) {
+      setError(
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        "Verification failed. Please try again."
+      );
+    } finally {
+      setVerifying(false);
+    }
   }
 
-  function handleResend() {
+  async function handleResend() {
     setOtp(["", "", "", "", "", ""]);
     setError("");
     setResendSeconds(30);
     inputRefs.current[0]?.focus();
-    // TODO: call resend-OTP API
+    setResending(true);
+    try {
+      await sendOtp(email, "EMAIL_OTP");
+    } catch {
+      // silently ignore resend errors
+    } finally {
+      setResending(false);
+    }
   }
+
+  
+
 
   return (
     <div className="reg-otp-wrap">
@@ -565,9 +645,13 @@ const STEP_TITLES: Record<Step, { title: string; sub: string }> = {
 export function RegisterPage() {
   const [step, setStep] = useState<Step>(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
+  const [termsUrl, setTermsUrl] = useState("");
+  const [privacyUrl, setPrivacyUrl] = useState("");
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: "",
     city: "",
+    cityId: 0,
     email: "",
     phone: "",
     password: "",
@@ -575,15 +659,61 @@ export function RegisterPage() {
     agreed: false,
   });
 
-  function handleChange(field: keyof RegisterFormData, value: string | boolean) {
+  useEffect(() => {
+    const fetchComplianceDocs = async () => {
+      try {
+        const [termsRes, privacyRes] = await Promise.all([
+          getTermsCondition(),
+          getPrivacyPolicy(),
+        ]);
+        if (termsRes?.data?.content_url) setTermsUrl(termsRes.data.content_url);
+        if (privacyRes?.data?.content_url) setPrivacyUrl(privacyRes.data.content_url);
+      } catch (error) {
+        console.error("Error fetching compliance docs:", error);
+      }
+    };
+    fetchComplianceDocs();
+  }, []);
+
+  function handleChange(field: keyof RegisterFormData, value: string | boolean | number) {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  }
+
+  async function handleStep1Next() {
+    setIsLoading(true);
+    setApiError("");
+    try {
+      const [emailRes, usernameRes] = await Promise.all([
+        checkEmailExists(formData.email),
+        checkUserExists(formData.fullName),
+      ]);
+
+      if (emailRes?.data?.is_available === false) {
+        setApiError("An account with this email already exists. Please sign in.");
+        return;
+      }
+      if (usernameRes?.data?.is_available === false) {
+        setApiError("An account with this username already exists. Please sign in.");
+        return;
+      }
+
+      await sendOtp(formData.email, "EMAIL_OTP");
+      setStep(2);
+    } catch (err: any) {
+      setApiError(
+        err?.response?.data?.message ||
+        err?.response?.data?.error
+      );
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   async function handleSubmit(plan: "monthly" | "annual") {
     setIsLoading(true);
-    // TODO: wire up to register API
-    console.log("Register payload:", { ...formData, plan });
-    await new Promise((r) => setTimeout(r, 1200));
+    // TODO: wire up to plan selection API
+    console.log("Plan selected:", plan);
+    await new Promise((r) => setTimeout(r, 800));
     setIsLoading(false);
     // TODO: redirect on success
   }
@@ -609,12 +739,17 @@ export function RegisterPage() {
               <StepDetails
                 data={formData}
                 onChange={handleChange}
-                onNext={() => setStep(2)}
+                onNext={handleStep1Next}
+                apiError={apiError}
+                isLoading={isLoading}
+                termsUrl={termsUrl}
+                privacyUrl={privacyUrl}
               />
             )}
             {step === 2 && (
               <StepOTP
                 email={formData.email}
+                formData={formData}
                 onBack={() => setStep(1)}
                 onVerified={() => setStep(3)}
               />
@@ -634,5 +769,3 @@ export function RegisterPage() {
     </div>
   );
 }
-
-

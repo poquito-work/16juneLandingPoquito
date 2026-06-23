@@ -572,7 +572,7 @@ export function DashboardPage() {
         <Sidebar active={activeTab} onSelect={setActiveTab} />
 
         <main className="dash-main">
-          <div className="dash-logout-bar">
+          {/* <div className="dash-logout-bar">
             <button type="button" className="dash-logout-btn" onClick={handleLogout}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
@@ -581,7 +581,7 @@ export function DashboardPage() {
               </svg>
               Sign Out
             </button>
-          </div>
+          </div> */}
           {activeTab === "profile" && <ProfileTab user={user} />}
           {activeTab === "transactions" && <TransactionsTab />}
           {activeTab === "subscription" && <SubscriptionTab />}

@@ -59,19 +59,24 @@ export const sendOtp = async (
 export const registerUser = async (data: {
   username: string;
   email: string;
-  phone_number: string;
+  phone_number: string | null;
   password: string;
-  city: string;
-  otp:string
+  city_id: number;
+  otp: string;
+  role_name: string;
+  is_terms_condition_accepted: boolean;
+  is_privacy_policy: boolean;
 }) => {
   const payload = {
     username: data.username,
     email: data.email,
     phone_number: data.phone_number,
     password: data.password,
-    city: data.city,
-    email_otp:data.otp
-    // device_id: "web",
+    city_id: data.city_id,
+    email_otp: data.otp,
+    role_name: data.role_name,
+    is_terms_condition_accepted: data.is_terms_condition_accepted,
+    is_privacy_policy: data.is_privacy_policy,
   };
 
   const response = await axios.post(
@@ -106,6 +111,46 @@ export const verifyOtp = async (data: {
         "Content-Type": "application/json",
       },
     }
+  );
+
+  return response.data;
+};
+
+export const checkEmailExists = async (email: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/api/v1/auth/availability/email?email=${encodeURIComponent(email)}`
+  );
+  return response.data;
+};
+export const checkUserExists = async (email: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/api/v1/auth/availability/username?username=${encodeURIComponent(email)}`
+  );
+  return response.data;
+};
+
+export const getPredefinedListByType = async (entity_type: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/api/v1/admin/predefined/?entity_type=${entity_type}`
+  );
+
+  return response.data;
+};
+
+
+
+export const getTermsCondition = async () => {
+  const response = await axios.get(
+    `${API_BASE_URL}/api/v1/compliance-documents/terms-and-conditions`
+  );
+
+  return response.data;
+};
+
+
+export const getPrivacyPolicy = async () => {
+  const response = await axios.get(
+    `${API_BASE_URL}/api/v1/compliance-documents/privacy-policy`
   );
 
   return response.data;
