@@ -1,21 +1,21 @@
 import { Q as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { Q as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { c as createRouter, a as createRootRouteWithContext, u as useRouter, L as Link, O as Outlet, H as HeadContent, S as Scripts, b as createFileRoute, l as lazyRouteComponent } from "../_libs/tanstack__react-router.mjs";
+import { Q as redirect } from "../_libs/tanstack__router-core.mjs";
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import "../_libs/tanstack__router-core.mjs";
-import "../_libs/tanstack__history.mjs";
-import "../_libs/cookie-es.mjs";
-import "../_libs/seroval.mjs";
-import "../_libs/seroval-plugins.mjs";
-import "node:stream/web";
-import "node:stream";
 import "../_libs/react-dom.mjs";
 import "util";
 import "crypto";
 import "async_hooks";
 import "stream";
+import "node:stream";
 import "../_libs/isbot.mjs";
-const appCss = "/assets/styles-Bf8P4fa3.css";
+import "../_libs/tanstack__history.mjs";
+import "../_libs/cookie-es.mjs";
+import "../_libs/seroval.mjs";
+import "../_libs/seroval-plugins.mjs";
+import "node:stream/web";
+const appCss = "/assets/styles-BchMmVc0.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -79,7 +79,7 @@ function ErrorComponent({ error, reset }) {
     ] })
   ] }) });
 }
-const Route$3 = createRootRouteWithContext()({
+const Route$6 = createRootRouteWithContext()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -154,18 +154,63 @@ function RootShell({ children }) {
   ] });
 }
 function RootComponent() {
-  const { queryClient } = Route$3.useRouteContext();
+  const { queryClient } = Route$6.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter$2 = () => import("./terms-unSrtDYB.mjs");
-const Route$2 = createFileRoute("/terms")({
+const $$splitComponentImporter$5 = () => import("./terms-CKKQg4lO.mjs");
+const Route$5 = createFileRoute("/terms")({
+  component: lazyRouteComponent($$splitComponentImporter$5, "component")
+});
+const $$splitComponentImporter$4 = () => import("./register-DKj-3-zr.mjs");
+const Route$4 = createFileRoute("/register")({
+  head: () => ({
+    meta: [{
+      title: "Create Account — Pocket Dragon"
+    }, {
+      name: "description",
+      content: "Create your Pocket Dragon account and choose your plan."
+    }]
+  }),
+  component: lazyRouteComponent($$splitComponentImporter$4, "component")
+});
+const $$splitComponentImporter$3 = () => import("./privacy-WGqKr-Nf.mjs");
+const Route$3 = createFileRoute("/privacy")({
+  component: lazyRouteComponent($$splitComponentImporter$3, "component")
+});
+const $$splitComponentImporter$2 = () => import("./dashboard-BTd_84Cc.mjs");
+const Route$2 = createFileRoute("/dashboard")({
+  head: () => ({
+    meta: [{
+      title: "My Account — Pocket Dragon"
+    }]
+  }),
+  beforeLoad: () => {
+    throw redirect({
+      to: "/MyAccount"
+    });
+  },
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./privacy-JT5S7jOn.mjs");
-const Route$1 = createFileRoute("/privacy")({
+const $$splitComponentImporter$1 = () => import("./MyAccount-BTd_84Cc.mjs");
+const Route$1 = createFileRoute("/MyAccount")({
+  head: () => ({
+    meta: [{
+      title: "My Account — Pocket Dragon"
+    }]
+  }),
+  beforeLoad: () => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        throw redirect({
+          to: "/"
+        });
+      }
+    }
+  },
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-BF22AtzC.mjs");
+const $$splitComponentImporter = () => import("./index-DbY42XGy.mjs");
 const Route = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -189,27 +234,45 @@ const Route = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
-const TermsRoute = Route$2.update({
+const TermsRoute = Route$5.update({
   id: "/terms",
   path: "/terms",
-  getParentRoute: () => Route$3
+  getParentRoute: () => Route$6
 });
-const PrivacyRoute = Route$1.update({
+const RegisterRoute = Route$4.update({
+  id: "/register",
+  path: "/register",
+  getParentRoute: () => Route$6
+});
+const PrivacyRoute = Route$3.update({
   id: "/privacy",
   path: "/privacy",
-  getParentRoute: () => Route$3
+  getParentRoute: () => Route$6
+});
+const DashboardRoute = Route$2.update({
+  id: "/dashboard",
+  path: "/dashboard",
+  getParentRoute: () => Route$6
+});
+const MyAccountRoute = Route$1.update({
+  id: "/MyAccount",
+  path: "/MyAccount",
+  getParentRoute: () => Route$6
 });
 const IndexRoute = Route.update({
   id: "/",
   path: "/",
-  getParentRoute: () => Route$3
+  getParentRoute: () => Route$6
 });
 const rootRouteChildren = {
   IndexRoute,
+  MyAccountRoute,
+  DashboardRoute,
   PrivacyRoute,
+  RegisterRoute,
   TermsRoute
 };
-const routeTree = Route$3._addFileChildren(rootRouteChildren)._addFileTypes();
+const routeTree = Route$6._addFileChildren(rootRouteChildren)._addFileTypes();
 const getRouter = () => {
   const queryClient = new QueryClient();
   const router = createRouter({

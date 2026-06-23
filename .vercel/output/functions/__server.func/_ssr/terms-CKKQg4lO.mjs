@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { L as LegalLayout } from "./layout-DiNCsg-k.mjs";
+import { L as LegalLayout } from "./layout-CoWE4PYI.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";

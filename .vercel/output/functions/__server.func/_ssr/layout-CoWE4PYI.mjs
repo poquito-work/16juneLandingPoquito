@@ -47,7 +47,7 @@ function LegalLayout({ children }) {
       /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1 min-w-0", children })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("footer", { className: "border-t border-foreground/8 py-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs", style: { color: "rgba(20,51,34,0.35)" }, children: "© 2026 Poquito Mahjong. All Rights Reserved." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs", style: { color: "rgba(20,51,34,0.35)" }, children: "© 2026 [Pocket Dragon/Poquito]. All Rights Reserved." }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-6", children: sidebarLinks.map(({ label, to }) => /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to, className: "text-xs transition-colors hover:opacity-70", style: { color: "rgba(20,51,34,0.4)" }, children: label }, to)) })
     ] }) })
   ] });

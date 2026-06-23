@@ -1,9 +1,11 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
+import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-CYGvCMWy.mjs";
 import { R as Root, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-import { L as Link } from "../_libs/tanstack__react-router.mjs";
+import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
+import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
+import { P as PocketDragonLogo } from "./Logo-D5gpayti.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { A as ArrowUp, X } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__primitive.mjs";
@@ -44,300 +46,6 @@ import "node:stream";
 import "../_libs/isbot.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-const sizeClasses = {
-  sm: "h-14 w-auto",
-  md: "h-14 w-auto",
-  lg: "h-20 w-auto",
-  xl: "h-28 w-auto md:h-36",
-  hero: "h-40 w-auto sm:h-56 md:h-72 lg:h-80"
-};
-const wrapperSizeClasses = {
-  sm: "h-10 w-40",
-  md: "h-14 w-56",
-  lg: "h-20 w-80",
-  xl: "h-28 w-auto md:h-36",
-  hero: "h-40 sm:h-56 md:h-72 lg:h-80 w-full max-w-[480px]"
-};
-const EASE$5 = [0.22, 0.61, 0.36, 1];
-function PocketDragonLogo({
-  className = "",
-  size = "sm",
-  animate = false,
-  light = false
-}) {
-  const lightFilter = "brightness(0) invert(1)";
-  if (!animate) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "img",
-      {
-        src: logoSrc,
-        alt: "Pocket Dragon",
-        width: 1024,
-        height: 768,
-        decoding: "async",
-        className: `${sizeClasses[size]} object-contain shrink-0 select-none transition-all duration-500 ${className}`,
-        style: light ? { filter: lightFilter } : void 0,
-        draggable: false
-      }
-    );
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "div",
-    {
-      className: `relative ${wrapperSizeClasses[size]} shrink-0 select-none ${className}`,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.div,
-          {
-            "aria-hidden": true,
-            className: "absolute inset-0 overflow-hidden",
-            initial: { clipPath: "inset(0% 0% 100% 0%)" },
-            animate: { clipPath: "inset(0% 0% 0% 0%)" },
-            transition: { duration: 1.1, ease: EASE$5, delay: 0.1 },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: logoSrc,
-                alt: "Pocket Dragon",
-                width: 1024,
-                height: 768,
-                decoding: "async",
-                draggable: false,
-                className: "w-full h-full object-contain"
-              }
-            )
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.div,
-          {
-            "aria-hidden": true,
-            className: "absolute inset-0 pointer-events-none",
-            initial: { opacity: 0, x: "-110%" },
-            animate: { opacity: [0, 0.4, 0], x: ["-110%", "210%"] },
-            transition: { duration: 0.55, delay: 1.2, ease: "easeInOut" },
-            style: {
-              background: "linear-gradient(105deg, transparent 30%, rgba(249,242,228,0.6) 50%, transparent 70%)"
-            }
-          }
-        )
-      ]
-    }
-  );
-}
-const NAV = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#playground" },
-  { label: "Contact Us", href: "#login" }
-];
-const DARK_SECTION_IDS = ["playground", "download", "contact"];
-const RUST_SECTION_IDS = ["login"];
-function getCurrentSectionId() {
-  const headerHeight = 64;
-  const scrollY = window.scrollY + headerHeight + 1;
-  const ids = ["home", "playground", "plans", "login", "faq", "download", "contact"];
-  let current = ids[0];
-  for (const id of ids) {
-    const el = document.getElementById(id);
-    if (el && el.offsetTop <= scrollY) current = id;
-  }
-  return current;
-}
-function Header({ onLoginClick }) {
-  const [open, setOpen] = reactExports.useState(false);
-  const [scrolled, setScrolled] = reactExports.useState(false);
-  const [sectionId, setSectionId] = reactExports.useState("home");
-  const isDark = DARK_SECTION_IDS.includes(sectionId);
-  const isRust = RUST_SECTION_IDS.includes(sectionId);
-  reactExports.useEffect(() => {
-    function update() {
-      setScrolled(window.scrollY > 0);
-      setSectionId(getCurrentSectionId());
-    }
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-  const lightStyle = {
-    background: "rgba(249, 242, 228, 0.85)",
-    backdropFilter: "blur(20px) saturate(180%)",
-    borderBottom: "1px solid rgba(20, 51, 34, 0.09)"
-    // boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
-  };
-  const darkStyle = {
-    background: "rgba(13, 31, 21, 0.88)",
-    backdropFilter: "blur(20px) saturate(180%)",
-    borderBottom: "1px solid rgba(249, 242, 228, 0.06)",
-    boxShadow: "rgba(0, 0, 0, 0.3) 0px 4px 20px"
-  };
-  const rustStyle = {
-    background: "rgba(122, 50, 20, 0.88)",
-    backdropFilter: "blur(20px) saturate(180%)",
-    borderBottom: "1px solid rgba(249, 242, 228, 0.08)",
-    boxShadow: "rgba(0, 0, 0, 0.25) 0px 4px 20px"
-  };
-  const atTopStyle = {
-    background: "transparent",
-    backdropFilter: "none",
-    borderBottom: "none",
-    boxShadow: "none"
-  };
-  const headerStyle = !scrolled ? atTopStyle : isDark ? darkStyle : isRust ? rustStyle : lightStyle;
-  const onDarkBg = scrolled && (isDark || isRust);
-  const textColor = onDarkBg ? "rgba(249,242,228,0.85)" : "#494949";
-  const hamburgerColor = onDarkBg ? "#f9f2e4" : "#494949";
-  const logoLight = onDarkBg;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "header",
-      {
-        className: "fixed top-0 left-0 right-0 z-50 transition-all duration-400",
-        style: { ...headerStyle, opacity: 1, transform: "none" },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#home", "aria-label": "Go to home", className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "lg", light: logoLight }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsx(
-              motion.nav,
-              {
-                initial: { opacity: 0, x: 20 },
-                animate: { opacity: 1, x: 0 },
-                exit: { opacity: 0, x: 20 },
-                transition: { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] },
-                className: "hidden md:flex items-center gap-6 headerNav",
-                "aria-label": "Primary",
-                children: NAV.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  motion.a,
-                  {
-                    href: item.href,
-                    onClick: () => setOpen(false),
-                    initial: { opacity: 0, y: -4 },
-                    animate: { opacity: 1, y: 0 },
-                    transition: { delay: i * 0.05, duration: 0.18, ease: "easeOut" },
-                    className: "text-sm font-normal transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]",
-                    style: { color: textColor },
-                    children: item.label
-                  },
-                  item.label
-                ))
-              },
-              "inline-nav"
-            ) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                type: "button",
-                onClick: onLoginClick,
-                className: "inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90",
-                children: "Login"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                type: "button",
-                onClick: () => setOpen((v) => !v),
-                "aria-label": "Toggle menu",
-                "aria-expanded": open,
-                className: "flex items-center justify-center w-8 h-8 cursor-pointer",
-                children: open ? /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "2", y1: "3", x2: "14", y2: "10", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "14", y1: "10", x2: "18", y2: "5", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "3", y1: "17", x2: "14", y2: "10", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "14.5", y1: "11", x2: "22", y2: "15", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" })
-                ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "20", height: "14", viewBox: "0 0 20 14", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "1", x2: "20", y2: "1", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "7", x2: "20", y2: "7", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "0", y1: "13", x2: "20", y2: "13", stroke: hamburgerColor, strokeWidth: "1.5", strokeLinecap: "round" })
-                ] })
-              }
-            )
-          ] })
-        ] })
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      motion.div,
-      {
-        initial: { y: "-100%" },
-        animate: { y: 0 },
-        exit: { y: "-100%" },
-        transition: { duration: 0.38, ease: [0.22, 0.61, 0.36, 1] },
-        className: "md:hidden fixed inset-x-0 top-0 z-50 backdrop-blur-xl backdrop-saturate-150",
-        style: { background: "rgba(249, 242, 228, 0.95)" },
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-16 items-center justify-between px-6 border-b border-foreground/10", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "md" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "button",
-              {
-                type: "button",
-                onClick: () => setOpen(false),
-                "aria-label": "Close menu",
-                className: "flex flex-col gap-1.5 p-2 z-50",
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block w-6 h-[1.5px] origin-center bg-foreground", style: { transform: "translateY(5px) rotate(45deg)" } }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block w-6 h-[1.5px] origin-center bg-foreground", style: { opacity: 0 } }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block w-6 h-[1.5px] origin-center bg-foreground", style: { transform: "translateY(-5px) rotate(-45deg)" } })
-                ]
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: "flex flex-col px-6 pt-2 pb-6", children: [
-            NAV.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              motion.a,
-              {
-                href: item.href,
-                onClick: () => setOpen(false),
-                initial: { opacity: 0, x: -18 },
-                animate: { opacity: 1, x: 0 },
-                transition: { delay: 0.12 + i * 0.07, duration: 0.28, ease: "easeOut" },
-                className: "border-b border-foreground/8 py-4 font-display font-medium uppercase tracking-widest text-foreground hover:text-rust transition-colors",
-                style: { fontSize: "0.95rem", letterSpacing: "0.14em" },
-                children: item.label
-              },
-              item.label
-            )),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              motion.div,
-              {
-                initial: { opacity: 0, y: 10 },
-                animate: { opacity: 1, y: 0 },
-                transition: { delay: 0.35, duration: 0.28, ease: "easeOut" },
-                className: "mt-8 flex justify-center",
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: () => {
-                      setOpen(false);
-                      onLoginClick?.();
-                    },
-                    className: "inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90",
-                    children: "Login"
-                  }
-                )
-              }
-            )
-          ] })
-        ]
-      },
-      "menu"
-    ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      motion.div,
-      {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        exit: { opacity: 0 },
-        transition: { duration: 0.25 },
-        className: "md:hidden fixed inset-0 z-30 bg-black/20",
-        onClick: () => setOpen(false)
-      },
-      "backdrop"
-    ) })
-  ] });
-}
 const appStoreBadge = "/assets/download-apple-app-store-BqueXrOt.svg";
 const googlePlayBadge = "/assets/download-google-play-store-Dij1jSIb.svg";
 function DownloadButtons({
@@ -391,14 +99,14 @@ function DownloadButtons({
   ] }) });
 }
 const heroVideo = "/assets/Studio_product_photography_vid-CwT2O4A8.mp4";
-const EASE$4 = [0.22, 0.61, 0.36, 1];
+const EASE$3 = [0.22, 0.61, 0.36, 1];
 const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } }
 };
 const itemVariants = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE$4 } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE$3 } }
 };
 const avatarGradients = [
   "linear-gradient(135deg, #143322, #2a6042)",
@@ -662,7 +370,7 @@ function CancellationDialog({
         type: "button",
         onClick: onClose,
         className: "cursor-pointer mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90",
-        children: "Understood"
+        children: "Got It"
       }
     )
   ] }) }) });
@@ -884,38 +592,59 @@ function Playground() {
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card active", id: "ofc-practice", "data-screen": "practice", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ofc-connector ofc-connector-right" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "SOLO PLAY" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Practice Mode with Bots" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Sharpen your skills with endless practice rounds  " }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "EASY" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "MEDIUM" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "HARD" })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", className: "lucide lucide-graduation-cap text-rust transition-transform duration-300 group-hover:scale-110", "aria-hidden": "true", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22 10v6" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M6 12.5V16a6 3 0 0 0 12 0v-3.5" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "SOLO PLAY" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Practice Mode with Bots" })
             ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Sharpen your skills with endless practice rounds" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "EASY" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "MEDIUM" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "HARD" })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card", id: "ofc-salon", "data-screen": "salon", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ofc-connector ofc-connector-right" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "SOCIAL" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Private Tables with Friends" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Round up your crew and deal in" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "INVITE LINK" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "UP TO 4" })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", className: "lucide lucide-users-round text-rust transition-transform duration-300 group-hover:scale-110", "aria-hidden": "true", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M18 21a8 8 0 0 0-16 0" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "10", cy: "8", r: "5" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "SOCIAL" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Private Tables with Friends" })
             ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Round up your crew and deal in" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "INVITE LINK" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "UP TO 4" })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card", id: "ofc-match", "data-screen": "match", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ofc-connector ofc-connector-right" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "INTELLIGENCE" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Smart Matchmaking" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The right table, right away. Skill-based matching finds your perfect game in seconds " }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "SKILL-BASED" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "INSTANT" })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", className: "lucide lucide-target text-rust transition-transform duration-300 group-hover:scale-110", "aria-hidden": "true", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "12", cy: "12", r: "10" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "12", cy: "12", r: "6" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "12", cy: "12", r: "2" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "INTELLIGENCE" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Smart Matchmaking" })
             ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The right table, right away. Skill-based matching finds your perfect game in seconds" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "SKILL-BASED" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "INSTANT" })
           ] })
         ] })
       ] }),
@@ -1176,32 +905,46 @@ function Playground() {
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card", id: "ofc-lobby", "data-screen": "lobby", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ofc-connector ofc-connector-left" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "LIVE" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Public Lobby Tables" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The lobby’s buzzing — grab a seat " }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "REAL-TIME" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "GLOBAL" })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", className: "lucide lucide-layout-grid text-rust transition-transform duration-300 group-hover:scale-110", "aria-hidden": "true", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "3", y: "3", rx: "1" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "14", y: "3", rx: "1" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "14", y: "14", rx: "1" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "3", y: "14", rx: "1" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "LIVE" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Public Lobby Tables" })
             ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The lobby’s buzzing — grab a seat" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "REAL-TIME" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "GLOBAL" })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card", id: "ofc-league", "data-screen": "league", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ofc-connector ofc-connector-left" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "COMPETITIVE" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Ranked Points & Tiers" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Earn points, reach new tiers and unlock exclusive rewards " }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "🐉 GRAND MASTER" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "REWARDS" })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", className: "lucide lucide-crown text-rust transition-transform duration-300 group-hover:scale-110", "aria-hidden": "true", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 21h14" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-overline", children: "COMPETITIVE" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "ofc-title", children: "Ranked Points & Tiers" })
             ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "Earn points, reach new tiers and unlock exclusive rewards" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "🐉 GRAND MASTER" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "REWARDS" })
           ] })
         ] })
       ] })
     ] })
   ] }) });
 }
-const EASE$3 = [0.22, 0.61, 0.36, 1];
+const EASE$2 = [0.22, 0.61, 0.36, 1];
 const faqs = [
   {
     q: "Do I need to create a new account on the website?",
@@ -1272,7 +1015,7 @@ function FAQSection() {
             initial: { opacity: 0, y: 36 },
             whileInView: { opacity: 1, y: 0 },
             viewport: { once: true, margin: "-80px" },
-            transition: { duration: 0.7, ease: EASE$3 },
+            transition: { duration: 0.7, ease: EASE$2 },
             className: "mb-14",
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-5", children: [
@@ -1351,7 +1094,7 @@ function FAQItem({
       initial: { opacity: 0, y: 24 },
       whileInView: { opacity: 1, y: 0 },
       viewport: { once: true, margin: "-20px" },
-      transition: { duration: 0.6, ease: EASE$3, delay: index * 0.08 },
+      transition: { duration: 0.6, ease: EASE$2, delay: index * 0.08 },
       className: `border-b transition-colors duration-300 ${isOpen ? "border-pq-green/20" : "border-pq-green/10"}`,
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onToggle, className: "w-full text-medium flex items-center justify-between gap-6 py-6 text-left group", children: [
@@ -1367,7 +1110,7 @@ function FAQItem({
             motion.div,
             {
               animate: { rotate: isOpen ? 45 : 0 },
-              transition: { duration: 0.35, ease: EASE$3 },
+              transition: { duration: 0.35, ease: EASE$2 },
               className: `cursor-pointer faqbtn flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-300 ${isOpen ? "border-pq-rust/50 bg-pq-rust/10" : "border-pq-green/15 bg-transparent group-hover:border-pq-green/30"}`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "svg",
@@ -1389,7 +1132,7 @@ function FAQItem({
             initial: { height: 0, opacity: 0 },
             animate: { height: "auto", opacity: 1 },
             exit: { height: 0, opacity: 0 },
-            transition: { duration: 0.45, ease: EASE$3 },
+            transition: { duration: 0.45, ease: EASE$2 },
             style: { overflow: "hidden" },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "p",
@@ -1405,12 +1148,13 @@ function FAQItem({
     }
   );
 }
-const EASE$2 = [0.22, 0.61, 0.36, 1];
+const EASE$1 = [0.22, 0.61, 0.36, 1];
 function LoginSection() {
   const [email, setEmail] = reactExports.useState("");
   const [password, setPassword] = reactExports.useState("");
   const [focused, setFocused] = reactExports.useState(null);
   const [showPass, setShowPass] = reactExports.useState(false);
+  useNavigate();
   const [loading, setLoading] = reactExports.useState(false);
   const [error, setError] = reactExports.useState("");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "login", className: "relative overflow-hidden pt-15", children: [
@@ -1448,7 +1192,7 @@ function LoginSection() {
           initial: { opacity: 0, y: 48 },
           whileInView: { opacity: 1, y: 0 },
           viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.9, ease: EASE$2 },
+          transition: { duration: 0.9, ease: EASE$1 },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8 bg-rust/70" }),
@@ -1481,7 +1225,7 @@ function LoginSection() {
           initial: { opacity: 0, x: 40 },
           whileInView: { opacity: 1, x: 0 },
           viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.9, ease: EASE$2, delay: 0.15 },
+          transition: { duration: 0.9, ease: EASE$1, delay: 0.15 },
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
@@ -1610,7 +1354,7 @@ function LoginSection() {
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-center text-pq-green/70 text-sm font-normal", children: [
                   "New to Poquito?",
                   " ",
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "text-pq-rust font-normal hover:underline underline-offset-2", children: "Create an account" })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/register", className: "text-pq-rust font-normal hover:underline underline-offset-2", children: "Create an account" })
                 ] })
               ]
             }
@@ -1622,7 +1366,7 @@ function LoginSection() {
 }
 const appStoreLogo = "/assets/appstore-CNw0Xi8t.png";
 const googlePlayLogo = "/assets/googleplay-BxecJl1F.png";
-const EASE$1 = [0.22, 0.61, 0.36, 1];
+const EASE = [0.22, 0.61, 0.36, 1];
 function StoreBadge({ icon, label, sub }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     motion.a,
@@ -1681,7 +1425,7 @@ function CTASection() {
               initial: { opacity: 0, y: 24 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.7, ease: EASE$1 },
+              transition: { duration: 0.7, ease: EASE },
               className: "flex items-center justify-center gap-3 mb-6",
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-rust/60" }),
@@ -1696,7 +1440,7 @@ function CTASection() {
               initial: { opacity: 0, y: 32 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.85, ease: EASE$1, delay: 0.1 },
+              transition: { duration: 0.85, ease: EASE, delay: 0.1 },
               className: "font-hero font-bold text-pq-cream leading-tight tracking-tight text-balance mb-6",
               style: { fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)" },
               children: [
@@ -1712,7 +1456,7 @@ function CTASection() {
               initial: { opacity: 0, y: 24 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.7, ease: EASE$1, delay: 0.2 },
+              transition: { duration: 0.7, ease: EASE, delay: 0.2 },
               className: "text-pq-cream leading-relaxed max-w-xl mx-auto mb-12",
               style: { fontSize: "1.1rem" },
               children: "A seat. A table. A game waiting to begin."
@@ -1724,220 +1468,12 @@ function CTASection() {
               initial: { opacity: 0, y: 24, scale: 0.96 },
               whileInView: { opacity: 1, y: 0, scale: 1 },
               viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.7, ease: EASE$1, delay: 0.3 },
+              transition: { duration: 0.7, ease: EASE, delay: 0.3 },
               className: "flex flex-col sm:flex-row items-center justify-center gap-4",
               children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: appStoreLogo, label: "App Store", sub: "Coming Soon on" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: googlePlayLogo, label: "Google Play", sub: "Coming Soon on" })
               ] })
-            }
-          )
-        ] })
-      ]
-    }
-  );
-}
-const tile1 = "/assets/White%20Dragon-CK92c6Sd.png";
-const tile2 = "/assets/Red%20Dragon-75AvbVbU.png";
-const tile3 = "/assets/Green%20Dragon-SwrH8Vri.png";
-const EASE = [0.22, 0.61, 0.36, 1];
-const OUTER_PATH$1 = "M6,1 L54,1 Q59,1 59,6 L59,74 Q59,79 54,79 L6,79 Q1,79 1,74 L1,6 Q1,1 6,1 Z";
-const INNER_PATH$1 = "M9,5.5 L51,5.5 Q54.5,5.5 54.5,9 L54.5,71 Q54.5,74.5 51,74.5 L9,74.5 Q5.5,74.5 5.5,71 L5.5,9 Q5.5,5.5 9,5.5 Z";
-const TILE_SRCS$1 = [tile1, tile2, tile3];
-const CYCLE$1 = 8;
-function TileOutlineReveal$1({ delay, tileSrc }) {
-  const base = {
-    duration: CYCLE$1,
-    repeat: Infinity,
-    repeatDelay: 0,
-    delay,
-    ease: "easeInOut"
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 44, height: 58 }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "svg",
-      {
-        width: "44",
-        height: "58",
-        viewBox: "0 0 60 80",
-        style: { position: "absolute", inset: 0, width: "100%", height: "100%" },
-        "aria-hidden": true,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.path,
-            {
-              d: OUTER_PATH$1,
-              fill: "none",
-              stroke: "rgba(249,242,228,0.55)",
-              strokeWidth: "1.5",
-              strokeLinecap: "round",
-              animate: {
-                pathLength: [0, 1, 1, 0, 0],
-                opacity: [0.85, 0.85, 0.4, 0, 0]
-              },
-              transition: { ...base, times: [0, 0.25, 0.42, 0.52, 1] }
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.path,
-            {
-              d: INNER_PATH$1,
-              fill: "none",
-              stroke: "rgba(249,242,228,0.32)",
-              strokeWidth: "1",
-              strokeLinecap: "round",
-              animate: {
-                pathLength: [0, 0, 1, 1, 0, 0],
-                opacity: [0, 0.7, 0.7, 0.35, 0, 0]
-              },
-              transition: { ...base, times: [0, 0.19, 0.4, 0.44, 0.52, 1] }
-            }
-          )
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      motion.div,
-      {
-        style: { position: "absolute", inset: 0, borderRadius: 3, overflow: "hidden" },
-        animate: { opacity: [0, 0, 1, 1, 0] },
-        transition: { ...base, times: [0, 0.44, 0.55, 0.78, 1] },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "img",
-          {
-            src: tileSrc,
-            alt: "Mahjong tile",
-            width: 44,
-            height: 58,
-            style: { objectFit: "cover", width: "100%", height: "100%" }
-          }
-        )
-      }
-    )
-  ] });
-}
-function Footer() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "footer",
-    {
-      id: "contact",
-      className: "border-t border-white/5 relative overflow-hidden",
-      style: { background: "linear-gradient(180deg, #0c2318 0%, #071610 100%)" },
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            "aria-hidden": true,
-            className: "absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay",
-            style: {
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`
-            }
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-10 relative z-10", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            motion.div,
-            {
-              initial: { opacity: 0, y: 24 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true, margin: "-60px" },
-              transition: { duration: 0.8, ease: EASE },
-              className: "grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 py-10 border-b border-white/5 items-center md:justify-items-center md:text-left",
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col items-start md:items-start gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "img",
-                  {
-                    src: logoSrc,
-                    alt: "Poquito Mahjong",
-                    width: 150,
-                    height: 34,
-                    className: "brightness-0 invert opacity-70"
-                  }
-                ) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-end gap-3 text-xs text-pq-cream md:col-start-2 md:flex-row md:items-center md:gap-6 md:justify-self-center", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "a",
-                    {
-                      href: "mailto:hello@pocketdragon.app",
-                      className: "hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap",
-                      children: "hello@pocketdragon.app"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "a",
-                      {
-                        href: "https://facebook.com/pocketdragonapp",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        "aria-label": "Facebook",
-                        className: "hover:opacity-80 transition-opacity",
-                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" }) })
-                      }
-                    ),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "a",
-                      {
-                        href: "https://twitter.com/pocketdragonapp",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        "aria-label": "Twitter",
-                        className: "hover:opacity-80 transition-opacity",
-                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" }) })
-                      }
-                    ),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "a",
-                      {
-                        href: "https://instagram.com/pocketdragonapp",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        "aria-label": "Instagram",
-                        className: "hover:opacity-80 transition-opacity",
-                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" }) })
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "hidden md:inline text-pq-cream/40", children: "|" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      Link,
-                      {
-                        to: "/privacy",
-                        className: "hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap",
-                        children: "Privacy Policy"
-                      }
-                    ),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      Link,
-                      {
-                        to: "/terms",
-                        className: "hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap",
-                        children: "Terms of Use"
-                      }
-                    )
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-span-2 md:col-span-1 flex items-center justify-center md:justify-end gap-3 md:justify-self-end w-full md:w-auto", children: TILE_SRCS$1.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  TileOutlineReveal$1,
-                  {
-                    tileSrc: src,
-                    delay: CYCLE$1 / 3 * i
-                  },
-                  src
-                )) })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.div,
-            {
-              initial: { opacity: 0 },
-              whileInView: { opacity: 1 },
-              viewport: { once: true },
-              transition: { delay: 0.2, duration: 0.6 },
-              className: "flex items-center justify-center py-5",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-cream text-xs font-normal tracking-wide hover:font-bold hover:scale-[1.03] transition-all duration-200", children: "© 2026 [Pocket Dragon/Poquito]. All Rights Reserved." })
             }
           )
         ] })
