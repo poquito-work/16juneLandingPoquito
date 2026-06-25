@@ -142,7 +142,13 @@ function Header({ onLoginClick }) {
         exit: { y: "-100%" },
         transition: { duration: 0.38, ease: [0.22, 0.61, 0.36, 1] },
         className: "md:hidden fixed inset-x-0 top-0 z-50 backdrop-blur-xl backdrop-saturate-150",
-        style: { background: "rgba(249, 242, 228, 0.95)" },
+        style: {
+          background: "rgba(249, 242, 228, 0.85)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
+          opacity: 1,
+          transform: "none"
+        },
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-16 items-center justify-between px-6 border-b border-foreground/10", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, { size: "md" }),
@@ -313,7 +319,7 @@ function Footer() {
             }
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-10 relative z-10", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-7xl mx-auto px-6 pl-30 lg:px-10 relative z-10", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             motion.div,
             {
@@ -321,7 +327,7 @@ function Footer() {
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true, margin: "-60px" },
               transition: { duration: 0.8, ease: EASE },
-              className: "grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 py-10 border-b border-white/5 items-center md:justify-items-center md:text-left",
+              className: "grid flex justify-between grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 py-10 border-b border-white/5 items-center md:justify-items-between md:text-left",
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col items-start md:items-start gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "img",
@@ -377,7 +383,6 @@ function Footer() {
                       }
                     )
                   ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "hidden md:inline text-pq-cream/40", children: "|" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Link,

@@ -1,5 +1,5 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-CYGvCMWy.mjs";
+import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-5RnBLSNV.mjs";
 import { R as Root, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
@@ -46,8 +46,8 @@ import "node:stream";
 import "../_libs/isbot.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-const appStoreBadge = "/assets/download-apple-app-store-BqueXrOt.svg";
-const googlePlayBadge = "/assets/download-google-play-store-Dij1jSIb.svg";
+const appStoreBadge = "/assets/download-apple-app-store-CQp-Xo94.svg";
+const googlePlayBadge = "/assets/download-google-play-store-DNXn7dBx.svg";
 function DownloadButtons({
   className = "",
   align = "start"
@@ -58,18 +58,17 @@ function DownloadButtons({
       motion.a,
       {
         href: "#",
-        whileHover: { scale: 1.04 },
-        whileTap: { scale: 0.97 },
         className: "cursor-none",
         style: {
           cursor: "auto",
           display: "block",
           borderRadius: 10,
           overflow: "hidden",
-          background: "#143322",
+          background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)",
           backdropFilter: "blur(16px) saturate(180%)",
           WebkitBackdropFilter: "blur(16px) saturate(180%)",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+          border: " 1px solid rgb(20, 51, 34)",
+          boxShadow: "rgb(0 0 0 / 14%) 0px 4px 24px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
           padding: "4px 10px"
         },
         children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: appStoreBadge, alt: "Download on the App Store", style: { height: 36, width: "auto", display: "block" } })
@@ -80,17 +79,16 @@ function DownloadButtons({
       {
         href: "#",
         className: "cursor-none",
-        whileHover: { scale: 1.04 },
-        whileTap: { scale: 0.97 },
         style: {
           cursor: "auto",
           display: "block",
           borderRadius: 10,
           overflow: "hidden",
-          background: "#143322",
+          background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)",
           backdropFilter: "blur(16px) saturate(180%)",
           WebkitBackdropFilter: "blur(16px) saturate(180%)",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+          border: " 1px solid rgb(20, 51, 34)",
+          boxShadow: "rgb(0 0 0 / 14%) 0px 4px 24px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
           padding: "4px 10px"
         },
         children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: googlePlayBadge, alt: "Get it on Google Play", style: { height: 36, width: "auto", display: "block" } })
@@ -98,7 +96,7 @@ function DownloadButtons({
     )
   ] }) });
 }
-const heroVideo = "/assets/Studio_product_photography_vid-CwT2O4A8.mp4";
+const heroVideo = "/assets/mahjong-video-v5-BGEeToFl.mp4";
 const EASE$3 = [0.22, 0.61, 0.36, 1];
 const containerVariants = {
   hidden: {},
@@ -178,8 +176,7 @@ function Hero() {
                 children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-3", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8", style: { background: "var(--rust)" } }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] uppercase tracking-[0.22em]", style: { color: "var(--rust)" }, children: "Play through tunnels, clouds, and signal tantrums" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8", style: { background: "var(--rust)" } })
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] uppercase tracking-[0.22em]", style: { color: "var(--rust)" }, children: "Play through tunnels, clouds, and signal tantrums" })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(
                     motion.h1,
@@ -212,7 +209,7 @@ function Hero() {
                         opacity: 0.75,
                         maxWidth: "44ch"
                       },
-                      children: "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips"
+                      children: "Practice, play, and compete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips"
                     }
                   ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: itemVariants, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadButtons, { align: "start" }) }),
@@ -356,13 +353,13 @@ function CancellationDialog({
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: " space-y-3 text-[0.95rem] text-cream/85 leading-relaxed", children: plan === "monthly" ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cream/55 text-[0.95rem]", children: 'To cancel, go to account settings in the Pocket Dragon app and select "Manage Subscription."' })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cream/55 text-[0.95rem]", children: "To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’" })
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter.                  " }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cream/55 text-[0.95rem]", children: "To cancel, go to Account Settings in the Pocket Dragon app and select ‘Manage Subscription’" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cream/55 text-[0.95rem]", children: "To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’" })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "button",
@@ -378,21 +375,21 @@ function CancellationDialog({
 function Subscriptions() {
   const [monthlyDialog, setMonthlyDialog] = reactExports.useState(false);
   const [annualDialog, setAnnualDialog] = reactExports.useState(false);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", className: "bg-background", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto max-w-5xl px-5 py-14 sm:px-8 md:py-16", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-3 text-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(SectionEyebrow, { children: "Membership" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "font-display text-2xl font-bold uppercase tracking-tight  sm:text-3xl md:text-[2rem]", style: { color: "var(--foreground)" }, children: [
           "Choose your ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "Plan" })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15 bg-cream p-7", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15  p-7", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70", children: "Monthly Plan" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground/70", children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none text-foreground", children: "500" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold", style: { color: "var(--foreground)" }, children: "Rs" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", style: { color: "var(--foreground)" }, children: "500" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-foreground/65", children: "/ month" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Excl GST" }),
@@ -483,7 +480,6 @@ function Subscriptions() {
     )
   ] });
 }
-const SCREEN_IDS = ["practice", "salon", "match", "lobby", "league"];
 let audioCtx = null;
 function playTick() {
   if (!audioCtx) {
@@ -522,15 +518,8 @@ function Playground() {
     const cards = document.querySelectorAll(".orbit-feature-card");
     const screens = document.querySelectorAll("#orbit-screen .app-screen");
     if (!cards.length || !screens.length) return;
-    let autoTimer = null;
     let resumeTimer = null;
-    let currentIndex = 0;
-    let isPaused = false;
     const stopAuto = () => {
-      if (autoTimer) {
-        clearInterval(autoTimer);
-        autoTimer = null;
-      }
       if (resumeTimer) {
         clearTimeout(resumeTimer);
         resumeTimer = null;
@@ -547,31 +536,18 @@ function Playground() {
         s.classList.toggle("active", isTarget);
       });
     };
-    const startAuto = () => {
-      stopAuto();
-      autoTimer = setInterval(() => {
-        currentIndex = (currentIndex + 1) % SCREEN_IDS.length;
-        switchTo(SCREEN_IDS[currentIndex]);
-      }, 5e3);
-    };
-    resumeTimer = setTimeout(startAuto, 2e3);
     cards.forEach((card) => {
       card.addEventListener("click", () => {
         playTick();
         stopAuto();
         const screenId = card.dataset.screen ?? "";
-        currentIndex = SCREEN_IDS.indexOf(screenId);
         setTimeout(() => switchTo(screenId), 100);
-        resumeTimer = setTimeout(startAuto, 1e4);
       });
       card.addEventListener("mouseenter", () => {
-        isPaused = true;
         stopAuto();
       });
       card.addEventListener("mouseleave", () => {
-        isPaused = false;
         resumeTimer = setTimeout(() => {
-          if (!isPaused) startAuto();
         }, 800);
       });
     });
@@ -919,7 +895,7 @@ function Playground() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "ofc-desc", children: "The lobby’s buzzing — grab a seat" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-tags", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "REAL-TIME" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "GLOBAL" })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "INDIA" })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card", id: "ofc-league", "data-screen": "league", children: [
@@ -1006,8 +982,8 @@ function FAQSection() {
     "section",
     {
       id: "faq",
-      className: "section-pad mt-15 faqWrap",
-      style: { background: "linear-gradient(180deg, #F9F2E4 0%, #EDE5D0 100%)" },
+      className: "section-pad pt-15 faqWrap",
+      style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" },
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-3xl mx-auto px-6 lg:px-10", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           motion.div,
@@ -1016,19 +992,22 @@ function FAQSection() {
             whileInView: { opacity: 1, y: 0 },
             viewport: { once: true, margin: "-80px" },
             transition: { duration: 0.7, ease: EASE$2 },
-            className: "mb-14",
+            className: "mb-14 text-center",
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-5 justify-center", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-rust/60" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust", children: "Questions" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-[1px] w-8 bg-pq-rust/60" })
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "h2",
                 {
-                  className: "font-hero font-bold text-pq leading-tight tracking-tight text-balance",
-                  style: { fontSize: "clamp(2.2rem, 4vw, 3.8rem)" },
-                  children: "FREQUENTLY ASKED"
+                  className: "sm:text-3xl md:text-[2rem] text-2xl text-rust font-hero font-bold text-pq leading-tight tracking-tight text-balance",
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--foreground)" }, children: "FREQUENTLY" }),
+                    " ",
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rust", children: "ASKED" })
+                  ]
                 }
               )
             ]
@@ -1101,7 +1080,7 @@ function FAQItem({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "span",
             {
-              className: `font-hero font-bold text-base leading-snug transition-all duration-300 ${isOpen ? "text-pq" : "text-pq"} group-hover:text-pq-green`,
+              className: `font-hero font-bold text-base leading-snug transition-all duration-300 ${isOpen ? "text-green" : "text-green"} group-hover:text-pq-green`,
               style: { fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)" },
               children: faq.q
             }
@@ -1137,7 +1116,7 @@ function FAQItem({
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "p",
               {
-                className: "text-pq text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200",
+                className: "text-green text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200",
                 dangerouslySetInnerHTML: { __html: faq.a }
               }
             )
@@ -1195,16 +1174,16 @@ function LoginSection() {
           transition: { duration: 0.9, ease: EASE$1 },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8 bg-rust/70" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust", children: "Member Access" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8 bg-rust/70" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8 bg-pq-white" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.72rem] font-bold text-offwhite uppercase tracking-[0.32em]", children: "Member Access" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-8 bg-pq-white" })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "h2",
               {
                 className: "font-hero font-bold text-offwhite leading-tight tracking-tight text-balance mb-6",
                 style: { fontSize: "clamp(2.4rem, 4.5vw, 4rem)" },
-                children: "READY WHEN YOU ARE."
+                children: "READY WHEN YOU ARE"
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-offwhite leading-relaxed mb-10 max-w-sm font-normal", children: "Connect with friends and to-be friends. Enjoy the game at your pace." }),
@@ -1231,35 +1210,41 @@ function LoginSection() {
             {
               className: "rounded-2xl p-8 lg:p-10 border",
               style: {
-                background: "#f9f2e4",
+                background: "rgb(249 242 228 / 53%)",
                 borderColor: "rgba(20,51,34,0.10)",
                 backdropFilter: "blur(24px)",
                 boxShadow: "0 24px 64px rgba(20,51,34,0.10)"
               },
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-7", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: logoSrc, alt: "Poquito", width: 110, height: 38, className: "opacity-90" }) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
                   "h3",
                   {
                     className: "font-hero font-bold text-pq-green mb-1.5",
                     style: { fontSize: "clamp(1.6rem, 2.5vw, 2.1rem)" },
-                    children: "Sign In"
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--foreground)" }, children: "Sign" }),
+                      " ",
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--rust)" }, children: "In" })
+                    ]
                   }
                 ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-green/70 text-sm mb-8 font-normal", children: "Access your Poquito account to continue playing." }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-green text-sm mb-8 font-normal", children: "Poquito with pocket dragon." }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "flex flex-col gap-5", onSubmit: async (e) => {
                   e.preventDefault();
                 }, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-pq-green/70 text-xs tracking-[0.14em] uppercase font-normal", children: "Email Address" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-green text-xs tracking-[0.14em] uppercase font-normal", children: "Email Address" }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "div",
                       {
                         className: "relative rounded-xl transition-all duration-300",
                         style: {
-                          border: `1.5px solid ${focused === "email" ? "rgba(20,51,34,0.45)" : "rgba(20,51,34,0.15)"}`,
-                          background: focused === "email" ? "rgba(255,255,255,0.80)" : "rgba(255,255,255,0.55)",
-                          boxShadow: focused === "email" ? "0 0 0 3px rgba(20,51,34,0.06)" : "none"
+                          border: `rgba(20,51,34,0.15)`,
+                          background: "rgba(255,255,255,0.55)"
+                          // border: `1.5px solid ${focused === 'email' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
+                          // background: focused === 'email' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
+                          // boxShadow: focused === 'email' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',
                         },
                         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                           "input",
@@ -1278,17 +1263,19 @@ function LoginSection() {
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-pq-green/70 text-xs tracking-[0.14em] uppercase font-normal", children: "Password" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "text-pq-rust text-xs hover:underline underline-offset-2 font-normal", children: "Forgot password?" })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-green text-xs tracking-[0.14em] uppercase font-normal", children: "Password" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "text-offwhite text-xs hover:underline underline-offset-2 font-normal", children: "Forgot password?" })
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(
                       "div",
                       {
                         className: "relative rounded-xl transition-all duration-300",
                         style: {
-                          border: `1.5px solid ${focused === "password" ? "rgba(20,51,34,0.45)" : "rgba(20,51,34,0.15)"}`,
-                          background: focused === "password" ? "rgba(255,255,255,0.80)" : "rgba(255,255,255,0.55)",
-                          boxShadow: focused === "password" ? "0 0 0 3px rgba(20,51,34,0.06)" : "none"
+                          border: `rgba(20,51,34,0.15)`,
+                          background: "rgba(255,255,255,0.55)"
+                          // border: `1.5px solid ${focused === 'password' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
+                          // background: focused === 'password' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
+                          // boxShadow: focused === 'password' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',
                         },
                         children: [
                           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -1354,7 +1341,7 @@ function LoginSection() {
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-center text-pq-green/70 text-sm font-normal", children: [
                   "New to Poquito?",
                   " ",
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/register", className: "text-pq-rust font-normal hover:underline underline-offset-2", children: "Create an account" })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/register", className: "text-offwhite font-normal hover:underline underline-offset-2", children: "Create an account" })
                 ] })
               ]
             }
@@ -1391,7 +1378,7 @@ function CTASection() {
     {
       id: "download",
       className: "relative overflow-hidden",
-      style: { padding: "9rem 0" },
+      style: { padding: "4rem 0" },
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
@@ -1446,7 +1433,7 @@ function CTASection() {
               children: [
                 "YOUR  ",
                 "",
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-pq-rust", children: "MOVE." })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-pq-rust", children: "MOVE" })
               ]
             }
           ),
@@ -1513,73 +1500,86 @@ function TileOutlineReveal({ delay, tileSrc }) {
     delay,
     ease: "easeInOut"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { position: "relative", width: 64, height: 84 }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "svg",
-      {
-        width: "64",
-        height: "84",
-        viewBox: "0 0 60 80",
-        style: { position: "absolute", inset: 0, width: "100%", height: "100%" },
-        "aria-hidden": true,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.path,
-            {
-              d: OUTER_PATH,
-              fill: "none",
-              stroke: "#b65a2f",
-              strokeWidth: "1.5",
-              strokeLinecap: "round",
-              animate: {
-                pathLength: [0, 1, 1, 0, 0],
-                opacity: [0.85, 0.85, 0.4, 0, 0]
-              },
-              transition: { ...base, times: [0, 0.25, 0.42, 0.52, 1] }
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            motion.path,
-            {
-              d: INNER_PATH,
-              fill: "none",
-              stroke: "#d9a38a",
-              strokeWidth: "1",
-              strokeLinecap: "round",
-              animate: {
-                pathLength: [0, 0, 1, 1, 0, 0],
-                opacity: [0, 0.7, 0.7, 0.35, 0, 0]
-              },
-              transition: { ...base, times: [0, 0.19, 0.4, 0.44, 0.52, 1] }
-            }
-          )
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      motion.div,
-      {
-        style: { position: "absolute", inset: 0, borderRadius: 5, overflow: "hidden" },
-        animate: { opacity: [0, 0, 1, 1, 0] },
-        transition: { ...base, times: [0, 0.44, 0.55, 0.78, 1] },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "img",
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    motion.div,
+    {
+      style: { position: "relative", width: 64, height: 84 },
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      transition: { duration: 0, delay },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "svg",
           {
-            src: tileSrc,
-            alt: "Mahjong tile",
-            style: { objectFit: "cover", width: "100%", height: "100%" }
+            width: "64",
+            height: "84",
+            viewBox: "0 0 60 80",
+            style: { position: "absolute", inset: 0, width: "100%", height: "100%" },
+            "aria-hidden": true,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                motion.path,
+                {
+                  d: OUTER_PATH,
+                  fill: "none",
+                  stroke: "#b65a2f",
+                  strokeWidth: "1.5",
+                  strokeLinecap: "round",
+                  animate: {
+                    pathLength: [0, 1, 1, 0, 0],
+                    opacity: [0.85, 0.85, 0.4, 0, 0]
+                  },
+                  transition: { ...base, times: [0, 0.25, 0.42, 0.52, 1] }
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                motion.path,
+                {
+                  d: INNER_PATH,
+                  fill: "none",
+                  stroke: "#d9a38a",
+                  strokeWidth: "1",
+                  strokeLinecap: "round",
+                  animate: {
+                    pathLength: [0, 0, 1, 1, 0, 0],
+                    opacity: [0, 0.7, 0.7, 0.35, 0, 0]
+                  },
+                  transition: { ...base, times: [0, 0.19, 0.4, 0.44, 0.52, 1] }
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          motion.div,
+          {
+            style: { position: "absolute", inset: 0, borderRadius: 5, overflow: "hidden" },
+            animate: { opacity: [0, 0, 1, 1, 0] },
+            transition: { ...base, times: [0, 0.44, 0.55, 0.78, 1] },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: tileSrc,
+                alt: "Mahjong tile",
+                style: { objectFit: "cover", width: "100%", height: "100%" }
+              }
+            )
           }
         )
-      }
-    )
-  ] });
+      ]
+    }
+  );
 }
 function PageLoader() {
-  const [visible, setVisible] = reactExports.useState(true);
+  const [visible, setVisible] = reactExports.useState(() => {
+    return !sessionStorage.getItem("loader_shown");
+  });
   reactExports.useEffect(() => {
+    if (!visible) return;
+    sessionStorage.setItem("loader_shown", "1");
     const t = setTimeout(() => setVisible(false), 8e3);
     return () => clearTimeout(t);
-  }, []);
+  }, [visible]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: visible && /* @__PURE__ */ jsxRuntimeExports.jsxs(
     motion.div,
     {
@@ -1604,7 +1604,7 @@ function PageLoader() {
             initial: { opacity: 0, y: -10 },
             animate: { opacity: 1, y: 0 },
             transition: { duration: 0.8 },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 scale-[2]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, {}) })
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-8 scale-[3]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, {}) })
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(

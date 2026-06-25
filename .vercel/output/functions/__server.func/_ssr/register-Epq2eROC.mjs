@@ -426,6 +426,11 @@ function StepPlans({
   isLoading
 }) {
   const [selected, setSelected] = reactExports.useState("annual");
+  const billingDate = (() => {
+    const d = /* @__PURE__ */ new Date();
+    d.setDate(d.getDate() + 15);
+    return d.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+  })();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans-grid", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -443,7 +448,11 @@ function StepPlans({
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-price", children: "500" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-period", children: "/ month" })
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-plan-note", children: "Excl. GST · Cancel anytime" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-plan-note", children: "Excl. GST · Cancel anytime" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "reg-plan-trial", children: [
+                "15-days free trial · Billed from ",
+                billingDate
+              ] })
             ] })
           ]
         }
@@ -464,7 +473,11 @@ function StepPlans({
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-price", children: "4,500" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-period", children: "/ year" })
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-plan-note", children: "Excl. GST · Save 25% (Rs 375/month)" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-plan-note", children: "Excl. GST · Save 25% (Rs 375/month)" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "reg-plan-trial", children: [
+                "15-days free trial · Billed from ",
+                billingDate
+              ] })
             ] })
           ]
         }

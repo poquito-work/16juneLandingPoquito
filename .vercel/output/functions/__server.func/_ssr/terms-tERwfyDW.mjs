@@ -16,7 +16,7 @@ import "stream";
 import "../_libs/isbot.mjs";
 import "./pocket-dragon-logo-B1TjRRiN.mjs";
 function TermsPage() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(LegalLayout, { children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(LegalLayout, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "terms", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-3xl font-bold uppercase tracking-tight text-foreground mb-4", children: "TERMS OF USE" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-md font-medium text-foreground mb-12", children: "Pocket Dragon is built on skill, strategy, and the love of a game that has brought people together for centuries. These Terms exist not to intimidate you, but to ensure that every player at our table — from a first-time Firefly to a seasoned Dragon — plays in a fair, safe, and transparent environment. By creating an account or playing on Pocket Dragon you agree to these terms. If something doesn't sit right with you, please reach out to us before playing. We're a small team and we actually read our emails." }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "privacyDiv flex flex-col gap-10 text-sm leading-relaxed text-foreground/80", children: [
@@ -132,7 +132,7 @@ function TermsPage() {
         ] })
       ] })
     ] })
-  ] });
+  ] }) });
 }
 export {
   TermsPage as component

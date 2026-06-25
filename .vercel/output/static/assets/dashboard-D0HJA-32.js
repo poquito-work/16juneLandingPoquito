@@ -1,1 +1,0 @@
-import{D as o}from"./DashaboardPage-BmrmvUqa.js";import"./index-CQkQakUR.js";import"./Footer-C08EYniR.js";import"./Logo-JsvQoBzO.js";import"./pocket-dragon-logo-C3S7ZUm-.js";const a=o;export{a as component};

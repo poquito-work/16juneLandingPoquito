@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { H as Header, F as Footer } from "./Footer-CYGvCMWy.mjs";
+import { H as Header, F as Footer } from "./Footer-5RnBLSNV.mjs";
 function decodeJwtPayload(token) {
   try {
     const base64 = token.split(".")[1];
@@ -428,25 +428,12 @@ function DashboardPage() {
   reactExports.useEffect(() => {
     setUser(getUserFromToken());
   }, []);
-  function handleLogout() {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("auth_token");
-    navigate({ to: "/" });
-  }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-page", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(Header, { onLoginClick: () => navigate({ to: "/" }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(MobileTabBar, { active: activeTab, onSelect: setActiveTab }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-body", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar, { active: activeTab, onSelect: setActiveTab }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { className: "dash-main", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "dash-logout-bar", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { type: "button", className: "dash-logout-btn", onClick: handleLogout, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "16 17 21 12 16 7" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "21", y1: "12", x2: "9", y2: "12" })
-          ] }),
-          "Sign Out"
-        ] }) }),
         activeTab === "profile" && /* @__PURE__ */ jsxRuntimeExports.jsx(ProfileTab, { user }),
         activeTab === "transactions" && /* @__PURE__ */ jsxRuntimeExports.jsx(TransactionsTab, {}),
         activeTab === "subscription" && /* @__PURE__ */ jsxRuntimeExports.jsx(SubscriptionTab, {})

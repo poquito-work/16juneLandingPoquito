@@ -15,7 +15,7 @@ import "../_libs/cookie-es.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
-const appCss = "/assets/styles-BchMmVc0.css";
+const appCss = "/assets/styles-B7L7uP1E.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -157,11 +157,11 @@ function RootComponent() {
   const { queryClient } = Route$6.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter$5 = () => import("./terms-CKKQg4lO.mjs");
+const $$splitComponentImporter$5 = () => import("./terms-tERwfyDW.mjs");
 const Route$5 = createFileRoute("/terms")({
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("./register-DKj-3-zr.mjs");
+const $$splitComponentImporter$4 = () => import("./register-Epq2eROC.mjs");
 const Route$4 = createFileRoute("/register")({
   head: () => ({
     meta: [{
@@ -177,7 +177,7 @@ const $$splitComponentImporter$3 = () => import("./privacy-WGqKr-Nf.mjs");
 const Route$3 = createFileRoute("/privacy")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./dashboard-BTd_84Cc.mjs");
+const $$splitComponentImporter$2 = () => import("./dashboard-DyIzmSqk.mjs");
 const Route$2 = createFileRoute("/dashboard")({
   head: () => ({
     meta: [{
@@ -191,7 +191,7 @@ const Route$2 = createFileRoute("/dashboard")({
   },
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./MyAccount-BTd_84Cc.mjs");
+const $$splitComponentImporter$1 = () => import("./MyAccount-DyIzmSqk.mjs");
 const Route$1 = createFileRoute("/MyAccount")({
   head: () => ({
     meta: [{
@@ -210,7 +210,7 @@ const Route$1 = createFileRoute("/MyAccount")({
   },
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-DbY42XGy.mjs");
+const $$splitComponentImporter = () => import("./index-GAZpWWk2.mjs");
 const Route = createFileRoute("/")({
   head: () => ({
     meta: [{

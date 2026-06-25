@@ -1,4 +1,4 @@
-import { D as DashboardPage } from "./DashaboardPage-7y5kskC8.mjs";
+import { D as DashboardPage } from "./DashaboardPage-DF8qWj7c.mjs";
 import "../_libs/react.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -14,7 +14,7 @@ import "crypto";
 import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
-import "./Footer-CYGvCMWy.mjs";
+import "./Footer-5RnBLSNV.mjs";
 import "./Logo-D5gpayti.mjs";
 import "./pocket-dragon-logo-B1TjRRiN.mjs";
 import "../_libs/framer-motion.mjs";
