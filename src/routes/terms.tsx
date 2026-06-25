@@ -8,6 +8,7 @@ export const Route = createFileRoute("/terms")({
 function TermsPage() {
   return (
     <LegalLayout>
+      <div className="terms">
       <h1 className="font-display text-3xl font-bold uppercase tracking-tight text-foreground mb-4">
         TERMS OF USE
       </h1>
@@ -123,6 +124,7 @@ function TermsPage() {
           <p>If you have any questions about these Terms, please reach out to <a href="mailto:hello@pocketdragon.app" className="text-rust hover:opacity-75 transition-opacity">hello@pocketdragon.app</a>.</p>
         </section>
 
+      </div>
       </div>
     </LegalLayout>
   );

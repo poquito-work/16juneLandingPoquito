@@ -25,7 +25,12 @@ function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string 
   };
 
   return (
-    <div style={{ position: "relative", width: 64, height: 84 }}>
+    <motion.div
+      style={{ position: "relative", width: 64, height: 84 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0, delay }}
+    >
       <svg
         width="64"
         height="84"
@@ -70,17 +75,21 @@ function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string 
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
 export function PageLoader() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(() => {
+    return !sessionStorage.getItem("loader_shown");
+  });
 
   useEffect(() => {
+    if (!visible) return;
+    sessionStorage.setItem("loader_shown", "1");
     const t = setTimeout(() => setVisible(false), 8000);
     return () => clearTimeout(t);
-  }, []);
+  }, [visible]);
 
   return (
     <AnimatePresence>
@@ -109,7 +118,7 @@ export function PageLoader() {
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8 }}
 >
-    <div className="mb-4 scale-[2]">
+    <div className="mb-8 scale-[3]">
   <PocketDragonLogo />
 </div>
  {/* <motion.img

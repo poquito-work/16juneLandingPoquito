@@ -1,0 +1,1 @@
+import{j as o}from"./index-E_4r4Cy2.js";import{D as t}from"./DashaboardPage-DU6jissz.js";import"./Footer-D3C2M5Em.js";import"./Logo-BbwSL-5a.js";import"./pocket-dragon-logo-C3S7ZUm-.js";const i=()=>o.jsx(t,{activeTab:"transactions"});export{i as component};

@@ -74,16 +74,16 @@ export function Playground() {
       });
     };
 
-    const startAuto = () => {
-      stopAuto();
-      autoTimer = setInterval(() => {
-        currentIndex = (currentIndex + 1) % SCREEN_IDS.length;
-        switchTo(SCREEN_IDS[currentIndex]);
-      }, 5000);
-    };
+    // const startAuto = () => {
+    //   stopAuto();
+    //   autoTimer = setInterval(() => {
+    //     currentIndex = (currentIndex + 1) % SCREEN_IDS.length;
+    //     switchTo(SCREEN_IDS[currentIndex]);
+    //   }, 5000);
+    // };
 
     // Delay initial auto-rotate by 2s so page can settle after load
-    resumeTimer = setTimeout(startAuto, 2000);
+    // resumeTimer = setTimeout(startAuto, 2000);
 
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -93,7 +93,7 @@ export function Playground() {
         currentIndex = SCREEN_IDS.indexOf(screenId as typeof SCREEN_IDS[number]);
         setTimeout(() => switchTo(screenId), 100);
         // Resume auto-rotate after 10s of inactivity
-        resumeTimer = setTimeout(startAuto, 10000);
+        // resumeTimer = setTimeout(startAuto, 10000);
       });
       card.addEventListener("mouseenter", () => {
         isPaused = true;
@@ -103,7 +103,7 @@ export function Playground() {
         isPaused = false;
         // Small delay before resuming so quick mouse passes don't retrigger immediately
         resumeTimer = setTimeout(() => {
-          if (!isPaused) startAuto();
+          // if (!isPaused) startAuto();
         }, 800);
       });
     });
@@ -142,42 +142,53 @@ export function Playground() {
             <div className="orbit-feature-card active" id="ofc-practice" data-screen="practice">
               <div className="ofc-connector ofc-connector-right"></div>
               <div className="ofc-text">
-                {/* <span className="flex h-12 w-12 items-center justify-center rounded-full bg-cream/10 transition-colors duration-300 group-hover:bg-rust/15 group-focus-visible:bg-rust/15"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-graduation-cap text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></span> */}
-                <span className="ofc-overline">SOLO PLAY</span>
-                <h3 className="ofc-title">Practice Mode with Bots</h3>
-                <p className="ofc-desc">Sharpen your skills with endless practice rounds  </p>
-                <div className="ofc-tags">
-                  <span className="ofc-tag">EASY</span>
-                  <span className="ofc-tag">MEDIUM</span>
-                  <span className="ofc-tag">HARD</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-graduation-cap text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>
+                <div className="ofc-text-content">
+                  <span className="ofc-overline">SOLO PLAY</span>
+                  <h3 className="ofc-title">Practice Mode with Bots</h3>
+                
                 </div>
               </div>
+                <p className="ofc-desc">Sharpen your skills with endless practice rounds</p>
+                  <div className="ofc-tags">
+                    <span className="ofc-tag">EASY</span>
+                    <span className="ofc-tag">MEDIUM</span>
+                    <span className="ofc-tag">HARD</span>
+                  </div>
             </div>
 
             <div className="orbit-feature-card" id="ofc-salon" data-screen="salon">
               <div className="ofc-connector ofc-connector-right"></div>
               <div className="ofc-text">
-                <span className="ofc-overline">SOCIAL</span>
-                <h3 className="ofc-title">Private Tables with Friends</h3>
-                <p className="ofc-desc">Round up your crew and deal in</p>
-                <div className="ofc-tags">
-                  <span className="ofc-tag">INVITE LINK</span>
-                  <span className="ofc-tag">UP TO 4</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users-round text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M18 21a8 8 0 0 0-16 0"></path><circle cx="10" cy="8" r="5"></circle><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"></path></svg>
+                <div className="ofc-text-content">
+                  <span className="ofc-overline">SOCIAL</span>
+                  <h3 className="ofc-title">Private Tables with Friends</h3>
+                  
                 </div>
               </div>
+              <p className="ofc-desc">Round up your crew and deal in</p>
+                  <div className="ofc-tags">
+                    <span className="ofc-tag">INVITE LINK</span>
+                    <span className="ofc-tag">UP TO 4</span>
+                  </div>
             </div>
 
             <div className="orbit-feature-card" id="ofc-match" data-screen="match">
               <div className="ofc-connector ofc-connector-right"></div>
               <div className="ofc-text">
-                <span className="ofc-overline">INTELLIGENCE</span>
-                <h3 className="ofc-title">Smart Matchmaking</h3>
-                <p className="ofc-desc">The right table, right away. Skill-based matching finds your perfect game in seconds </p>
-                <div className="ofc-tags">
-                  <span className="ofc-tag">SKILL-BASED</span>
-                  <span className="ofc-tag">INSTANT</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-target text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                <div className="ofc-text-content">
+                  <span className="ofc-overline">INTELLIGENCE</span>
+                  <h3 className="ofc-title">Smart Matchmaking</h3>
+                  
                 </div>
               </div>
+              <p className="ofc-desc">The right table, right away. Skill-based matching finds your perfect game in seconds</p>
+                  <div className="ofc-tags">
+                    <span className="ofc-tag">SKILL-BASED</span>
+                    <span className="ofc-tag">INSTANT</span>
+                  </div>
             </div>
 
           </div>
@@ -387,27 +398,35 @@ export function Playground() {
             <div className="orbit-feature-card" id="ofc-lobby" data-screen="lobby">
               <div className="ofc-connector ofc-connector-left"></div>
               <div className="ofc-text">
-                <span className="ofc-overline">LIVE</span>
-                <h3 className="ofc-title">Public Lobby Tables</h3>
-                <p className="ofc-desc">The lobby’s buzzing — grab a seat </p>
-                <div className="ofc-tags">
-                  <span className="ofc-tag">REAL-TIME</span>
-                  <span className="ofc-tag">GLOBAL</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layout-grid text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+                <div className="ofc-text-content">
+                  <span className="ofc-overline">LIVE</span>
+                  <h3 className="ofc-title">Public Lobby Tables</h3>
+                  
                 </div>
               </div>
+              <p className="ofc-desc">The lobby’s buzzing — grab a seat</p>
+                  <div className="ofc-tags">
+                    <span className="ofc-tag">REAL-TIME</span>
+                    <span className="ofc-tag">INDIA</span>
+                  </div>
             </div>
 
             <div className="orbit-feature-card" id="ofc-league" data-screen="league">
               <div className="ofc-connector ofc-connector-left"></div>
               <div className="ofc-text">
-                <span className="ofc-overline">COMPETITIVE</span>
-                <h3 className="ofc-title">Ranked Points &amp; Tiers</h3>
-                <p className="ofc-desc">Earn points, reach new tiers and unlock exclusive rewards </p>
-                <div className="ofc-tags">
-                  <span className="ofc-tag">🐉 GRAND MASTER</span>
-                  <span className="ofc-tag">REWARDS</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-crown text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg>
+                <div className="ofc-text-content">
+                  <span className="ofc-overline">COMPETITIVE</span>
+                  <h3 className="ofc-title">Ranked Points &amp; Tiers</h3>
+                  
                 </div>
               </div>
+              <p className="ofc-desc">Earn points, reach new tiers and unlock exclusive rewards</p>
+                  <div className="ofc-tags">
+                    <span className="ofc-tag">🐉 GRAND MASTER</span>
+                    <span className="ofc-tag">REWARDS</span>
+                  </div>
             </div>
 
           </div>

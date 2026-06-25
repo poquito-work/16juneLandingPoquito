@@ -40,24 +40,24 @@ function CancellationDialog({
             {plan === "monthly" ? (
               <>
                 <p>
-                 Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter.  
+                 Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter
                 </p>
                 <p>
                   No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
                 </p>
                 <p className="text-cream/55 text-[0.95rem]">
-                  To cancel, go to account settings in the Pocket Dragon app and select "Manage Subscription."
+                  To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’
                 </p>
               </>
             ) : (
               <>
                 <p>
-Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter.                  </p>
+Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter</p>
                 <p>
                  No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
                 </p>
                 <p className="text-cream/55 text-[0.95rem]">
-                  To cancel, go to Account Settings in the Pocket Dragon app and select ‘Manage Subscription’ 
+                  To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’ 
                 </p>
               </>
             )}
@@ -69,7 +69,7 @@ Subscriptions are non-refundable. Upon cancellation, benefits will remain active
             onClick={onClose}
             className="cursor-pointer mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
           >
-            Understood
+            Got It
           </button>
         </div>
       </DialogContent>
@@ -82,25 +82,25 @@ export function Subscriptions() {
   const [annualDialog, setAnnualDialog] = useState(false);
 
   return (
-    <section id="plans" className="bg-background">
+    <section id="plans"  style={{ background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }}>
       <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 md:py-16">
 
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionEyebrow>Membership</SectionEyebrow>
-          <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl md:text-[2rem]">
+          <h2 className="font-display text-2xl font-bold uppercase tracking-tight  sm:text-3xl md:text-[2rem]" style={{ color: 'var(--foreground)' }}>
             Choose your <span style={{ color: 'var(--rust)' }}>Plan</span>
           </h2>
         </div>
 
         <div className="articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
           {/* Monthly */}
-          <article className="plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15 bg-cream p-7">
+          <article className="plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15  p-7">
             <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70">
               Monthly Plan
             </span>
             <div className="mt-6 flex items-baseline gap-1">
-              <span className="text-sm font-bold text-foreground/70">Rs</span>
-              <span className="font-display text-5xl font-bold leading-none text-foreground">
+              <span className="text-sm font-bold" style={{ color: 'var(--foreground)' }}>Rs</span>
+              <span className="font-display text-5xl font-bold leading-none" style={{ color: 'var(--foreground)' }}>
                 500
               </span>
               <span className="ml-1 text-sm text-foreground/65">/ month</span>
