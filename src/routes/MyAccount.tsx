@@ -1,17 +1,16 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { DashboardPage } from "@/components/poquito/DashaboardPage";
+import { createFileRoute, redirect, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/MyAccount")({
+export const Route = createFileRoute("/myaccount")({
   head: () => ({
     meta: [{ title: "My Account — Pocket Dragon" }],
   }),
-  beforeLoad: () => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("access_token");
-      if (!token) {
-        throw redirect({ to: "/" });
-      }
-    }
-  },
-  component: DashboardPage,
+  // beforeLoad: () => {
+  //   if (typeof window !== "undefined") {
+  //     const token = localStorage.getItem("access_token");
+  //     if (!token) {
+  //       throw redirect({ to: "/" });
+  //     }
+  //   }
+  // },
+  component: () => <Outlet />,
 });

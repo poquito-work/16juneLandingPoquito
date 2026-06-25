@@ -255,8 +255,8 @@ const DashboardRoute = Route$2.update({
   getParentRoute: () => Route$6
 });
 const MyAccountRoute = Route$1.update({
-  id: "/MyAccount",
-  path: "/MyAccount",
+  id: "/myaccount",
+  path: "/myaccount",
   getParentRoute: () => Route$6
 });
 const IndexRoute = Route.update({

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { getPredefinedListByType } from "@/services/auth";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
@@ -12,6 +13,7 @@ interface UserProfile {
   username?: string;
   email?: string;
   phone_number?: string;
+  city?: string;
   avatar_url?: string;
   joined_at?: string;
 }
@@ -53,6 +55,7 @@ function getUserFromToken(): UserProfile {
     username: (payload?.username as string) ?? (payload?.preferred_username as string) ?? "—",
     email: (payload?.email as string) ?? "—",
     phone_number: (payload?.phone_number as string) ?? "—",
+    city: (payload?.city as string) ?? "",
     avatar_url: (payload?.picture as string) ?? "",
     joined_at: payload?.iat
       ? new Date((payload.iat as number) * 1000).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })
@@ -64,10 +67,11 @@ function getUserFromToken(): UserProfile {
 
 type Tab = "profile" | "transactions" | "subscription";
 
-const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
+const TABS: { id: Tab; label: string; href: string; icon: ReactNode }[] = [
   {
     id: "profile",
     label: "Profile",
+    href: "/myaccount/profile",
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="8" r="4" />
@@ -78,6 +82,7 @@ const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   {
     id: "transactions",
     label: "Transactions",
+    href: "/myaccount/transaction",
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="5" width="20" height="14" rx="2" />
@@ -88,6 +93,7 @@ const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   {
     id: "subscription",
     label: "Subscription",
+    href: "/myaccount/subscription",
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" />
@@ -121,7 +127,7 @@ function Sidebar({ active, onSelect }: { active: Tab; onSelect: (t: Tab) => void
 
 function MobileTabBar({ active, onSelect }: { active: Tab; onSelect: (t: Tab) => void }) {
   return (
-    <div className="dash-mobile-tabs">
+    <div className="dash-mobile-tabs mt-7">
       {TABS.map((tab) => (
         <button
           key={tab.id}
@@ -152,10 +158,18 @@ function ProfileTab({ user }: { user: UserProfile }) {
     username: user.username ?? "",
     email: user.email ?? "",
     phone_number: user.phone_number ?? "",
+    city: user.city ?? "",
   });
+  const [cityList, setCityList] = useState<{ id: number; uuid: string; name: string }[]>([]);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    getPredefinedListByType("city")
+      .then((res) => setCityList(res.data.content ?? []))
+      .catch(() => {});
+  }, []);
 
   // Sync when parent user data loads
   useEffect(() => {
@@ -164,12 +178,13 @@ function ProfileTab({ user }: { user: UserProfile }) {
       username: user.username ?? "",
       email: user.email ?? "",
       phone_number: user.phone_number ?? "",
+      city: user.city ?? "",
     });
-  }, [user.name, user.username, user.email, user.phone_number]);
+  }, [user.name, user.username, user.email, user.phone_number, user.city]);
 
   function validate() {
     const e: Record<string, string> = {};
-    if (!form.name.trim()) e.name = "Full name is required.";
+    // if (!form.name.trim()) e.name = "Full name is required.";
     if (!form.username.trim()) e.username = "Username is required.";
     else if (form.username.trim().length < 3) e.username = "Min. 3 characters.";
     if (!form.email.trim()) e.email = "Email is required.";
@@ -217,7 +232,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
       <form className="dash-profile-form" onSubmit={handleSave} noValidate>
         <div className="dash-fields-grid">
 
-          <div className="dash-field">
+          {/* <div className="dash-field">
             <label className="dash-field-label" htmlFor="dp-name">Full Name</label>
             <input
               id="dp-name"
@@ -228,7 +243,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
               placeholder="Your full name"
             />
             {errors.name && <span className="dash-field-error">{errors.name}</span>}
-          </div>
+          </div> */}
 
           <div className="dash-field">
             <label className="dash-field-label" htmlFor="dp-username">Username</label>
@@ -269,8 +284,30 @@ function ProfileTab({ user }: { user: UserProfile }) {
             {errors.phone_number && <span className="dash-field-error">{errors.phone_number}</span>}
           </div>
 
-          {/* Read-only fields */}
           <div className="dash-field">
+            <label className="dash-field-label" htmlFor="dp-city">City</label>
+            <div className="reg-select-wrap">
+              <select
+                id="dp-city"
+                className={`dash-input reg-select ${!form.city ? "reg-select-placeholder" : ""}`}
+                value={form.city}
+                onChange={(e) => setForm((p) => ({ ...p, city: e.target.value }))}
+              >
+                <option value="" disabled>Select your city</option>
+                {cityList.map((c) => (
+                  <option key={c.uuid} value={c.name}>{c.name}</option>
+                ))}
+              </select>
+              <span className="reg-select-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          {/* Read-only fields */}
+          {/* <div className="dash-field">
             <span className="dash-field-label">Member Since</span>
             <span className="dash-field-value">{user.joined_at ?? "—"}</span>
           </div>
@@ -278,7 +315,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
           <div className="dash-field">
             <span className="dash-field-label">Account ID</span>
             <span className="dash-field-value dash-field-mono">{user.id ?? "—"}</span>
-          </div>
+          </div> */}
 
         </div>
 
@@ -470,41 +507,41 @@ function SubscriptionTab() {
           {/* Monthly */}
           <button
             type="button"
-            className={`dash-plan-card ${selectedPlan === "monthly" ? "dash-plan-card-selected" : ""}`}
+            className={`reg-plan-card ${selectedPlan === "monthly" ? "reg-plan-card-selected" : ""}`}
             onClick={() => setSelectedPlan("monthly")}
           >
-            <div className="dash-plan-radio">
-              <div className={`dash-plan-radio-dot ${selectedPlan === "monthly" ? "dash-plan-radio-dot-active" : ""}`} />
+            <div className="reg-plan-radio">
+              <div className={`reg-plan-radio-dot ${selectedPlan === "monthly" ? "reg-plan-radio-dot-active" : ""}`} />
             </div>
             <div>
-              <p className="dash-plan-label">Monthly Plan</p>
-              <p className="dash-plan-price-row">
-                <span className="dash-plan-currency">Rs</span>
-                <span className="dash-plan-price">500</span>
-                <span className="dash-plan-period">/ month</span>
+              <p className="reg-plan-label">Monthly Plan</p>
+              <p className="reg-plan-price-row">
+                <span className="reg-plan-currency">Rs</span>
+                <span className="reg-plan-price">500</span>
+                <span className="reg-plan-period">/ month</span>
               </p>
-              <p className="dash-plan-note">Excl. GST · Cancel anytime</p>
+              <p className="reg-plan-note">Excl. GST · Cancel anytime</p>
             </div>
           </button>
 
           {/* Annual */}
           <button
             type="button"
-            className={`dash-plan-card ${selectedPlan === "annual" ? "dash-plan-card-selected dash-plan-card-featured" : ""}`}
+            className={`reg-plan-card  ${selectedPlan === "annual" ? "reg-plan-card-selected reg-plan-card-featured" : ""}`}
             onClick={() => setSelectedPlan("annual")}
           >
-            <div className="dash-plan-badge">Best Value</div>
-            <div className="dash-plan-radio">
-              <div className={`dash-plan-radio-dot ${selectedPlan === "annual" ? "dash-plan-radio-dot-active" : ""}`} />
+            <div className="reg-plan-badge">Best Value</div>
+            <div className="reg-plan-radio">
+              <div className={`reg-plan-radio-dot ${selectedPlan === "annual" ? "reg-plan-radio-dot-active" : ""}`} />
             </div>
             <div>
-              <p className="dash-plan-label">Annual Plan</p>
-              <p className="dash-plan-price-row">
-                <span className="dash-plan-currency">Rs</span>
-                <span className="dash-plan-price">4,500</span>
-                <span className="dash-plan-period">/ year</span>
+              <p className="reg-plan-label">Annual Plan</p>
+              <p className="reg-plan-price-row">
+                <span className="reg-plan-currency">Rs</span>
+                <span className="reg-plan-price">4,500</span>
+                <span className="reg-plan-period">/ year</span>
               </p>
-              <p className="dash-plan-note">Excl. GST · Save 25%</p>
+              <p className="reg-plan-note">Excl. GST · Save 25%</p>
             </div>
           </button>
         </div>
@@ -526,7 +563,7 @@ function SubscriptionTab() {
                 Plan Updated
               </>
             ) : (
-              "Confirm Plan Change"
+              "Cancel Subscription"
             )}
           </button>
           {selectedPlan === sub.plan && (
@@ -547,8 +584,14 @@ function SubscriptionTab() {
 
 // ─── Main DashboardPage ───────────────────────────────────────────────────────
 
-export function DashboardPage() {
-  const [activeTab, setActiveTab] = useState<Tab>("profile");
+const TAB_ROUTES: Record<Tab, "/myaccount/profile" | "/myaccount/transaction" | "/myaccount/subscription"> = {
+  profile: "/myaccount/profile",
+  transactions: "/myaccount/transaction",
+  subscription: "/myaccount/subscription",
+};
+
+export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
+  const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [user, setUser] = useState<UserProfile>({});
   const navigate = useNavigate();
 
@@ -556,32 +599,26 @@ export function DashboardPage() {
     setUser(getUserFromToken());
   }, []);
 
-  function handleLogout() {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("auth_token");
-    navigate({ to: "/" });
+  // Sync if the prop changes (e.g. direct URL navigation)
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
+
+  function handleTabSelect(tab: Tab) {
+    setActiveTab(tab);
+    navigate({ to: TAB_ROUTES[tab] });
   }
 
   return (
     <div className="dash-page">
       <Header onLoginClick={() => navigate({ to: "/" })} />
 
-      <MobileTabBar active={activeTab} onSelect={setActiveTab} />
+      <MobileTabBar active={activeTab} onSelect={handleTabSelect} />
 
       <div className="dash-body">
-        <Sidebar active={activeTab} onSelect={setActiveTab} />
+        <Sidebar active={activeTab} onSelect={handleTabSelect} />
 
         <main className="dash-main">
-          {/* <div className="dash-logout-bar">
-            <button type="button" className="dash-logout-btn" onClick={handleLogout}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-                <polyline points="16 17 21 12 16 7" />
-                <line x1="21" y1="12" x2="9" y2="12" />
-              </svg>
-              Sign Out
-            </button>
-          </div> */}
           {activeTab === "profile" && <ProfileTab user={user} />}
           {activeTab === "transactions" && <TransactionsTab />}
           {activeTab === "subscription" && <SubscriptionTab />}

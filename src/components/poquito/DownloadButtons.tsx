@@ -13,37 +13,39 @@ export function DownloadButtons({
   return (
     <div className={className}>
       <div className={`flex flex-wrap items-center gap-3 ${justify}`}>
-            <motion.a
+        <motion.a
           href="#"
-          className="cursor-none"
+          whileHover={{ scale: 1.04, boxShadow: "0 6px 18px rgba(20,51,34,0.08), " }}
+          // whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 340, damping: 22 }}
           style={{
-            cursor:"auto",
+            cursor: "pointer",
             display: "block",
             borderRadius: 10,
             overflow: "hidden",
             background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)",
             backdropFilter: "blur(16px) saturate(180%)",
             WebkitBackdropFilter: "blur(16px) saturate(180%)",
-               border:" 1px solid rgb(20, 51, 34)",
-              boxShadow: "rgb(0 0 0 / 14%) 0px 4px 24px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
+            border: "1px solid rgb(20, 51, 34)",
             padding: "4px 10px",
           }}
         >
           <img src={appStoreBadge} alt="Download on the App Store" style={{ height: 36, width: "auto", display: "block" }} />
         </motion.a>
-          <motion.a
+        <motion.a
           href="#"
-           className="cursor-none"
+          whileHover={{ scale: 1.04, y: -2, boxShadow: "0 6px 18px rgba(20,51,34,0.08), " }}
+          // whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 340, damping: 22 }}
           style={{
-            cursor:"auto",
+            cursor: "pointer",
             display: "block",
             borderRadius: 10,
             overflow: "hidden",
             background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)",
             backdropFilter: "blur(16px) saturate(180%)",
             WebkitBackdropFilter: "blur(16px) saturate(180%)",
-            border:" 1px solid rgb(20, 51, 34)",
-              boxShadow: "rgb(0 0 0 / 14%) 0px 4px 24px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
+            border: "1px solid rgb(20, 51, 34)",
             padding: "4px 10px",
           }}
         >

@@ -2030,7 +2030,7 @@ html {
   cursor: pointer;
   padding-right: 2.5rem !important;
   background-color: #faf8f4;
-  color: rgba(20, 51, 34, 0.85);
+  color: rgba(20, 51, 34, 1);
 }
 
 .reg-select-placeholder {
@@ -2504,7 +2504,7 @@ html {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(20, 51, 34, 0.4);
+  color: #143322a6;
 }
 
 .dash-field-value {
@@ -2641,7 +2641,7 @@ html {
 }
 
 .dash-table thead tr {
-  background: rgba(20, 51, 34, 0.04);
+  background: rgba(40, 40, 40, 0.04);
   border-bottom: 1px solid rgba(20, 51, 34, 0.08);
 }
 
@@ -2652,7 +2652,7 @@ html {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(20, 51, 34, 0.4);
+  color: #143322a6;
   white-space: nowrap;
 }
 
@@ -2695,8 +2695,8 @@ html {
 }
 
 .dash-chip-success {
-  background: rgba(20, 120, 60, 0.1);
-  color: #0e6b35;
+      color: #0e6b35;
+    background: #14783c1a;
 }
 
 .dash-chip-pending {
@@ -2715,7 +2715,7 @@ html {
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  background: var(--green, #143322);
+  background: linear-gradient(110deg, rgba(94, 45, 23, 0.98) 0%, rgba(122, 59, 31, 0.95) 25%, rgba(154, 76, 40, 0.9) 50%, rgba(182, 90, 47, 0.85) 75%, rgba(214, 122, 76, 0.8) 100%);
   border-radius: 14px;
   padding: 1.5rem;
   margin-bottom: 2rem;
@@ -2732,7 +2732,7 @@ html {
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(249, 242, 228, 0.5);
+  color: #f9f2e4;
   margin-bottom: 0.25rem;
 }
 
@@ -2748,7 +2748,7 @@ html {
 
 .dash-sub-plan-price {
   font-size: 0.85rem;
-  color: rgba(249, 242, 228, 0.65);
+  color: #f9f2e4;
   margin: 0;
 }
 
@@ -2761,7 +2761,7 @@ html {
 
 .dash-sub-meta span {
   font-size: 0.72rem;
-  color: rgba(249, 242, 228, 0.45);
+  color: #f9f2e4;
 }
 
 .dash-sub-change {
@@ -2773,7 +2773,7 @@ html {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(20, 51, 34, 0.45);
+  color: #143322a6;
   margin-bottom: 0.9rem;
 }
 
@@ -2992,3 +2992,6 @@ html {
 /* .border-100{
   border-radius: 50%;
 } */
+ .reg-select-wrap option{
+  color: #143322;
+ }

@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as MyaccountRouteImport } from './routes/myaccount'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as MyAccountRouteImport } from './routes/MyAccount'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MyaccountTransactionRouteImport } from './routes/myaccount/transaction'
+import { Route as MyaccountSubscriptionRouteImport } from './routes/myaccount/subscription'
+import { Route as MyaccountProfileRouteImport } from './routes/myaccount/profile'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -31,14 +34,14 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MyaccountRoute = MyaccountRouteImport.update({
+  id: '/myaccount',
+  path: '/myaccount',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyAccountRoute = MyAccountRouteImport.update({
-  id: '/MyAccount',
-  path: '/MyAccount',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -46,57 +49,96 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MyaccountTransactionRoute = MyaccountTransactionRouteImport.update({
+  id: '/transaction',
+  path: '/transaction',
+  getParentRoute: () => MyaccountRoute,
+} as any)
+const MyaccountSubscriptionRoute = MyaccountSubscriptionRouteImport.update({
+  id: '/subscription',
+  path: '/subscription',
+  getParentRoute: () => MyaccountRoute,
+} as any)
+const MyaccountProfileRoute = MyaccountProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => MyaccountRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/MyAccount': typeof MyAccountRoute
   '/dashboard': typeof DashboardRoute
+  '/myaccount': typeof MyaccountRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/myaccount/profile': typeof MyaccountProfileRoute
+  '/myaccount/subscription': typeof MyaccountSubscriptionRoute
+  '/myaccount/transaction': typeof MyaccountTransactionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/MyAccount': typeof MyAccountRoute
   '/dashboard': typeof DashboardRoute
+  '/myaccount': typeof MyaccountRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/myaccount/profile': typeof MyaccountProfileRoute
+  '/myaccount/subscription': typeof MyaccountSubscriptionRoute
+  '/myaccount/transaction': typeof MyaccountTransactionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/MyAccount': typeof MyAccountRoute
   '/dashboard': typeof DashboardRoute
+  '/myaccount': typeof MyaccountRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/myaccount/profile': typeof MyaccountProfileRoute
+  '/myaccount/subscription': typeof MyaccountSubscriptionRoute
+  '/myaccount/transaction': typeof MyaccountTransactionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/MyAccount'
     | '/dashboard'
+    | '/myaccount'
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/myaccount/profile'
+    | '/myaccount/subscription'
+    | '/myaccount/transaction'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/MyAccount' | '/dashboard' | '/privacy' | '/register' | '/terms'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/myaccount'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/myaccount/profile'
+    | '/myaccount/subscription'
+    | '/myaccount/transaction'
   id:
     | '__root__'
     | '/'
-    | '/MyAccount'
     | '/dashboard'
+    | '/myaccount'
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/myaccount/profile'
+    | '/myaccount/subscription'
+    | '/myaccount/transaction'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MyAccountRoute: typeof MyAccountRoute
   DashboardRoute: typeof DashboardRoute
+  MyaccountRoute: typeof MyaccountRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
@@ -125,18 +167,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/myaccount': {
+      id: '/myaccount'
+      path: '/myaccount'
+      fullPath: '/myaccount'
+      preLoaderRoute: typeof MyaccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/MyAccount': {
-      id: '/MyAccount'
-      path: '/MyAccount'
-      fullPath: '/MyAccount'
-      preLoaderRoute: typeof MyAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -146,13 +188,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/myaccount/transaction': {
+      id: '/myaccount/transaction'
+      path: '/transaction'
+      fullPath: '/myaccount/transaction'
+      preLoaderRoute: typeof MyaccountTransactionRouteImport
+      parentRoute: typeof MyaccountRoute
+    }
+    '/myaccount/subscription': {
+      id: '/myaccount/subscription'
+      path: '/subscription'
+      fullPath: '/myaccount/subscription'
+      preLoaderRoute: typeof MyaccountSubscriptionRouteImport
+      parentRoute: typeof MyaccountRoute
+    }
+    '/myaccount/profile': {
+      id: '/myaccount/profile'
+      path: '/profile'
+      fullPath: '/myaccount/profile'
+      preLoaderRoute: typeof MyaccountProfileRouteImport
+      parentRoute: typeof MyaccountRoute
+    }
   }
 }
 
+interface MyaccountRouteChildren {
+  MyaccountProfileRoute: typeof MyaccountProfileRoute
+  MyaccountSubscriptionRoute: typeof MyaccountSubscriptionRoute
+  MyaccountTransactionRoute: typeof MyaccountTransactionRoute
+}
+
+const MyaccountRouteChildren: MyaccountRouteChildren = {
+  MyaccountProfileRoute: MyaccountProfileRoute,
+  MyaccountSubscriptionRoute: MyaccountSubscriptionRoute,
+  MyaccountTransactionRoute: MyaccountTransactionRoute,
+}
+
+const MyaccountRouteWithChildren = MyaccountRoute._addFileChildren(
+  MyaccountRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MyAccountRoute: MyAccountRoute,
   DashboardRoute: DashboardRoute,
+  MyaccountRoute: MyaccountRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   TermsRoute: TermsRoute,

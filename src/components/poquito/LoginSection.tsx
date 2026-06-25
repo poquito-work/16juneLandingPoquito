@@ -42,7 +42,7 @@ const [error, setError] = useState("");
         "access_token",
         response.access_token
       );
-      navigate({ to: "/MyAccount" });
+      navigate({ to: "/myaccount/profile" });
     }
 
   } catch (err: any) {
@@ -156,7 +156,7 @@ const [error, setError] = useState("");
                 className="font-hero font-bold text-pq-green mb-1.5"
                 style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.1rem)' }}
               >
-                <span style={{ color: 'var(--foreground)' }}>Sign</span> <span style={{ color: 'var(--rust)' }}>In</span>
+                <span style={{ color: 'var(--foreground)' }}>Sign</span> In
               </h3>
               <p className="text-green text-sm mb-8 font-normal">
                 Poquito with pocket dragon.

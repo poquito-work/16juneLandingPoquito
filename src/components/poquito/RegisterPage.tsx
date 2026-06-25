@@ -476,7 +476,7 @@ function StepPlans({
   isLoading: boolean;
 }) {
   const [selected, setSelected] = useState<"monthly" | "annual">("annual");
-
+ 
   const billingDate = (() => {
     const d = new Date();
     d.setDate(d.getDate() + 15);
@@ -506,7 +506,7 @@ function StepPlans({
             <p className="reg-plan-trial">15-days free trial · Billed from {billingDate}</p>
           </div>
         </button>
-
+ 
         {/* Annual */}
         <button
           type="button"
@@ -642,5 +642,4 @@ export function RegisterPage() {
     </div>
   );
 }
- 
  

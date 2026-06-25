@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "@tanstack/react-router";
 import { PocketDragonLogo } from "./Logo";
 
 const NAV = [
@@ -29,6 +30,8 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [sectionId, setSectionId] = useState("home");
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("access_token"));
+  const navigate = useNavigate();
 
   const isDark = DARK_SECTION_IDS.includes(sectionId);
   const isRust = RUST_SECTION_IDS.includes(sectionId);
@@ -42,6 +45,22 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
+
+  useEffect(() => {
+    function onStorage() {
+      setIsLoggedIn(!!localStorage.getItem("access_token"));
+    }
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  function handleSignOut() {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("auth_token");
+    setIsLoggedIn(false);
+    setOpen(false);
+    navigate({ to: "/" });
+  }
 
   const lightStyle = {
     background: "rgba(249, 242, 228, 0.85)",
@@ -91,7 +110,15 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
         <div className="mx-auto flex h-16 max-w-7xl items-center px-5 sm:px-8">
 
           {/* Logo */}
-          <a href="#home" aria-label="Go to home" className="shrink-0">
+          <a
+            href="/"
+            aria-label="Go to home"
+            className="shrink-0"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate({ to: "/" });
+            }}
+          >
             <PocketDragonLogo size="lg" light={logoLight} />
           </a>
 
@@ -129,13 +156,33 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
               )}
             </AnimatePresence>
 
-            <button
-              type="button"
-              onClick={onLoginClick}
-              className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
-            >
-              Login
-            </button>
+            {isLoggedIn ? (
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => navigate({ to: "/myaccount/profile" })}
+                  className="text-[0.7rem] font-bold uppercase tracking-[0.16em] transition-opacity hover:opacity-70 bg-transparent border-0 p-0 cursor-pointer"
+                  style={{ color: textColor }}
+                >
+                  My Account
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={onLoginClick}
+                className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
+              >
+                Login
+              </button>
+            )}
 
             <button
               type="button"
@@ -214,15 +261,34 @@ style={{
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35, duration: 0.28, ease: "easeOut" }}
-                className="mt-8 flex justify-center"
+                className="mt-8 flex flex-col items-center gap-3"
               >
-                <button
-                  type="button"
-                  onClick={() => { setOpen(false); onLoginClick?.(); }}
-                  className="inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90"
-                >
-                  Login
-                </button>
+                {isLoggedIn ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => { setOpen(false); navigate({ to: "/myaccount/profile" }); }}
+                      className="inline-flex items-center justify-center rounded-full border border-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-rust transition-opacity hover:opacity-80"
+                    >
+                      My Account
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSignOut}
+                      className="inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90"
+                    >
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => { setOpen(false); onLoginClick?.(); }}
+                    className="inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90"
+                  >
+                    Login
+                  </button>
+                )}
               </motion.div>
             </nav>
           </motion.div>
