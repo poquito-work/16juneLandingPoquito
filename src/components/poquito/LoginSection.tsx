@@ -38,10 +38,8 @@ const [error, setError] = useState("");
     console.log("Login Success:", response);
 
     if (response?.access_token) {
-      localStorage.setItem(
-        "access_token",
-        response.access_token
-      );
+      localStorage.setItem("access_token", response.access_token);
+      window.dispatchEvent(new Event("auth-change"));
       navigate({ to: "/myaccount/profile" });
     }
 
@@ -164,7 +162,7 @@ const [error, setError] = useState("");
 
               <form className="flex flex-col gap-5"  onSubmit={async (e) => {
     e.preventDefault();
-    // await handleLogin();
+    await handleLogin();
   }}>
 
                 {/* Email */}

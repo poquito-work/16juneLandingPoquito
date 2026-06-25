@@ -11,7 +11,7 @@ export const loginUser = async (
   const payload = {
     email,
     username: "",
-    phone_number: "",
+    phone_number: null,
     password,
     device_id: "web",
   };

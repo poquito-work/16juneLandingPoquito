@@ -2753,10 +2753,18 @@ html {
 }
 
 .dash-sub-meta {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   gap: 0.5rem 1.25rem;
   margin-top: 0.6rem;
+  h3{
+        color: #f9f2e4;
+    font-size: 16px;
+  }
+  p{
+        color: #f9f2e4;
+    font-size: 14px;
+  }
 }
 
 .dash-sub-meta span {

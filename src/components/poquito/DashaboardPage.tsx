@@ -486,10 +486,12 @@ function SubscriptionTab() {
           <p className="dash-sub-plan-price">{planPrice[sub.plan]}</p>
           {sub.plan !== "none" && (
             <div className="dash-sub-meta">
-              {sub.started_at && <span>Started: {sub.started_at}</span>}
+              <h3 className="">Free trial active</h3>
+              <p className="">Your 2-week trial ends 3 July.</p>
+              {/* {sub.started_at && <span>Started: {sub.started_at}</span>}
               {sub.next_billing && sub.status === "active" && (
                 <span>Next billing: {sub.next_billing}</span>
-              )}
+              )} */}
             </div>
           )}
         </div>
