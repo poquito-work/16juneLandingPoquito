@@ -1220,8 +1220,8 @@ function LoginSection() {
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(
                   "h3",
                   {
-                    className: "font-hero font-bold text-pq-green mb-1.5",
-                    style: { fontSize: "clamp(1.6rem, 2.5vw, 2.1rem)" },
+                    className: "font-hero font-bold  mb-1.5",
+                    style: { fontSize: "clamp(1.6rem, 2.5vw, 2.1rem)", color: "var(--foreground)" },
                     children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "var(--foreground)" }, children: "Sign" }),
                       " In"

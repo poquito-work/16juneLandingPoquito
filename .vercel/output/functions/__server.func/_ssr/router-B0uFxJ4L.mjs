@@ -208,7 +208,7 @@ const Route$4 = createFileRoute("/dashboard")({
   },
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-DGNsmsvn.mjs");
+const $$splitComponentImporter$3 = () => import("./index-4abqzSAF.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
