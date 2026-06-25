@@ -1,11 +1,11 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-7jRsXtTO.mjs";
+import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-rnCEzWrR.mjs";
 import { R as Root, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
+import { P as PocketDragonLogo, l as loginUser } from "./Logo-gUN_Ou0b.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { P as PocketDragonLogo } from "./Logo-D5gpayti.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { A as ArrowUp, X } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__primitive.mjs";
@@ -36,6 +36,48 @@ import "../_libs/get-nonce.mjs";
 import "../_libs/use-sidecar.mjs";
 import "../_libs/use-callback-ref.mjs";
 import "../_libs/aria-hidden.mjs";
+import "../_libs/axios.mjs";
+import "../_libs/form-data.mjs";
+import "fs";
+import "../_libs/combined-stream.mjs";
+import "../_libs/delayed-stream.mjs";
+import "path";
+import "http";
+import "https";
+import "url";
+import "../_libs/mime-types.mjs";
+import "../_libs/mime-db.mjs";
+import "../_libs/asynckit.mjs";
+import "../_libs/es-set-tostringtag.mjs";
+import "../_libs/get-intrinsic.mjs";
+import "../_libs/es-object-atoms.mjs";
+import "../_libs/es-errors.mjs";
+import "../_libs/math-intrinsics.mjs";
+import "../_libs/gopd.mjs";
+import "../_libs/es-define-property.mjs";
+import "../_libs/has-symbols.mjs";
+import "../_libs/get-proto.mjs";
+import "../_libs/dunder-proto.mjs";
+import "../_libs/call-bind-apply-helpers.mjs";
+import "../_libs/function-bind.mjs";
+import "../_libs/hasown.mjs";
+import "../_libs/has-tostringtag.mjs";
+import "../_libs/proxy-from-env.mjs";
+import "../_libs/https-proxy-agent.mjs";
+import "net";
+import "tls";
+import "assert";
+import "../_libs/debug.mjs";
+import "../_libs/ms.mjs";
+import "tty";
+import "../_libs/supports-color.mjs";
+import "os";
+import "../_libs/has-flag.mjs";
+import "../_libs/agent-base.mjs";
+import "events";
+import "http2";
+import "../_libs/follow-redirects.mjs";
+import "zlib";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -1133,9 +1175,40 @@ function LoginSection() {
   const [password, setPassword] = reactExports.useState("");
   const [focused, setFocused] = reactExports.useState(null);
   const [showPass, setShowPass] = reactExports.useState(false);
-  useNavigate();
+  const navigate = useNavigate();
   const [loading, setLoading] = reactExports.useState(false);
   const [error, setError] = reactExports.useState("");
+  const handleLogin = async () => {
+    setError("");
+    if (!email.trim()) {
+      setError("Please enter your email");
+      return;
+    }
+    if (!password.trim()) {
+      setError("Please enter your password");
+      return;
+    }
+    try {
+      setLoading(true);
+      const response = await loginUser(
+        email.trim(),
+        password
+      );
+      console.log("Login Success:", response);
+      if (response?.access_token) {
+        localStorage.setItem("access_token", response.access_token);
+        window.dispatchEvent(new Event("auth-change"));
+        navigate({ to: "/myaccount/profile" });
+      }
+    } catch (err) {
+      console.error("Login Error:", err);
+      setError(
+        err?.response?.data?.message || err?.response?.data?.error || "Invalid email or password"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "login", className: "relative overflow-hidden pt-15", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
@@ -1231,6 +1304,7 @@ function LoginSection() {
                 /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-green text-sm mb-8 font-normal", children: "Poquito with pocket dragon." }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "flex flex-col gap-5", onSubmit: async (e) => {
                   e.preventDefault();
+                  await handleLogin();
                 }, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-green text-xs tracking-[0.14em] uppercase font-normal", children: "Email Address" }),

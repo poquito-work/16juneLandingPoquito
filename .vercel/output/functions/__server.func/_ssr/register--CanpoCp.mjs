@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { L as Link } from "../_libs/tanstack__react-router.mjs";
-import { P as PocketDragonLogo } from "./Logo-D5gpayti.mjs";
+import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, v as verifyOtp, r as registerUser } from "./Logo-gUN_Ou0b.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -14,43 +14,52 @@ import "crypto";
 import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
+import "../_libs/axios.mjs";
+import "../_libs/form-data.mjs";
+import "fs";
+import "../_libs/combined-stream.mjs";
+import "../_libs/delayed-stream.mjs";
+import "path";
+import "http";
+import "https";
+import "url";
+import "../_libs/mime-types.mjs";
+import "../_libs/mime-db.mjs";
+import "../_libs/asynckit.mjs";
+import "../_libs/es-set-tostringtag.mjs";
+import "../_libs/get-intrinsic.mjs";
+import "../_libs/es-object-atoms.mjs";
+import "../_libs/es-errors.mjs";
+import "../_libs/math-intrinsics.mjs";
+import "../_libs/gopd.mjs";
+import "../_libs/es-define-property.mjs";
+import "../_libs/has-symbols.mjs";
+import "../_libs/get-proto.mjs";
+import "../_libs/dunder-proto.mjs";
+import "../_libs/call-bind-apply-helpers.mjs";
+import "../_libs/function-bind.mjs";
+import "../_libs/hasown.mjs";
+import "../_libs/has-tostringtag.mjs";
+import "../_libs/proxy-from-env.mjs";
+import "../_libs/https-proxy-agent.mjs";
+import "net";
+import "tls";
+import "assert";
+import "../_libs/debug.mjs";
+import "../_libs/ms.mjs";
+import "tty";
+import "../_libs/supports-color.mjs";
+import "os";
+import "../_libs/has-flag.mjs";
+import "../_libs/agent-base.mjs";
+import "events";
+import "http2";
+import "../_libs/follow-redirects.mjs";
+import "zlib";
 import "./pocket-dragon-logo-B1TjRRiN.mjs";
 import "../_libs/framer-motion.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-const CITIES = [
-  "Ahmedabad",
-  "Bengaluru",
-  "Bhopal",
-  "Bhubaneswar",
-  "Chandigarh",
-  "Chennai",
-  "Coimbatore",
-  "Delhi",
-  "Faridabad",
-  "Ghaziabad",
-  "Gurugram",
-  "Hyderabad",
-  "Indore",
-  "Jaipur",
-  "Kochi",
-  "Kolkata",
-  "Lucknow",
-  "Ludhiana",
-  "Mumbai",
-  "Nagpur",
-  "Nashik",
-  "Noida",
-  "Patna",
-  "Pune",
-  "Rajkot",
-  "Surat",
-  "Thane",
-  "Vadodara",
-  "Varanasi",
-  "Visakhapatnam",
-  "Other"
-];
 function RegisterHeader() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "header",
@@ -114,11 +123,27 @@ function EyeIcon({ visible }) {
 function StepDetails({
   data,
   onChange,
-  onNext
+  onNext,
+  apiError,
+  isLoading,
+  termsUrl,
+  privacyUrl
 }) {
   const [errors, setErrors] = reactExports.useState({});
   const [showPassword, setShowPassword] = reactExports.useState(false);
   const [showConfirm, setShowConfirm] = reactExports.useState(false);
+  const [cityList, setCityList] = reactExports.useState([]);
+  reactExports.useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await getPredefinedListByType("city");
+        setCityList(response.data.content);
+      } catch (error) {
+        console.error("Error fetching city list:", error);
+      }
+    };
+    fetchCities();
+  }, []);
   function validate() {
     const e = {};
     if (!data.fullName.trim()) e.fullName = "Username is required.";
@@ -127,7 +152,11 @@ function StepDetails({
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) e.email = "Please enter a valid email.";
     if (data.phone.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())) e.phone = "Please enter a valid phone number.";
     if (!data.password) e.password = "Password is required.";
-    else if (data.password.length < 8) e.password = "Password must be at least 8 characters.";
+    else if (data.password.length < 8) e.password = "Must be at least 8 characters.";
+    else if (!/[A-Z]/.test(data.password)) e.password = "Must include at least one uppercase letter.";
+    else if (!/[a-z]/.test(data.password)) e.password = "Must include at least one lowercase letter.";
+    else if (!/[0-9]/.test(data.password)) e.password = "Must include at least one digit.";
+    else if (!/[^A-Za-z0-9]/.test(data.password)) e.password = "Must include at least one special character.";
     if (!data.confirmPassword) e.confirmPassword = "Please confirm your password.";
     else if (data.password !== data.confirmPassword) e.confirmPassword = "Passwords do not match.";
     if (!data.agreed) e.agreed = "You must agree to the Terms & Privacy Policy to continue.";
@@ -174,7 +203,8 @@ function StepDetails({
             placeholder: "Your phone",
             value: data.phone,
             onChange: (e) => onChange("phone", e.target.value),
-            autoComplete: "tel"
+            autoComplete: "tel",
+            maxLength: 10
           }
         ),
         errors.phone && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.phone })
@@ -211,10 +241,14 @@ function StepDetails({
               id: "reg-city",
               className: `reg-input reg-select ${errors.city ? "reg-input-error" : ""} ${!data.city ? "reg-select-placeholder" : ""}`,
               value: data.city,
-              onChange: (e) => onChange("city", e.target.value),
+              onChange: (e) => {
+                const selected = cityList.find((c) => c.name === e.target.value);
+                onChange("city", e.target.value);
+                onChange("cityId", selected?.id ?? 0);
+              },
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", disabled: true, children: "Select your city" }),
-                CITIES.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: c, children: c }, c))
+                cityList?.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: c.name, children: c.name }, c.uuid))
               ]
             }
           ),
@@ -234,7 +268,7 @@ function StepDetails({
               id: "reg-password",
               type: showPassword ? "text" : "password",
               className: `reg-input reg-input-padded ${errors.password ? "reg-input-error" : ""}`,
-              placeholder: "Min. 8 characters",
+              placeholder: "Min. 8 chars, A-Z, a-z, 0-9, @#$…",
               value: data.password,
               onChange: (e) => onChange("password", e.target.value),
               autoComplete: "new-password"
@@ -281,22 +315,26 @@ function StepDetails({
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "reg-checkbox-text", children: [
           "I agree to the",
           " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/terms", className: "reg-signin-link", target: "_blank", children: "Terms of Use" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: termsUrl || "/terms", className: "reg-signin-link", target: "_blank", rel: "noreferrer", children: "Terms of Use" }),
           " ",
           "and",
           " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/privacy", className: "reg-signin-link", target: "_blank", children: "Privacy Policy" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: privacyUrl || "/privacy", className: "reg-signin-link", target: "_blank", rel: "noreferrer", children: "Privacy Policy" })
         ] })
       ] }),
       errors.agreed && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error reg-error-checkbox", children: errors.agreed })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { type: "submit", className: "reg-next-btn", children: [
+    apiError && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg px-4 py-3 text-sm mb-2", style: { background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }, children: apiError }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", className: "reg-next-btn", disabled: isLoading, children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
+      "Registering…"
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       "Continue",
       /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 12h14" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l7 7-7 7" })
       ] })
-    ] }),
+    ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "reg-signin-hint", children: [
       "Already have an account?",
       " ",
@@ -306,12 +344,14 @@ function StepDetails({
 }
 function StepOTP({
   email,
+  formData,
   onBack,
   onVerified
 }) {
   const [otp, setOtp] = reactExports.useState(["", "", "", "", "", ""]);
   const [error, setError] = reactExports.useState("");
   const [verifying, setVerifying] = reactExports.useState(false);
+  const [resending, setResending] = reactExports.useState(false);
   const [resendSeconds, setResendSeconds] = reactExports.useState(30);
   const inputRefs = reactExports.useRef([]);
   reactExports.useEffect(() => {
@@ -351,15 +391,40 @@ function StepOTP({
     }
     setVerifying(true);
     setError("");
-    await new Promise((r) => setTimeout(r, 900));
-    setVerifying(false);
-    onVerified();
+    try {
+      await verifyOtp({ identifier: email, otp: code, otp_type: "EMAIL_OTP" });
+      await registerUser({
+        username: formData.fullName,
+        email: formData.email,
+        phone_number: formData.phone.trim() || null,
+        password: formData.password,
+        city_id: formData.cityId,
+        otp: code,
+        role_name: "user",
+        is_terms_condition_accepted: true,
+        is_privacy_policy: true
+      });
+      onVerified();
+    } catch (err) {
+      setError(
+        err?.response?.data?.message || err?.response?.data?.error || "Verification failed. Please try again."
+      );
+    } finally {
+      setVerifying(false);
+    }
   }
-  function handleResend() {
+  async function handleResend() {
     setOtp(["", "", "", "", "", ""]);
     setError("");
     setResendSeconds(30);
     inputRefs.current[0]?.focus();
+    setResending(true);
+    try {
+      await sendOtp(email, "EMAIL_OTP");
+    } catch {
+    } finally {
+      setResending(false);
+    }
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-otp-wrap", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-otp-hint", children: [
@@ -512,22 +577,67 @@ const STEP_TITLES = {
 function RegisterPage() {
   const [step, setStep] = reactExports.useState(1);
   const [isLoading, setIsLoading] = reactExports.useState(false);
+  const [apiError, setApiError] = reactExports.useState("");
+  const [termsUrl, setTermsUrl] = reactExports.useState("");
+  const [privacyUrl, setPrivacyUrl] = reactExports.useState("");
   const [formData, setFormData] = reactExports.useState({
     fullName: "",
     city: "",
+    cityId: 0,
     email: "",
     phone: "",
     password: "",
     confirmPassword: "",
     agreed: false
   });
+  reactExports.useEffect(() => {
+    const fetchComplianceDocs = async () => {
+      try {
+        const [termsRes, privacyRes] = await Promise.all([
+          getTermsCondition(),
+          getPrivacyPolicy()
+        ]);
+        if (termsRes?.data?.content_url) setTermsUrl(termsRes.data.content_url);
+        if (privacyRes?.data?.content_url) setPrivacyUrl(privacyRes.data.content_url);
+      } catch (error) {
+        console.error("Error fetching compliance docs:", error);
+      }
+    };
+    fetchComplianceDocs();
+  }, []);
   function handleChange(field, value) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
+  async function handleStep1Next() {
+    setIsLoading(true);
+    setApiError("");
+    try {
+      const [emailRes, usernameRes] = await Promise.all([
+        checkEmailExists(formData.email),
+        checkUserExists(formData.fullName)
+      ]);
+      if (emailRes?.data?.is_available === false) {
+        setApiError("An account with this email already exists. Please sign in.");
+        return;
+      }
+      if (usernameRes?.data?.is_available === false) {
+        setApiError("An account with this username already exists. Please sign in.");
+        return;
+      }
+      await sendOtp(formData.email, "EMAIL_OTP");
+      setStep(2);
+    } catch (err) {
+      setApiError(
+        err?.response?.data?.message || err?.response?.data?.error
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }
   async function handleSubmit(plan) {
     setIsLoading(true);
-    console.log("Register payload:", { ...formData, plan });
-    await new Promise((r) => setTimeout(r, 1200));
+    console.log("Plan selected:", plan);
+    await new Promise((r) => setTimeout(r, 800));
     setIsLoading(false);
   }
   const { title, sub } = STEP_TITLES[step];
@@ -546,13 +656,18 @@ function RegisterPage() {
           {
             data: formData,
             onChange: handleChange,
-            onNext: () => setStep(2)
+            onNext: handleStep1Next,
+            apiError,
+            isLoading,
+            termsUrl,
+            privacyUrl
           }
         ),
         step === 2 && /* @__PURE__ */ jsxRuntimeExports.jsx(
           StepOTP,
           {
             email: formData.email,
+            formData,
             onBack: () => setStep(1),
             onVerified: () => setStep(3)
           }

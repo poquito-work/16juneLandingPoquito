@@ -1,14 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { a as axios } from "../_libs/axios.mjs";
-import { H as Header, F as Footer } from "./Footer-7jRsXtTO.mjs";
-const API_BASE_URL = "http://13.207.123.199:8080";
-const getPredefinedListByType = async (entity_type) => {
-  const response = await axios.get(
-    `${API_BASE_URL}/api/v1/admin/predefined/?entity_type=${entity_type}`
-  );
-  return response.data;
-};
+import { d as getPredefinedListByType } from "./Logo-gUN_Ou0b.mjs";
+import { H as Header, F as Footer } from "./Footer-rnCEzWrR.mjs";
 function decodeJwtPayload(token) {
   try {
     const base64 = token.split(".")[1];
@@ -349,14 +342,8 @@ function SubscriptionTab() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "dash-sub-plan-name", children: planLabel[sub.plan] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "dash-sub-plan-price", children: planPrice[sub.plan] }),
         sub.plan !== "none" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-sub-meta", children: [
-          sub.started_at && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-            "Started: ",
-            sub.started_at
-          ] }),
-          sub.next_billing && sub.status === "active" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-            "Next billing: ",
-            sub.next_billing
-          ] })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "", children: "Free trial active" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "", children: "Your 2-week trial ends 3 July." })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `dash-chip ${statusMap[sub.status].cls}`, children: statusMap[sub.status].label }) })

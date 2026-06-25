@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { P as PocketDragonLogo } from "./Logo-D5gpayti.mjs";
+import { P as PocketDragonLogo } from "./Logo-gUN_Ou0b.mjs";
 import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 const NAV = [
@@ -25,7 +25,7 @@ function Header({ onLoginClick }) {
   const [open, setOpen] = reactExports.useState(false);
   const [scrolled, setScrolled] = reactExports.useState(false);
   const [sectionId, setSectionId] = reactExports.useState("home");
-  const [isLoggedIn, setIsLoggedIn] = reactExports.useState(() => !!localStorage.getItem("access_token"));
+  const [isLoggedIn, setIsLoggedIn] = reactExports.useState(() => !!localStorage.getItem("auth_access_token"));
   const navigate = useNavigate();
   const isDark = DARK_SECTION_IDS.includes(sectionId);
   const isRust = RUST_SECTION_IDS.includes(sectionId);
@@ -39,15 +39,19 @@ function Header({ onLoginClick }) {
     return () => window.removeEventListener("scroll", update);
   }, []);
   reactExports.useEffect(() => {
-    function onStorage() {
+    function onAuthChange() {
       setIsLoggedIn(!!localStorage.getItem("access_token"));
     }
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    window.addEventListener("storage", onAuthChange);
+    window.addEventListener("auth-change", onAuthChange);
+    return () => {
+      window.removeEventListener("storage", onAuthChange);
+      window.removeEventListener("auth-change", onAuthChange);
+    };
   }, []);
   function handleSignOut() {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_access_token");
+    localStorage.removeItem("auth_refresh_token");
     setIsLoggedIn(false);
     setOpen(false);
     navigate({ to: "/" });
@@ -103,7 +107,7 @@ function Header({ onLoginClick }) {
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: open && /* @__PURE__ */ jsxRuntimeExports.jsxs(
               motion.nav,
               {
                 initial: { opacity: 0, x: 20 },
@@ -112,44 +116,50 @@ function Header({ onLoginClick }) {
                 transition: { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] },
                 className: "hidden md:flex items-center gap-6 headerNav",
                 "aria-label": "Primary",
-                children: NAV.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  motion.a,
-                  {
-                    href: item.href,
-                    onClick: () => setOpen(false),
-                    initial: { opacity: 0, y: -4 },
-                    animate: { opacity: 1, y: 0 },
-                    transition: { delay: i * 0.05, duration: 0.18, ease: "easeOut" },
-                    className: "text-sm font-normal transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]",
-                    style: { color: textColor },
-                    children: item.label
-                  },
-                  item.label
-                ))
+                children: [
+                  NAV.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    motion.a,
+                    {
+                      href: item.href,
+                      onClick: () => setOpen(false),
+                      initial: { opacity: 0, y: -4 },
+                      animate: { opacity: 1, y: 0 },
+                      transition: { delay: i * 0.05, duration: 0.18, ease: "easeOut" },
+                      className: "text-sm font-normal transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03]",
+                      style: { color: textColor },
+                      children: item.label
+                    },
+                    item.label
+                  )),
+                  isLoggedIn && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    motion.button,
+                    {
+                      type: "button",
+                      onClick: () => {
+                        setOpen(false);
+                        navigate({ to: "/myaccount/profile" });
+                      },
+                      initial: { opacity: 0, y: -4 },
+                      animate: { opacity: 1, y: 0 },
+                      transition: { delay: NAV.length * 0.05, duration: 0.18, ease: "easeOut" },
+                      className: "text-sm font-normal transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03] bg-transparent border-0 p-0 cursor-pointer",
+                      style: { color: textColor },
+                      children: "My Account"
+                    }
+                  )
+                ]
               },
               "inline-nav"
             ) }),
-            isLoggedIn ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "button",
-                {
-                  type: "button",
-                  onClick: () => navigate({ to: "/myaccount/profile" }),
-                  className: "text-[0.7rem] font-bold uppercase tracking-[0.16em] transition-opacity hover:opacity-70 bg-transparent border-0 p-0 cursor-pointer",
-                  style: { color: textColor },
-                  children: "My Account"
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "button",
-                {
-                  type: "button",
-                  onClick: handleSignOut,
-                  className: "inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90",
-                  children: "Sign Out"
-                }
-              )
-            ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+            isLoggedIn ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                onClick: handleSignOut,
+                className: "inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90",
+                children: "Log Out"
+              }
+            ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
               "button",
               {
                 type: "button",
@@ -236,7 +246,7 @@ function Header({ onLoginClick }) {
                 initial: { opacity: 0, y: 10 },
                 animate: { opacity: 1, y: 0 },
                 transition: { delay: 0.35, duration: 0.28, ease: "easeOut" },
-                className: "mt-8 flex flex-col items-center gap-3",
+                className: "flex flex-col items-center gap-3",
                 children: isLoggedIn ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "button",
@@ -246,7 +256,7 @@ function Header({ onLoginClick }) {
                         setOpen(false);
                         navigate({ to: "/myaccount/profile" });
                       },
-                      className: "inline-flex items-center justify-center rounded-full border border-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-rust transition-opacity hover:opacity-80",
+                      className: "w-full text-left border-b border-foreground/8 py-4 font-display font-medium uppercase tracking-widest text-foreground hover:text-rust transition-colors",
                       children: "My Account"
                     }
                   ),
@@ -256,7 +266,7 @@ function Header({ onLoginClick }) {
                       type: "button",
                       onClick: handleSignOut,
                       className: "inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90",
-                      children: "Sign Out"
+                      children: "Log Out"
                     }
                   )
                 ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
