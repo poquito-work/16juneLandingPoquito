@@ -33,7 +33,7 @@ export function CTASection() {
     <section
       id="download"
       className="relative overflow-hidden"
-      style={{ padding: '9rem 0' }}
+      style={{ padding: '4rem 0' }}
     >
       {/* Gradient: deep green top → rich green mid → dark green bottom */}
       <div
@@ -83,7 +83,7 @@ export function CTASection() {
           style={{ fontSize: 'clamp(2.8rem, 6.5vw, 5.8rem)' }}
         >
           YOUR  {''}
-           <span className="text-pq-rust">MOVE.</span>
+           <span className="text-pq-rust">MOVE</span>
         </motion.h2>
 
         {/* Subtext */}

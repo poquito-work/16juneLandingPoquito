@@ -74,16 +74,16 @@ export function Playground() {
       });
     };
 
-    const startAuto = () => {
-      stopAuto();
-      autoTimer = setInterval(() => {
-        currentIndex = (currentIndex + 1) % SCREEN_IDS.length;
-        switchTo(SCREEN_IDS[currentIndex]);
-      }, 5000);
-    };
+    // const startAuto = () => {
+    //   stopAuto();
+    //   autoTimer = setInterval(() => {
+    //     currentIndex = (currentIndex + 1) % SCREEN_IDS.length;
+    //     switchTo(SCREEN_IDS[currentIndex]);
+    //   }, 5000);
+    // };
 
     // Delay initial auto-rotate by 2s so page can settle after load
-    resumeTimer = setTimeout(startAuto, 2000);
+    // resumeTimer = setTimeout(startAuto, 2000);
 
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -93,7 +93,7 @@ export function Playground() {
         currentIndex = SCREEN_IDS.indexOf(screenId as typeof SCREEN_IDS[number]);
         setTimeout(() => switchTo(screenId), 100);
         // Resume auto-rotate after 10s of inactivity
-        resumeTimer = setTimeout(startAuto, 10000);
+        // resumeTimer = setTimeout(startAuto, 10000);
       });
       card.addEventListener("mouseenter", () => {
         isPaused = true;
@@ -103,7 +103,7 @@ export function Playground() {
         isPaused = false;
         // Small delay before resuming so quick mouse passes don't retrigger immediately
         resumeTimer = setTimeout(() => {
-          if (!isPaused) startAuto();
+          // if (!isPaused) startAuto();
         }, 800);
       });
     });
@@ -408,7 +408,7 @@ export function Playground() {
               <p className="ofc-desc">The lobby’s buzzing — grab a seat</p>
                   <div className="ofc-tags">
                     <span className="ofc-tag">REAL-TIME</span>
-                    <span className="ofc-tag">GLOBAL</span>
+                    <span className="ofc-tag">INDIA</span>
                   </div>
             </div>
 

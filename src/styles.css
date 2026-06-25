@@ -1330,26 +1330,32 @@
   }
 }
 
+/* ── Scrollbar — all platforms ─────────────────────────────── */
+
+/* Standard (Firefox, Chrome Android 121+, Safari 18+) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #b65a2f #143322;
+}
+
+/* Webkit (desktop Chrome/Edge/Safari, older Android WebView) */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   border-radius: 5px;
-  background:#143322;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #b65a2f; 
-  border-radius: 10px;
- 
+  background: #143322;
 }
 
-/* Handle on hover */
+::-webkit-scrollbar-thumb {
+  background: #b65a2f;
+  border-radius: 10px;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #b65a2f; 
+  background: #b65a2f;
 }
 .faqWrap .faqbtn{
   
@@ -1721,8 +1727,23 @@
 
 .reg-plan-card-selected {
   border-color: var(--rust, #B65A2F);
-  background: rgba(182, 90, 47, 0.04);
-  box-shadow: 0 0 0 3px rgba(182, 90, 47, 0.12);
+  background: var(--rust, #B65A2F);
+  box-shadow: 0 0 0 3px rgba(182, 90, 47, 0.2);
+}
+
+.reg-plan-card-selected:not(.reg-plan-card-featured) .reg-plan-label,
+.reg-plan-card-selected:not(.reg-plan-card-featured) .reg-plan-currency,
+.reg-plan-card-selected:not(.reg-plan-card-featured) .reg-plan-price,
+.reg-plan-card-selected:not(.reg-plan-card-featured) .reg-plan-period {
+  color: #ffffff;
+}
+
+.reg-plan-card-selected:not(.reg-plan-card-featured) .reg-plan-note {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.reg-plan-card-selected:not(.reg-plan-card-featured) .reg-plan-trial {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .reg-plan-card-featured.reg-plan-card-selected {
@@ -1770,7 +1791,7 @@
 }
 
 .reg-plan-card-selected .reg-plan-radio {
-  border-color: var(--rust, #B65A2F);
+  border-color: #ffffff;
 }
 
 .reg-plan-card-featured.reg-plan-card-selected .reg-plan-radio {
@@ -1787,6 +1808,10 @@
 
 .reg-plan-radio-dot-active {
   background: var(--rust, #B65A2F);
+}
+
+.reg-plan-card-selected:not(.reg-plan-card-featured) .reg-plan-radio-dot-active {
+  background: #ffffff;
 }
 
 .reg-plan-card-featured.reg-plan-card-selected .reg-plan-radio-dot-active {
@@ -1840,6 +1865,18 @@
   color: rgba(20, 51, 34, 0.45);
   margin: 0.25rem 0 0;
   line-height: 1.4;
+}
+
+.reg-plan-trial {
+  font-size: 0.75rem;
+  color: #b65a2f;
+  margin: 0.3rem 0 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.reg-plan-card-featured.reg-plan-card-selected .reg-plan-trial {
+  color: rgba(249, 242, 228, 0.75);
 }
 
 /* Actions row */
@@ -2940,7 +2977,18 @@
     padding: 1.25rem;
   }
 }
-
+.text-green{
+  color: #143322;
+}
+.pl-30{
+  padding-left: 30px;
+}
+.text-justify{
+  text-align: justify;
+}
+.privacyDiv p,.terms p{
+  text-align: justify;
+}
 /* .border-100{
   border-radius: 50%;
 } */

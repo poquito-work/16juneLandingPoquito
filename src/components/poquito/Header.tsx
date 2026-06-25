@@ -173,8 +173,13 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
             exit={{ y: "-100%" }}
             transition={{ duration: 0.38, ease: [0.22, 0.61, 0.36, 1] }}
             className="md:hidden fixed inset-x-0 top-0 z-50 backdrop-blur-xl backdrop-saturate-150"
-            style={{ background: "rgba(249, 242, 228, 0.95)" }}
-          >
+style={{
+    background: "rgba(249, 242, 228, 0.85)",
+    backdropFilter: "blur(20px) saturate(180%)",
+    borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
+    opacity: 1,
+    transform: "none",
+  }}          >
             <div className="flex h-16 items-center justify-between px-6 border-b border-foreground/10">
               <PocketDragonLogo size="md" />
               <button

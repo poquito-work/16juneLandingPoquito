@@ -15,18 +15,17 @@ export function DownloadButtons({
       <div className={`flex flex-wrap items-center gap-3 ${justify}`}>
             <motion.a
           href="#"
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
           className="cursor-none"
           style={{
             cursor:"auto",
             display: "block",
             borderRadius: 10,
             overflow: "hidden",
-            background: "#143322",
+            background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)",
             backdropFilter: "blur(16px) saturate(180%)",
             WebkitBackdropFilter: "blur(16px) saturate(180%)",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+               border:" 1px solid rgb(20, 51, 34)",
+              boxShadow: "rgb(0 0 0 / 14%) 0px 4px 24px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
             padding: "4px 10px",
           }}
         >
@@ -35,17 +34,16 @@ export function DownloadButtons({
           <motion.a
           href="#"
            className="cursor-none"
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
           style={{
             cursor:"auto",
             display: "block",
             borderRadius: 10,
             overflow: "hidden",
-            background: "#143322",
+            background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)",
             backdropFilter: "blur(16px) saturate(180%)",
             WebkitBackdropFilter: "blur(16px) saturate(180%)",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+            border:" 1px solid rgb(20, 51, 34)",
+              boxShadow: "rgb(0 0 0 / 14%) 0px 4px 24px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
             padding: "4px 10px",
           }}
         >

@@ -69,8 +69,8 @@ export default function FAQSection() {
   return (
     <section
       id="faq"
-      className="section-pad mt-15 faqWrap"
-      style={{ background: "linear-gradient(180deg, #F9F2E4 0%, #EDE5D0 100%)" }}
+      className="section-pad pt-15 faqWrap"
+      style={{ background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }}
     >
       <div className="max-w-3xl mx-auto px-6 lg:px-10">
         {/* Header */}
@@ -79,18 +79,18 @@ export default function FAQSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="mb-14"
+          className="mb-14 text-center"
         >
-          <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center gap-3 mb-5 justify-center">
             <span className="h-[1px] w-8 bg-pq-rust/60" />
             <span className="text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust">Questions</span>
             <span className="h-[1px] w-8 bg-pq-rust/60" />
           </div>
           <h2
-            className="font-hero font-bold text-pq leading-tight tracking-tight text-balance"
-            style={{ fontSize: "clamp(2.2rem, 4vw, 3.8rem)" }}
+            className="sm:text-3xl md:text-[2rem] text-2xl text-rust font-hero font-bold text-pq leading-tight tracking-tight text-balance"
+            
           >
-            FREQUENTLY ASKED
+           <span style={{ color: 'var(--foreground)' }} >FREQUENTLY</span> <span  className="text-rust">ASKED</span>
           </h2>
         </motion.div>
 
@@ -163,7 +163,7 @@ function FAQItem({
       <button onClick={onToggle} className="w-full text-medium flex items-center justify-between gap-6 py-6 text-left group">
         <span
           className={`font-hero font-bold text-base leading-snug transition-all duration-300 ${
-            isOpen ? "text-pq" : "text-pq"
+            isOpen ? "text-green" : "text-green"
           } group-hover:text-pq-green`}
           style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)" }}
         >
@@ -202,7 +202,7 @@ function FAQItem({
             style={{ overflow: "hidden" }}
           >
             <p
-              className="text-pq text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200"
+              className="text-green text-sm font-medium leading-relaxed pb-6 max-w-2xl transition-all duration-200"
               dangerouslySetInnerHTML={{ __html: faq.a }}
             />
           </motion.div>

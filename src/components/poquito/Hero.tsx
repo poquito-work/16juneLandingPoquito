@@ -104,7 +104,7 @@ export function Hero() {
               <span className="text-[0.72rem] uppercase tracking-[0.22em]" style={{ color: "var(--rust)" }}>
                  Play through tunnels, clouds, and signal tantrums
               </span>
-              <span className="h-px w-8" style={{ background: "var(--rust)" }} />
+              {/* <span className="h-px w-8" style={{ background: "var(--rust)" }} /> */}
             </motion.div>
 
             {/* Headline */}
@@ -133,7 +133,7 @@ export function Hero() {
                 maxWidth: "44ch",
               }}
             >
-              Practice, play, and complete your way to the top!
+              Practice, play, and compete your way to the top!
               Enjoy real-time Traditional Mahjong action at your fingertips
             </motion.p>
 

@@ -98,9 +98,9 @@ const [error, setError] = useState("");
           >
             {/* Eyebrow */}
             <div className="flex items-center gap-3 mb-6">
-              <span className="h-px w-8 bg-rust/70" />
-              <span className="text-[0.72rem] font-bold uppercase tracking-[0.32em] text-rust">Member Access</span>
-              <span className="h-px w-8 bg-rust/70" />
+              <span className="h-px w-8 bg-pq-white" />
+              <span className="text-[0.72rem] font-bold text-offwhite uppercase tracking-[0.32em]">Member Access</span>
+              <span className="h-px w-8 bg-pq-white" />
 
             </div>
 
@@ -109,7 +109,7 @@ const [error, setError] = useState("");
               className="font-hero font-bold text-offwhite leading-tight tracking-tight text-balance mb-6"
               style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}
             >
-              READY WHEN YOU ARE.
+              READY WHEN YOU ARE
             </h2>
 
             <p className="text-offwhite leading-relaxed mb-10 max-w-sm font-normal">
@@ -141,7 +141,7 @@ const [error, setError] = useState("");
             <div
               className="rounded-2xl p-8 lg:p-10 border"
               style={{
-                background: '#f9f2e4',
+                background: 'rgb(249 242 228 / 53%)',
                 borderColor: 'rgba(20,51,34,0.10)',
                 backdropFilter: 'blur(24px)',
                 boxShadow: '0 24px 64px rgba(20,51,34,0.10)',
@@ -156,10 +156,10 @@ const [error, setError] = useState("");
                 className="font-hero font-bold text-pq-green mb-1.5"
                 style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.1rem)' }}
               >
-                Sign In
+                <span style={{ color: 'var(--foreground)' }}>Sign</span> <span style={{ color: 'var(--rust)' }}>In</span>
               </h3>
-              <p className="text-pq-green/70 text-sm mb-8 font-normal">
-                Access your Poquito account to continue playing.
+              <p className="text-green text-sm mb-8 font-normal">
+                Poquito with pocket dragon.
               </p>
 
               <form className="flex flex-col gap-5"  onSubmit={async (e) => {
@@ -169,15 +169,17 @@ const [error, setError] = useState("");
 
                 {/* Email */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-pq-green/70 text-xs tracking-[0.14em] uppercase font-normal">
+                  <label className="text-green text-xs tracking-[0.14em] uppercase font-normal">
                     Email Address
                   </label>
                   <div
                     className="relative rounded-xl transition-all duration-300"
                     style={{
-                      border: `1.5px solid ${focused === 'email' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
-                      background: focused === 'email' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
-                      boxShadow: focused === 'email' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',
+                      border:`rgba(20,51,34,0.15)`,
+                      background:'rgba(255,255,255,0.55)',
+                      // border: `1.5px solid ${focused === 'email' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
+                      // background: focused === 'email' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
+                      // boxShadow: focused === 'email' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',
                     }}
                   >
                     <input
@@ -197,19 +199,21 @@ const [error, setError] = useState("");
                 {/* Password */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-pq-green/70 text-xs tracking-[0.14em] uppercase font-normal">
+                    <label className="text-green text-xs tracking-[0.14em] uppercase font-normal">
                       Password
                     </label>
-                    <a href="#" className="text-pq-rust text-xs hover:underline underline-offset-2 font-normal">
+                    <a href="#" className="text-offwhite text-xs hover:underline underline-offset-2 font-normal">
                       Forgot password?
                     </a>
                   </div>
                   <div
                     className="relative rounded-xl transition-all duration-300"
                     style={{
-                      border: `1.5px solid ${focused === 'password' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
-                      background: focused === 'password' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
-                      boxShadow: focused === 'password' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',
+                        border:`rgba(20,51,34,0.15)`,
+                      background:'rgba(255,255,255,0.55)',
+                      // border: `1.5px solid ${focused === 'password' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
+                      // background: focused === 'password' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
+                      // boxShadow: focused === 'password' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',
                     }}
                   >
                     <input
@@ -276,7 +280,7 @@ const [error, setError] = useState("");
 
               <p className="text-center text-pq-green/70 text-sm font-normal">
                 New to Poquito?{' '}
-                <Link   to="/register" className="text-pq-rust font-normal hover:underline underline-offset-2">
+                <Link   to="/register" className="text-offwhite font-normal hover:underline underline-offset-2">
                   Create an account
                 </Link>
               </p>
