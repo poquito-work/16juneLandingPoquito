@@ -96,7 +96,7 @@ function DownloadButtons({
     )
   ] }) });
 }
-const heroVideo = "/assets/mahjong-video-v5-BGEeToFl.mp4";
+const heroVideo = "/assets/Studio_product_photography_vid-CwT2O4A8.mp4";
 const EASE$3 = [0.22, 0.61, 0.36, 1];
 const containerVariants = {
   hidden: {},
