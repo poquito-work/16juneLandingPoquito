@@ -37,8 +37,9 @@ const [error, setError] = useState("");
 
     console.log("Login Success:", response);
 
-    if (response?.access_token) {
-      localStorage.setItem("access_token", response.access_token);
+    if (response?.data?.access_token) {
+      localStorage.setItem("access_token", response.data?.access_token);
+      localStorage.setItem("userData", response.data);
       window.dispatchEvent(new Event("auth-change"));
       navigate({ to: "/myaccount/profile" });
     }

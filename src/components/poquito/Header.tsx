@@ -30,7 +30,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [sectionId, setSectionId] = useState("home");
-  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("auth_access_token"));
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("access_token"));
   const navigate = useNavigate();
 
   const isDark = DARK_SECTION_IDS.includes(sectionId);
@@ -59,8 +59,8 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   }, []);
 
   function handleSignOut() {
-    localStorage.removeItem("auth_access_token");
-    localStorage.removeItem("auth_refresh_token");
+    localStorage.removeItem("access_token");
+    // localStorage.removeItem("auth_refresh_token");
     setIsLoggedIn(false);
     setOpen(false);
     navigate({ to: "/" });
