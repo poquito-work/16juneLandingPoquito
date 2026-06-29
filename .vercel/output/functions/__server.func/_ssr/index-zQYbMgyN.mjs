@@ -1,12 +1,11 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-RQqyo9uQ.mjs";
+import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-Db9icIKz.mjs";
 import { R as Root, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-import { e as getPackageList, l as loginUser } from "./auth-Cg9RLxff.mjs";
+import { P as PocketDragonLogo, h as getPackageList } from "./Logo-taAcf7RK.mjs";
 import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { P as PocketDragonLogo } from "./Logo-D5gpayti.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { A as ArrowUp, W as WifiOff, T as Trophy, R as Radar, X } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__primitive.mjs";
@@ -18,9 +17,9 @@ import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
 import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
 import "../_libs/radix-ui__react-primitive.mjs";
 import "../_libs/react-dom.mjs";
-import "crypto";
 import "async_hooks";
 import "util";
+import "crypto";
 import "stream";
 import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
@@ -256,7 +255,7 @@ function Hero() {
                     }
                   ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: itemVariants, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadButtons, { align: "start" }) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-2 pt-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(motion.div, { variants: itemVariants, className: "flex items-center gap-2 pt-1 heroText", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm", style: { color: "var(--foreground)", opacity: 0.7 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "10,000+ Players" }) }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex -space-x-2 socialRound", children: avatarGradients.map((g, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "div",
@@ -1182,7 +1181,7 @@ function LoginSection() {
   const [password, setPassword] = reactExports.useState("");
   const [focused, setFocused] = reactExports.useState(null);
   const [showPass, setShowPass] = reactExports.useState(false);
-  const navigate = useNavigate();
+  useNavigate();
   const features = [
     {
       title: "Offline Supported",
@@ -1199,38 +1198,6 @@ function LoginSection() {
   ];
   const [loading, setLoading] = reactExports.useState(false);
   const [error, setError] = reactExports.useState("");
-  const handleLogin = async () => {
-    setError("");
-    if (!email.trim()) {
-      setError("Please enter your email");
-      return;
-    }
-    if (!password.trim()) {
-      setError("Please enter your password");
-      return;
-    }
-    try {
-      setLoading(true);
-      const response = await loginUser(
-        email.trim(),
-        password
-      );
-      console.log("Login Success:", response);
-      if (response?.data?.access_token) {
-        localStorage.setItem("access_token", response.data?.access_token);
-        localStorage.setItem("userData", response.data);
-        window.dispatchEvent(new Event("auth-change"));
-        navigate({ to: "/myaccount/profile" });
-      }
-    } catch (err) {
-      console.error("Login Error:", err);
-      setError(
-        err?.response?.data?.message || err?.response?.data?.error || "Invalid email or password"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "login", className: "relative overflow-hidden pt-15", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
@@ -1329,7 +1296,6 @@ function LoginSection() {
                 /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-green text-sm mb-8 font-normal", children: "Enter your world of Mahjong" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "flex flex-col gap-5", onSubmit: async (e) => {
                   e.preventDefault();
-                  await handleLogin();
                 }, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-green text-xs tracking-[0.14em] uppercase font-normal", children: "Email Address" }),

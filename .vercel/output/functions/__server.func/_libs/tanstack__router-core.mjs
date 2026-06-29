@@ -4696,7 +4696,6 @@ export {
   makeSerovalPlugin as N,
   getStylesheetHref as O,
   isSsrResponse as P,
-  redirect as Q,
   RouterCore as R,
   isDangerousProtocol as a,
   BaseRoute as b,

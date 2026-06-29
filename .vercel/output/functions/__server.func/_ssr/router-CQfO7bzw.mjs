@@ -1,21 +1,21 @@
 import { Q as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { Q as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { c as createRouter, a as createRootRouteWithContext, u as useRouter, L as Link, O as Outlet, H as HeadContent, S as Scripts, b as createFileRoute, l as lazyRouteComponent } from "../_libs/tanstack__react-router.mjs";
-import { Q as redirect } from "../_libs/tanstack__router-core.mjs";
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import "../_libs/react-dom.mjs";
-import "crypto";
-import "async_hooks";
-import "util";
-import "stream";
-import "node:stream";
-import "../_libs/isbot.mjs";
+import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
-const appCss = "/assets/styles-CteKxpFs.css";
+import "node:stream";
+import "../_libs/react-dom.mjs";
+import "async_hooks";
+import "util";
+import "crypto";
+import "stream";
+import "../_libs/isbot.mjs";
+const appCss = "/assets/styles-chDJlWGj.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -161,7 +161,7 @@ const $$splitComponentImporter$9 = () => import("./terms-tERwfyDW.mjs");
 const Route$9 = createFileRoute("/terms")({
   component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
-const $$splitComponentImporter$8 = () => import("./register-DXWeekxO.mjs");
+const $$splitComponentImporter$8 = () => import("./register-CJoA7eif.mjs");
 const Route$8 = createFileRoute("/register")({
   head: () => ({
     meta: [{
@@ -194,7 +194,7 @@ const Route$6 = createFileRoute("/myaccount")({
   // },
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./forgot-password-s-AF73bs.mjs");
+const $$splitComponentImporter$5 = () => import("./forgot-password-soKjBXFR.mjs");
 const Route$5 = createFileRoute("/forgot-password")({
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
@@ -205,14 +205,12 @@ const Route$4 = createFileRoute("/dashboard")({
       title: "My Account — Pocket Dragon"
     }]
   }),
-  beforeLoad: () => {
-    throw redirect({
-      to: "/myaccount/profile"
-    });
-  },
+  // beforeLoad: () => {
+  //   throw redirect({ to: "/myaccount/profile" });
+  // },
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-CCADdvhY.mjs");
+const $$splitComponentImporter$3 = () => import("./index-zQYbMgyN.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -236,7 +234,7 @@ const Route$3 = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./transaction-history-CLJGb3bH.mjs");
+const $$splitComponentImporter$2 = () => import("./transaction-history-CY1a6eBf.mjs");
 const Route$2 = createFileRoute("/myaccount/transaction-history")({
   head: () => ({
     meta: [{
@@ -245,7 +243,7 @@ const Route$2 = createFileRoute("/myaccount/transaction-history")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./profile-CIQzqXG9.mjs");
+const $$splitComponentImporter$1 = () => import("./profile-DUDurQuY.mjs");
 const Route$1 = createFileRoute("/myaccount/profile")({
   head: () => ({
     meta: [{
@@ -254,7 +252,7 @@ const Route$1 = createFileRoute("/myaccount/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./manage-subscription-DuUJjI3x.mjs");
+const $$splitComponentImporter = () => import("./manage-subscription-BA2NWbYd.mjs");
 const Route = createFileRoute("/myaccount/manage-subscription")({
   head: () => ({
     meta: [{

@@ -1,7 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { L as Link } from "../_libs/tanstack__react-router.mjs";
-import { g as getTermsCondition, a as getPrivacyPolicy, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, v as verifyOtp, r as registerUser } from "./auth-Cg9RLxff.mjs";
-import { P as PocketDragonLogo } from "./Logo-D5gpayti.mjs";
+import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-taAcf7RK.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -10,9 +9,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
-import "crypto";
 import "async_hooks";
 import "util";
+import "crypto";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -393,7 +392,6 @@ function StepOTP({
     setVerifying(true);
     setError("");
     try {
-      await verifyOtp({ identifier: email, otp: code, otp_type: "EMAIL_OTP" });
       await registerUser({
         username: formData.fullName,
         email: formData.email,
