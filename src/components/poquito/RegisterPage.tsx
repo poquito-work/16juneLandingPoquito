@@ -433,7 +433,7 @@ function StepOTP({
     setVerifying(true);
     setError("");
     try {
-      await verifyOtp({ identifier: email, otp: code, otp_type: "EMAIL_OTP" });
+      // await verifyOtp({ identifier: email, otp: code, otp_type: "EMAIL_OTP" });
       await registerUser({
         username: formData.fullName,
         email: formData.email,

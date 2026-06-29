@@ -211,3 +211,40 @@ export function upgradeSubscription(new_plan_uuid: string) {
 export function cancelSubscription() {
   return api.post("/api/v1/subscriptions/cancel");
 }
+
+
+export const forgotPassword = async (email: string) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/forgot-password`,
+    { email },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const resetPassword = async (
+  email: string,
+  reset_otp: string,
+  new_password: string
+) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/reset-password`,
+    {
+      email,
+      reset_otp,
+      new_password,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.data;
+};

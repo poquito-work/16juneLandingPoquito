@@ -143,7 +143,7 @@ export function Hero() {
             </motion.div>
 
             {/* Social proof */}
-            <motion.div variants={itemVariants} className="flex items-center gap-2 pt-1">
+            <motion.div variants={itemVariants} className="flex items-center gap-2 pt-1 heroText">
               <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
                  <strong>10,000+ Players</strong>
               </span>
