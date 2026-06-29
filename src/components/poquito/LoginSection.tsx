@@ -55,7 +55,7 @@ const [error, setError] = useState("");
       localStorage.setItem("access_token", response.data?.access_token);
       localStorage.setItem("userData", response.data);
       window.dispatchEvent(new Event("auth-change"));
-      // navigate({ to: "/myaccount/profile" });
+      navigate({ to: "/myaccount/profile" });
     }
 
   } catch (err: any) {
@@ -194,7 +194,7 @@ const [error, setError] = useState("");
 
               <form className="flex flex-col gap-5"  onSubmit={async (e) => {
     e.preventDefault();
-    // await handleLogin();
+    await handleLogin();
   }}>
 
                 {/* Email */}
