@@ -3050,3 +3050,43 @@ html {
  .reg-select-wrap option{
   color: #143322;
  }
+ .logoSign{
+  margin-left: -25px;
+ }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #143324 !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  background-color: transparent !important;
+  transition: background-color 99999s ease-in-out 0s;
+}
+.dash-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  margin-bottom: 20px;
+}
+
+.dash-pagination button {
+    font-size: 14px;
+    padding: 6px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #b65a2f;
+  color: #fff;
+}
+
+.dash-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.dash-field :disabled{
+      background: #716f6f14!important;
+      cursor: not-allowed;
+}

@@ -6,7 +6,7 @@ import { PocketDragonLogo } from "./Logo";
 const NAV = [
   { label: "Home", href: "#home" },
   { label: "About Us", href: "#playground" },
-  { label: "Contact Us", href: "#login" },
+  { label: "Contact Us", href: "#contact" },
 ];
 
 // dark green sections
@@ -177,7 +177,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
+                className="cursor-pointer inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
               >
                 Log Out
               </button>
@@ -185,7 +185,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
               <button
                 type="button"
                 onClick={onLoginClick}
-                className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
+                className="cursor-pointer inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
               >
                 Login
               </button>

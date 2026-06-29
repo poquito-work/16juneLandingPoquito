@@ -3,6 +3,7 @@ import logoSrc from '@/assets/pocket-dragon-logo.png'
 import { useState } from 'react'
 import { loginUser } from "@/services/auth";
 import { Link, useNavigate } from '@tanstack/react-router'
+import { Radar, Trophy, WifiOff } from 'lucide-react';
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
 export function LoginSection() {
@@ -11,7 +12,20 @@ export function LoginSection() {
   const [focused, setFocused]   = useState<string | null>(null)
   const [showPass, setShowPass] = useState(false)
   const navigate = useNavigate()
-
+const features = [
+  {
+    title: "Offline Supported",
+    icon: <WifiOff className="h-5 w-5 text-offwhite" />,
+  },
+  {
+    title: "5 Ranked Tiers",
+    icon: <Trophy className="h-5 w-5 text-offwhite" />,
+  },
+  {
+    title: "Smart Matchmaking",
+    icon: <Radar className="h-5 w-5 text-offwhite" />,
+  },
+];
 const [loading, setLoading] = useState(false);
 const [error, setError] = useState("");
   const handleLogin = async () => {
@@ -116,7 +130,7 @@ const [error, setError] = useState("");
             </p>
 
             {/* Stats */}
-            <div className="flex items-center gap-8">
+            {/* <div className="flex items-center gap-8">
               {[
                 { label: 'Players',     value: '10K+' },
                 { label: 'Tables Live', value: '340+' },
@@ -127,7 +141,24 @@ const [error, setError] = useState("");
                   <span className="text-offwhite text-[10px] tracking-[0.14em] uppercase font-normal">{label}</span>
                 </div>
               ))}
-            </div>
+            </div> */}
+
+            <div className="flex flex-wrap items-center gap-6">
+  {features.map(({ title, icon }) => (
+    <div
+      key={title}
+      className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm"
+    >
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rust/15">
+        {icon}
+      </div>
+
+      <span className="font-medium text-offwhite">
+        {title}
+      </span>
+    </div>
+  ))}
+</div>
           </motion.div>
 
           {/* RIGHT — Login form */}
@@ -148,7 +179,7 @@ const [error, setError] = useState("");
             >
               {/* Logo */}
               <div className="mb-7">
-                <img src={logoSrc} alt="Poquito" width={110} height={38} className="opacity-90" />
+                <img src={logoSrc} alt="Poquito" width={110} height={38} className="opacity-90 logoSign" />
               </div>
 
               <h3
@@ -158,7 +189,7 @@ const [error, setError] = useState("");
                 <span style={{ color: 'var(--foreground)' }}>Sign</span> In
               </h3>
               <p className="text-green text-sm mb-8 font-normal">
-                Poquito with pocket dragon.
+                Enter your world of Mahjong
               </p>
 
               <form className="flex flex-col gap-5"  onSubmit={async (e) => {
@@ -174,8 +205,9 @@ const [error, setError] = useState("");
                   <div
                     className="relative rounded-xl transition-all duration-300"
                     style={{
-                      border:`rgba(20,51,34,0.15)`,
-                      background:'rgba(255,255,255,0.55)',
+                        background: "rgba(249,242,228,0.12)",
+  border: "1px solid rgba(20,51,34,0.15)",
+  backdropFilter: "blur(8px)",
                       // border: `1.5px solid ${focused === 'email' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
                       // background: focused === 'email' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
                       // boxShadow: focused === 'email' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',
@@ -208,8 +240,9 @@ const [error, setError] = useState("");
                   <div
                     className="relative rounded-xl transition-all duration-300"
                     style={{
-                        border:`rgba(20,51,34,0.15)`,
-                      background:'rgba(255,255,255,0.55)',
+                             background: "rgba(249,242,228,0.12)",
+  border: "1px solid rgba(20,51,34,0.15)",
+  backdropFilter: "blur(8px)",
                       // border: `1.5px solid ${focused === 'password' ? 'rgba(20,51,34,0.45)' : 'rgba(20,51,34,0.15)'}`,
                       // background: focused === 'password' ? 'rgba(255,255,255,0.80)' : 'rgba(255,255,255,0.55)',
                       // boxShadow: focused === 'password' ? '0 0 0 3px rgba(20,51,34,0.06)' : 'none',

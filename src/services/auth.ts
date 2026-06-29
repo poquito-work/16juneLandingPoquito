@@ -194,10 +194,14 @@ export async function getPackageList() {
   return response.data;
 }
 
-export async function getTransactionList() {
-  const response = await api.get(`/api/v1/subscriptions/transactions`);
-  return response.data;
-}
+export const getTransactionList = async (
+  page = 0,
+  size = 10
+) => {
+  return api.get(
+    `${API_BASE_URL}/api/v1/subscriptions/transactions?page=${page}&size=${size}`
+  );
+};
 
 export function upgradeSubscription(new_plan_uuid: string) {
   return api.post("/api/v1/subscriptions/upgrade", { new_plan_uuid });

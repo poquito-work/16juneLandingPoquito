@@ -95,7 +95,7 @@ function getUserFromToken(): UserProfile {
     name: (payload?.name as string) ?? (payload?.full_name as string) ?? "Player",
     username: (payload?.username as string) ?? (payload?.preferred_username as string) ?? "—",
     email: (payload?.email as string) ?? "—",
-    phone_number: (payload?.phone_number as string) ?? "—",
+    phone_number: (payload?.phone_number as string),
     city: (payload?.city as string) ?? "",
     avatar_url: (payload?.picture as string) ?? "",
     joined_at: payload?.iat
@@ -458,17 +458,26 @@ function statusChip(status: Transaction["status"]) {
 
 function TransactionsTab() {
   const [transactionList, setTransactionList] = useState<Transaction[]>([]);
+const [page, setPage] = useState(0);
+const [pageSize] = useState(10);
 
-  useEffect(() => {
-    getTransactionList()
-      .then((res) => {
-        setTransactionList(res.data.content ?? []);
-      })
-      .catch((err) => {
-        console.error("Failed to load transactions", err);
-      })
-      // .finally(() => setLoading(false));
-  }, []);
+const [totalPages, setTotalPages] = useState(0);
+const [totalElements, setTotalElements] = useState(0);
+useEffect(() => {
+  loadTransactions(page);
+}, [page]);
+
+const loadTransactions = async (pageNumber: number) => {
+  try {
+    const res = await getTransactionList(pageNumber, pageSize);
+    console.log(res,"res")
+    setTransactionList(res.data.data.content ?? []);
+    setTotalPages(res.data.data.totalPages);
+    setTotalElements(res.data.data.totalElements);
+  } catch (err) {
+    console.error(err);
+  }
+};
 function handleDownloadInvoice(invoiceUrl: string, txId: string) {
   const link = document.createElement("a");
   link.href = invoiceUrl;
@@ -539,6 +548,28 @@ function handleDownloadInvoice(invoiceUrl: string, txId: string) {
               ))}
             </tbody>
           </table>
+
+          {totalPages > 1 && (
+  <div className="dash-pagination">
+    <button
+      onClick={() => setPage((p) => p - 1)}
+      disabled={page === 0}
+    >
+      Previous
+    </button>
+
+    <span>
+      Page {page + 1} of {totalPages}
+    </span>
+
+    <button
+      onClick={() => setPage((p) => p + 1)}
+      disabled={page + 1 >= totalPages}
+    >
+      Next
+    </button>
+  </div>
+)}
         </div>
 
         
@@ -690,13 +721,19 @@ html: `If your next renewal is 3 or more days away, your subscription will end o
 }
 
 
-  useEffect(() => {
-    getPackageList()
-      .then((res) => {
-        setPlans(res.data?.content ?? []);
-      })
-      .catch((err) => console.error("Failed to load plans", err));
-  }, []);
+ useEffect(() => {
+  getPackageList()
+    .then((res) => {
+      const loadedPlans = res.data?.content ?? [];
+      setPlans(loadedPlans);
+
+      // Select first plan by default
+      if (loadedPlans.length > 0) {
+        setSelectedPlanId(loadedPlans[0].id);
+      }
+    })
+    .catch((err) => console.error("Failed to load plans", err));
+}, []);
 
   const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
   const annualPlan = plans.find((p) => p.billing_cycle === "annual");

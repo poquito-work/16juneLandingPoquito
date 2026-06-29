@@ -143,7 +143,10 @@ export function Hero() {
             </motion.div>
 
             {/* Social proof */}
-            <motion.div variants={itemVariants} className="flex items-center gap-4 pt-1">
+            <motion.div variants={itemVariants} className="flex items-center gap-2 pt-1">
+              <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
+                 <strong>10,000+ Players</strong>
+              </span>
               <div className="flex -space-x-2 socialRound">
                 {avatarGradients.map((g, i) => (
                   <div 
@@ -156,7 +159,7 @@ export function Hero() {
                 ))}
               </div>
               <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
-                 <strong>10,000+</strong> players waiting worldwide
+                 <span> ‘Join our growing community’</span>
               </span>
             </motion.div>
           </motion.div>
