@@ -162,7 +162,7 @@ export function Footer() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 pl-30 lg:px-10 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 pl-30 lg:px-10 relative z-10" id="smallFooter">
 
         {/* ── Main footer row: brand · links · tiles ── */}
         <motion.div

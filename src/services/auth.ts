@@ -1,8 +1,22 @@
 import axios from "axios";
 
+
+
 const API_BASE_URL =
   import.meta.env.VITE_API_TARGET ||
   "http://13.207.123.199:8080";
+
+
+  const api = axios.create({ baseURL: API_BASE_URL });
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("access_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 
 export const loginUser = async (
   email: string,
@@ -11,7 +25,7 @@ export const loginUser = async (
   const payload = {
     email,
     username: "",
-    phone_number: "",
+    phone_number: null,
     password,
     device_id: "web",
   };
@@ -151,6 +165,85 @@ export const getTermsCondition = async () => {
 export const getPrivacyPolicy = async () => {
   const response = await axios.get(
     `${API_BASE_URL}/api/v1/compliance-documents/privacy-policy`
+  );
+
+  return response.data;
+};
+
+
+export async function getUserProfile() {
+  const response = await api.get(`/api/v1/users/profile`);
+  return response.data;
+}
+
+export const updateUserProfile = async (data: {
+  name?: string;
+  username?: string;
+  phone_number?: string;
+  avatar_url?: string;
+  city_id?: number;
+  is_mfa_enabled?: boolean;
+  is_biometric_enabled?: boolean;
+}) => {
+  const response = await api.put(`/api/v1/users/profile`, data);
+  return response.data;
+};
+
+export async function getPackageList() {
+  const response = await api.get(`/api/v1/package-master`);
+  return response.data;
+}
+
+export const getTransactionList = async (
+  page = 0,
+  size = 10
+) => {
+  return api.get(
+    `${API_BASE_URL}/api/v1/subscriptions/transactions?page=${page}&size=${size}`
+  );
+};
+
+export function upgradeSubscription(new_plan_uuid: string) {
+  return api.post("/api/v1/subscriptions/upgrade", { new_plan_uuid });
+}
+
+
+export function cancelSubscription() {
+  return api.post("/api/v1/subscriptions/cancel");
+}
+
+
+export const forgotPassword = async (email: string) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/forgot-password`,
+    { email },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const resetPassword = async (
+  email: string,
+  reset_otp: string,
+  new_password: string
+) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/reset-password`,
+    {
+      email,
+      reset_otp,
+      new_password,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
 
   return response.data;

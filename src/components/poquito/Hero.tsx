@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { DownloadButtons } from "./DownloadButtons";
-import heroVideo from "@/assets/Studio_product_photography_vid.mp4";
+import heroVideo from "@/assets/1782469897969_original-c7032776-010c-49e4-8b35-e7234191ebb3.mp4";
 import tile1 from "@/assets/Mpt1z.png";
 import tile2 from "@/assets/Mpt3z.png";
 
@@ -143,7 +143,10 @@ export function Hero() {
             </motion.div>
 
             {/* Social proof */}
-            <motion.div variants={itemVariants} className="flex items-center gap-4 pt-1">
+            <motion.div variants={itemVariants} className="flex items-center gap-2 pt-1 heroText">
+              <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
+                 <strong>10,000+ Players</strong>
+              </span>
               <div className="flex -space-x-2 socialRound">
                 {avatarGradients.map((g, i) => (
                   <div 
@@ -156,7 +159,7 @@ export function Hero() {
                 ))}
               </div>
               <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
-                 <strong>10,000+</strong> players waiting worldwide
+                 <span> ‘Join our growing community’</span>
               </span>
             </motion.div>
           </motion.div>

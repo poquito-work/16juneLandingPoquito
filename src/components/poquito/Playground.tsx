@@ -151,9 +151,9 @@ export function Playground() {
               </div>
                 <p className="ofc-desc">Sharpen your skills with endless practice rounds</p>
                   <div className="ofc-tags">
-                    <span className="ofc-tag">EASY</span>
-                    <span className="ofc-tag">MEDIUM</span>
-                    <span className="ofc-tag">HARD</span>
+                    <span className="ofc-tag">Unranked</span>
+                    <span className="ofc-tag">Online</span>
+                    <span className="ofc-tag">Offline</span>
                   </div>
             </div>
 
@@ -170,7 +170,7 @@ export function Playground() {
               <p className="ofc-desc">Round up your crew and deal in</p>
                   <div className="ofc-tags">
                     <span className="ofc-tag">INVITE LINK</span>
-                    <span className="ofc-tag">UP TO 4</span>
+                    <span className="ofc-tag">Custom Sessions </span>
                   </div>
             </div>
 
@@ -184,7 +184,7 @@ export function Playground() {
                   
                 </div>
               </div>
-              <p className="ofc-desc">The right table, right away. Skill-based matching finds your perfect game in seconds</p>
+              <p className="ofc-desc">The right table, right away. Skill-based matching finds your perfect game in seconds </p>
                   <div className="ofc-tags">
                     <span className="ofc-tag">SKILL-BASED</span>
                     <span className="ofc-tag">INSTANT</span>
@@ -408,7 +408,7 @@ export function Playground() {
               <p className="ofc-desc">The lobby’s buzzing — grab a seat</p>
                   <div className="ofc-tags">
                     <span className="ofc-tag">REAL-TIME</span>
-                    <span className="ofc-tag">INDIA</span>
+                    <span className="ofc-tag"> All Skill levels </span>
                   </div>
             </div>
 
@@ -422,10 +422,10 @@ export function Playground() {
                   
                 </div>
               </div>
-              <p className="ofc-desc">Earn points, reach new tiers and unlock exclusive rewards</p>
+              <p className="ofc-desc">Earn points, unlock new tiers, and chase the top spot</p>
                   <div className="ofc-tags">
-                    <span className="ofc-tag">🐉 GRAND MASTER</span>
-                    <span className="ofc-tag">REWARDS</span>
+                    <span className="ofc-tag">Leaderboard</span>
+                    <span className="ofc-tag">Season Progress </span>
                   </div>
             </div>
 

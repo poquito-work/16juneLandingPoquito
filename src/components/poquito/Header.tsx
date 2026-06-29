@@ -6,7 +6,7 @@ import { PocketDragonLogo } from "./Logo";
 const NAV = [
   { label: "Home", href: "#home" },
   { label: "About Us", href: "#playground" },
-  { label: "Contact Us", href: "#login" },
+  { label: "Contact Us", href: "#contact" },
 ];
 
 // dark green sections
@@ -47,16 +47,20 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   }, []);
 
   useEffect(() => {
-    function onStorage() {
+    function onAuthChange() {
       setIsLoggedIn(!!localStorage.getItem("access_token"));
     }
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    window.addEventListener("storage", onAuthChange);
+    window.addEventListener("auth-change", onAuthChange);
+    return () => {
+      window.removeEventListener("storage", onAuthChange);
+      window.removeEventListener("auth-change", onAuthChange);
+    };
   }, []);
 
   function handleSignOut() {
     localStorage.removeItem("access_token");
-    localStorage.removeItem("auth_token");
+    // localStorage.removeItem("auth_refresh_token");
     setIsLoggedIn(false);
     setOpen(false);
     navigate({ to: "/" });
@@ -152,33 +156,36 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                       {item.label}
                     </motion.a>
                   ))}
+                  {isLoggedIn && (
+                    <motion.button
+                      type="button"
+                      onClick={() => { setOpen(false); navigate({ to: "/myaccount/profile" }); }}
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: NAV.length * 0.05, duration: 0.18, ease: "easeOut" }}
+                      className="text-sm font-normal transition-colors hover:text-rust whitespace-nowrap hover:font-bold hover:scale-[1.03] bg-transparent border-0 p-0 cursor-pointer"
+                      style={{ color: textColor }}
+                    >
+                      My Account
+                    </motion.button>
+                  )}
                 </motion.nav>
               )}
             </AnimatePresence>
 
             {isLoggedIn ? (
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => navigate({ to: "/myaccount/profile" })}
-                  className="text-[0.7rem] font-bold uppercase tracking-[0.16em] transition-opacity hover:opacity-70 bg-transparent border-0 p-0 cursor-pointer"
-                  style={{ color: textColor }}
-                >
-                  My Account
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
-                >
-                  Sign Out
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="cursor-pointer inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
+              >
+                Log Out
+              </button>
             ) : (
               <button
                 type="button"
                 onClick={onLoginClick}
-                className="inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
+                className="cursor-pointer inline-flex items-center justify-center rounded-full bg-rust px-5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-cream transition-opacity hover:opacity-90"
               >
                 Login
               </button>
@@ -261,14 +268,14 @@ style={{
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35, duration: 0.28, ease: "easeOut" }}
-                className="mt-8 flex flex-col items-center gap-3"
+                className="flex flex-col items-center gap-3"
               >
                 {isLoggedIn ? (
                   <>
                     <button
                       type="button"
                       onClick={() => { setOpen(false); navigate({ to: "/myaccount/profile" }); }}
-                      className="inline-flex items-center justify-center rounded-full border border-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-rust transition-opacity hover:opacity-80"
+                      className="w-full text-left border-b border-foreground/8 py-4 font-display font-medium uppercase tracking-widest text-foreground hover:text-rust transition-colors"
                     >
                       My Account
                     </button>
@@ -277,7 +284,7 @@ style={{
                       onClick={handleSignOut}
                       className="inline-flex items-center justify-center rounded-full bg-rust px-10 py-3 text-sm font-bold uppercase tracking-[0.18em] text-cream transition-opacity hover:opacity-90"
                     >
-                      Sign Out
+                      Log Out
                     </button>
                   </>
                 ) : (

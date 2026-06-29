@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { SectionEyebrow } from "./SectionEyebrow";
 import {
@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { getPackageList, getTransactionList } from "@/services/auth";
 
 function CancellationDialog({
   open,
@@ -18,6 +19,9 @@ function CancellationDialog({
   onClose: () => void;
   plan: "monthly" | "annual";
 }) {
+
+
+
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-foreground [&>button]:hover:text-foreground/70" style={{ background: "var(--green)" }}>
@@ -81,6 +85,30 @@ export function Subscriptions() {
   const [monthlyDialog, setMonthlyDialog] = useState(false);
   const [annualDialog, setAnnualDialog] = useState(false);
 
+  interface Plan {
+  id: number;
+  uuid: string;
+  name: string;
+  billing_cycle: "monthly" | "annual";
+  price: number;
+  price_per_month_equiv: number | null;
+  discount_percent: number | null;
+  gst_excluded: boolean;
+  is_active: boolean;
+  trial_days: number;
+}
+
+    const [plans, setPlans] = useState<Plan[]>([]);
+    useEffect(() => {
+      getPackageList()
+        .then((res) => {
+          setPlans(res.data?.content ?? []);
+        })
+        .catch((err) => console.error("Failed to load plans", err));
+    }, []);
+
+const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
+const annualPlan = plans.find((p) => p.billing_cycle === "annual");
   return (
     <section id="plans"  style={{ background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }}>
       <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 md:py-16">
@@ -94,6 +122,7 @@ export function Subscriptions() {
 
         <div className="articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
           {/* Monthly */}
+           {/* {monthlyPlan && ( */}
           <article className="plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15  p-7">
             <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70">
               Monthly Plan
@@ -101,7 +130,7 @@ export function Subscriptions() {
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold" style={{ color: 'var(--foreground)' }}>Rs</span>
               <span className="font-display text-5xl font-bold leading-none" style={{ color: 'var(--foreground)' }}>
-                500
+                 {/* {monthlyPlan.price.toLocaleString("en-IN")} */} 500
               </span>
               <span className="ml-1 text-sm text-foreground/65">/ month</span>
             </div>
@@ -152,8 +181,10 @@ export function Subscriptions() {
               Terms of cancellation
             </button>
           </article>
+          {/* //  )} */}
 
-          {/* Annual — Featured */}
+          {/* //    {annualPlan && ( */}
+        
           <article className="relative flex flex-col rounded-2xl bg-green-new p-7 text-cream">
             <div className="absolute right-5 -top-3">
               <span className="rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">
@@ -169,10 +200,15 @@ export function Subscriptions() {
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
-              <span className="font-display text-5xl font-bold leading-none">4,500</span>
+              <span className="font-display text-5xl font-bold leading-none">
+                 {/* {annualPlan.price.toLocaleString("en-IN")} */} 4,500
+</span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
-            <p className="mt-2 text-xs text-cream/75">Save Rs 25% | Rs 375/month </p>
+            <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month </p> 
+            {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}% | Rs 375/month </p> */}
+                        {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}%  {annualPlan.price_per_month_equiv ? ` | Rs ${annualPlan.price_per_month_equiv}/month` : ""} */}
+
             <p className="mt-2 text-xs text-cream/75">Excl GST</p>
 
             <div className="my-6 h-px w-full bg-cream/15" />
@@ -220,6 +256,7 @@ export function Subscriptions() {
               Terms of cancellation
             </button>
           </article>
+          {/* // )} */}
         </div>
       </div>
 
