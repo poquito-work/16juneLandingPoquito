@@ -18,9 +18,9 @@ import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
 import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
 import "../_libs/radix-ui__react-primitive.mjs";
 import "../_libs/react-dom.mjs";
-import "util";
 import "crypto";
 import "async_hooks";
+import "util";
 import "stream";
 import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
@@ -422,8 +422,8 @@ function Subscriptions() {
       setPlans(res.data?.content ?? []);
     }).catch((err) => console.error("Failed to load plans", err));
   }, []);
-  const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
-  const annualPlan = plans.find((p) => p.billing_cycle === "annual");
+  plans.find((p) => p.billing_cycle === "monthly");
+  plans.find((p) => p.billing_cycle === "annual");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto max-w-5xl px-5 py-14 sm:px-8 md:py-16", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-3 text-center", children: [
@@ -434,11 +434,11 @@ function Subscriptions() {
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2", children: [
-        monthlyPlan && /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15  p-7", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15  p-7", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70", children: "Monthly Plan" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold", style: { color: "var(--foreground)" }, children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", style: { color: "var(--foreground)" }, children: monthlyPlan.price.toLocaleString("en-IN") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", style: { color: "var(--foreground)" }, children: " 500" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-foreground/65", children: "/ month" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Excl GST" }),
@@ -473,15 +473,12 @@ function Subscriptions() {
             }
           )
         ] }),
-        annualPlan && /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "relative flex flex-col rounded-2xl bg-green-new p-7 text-cream", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "relative flex flex-col rounded-2xl bg-green-new p-7 text-cream", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute right-5 -top-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm", children: "Best Value" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85", children: "Annual Plan" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex items-baseline gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-cream/85", children: "Rs" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-display text-5xl font-bold leading-none", children: [
-              " ",
-              annualPlan.price.toLocaleString("en-IN")
-            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-5xl font-bold leading-none", children: " 4,500" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-cream/75", children: "/ year" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save 25% | Rs 375/month " }),
