@@ -122,7 +122,7 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 
         <div className="articleClass mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
           {/* Monthly */}
-           {monthlyPlan && (
+           {/* {monthlyPlan && ( */}
           <article className="plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15  p-7">
             <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70">
               Monthly Plan
@@ -130,7 +130,7 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold" style={{ color: 'var(--foreground)' }}>Rs</span>
               <span className="font-display text-5xl font-bold leading-none" style={{ color: 'var(--foreground)' }}>
-                 {monthlyPlan.price.toLocaleString("en-IN")}
+                 {/* {monthlyPlan.price.toLocaleString("en-IN")} */} 500
               </span>
               <span className="ml-1 text-sm text-foreground/65">/ month</span>
             </div>
@@ -181,9 +181,9 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
               Terms of cancellation
             </button>
           </article>
-           )}
+          {/* //  )} */}
 
-             {annualPlan && (
+          {/* //    {annualPlan && ( */}
         
           <article className="relative flex flex-col rounded-2xl bg-green-new p-7 text-cream">
             <div className="absolute right-5 -top-3">
@@ -200,7 +200,8 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
-              <span className="font-display text-5xl font-bold leading-none"> {annualPlan.price.toLocaleString("en-IN")}
+              <span className="font-display text-5xl font-bold leading-none">
+                 {/* {annualPlan.price.toLocaleString("en-IN")} */} 4,500
 </span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
@@ -255,7 +256,7 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
               Terms of cancellation
             </button>
           </article>
-          )}
+          {/* // )} */}
         </div>
       </div>
 
