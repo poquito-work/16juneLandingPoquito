@@ -1608,7 +1608,7 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
 
 .reg-input-error {
   border-color: #e05c2a;
-  background: #fff6f2;
+  /* background: #fff6f2; */
 }
 
 .reg-input-wrap {

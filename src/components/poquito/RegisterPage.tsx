@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { checkEmailExists, checkUserExists, getPredefinedListByType, getPrivacyPolicy, getTermsCondition, registerUser, sendOtp, verifyOtp } from "@/services/auth";
 import { PocketDragonLogo } from "./Logo";
+import uploadLogo from "@/assets/poquito-boy.png";
 
 // ─── City list ───────────────────────────────────────────────────────────────
 
@@ -131,6 +132,7 @@ interface RegisterFormData {
   password: string;
   confirmPassword: string;
   agreed: boolean;
+  avatar_url: string,
 }
 
 interface RegisterFormErrors {
@@ -164,7 +166,7 @@ function StepDetails({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [cityList, setCityList] = useState([]);
-
+const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -205,9 +207,14 @@ function StepDetails({
 
   return (
     <form className="reg-form" onSubmit={handleSubmit} noValidate>
+    {/* <img
+  src={uploadLogo}
+  className="uploadLogo"
+  onClick={() => onChange("avatar_url", uploadLogo)}
+/> */}
       <div className="reg-form-grid">
 
-        
+    
 
         {/* Email */}
         <div className="reg-field">
@@ -447,6 +454,7 @@ function StepOTP({
         role_name: "user",
         is_terms_condition_accepted: true,
         is_privacy_policy: true,
+        avatar_url: formData.avatar_url,
       });
 
      if (response?.data?.access_token) {
@@ -675,6 +683,7 @@ export function RegisterPage() {
     password: "",
     confirmPassword: "",
     agreed: false,
+    avatar_url:""
   });
 
   useEffect(() => {

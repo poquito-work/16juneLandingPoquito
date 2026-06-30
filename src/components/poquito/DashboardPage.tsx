@@ -15,7 +15,7 @@ interface UserProfile {
   name?: string;
   username?: string;
   email?: string;
-  phone_number?: string;
+  phone_number?: string | null;
   city?: string;
   city_id?: number | null;
   avatar_url?: string;
@@ -251,7 +251,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
       await updateUserProfile({
         name: form.name,
         username: form.username,
-        phone_number: form.phone_number,
+       phone_number: form.phone_number.trim() || null,
         city_id: selectedCity?.id,
       });
 

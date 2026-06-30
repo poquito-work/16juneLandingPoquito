@@ -80,7 +80,7 @@ export const registerUser = async (data: {
   role_name: string;
   is_terms_condition_accepted: boolean;
   is_privacy_policy: boolean;
-  // avatar_url: string;
+  avatar_url: string;
   
 }) => {
   const payload = {
@@ -93,7 +93,7 @@ export const registerUser = async (data: {
     role_name: data.role_name,
     is_terms_condition_accepted: data.is_terms_condition_accepted,
     is_privacy_policy: data.is_privacy_policy,
-    //  avatar_url: data.avatar_url,
+     avatar_url: data.avatar_url,
   };
 
   const response = await axios.post(
@@ -182,11 +182,12 @@ export async function getUserProfile() {
 export const updateUserProfile = async (data: {
   name?: string;
   username?: string;
-  phone_number?: string;
+  phone_number?: string | null;
   avatar_url?: string;
   city_id?: number;
   is_mfa_enabled?: boolean;
   is_biometric_enabled?: boolean;
+  
 }) => {
   const response = await api.put(`/api/v1/users/profile`, data);
   return response.data;
