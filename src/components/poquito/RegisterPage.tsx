@@ -71,37 +71,37 @@ function RegisterFooter() {
 
 type Step = 1 | 2 ;
 
-const STEP_LABELS: Record<Step, string> = {
-  1: "Account Details",
-  2: "Verify OTP",
-  // 3: "Choose Plan",
-};
+// const STEP_LABELS: Record<Step, string> = {
+//   1: "Account Details",
+//   2: "Verify OTP",
+//   // 3: "Choose Plan",
+// };
 
-function StepIndicator({ step }: { step: Step }) {
-  return (
-    <div className="reg-stepper">
-      {([1, 2] as Step[]).map((s, i) => (
-        <>
-          <div key={s} className={`reg-step ${step >= s ? "reg-step-active" : "reg-step-inactive"}`}>
-            <div className="reg-step-circle">
-              {step > s ? (
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              ) : (
-                <span>{s}</span>
-              )}
-            </div>
-            <span className="reg-step-label">{STEP_LABELS[s]}</span>
-          </div>
-          {i < 1 && (
-            <div key={`c${s}`} className={`reg-step-connector ${step > s ? "reg-step-connector-active" : ""}`} />
-          )}
-        </>
-      ))}
-    </div>
-  );
-}
+// function StepIndicator({ step }: { step: Step }) {
+//   return (
+//     <div className="reg-stepper">
+//       {([1, 2] as Step[]).map((s, i) => (
+//         <>
+//           <div key={s} className={`reg-step ${step >= s ? "reg-step-active" : "reg-step-inactive"}`}>
+//             <div className="reg-step-circle">
+//               {step > s ? (
+//                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+//                   <polyline points="20 6 9 17 4 12" />
+//                 </svg>
+//               ) : (
+//                 <span>{s}</span>
+//               )}
+//             </div>
+//             <span className="reg-step-label">{STEP_LABELS[s]}</span>
+//           </div>
+//           {i < 1 && (
+//             <div key={`c${s}`} className={`reg-step-connector ${step > s ? "reg-step-connector-active" : ""}`} />
+//           )}
+//         </>
+//       ))}
+//     </div>
+//   );
+// }
 
 // ─── Eye icon ────────────────────────────────────────────────────────────────
 
@@ -207,7 +207,8 @@ function StepDetails({
     <form className="reg-form" onSubmit={handleSubmit} noValidate>
       <div className="reg-form-grid">
 
-      
+        
+
         {/* Email */}
         <div className="reg-field">
           <label className="reg-label" htmlFor="reg-email">Email Address <span className="color-red">*</span></label>
@@ -338,7 +339,7 @@ function StepDetails({
           />
           <span className="reg-checkbox-text">
             I agree to the{" "}
-            <a href={termsUrl || "/terms"} className="reg-signin-link" target="_blank" rel="noreferrer">Terms of Use</a>
+            <a href={termsUrl || "/terms"} className="reg-signin-link" target="_blank" rel="noreferrer">Terms & Conditions </a>
             {" "}and{" "}
             <a href={privacyUrl || "/privacy"} className="reg-signin-link" target="_blank" rel="noreferrer">Privacy Policy</a>
           </span>
@@ -356,10 +357,10 @@ function StepDetails({
         {isLoading ? (
           <><span className="reg-spinner" />Registering…</>
         ) : (
-          <>Continue
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <>Get Started
+            {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
-            </svg>
+            </svg> */}
           </>
         )}
       </button>
@@ -744,12 +745,12 @@ export function RegisterPage() {
       <main className="register-main">
         <div className="register-card">
           <div className="register-card-top">
-            <span className="register-eyebrow">Get Started</span>
+            {/* <span className="register-eyebrow">Get Started</span> */}
             <h1 className="register-title">{title}</h1>
-            <p className="register-subtitle">{sub}</p>
+            <p className="register-subtitle mb-5">{sub}</p>
           </div>
 
-          <StepIndicator step={step} />
+          {/* <StepIndicator step={step} /> */}
 
           <div className="register-step-body">
             {step === 1 && (

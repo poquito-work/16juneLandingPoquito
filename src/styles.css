@@ -1588,7 +1588,7 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
   height: 44px;
   border-radius: 10px;
   border: 1.5px solid rgba(20, 51, 34, 0.15);
-  background: #faf8f48a;
+  /* background: #faf8f48a; */
   padding: 0 0.9rem;
   font-size: 0.88rem;
   color: #143322;
@@ -2050,7 +2050,7 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
   -webkit-appearance: none;
   cursor: pointer;
   padding-right: 2.5rem !important;
-  background-color: #faf8f48a;
+  /* background-color: #faf8f48a; */
   color: rgba(20, 51, 34, 1);
 }
 
@@ -3109,4 +3109,9 @@ input:-webkit-autofill:active {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
+}
+.uploadLogo{
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 20px;
 }
