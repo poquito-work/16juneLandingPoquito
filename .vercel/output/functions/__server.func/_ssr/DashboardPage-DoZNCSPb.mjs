@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { h as getUserProfile, d as getPredefinedListByType, i as getTransactionList, j as getPackageList, u as updateUserProfile, k as initializeSubscription, m as upgradeSubscription, n as cancelSubscription } from "./Logo-DfoIx9ag.mjs";
-import { H as Header, F as Footer } from "./Footer-D89Zb4GD.mjs";
+import { h as getUserProfile, d as getPredefinedListByType, i as getTransactionList, j as getPackageList, u as updateUserProfile, k as initializeSubscription, m as upgradeSubscription, n as cancelSubscription } from "./Logo-XhUeaTmY.mjs";
+import { H as Header, F as Footer } from "./Footer-2GQZll1V.mjs";
 import { S as Swal } from "../_libs/sweetalert2.mjs";
 function decodeJwtPayload(token) {
   try {
@@ -133,7 +133,7 @@ function ProfileTab({ user }) {
       await updateUserProfile({
         name: form.name,
         username: form.username,
-        phone_number: form.phone_number,
+        phone_number: form.phone_number.trim() || null,
         city_id: selectedCity?.id
       });
       setSaved(true);

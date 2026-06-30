@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-DfoIx9ag.mjs";
+import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-XhUeaTmY.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -9,9 +9,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
+import "util";
 import "crypto";
 import "async_hooks";
-import "util";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -119,6 +119,7 @@ function StepDetails({
   const [showPassword, setShowPassword] = reactExports.useState(false);
   const [showConfirm, setShowConfirm] = reactExports.useState(false);
   const [cityList, setCityList] = reactExports.useState([]);
+  reactExports.useRef(null);
   reactExports.useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -381,7 +382,8 @@ function StepOTP({
         otp: code,
         role_name: "user",
         is_terms_condition_accepted: true,
-        is_privacy_policy: true
+        is_privacy_policy: true,
+        avatar_url: formData.avatar_url
       });
       if (response?.data?.access_token) {
         localStorage.setItem("access_token", response.data?.access_token);
@@ -489,7 +491,8 @@ function RegisterPage() {
     phone: "",
     password: "",
     confirmPassword: "",
-    agreed: false
+    agreed: false,
+    avatar_url: ""
   });
   reactExports.useEffect(() => {
     const fetchComplianceDocs = async () => {

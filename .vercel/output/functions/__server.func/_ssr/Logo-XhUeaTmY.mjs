@@ -58,8 +58,8 @@ const registerUser = async (data) => {
     email_otp: data.otp,
     role_name: data.role_name,
     is_terms_condition_accepted: data.is_terms_condition_accepted,
-    is_privacy_policy: data.is_privacy_policy
-    //  avatar_url: data.avatar_url,
+    is_privacy_policy: data.is_privacy_policy,
+    avatar_url: data.avatar_url
   };
   const response = await axios.post(
     `${API_BASE_URL}/api/v1/auth/register`,
