@@ -292,7 +292,7 @@ const [error, setError] = useState("");
                 {/* Submit */}
                 <motion.button
                   type="submit"
-                  className="w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal"
+                  className="cursor-pointer w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal"
                   style={{
                     background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 88%)',
                     boxShadow: '0 8px 24px rgba(182,90,47,0.30)',

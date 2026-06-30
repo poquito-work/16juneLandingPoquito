@@ -159,7 +159,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                   {isLoggedIn && (
                     <motion.button
                       type="button"
-                      // onClick={() => { setOpen(false); navigate({ to: "/myaccount/profile" }); }}
+                      onClick={() => { setOpen(false); navigate({ to: "/myaccount/profile" }); }}
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: NAV.length * 0.05, duration: 0.18, ease: "easeOut" }}

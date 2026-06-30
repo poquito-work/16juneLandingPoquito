@@ -9,6 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { getPackageList, getTransactionList } from "@/services/auth";
+import { useNavigate } from "@tanstack/react-router";
 
 function CancellationDialog({
   open,
@@ -99,13 +100,31 @@ export function Subscriptions() {
 }
 
     const [plans, setPlans] = useState<Plan[]>([]);
-    useEffect(() => {
-      getPackageList()
-        .then((res) => {
-          setPlans(res.data?.content ?? []);
-        })
-        .catch((err) => console.error("Failed to load plans", err));
-    }, []);
+    // useEffect(() => {
+    //   getPackageList()
+    //     .then((res) => {
+    //       setPlans(res.data?.content ?? []);
+    //     })
+    //     .catch((err) => console.error("Failed to load plans", err));
+    // }, []);
+
+
+    const navigate = useNavigate();
+
+const handleSubscribeClick = () => {
+  const token = localStorage.getItem("access_token");
+
+  if (token) {
+    navigate({ to: "/myaccount/manage-subscription" });
+  } else {
+    // If login is on the home page
+     window.location.href = "/#login";
+
+    // Open login section/modal
+    // window.dispatchEvent(new Event("open-login"));
+    // or call your setShowLogin(true) if available
+  }
+};
 
 const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
 const annualPlan = plans.find((p) => p.billing_cycle === "annual");
@@ -162,8 +181,9 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
                     // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
                     // boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
                   }}
-              href="#"
-              className="inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white"
+             onClick={handleSubscribeClick}
+
+              className="cursor-pointer inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white"
             >
               Subscribe Now
             </a>
@@ -230,8 +250,8 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 
               <a
                
-              href="#"
-              className="inline-flex  items-center justify-center rounded-xl border-2 bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
+              onClick={handleSubscribeClick}
+              className="cursor-pointer inline-flex  items-center justify-center rounded-xl border-2 bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green"
             >
               Subscribe Now
             </a>

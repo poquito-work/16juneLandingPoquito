@@ -248,3 +248,19 @@ export const resetPassword = async (
 
   return response.data;
 };
+
+
+export const initializeSubscription = async (
+  user_uuid: string,
+  plan_uuid: string
+) => {
+  const response = await api.post(
+    `${API_BASE_URL}/api/v1/subscriptions/`,
+    {
+      user_uuid,
+      plan_uuid,
+    }
+  );
+
+  return response.data;
+};

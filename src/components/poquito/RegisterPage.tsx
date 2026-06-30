@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { checkEmailExists, checkUserExists, getPredefinedListByType, getPrivacyPolicy, getTermsCondition, registerUser, sendOtp, verifyOtp } from "@/services/auth";
 import { PocketDragonLogo } from "./Logo";
 
@@ -69,18 +69,18 @@ function RegisterFooter() {
 
 // ─── Step Indicator (3 steps) ────────────────────────────────────────────────
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2 ;
 
 const STEP_LABELS: Record<Step, string> = {
   1: "Account Details",
   2: "Verify OTP",
-  3: "Choose Plan",
+  // 3: "Choose Plan",
 };
 
 function StepIndicator({ step }: { step: Step }) {
   return (
     <div className="reg-stepper">
-      {([1, 2, 3] as Step[]).map((s, i) => (
+      {([1, 2] as Step[]).map((s, i) => (
         <>
           <div key={s} className={`reg-step ${step >= s ? "reg-step-active" : "reg-step-inactive"}`}>
             <div className="reg-step-circle">
@@ -94,7 +94,7 @@ function StepIndicator({ step }: { step: Step }) {
             </div>
             <span className="reg-step-label">{STEP_LABELS[s]}</span>
           </div>
-          {i < 2 && (
+          {i < 1 && (
             <div key={`c${s}`} className={`reg-step-connector ${step > s ? "reg-step-connector-active" : ""}`} />
           )}
         </>
@@ -239,23 +239,7 @@ function StepDetails({
           {errors.phone && <span className="reg-error">{errors.phone}</span>}
         </div>
 
-        {/* Full Name */}
-        <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-fullname">Username <span className="color-red">*</span> </label>
-          <input
-            id="reg-fullname"
-            type="text"
-            className={`reg-input ${errors.fullName ? "reg-input-error" : ""}`}
-            placeholder="Your username"
-            value={data.fullName}
-            onChange={(e) => onChange("fullName", e.target.value)}
-            autoComplete="name"
-          />
-          {errors.fullName && <span className="reg-error">{errors.fullName}</span>}
-        </div>
-
-        {/* City dropdown */}
-        <div className="reg-field">
+            <div className="reg-field">
           <label className="reg-label" htmlFor="reg-city">City <span className="color-red">*</span></label>
           <div className="reg-select-wrap">
             <select
@@ -281,6 +265,24 @@ function StepDetails({
           </div>
           {errors.city && <span className="reg-error">{errors.city}</span>}
         </div>
+
+        {/* Full Name */}
+        <div className="reg-field">
+          <label className="reg-label" htmlFor="reg-fullname">Username <span className="color-red">*</span> </label>
+          <input
+            id="reg-fullname"
+            type="text"
+            className={`reg-input ${errors.fullName ? "reg-input-error" : ""}`}
+            placeholder="Your username"
+            value={data.fullName}
+            onChange={(e) => onChange("fullName", e.target.value)}
+            autoComplete="name"
+          />
+          {errors.fullName && <span className="reg-error">{errors.fullName}</span>}
+        </div>
+
+        {/* City dropdown */}
+    
 
 
         {/* Password */}
@@ -434,7 +436,7 @@ function StepOTP({
     setError("");
     try {
       // await verifyOtp({ identifier: email, otp: code, otp_type: "EMAIL_OTP" });
-      await registerUser({
+      const response = await registerUser({
         username: formData.fullName,
         email: formData.email,
         phone_number: formData.phone.trim() || null,
@@ -445,6 +447,13 @@ function StepOTP({
         is_terms_condition_accepted: true,
         is_privacy_policy: true,
       });
+
+     if (response?.data?.access_token) {
+      localStorage.setItem("access_token", response.data?.access_token);
+      localStorage.setItem("userData", JSON.stringify(response));
+      window.dispatchEvent(new Event("auth-change"));
+    }
+
       onVerified();
     } catch (err: any) {
       setError(
@@ -642,9 +651,9 @@ function StepPlans({
 // ─── Step titles ─────────────────────────────────────────────────────────────
 
 const STEP_TITLES: Record<Step, { title: string; sub: string }> = {
-  1: { title: "Create Your Account", sub: "Fill in your details to join Pocket Dragon." },
+  1: { title: "Create  Account", sub: "Email verification is required before your account goes live" },
   2: { title: "Verify Your Email", sub: "Enter the OTP we sent to your email address." },
-  3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." },
+  // 3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." },
 };
 
 // ─── Main RegisterPage ────────────────────────────────────────────────────────
@@ -655,6 +664,7 @@ export function RegisterPage() {
   const [apiError, setApiError] = useState("");
   const [termsUrl, setTermsUrl] = useState("");
   const [privacyUrl, setPrivacyUrl] = useState("");
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: "",
     city: "",
@@ -758,16 +768,17 @@ export function RegisterPage() {
                 email={formData.email}
                 formData={formData}
                 onBack={() => setStep(1)}
-                onVerified={() => setStep(3)}
+                // onVerified={() => setStep(3)}
+               onVerified={() => navigate({ to: "/myaccount/profile" })}
               />
             )}
-            {step === 3 && (
+            {/* {step === 3 && (
               <StepPlans
                 onBack={() => setStep(2)}
                 onSubmit={handleSubmit}
                 isLoading={isLoading}
               />
-            )}
+            )} */}
           </div>
         </div>
       </main>

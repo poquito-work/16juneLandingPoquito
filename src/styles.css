@@ -1445,6 +1445,7 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
 .register-card-top {
   padding: 2.25rem 2.25rem 0;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .register-eyebrow {
@@ -3103,4 +3104,9 @@ input:-webkit-autofill:active {
     padding: 2rem;
     overflow: hidden;
     box-shadow: 0 2px 24px #1433220d;
+}
+.noUpgrade{
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
 }
