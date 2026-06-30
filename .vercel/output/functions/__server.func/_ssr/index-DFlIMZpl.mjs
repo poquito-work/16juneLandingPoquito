@@ -1,11 +1,11 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-Db9icIKz.mjs";
+import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-D89Zb4GD.mjs";
 import { R as Root, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-import { P as PocketDragonLogo, h as getPackageList } from "./Logo-taAcf7RK.mjs";
-import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
+import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
+import { P as PocketDragonLogo, l as loginUser } from "./Logo-DfoIx9ag.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { A as ArrowUp, W as WifiOff, T as Trophy, R as Radar, X } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__primitive.mjs";
@@ -17,9 +17,9 @@ import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
 import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
 import "../_libs/radix-ui__react-primitive.mjs";
 import "../_libs/react-dom.mjs";
+import "crypto";
 import "async_hooks";
 import "util";
-import "crypto";
 import "stream";
 import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
@@ -36,6 +36,14 @@ import "../_libs/get-nonce.mjs";
 import "../_libs/use-sidecar.mjs";
 import "../_libs/use-callback-ref.mjs";
 import "../_libs/aria-hidden.mjs";
+import "../_libs/tanstack__router-core.mjs";
+import "../_libs/tanstack__history.mjs";
+import "../_libs/cookie-es.mjs";
+import "../_libs/seroval.mjs";
+import "../_libs/seroval-plugins.mjs";
+import "node:stream/web";
+import "node:stream";
+import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
 import "../_libs/form-data.mjs";
 import "fs";
@@ -78,14 +86,6 @@ import "events";
 import "http2";
 import "../_libs/follow-redirects.mjs";
 import "zlib";
-import "../_libs/tanstack__router-core.mjs";
-import "../_libs/tanstack__history.mjs";
-import "../_libs/cookie-es.mjs";
-import "../_libs/seroval.mjs";
-import "../_libs/seroval-plugins.mjs";
-import "node:stream/web";
-import "node:stream";
-import "../_libs/isbot.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
 const appStoreBadge = "/assets/download-apple-app-store-CQp-Xo94.svg";
@@ -416,11 +416,15 @@ function Subscriptions() {
   const [monthlyDialog, setMonthlyDialog] = reactExports.useState(false);
   const [annualDialog, setAnnualDialog] = reactExports.useState(false);
   const [plans, setPlans] = reactExports.useState([]);
-  reactExports.useEffect(() => {
-    getPackageList().then((res) => {
-      setPlans(res.data?.content ?? []);
-    }).catch((err) => console.error("Failed to load plans", err));
-  }, []);
+  const navigate = useNavigate();
+  const handleSubscribeClick = () => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      navigate({ to: "/myaccount/manage-subscription" });
+    } else {
+      window.location.href = "/#login";
+    }
+  };
   plans.find((p) => p.billing_cycle === "monthly");
   plans.find((p) => p.billing_cycle === "annual");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }, children: [
@@ -450,8 +454,8 @@ function Subscriptions() {
                 // background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 100%)',
                 // boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
               },
-              href: "#",
-              className: "inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white",
+              onClick: handleSubscribeClick,
+              className: "cursor-pointer inline-flex items-center justify-center rounded-xl border-2 border-rust bg-transparent px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-rust transition-colors hover:bg-rust hover:text-white",
               children: "Subscribe Now"
             }
           ),
@@ -486,8 +490,8 @@ function Subscriptions() {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
-              href: "#",
-              className: "inline-flex  items-center justify-center rounded-xl border-2 bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
+              onClick: handleSubscribeClick,
+              className: "cursor-pointer inline-flex  items-center justify-center rounded-xl border-2 bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-colors hover:bg-cream hover:text-green",
               children: "Subscribe Now"
             }
           ),
@@ -1181,7 +1185,7 @@ function LoginSection() {
   const [password, setPassword] = reactExports.useState("");
   const [focused, setFocused] = reactExports.useState(null);
   const [showPass, setShowPass] = reactExports.useState(false);
-  useNavigate();
+  const navigate = useNavigate();
   const features = [
     {
       title: "Offline Supported",
@@ -1198,6 +1202,38 @@ function LoginSection() {
   ];
   const [loading, setLoading] = reactExports.useState(false);
   const [error, setError] = reactExports.useState("");
+  const handleLogin = async () => {
+    setError("");
+    if (!email.trim()) {
+      setError("Please enter your email");
+      return;
+    }
+    if (!password.trim()) {
+      setError("Please enter your password");
+      return;
+    }
+    try {
+      setLoading(true);
+      const response = await loginUser(
+        email.trim(),
+        password
+      );
+      console.log("Login Success:", response);
+      if (response?.data?.access_token) {
+        localStorage.setItem("access_token", response.data?.access_token);
+        localStorage.setItem("userData", response.data);
+        window.dispatchEvent(new Event("auth-change"));
+        navigate({ to: "/myaccount/profile" });
+      }
+    } catch (err) {
+      console.error("Login Error:", err);
+      setError(
+        err?.response?.data?.message || err?.response?.data?.error || "Invalid email or password"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "login", className: "relative overflow-hidden pt-15", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
@@ -1296,6 +1332,7 @@ function LoginSection() {
                 /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-green text-sm mb-8 font-normal", children: "Enter your world of Mahjong" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "flex flex-col gap-5", onSubmit: async (e) => {
                   e.preventDefault();
+                  await handleLogin();
                 }, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-green text-xs tracking-[0.14em] uppercase font-normal", children: "Email Address" }),
@@ -1388,7 +1425,7 @@ function LoginSection() {
                     motion.button,
                     {
                       type: "submit",
-                      className: "w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal",
+                      className: "cursor-pointer w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal",
                       style: {
                         background: "linear-gradient(135deg, #B65A2F 0%, #943f1e 88%)",
                         boxShadow: "0 8px 24px rgba(182,90,47,0.30)"

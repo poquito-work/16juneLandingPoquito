@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { i as getUserProfile, d as getPredefinedListByType, j as getTransactionList, h as getPackageList, u as updateUserProfile, k as upgradeSubscription, l as cancelSubscription } from "./Logo-taAcf7RK.mjs";
-import { H as Header, F as Footer } from "./Footer-Db9icIKz.mjs";
+import { h as getUserProfile, d as getPredefinedListByType, i as getTransactionList, j as getPackageList, u as updateUserProfile, k as initializeSubscription, m as upgradeSubscription, n as cancelSubscription } from "./Logo-DfoIx9ag.mjs";
+import { H as Header, F as Footer } from "./Footer-D89Zb4GD.mjs";
 import { S as Swal } from "../_libs/sweetalert2.mjs";
 function decodeJwtPayload(token) {
   try {
@@ -380,6 +380,7 @@ const SUB_STATUS_MAP = {
   expired: { label: "Expired", cls: "dash-chip-pending" }
 };
 function SubscriptionTab({
+  userUuid,
   trialEndedWithoutSubscription,
   subscription,
   isTrialActive,
@@ -397,16 +398,78 @@ function SubscriptionTab({
     const diffMs = new Date(dateStr).getTime() - Date.now();
     return Math.ceil(diffMs / (1e3 * 60 * 60 * 24));
   }
+  const showSubscribeButton = !subscription || ["stopped", "expired", "cancelling"].includes(subscription.status);
+  async function handleSubscribe() {
+    if (!selectedPlanId) return;
+    const selectedPlan2 = plans.find((p) => p.id === selectedPlanId);
+    if (!selectedPlan2) return;
+    setChanging(true);
+    const profileRes = await getUserProfile();
+    const userUuid2 = profileRes.data.uuid;
+    try {
+      const res = await initializeSubscription(
+        userUuid2,
+        // current logged in user uuid
+        selectedPlan2.uuid
+      );
+      const paymentUrl = res.data.razorpay_short_url;
+      const paymentWindow = window.open(
+        paymentUrl,
+        "_blank",
+        "width=900,height=700"
+      );
+      pollSubscriptionStatus(paymentWindow, selectedPlan2.uuid);
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: err?.response?.data?.message ?? "Unable to initialize subscription."
+      });
+    } finally {
+      setChanging(false);
+    }
+  }
+  async function pollSubscriptionStatus(paymentWindow, targetPlanUuid) {
+    if (!paymentWindow) return;
+    const interval = setInterval(async () => {
+      try {
+        if (paymentWindow.closed) {
+          clearInterval(interval);
+          return;
+        }
+        const profile = await getUserProfile();
+        const sub = profile.data.subscription;
+        const hasActive = profile.data.has_active_subscription;
+        const isPlanActive = hasActive || sub && (sub.status === "active" || sub.status === "trialing");
+        const isTargetPlan = targetPlanUuid ? sub?.plan?.uuid === targetPlanUuid : true;
+        if (isPlanActive && isTargetPlan) {
+          clearInterval(interval);
+          paymentWindow.close();
+          await onSubscriptionChanged?.();
+          Swal.fire({
+            icon: "success",
+            title: "Subscription Activated"
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }, 3e3);
+  }
   async function handleChangePlan() {
     const planToApply = plans.find((p) => p.id === selectedPlanId);
     if (!planToApply) return;
     setChanging(true);
     try {
-      await upgradeSubscription(planToApply.uuid);
-      setChanged(true);
-      setTimeout(() => setChanged(false), 3e3);
-      Swal.fire({ icon: "success", title: "Subscription upgraded successfully." });
-      await onSubscriptionChanged?.();
+      const res = await upgradeSubscription(planToApply.uuid);
+      const paymentUrl = res.data.data?.razorpay_short_url;
+      const paymentWindow = window.open(
+        paymentUrl,
+        "_blank",
+        "width=900,height=700"
+      );
+      console.log(res, "paymentUrl");
+      pollSubscriptionStatus(paymentWindow, planToApply.uuid);
     } catch (err) {
       if (err?.response?.data?.errorCode === "400" || err?.response?.data?.errorCode === "404") {
         Swal.fire({
@@ -463,15 +526,19 @@ function SubscriptionTab({
     getPackageList().then((res) => {
       const loadedPlans = res.data?.content ?? [];
       setPlans(loadedPlans);
-      if (loadedPlans.length > 0) {
+      if (subscription?.plan?.id) {
+        setSelectedPlanId(subscription.plan.id);
+      } else if (loadedPlans.length > 0) {
         setSelectedPlanId(loadedPlans[0].id);
       }
     }).catch((err) => console.error("Failed to load plans", err));
-  }, []);
+  }, [subscription]);
   plans.find((p) => p.billing_cycle === "monthly");
   plans.find((p) => p.billing_cycle === "annual");
   const isCurrentPlanSelected = !!subscription && selectedPlanId === subscription.plan.id;
   const isDifferentPlanSelected = !!selectedPlanId && !isCurrentPlanSelected;
+  const selectedPlan = plans.find((p) => p.id === selectedPlanId);
+  const isDowngrade = subscription?.plan?.billing_cycle === "annual" && selectedPlan?.billing_cycle === "monthly";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-section", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-section-head", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "dash-section-title", children: "Subscription" }),
@@ -561,18 +628,17 @@ function SubscriptionTab({
         );
       }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-sub-actions", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-2", children: trialEndedWithoutSubscription || isTrialActive ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        isDowngrade && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-red-500 mb-3", children: "You cannot downgrade from the Annual plan to the Monthly plan." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-2", children: showSubscribeButton ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
             type: "button",
             className: "dash-cta-btn",
+            onClick: handleSubscribe,
             disabled: changing || !selectedPlanId,
             children: changing ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
-              "Activating Plan…"
-            ] }) : changed ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "20 6 9 17 4 12" }) }),
-              "Plan Activated"
+              "Redirecting..."
             ] }) : "Subscribe now"
           }
         ) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -580,7 +646,7 @@ function SubscriptionTab({
             "button",
             {
               type: "button",
-              className: "dash-cta-btn",
+              className: `dash-cta-btn ${isDowngrade ? "noUpgrade" : ""}`,
               onClick: handleChangePlan,
               disabled: changing || !selectedPlanId || isCurrentPlanSelected,
               children: changing ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -621,6 +687,7 @@ function DashboardPage({ activeTab: initialTab }) {
       setUser((prev) => ({
         ...prev,
         id: data.id != null ? String(data.id) : prev.id,
+        uuid: data.uuid ?? prev.uuid,
         username: data.username ?? prev.username,
         email: data.email ?? prev.email,
         phone_number: data.phone_number ?? prev.phone_number,
@@ -664,6 +731,7 @@ function DashboardPage({ activeTab: initialTab }) {
         activeTab === "subscription" && /* @__PURE__ */ jsxRuntimeExports.jsx(
           SubscriptionTab,
           {
+            userUuid: user.uuid,
             trialEndedWithoutSubscription: !!user.trial_ended_without_subscription,
             subscription: user.subscription ?? null,
             isTrialActive: !!user.is_trial_active,

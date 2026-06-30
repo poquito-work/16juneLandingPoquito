@@ -11,6 +11,27 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+const loginUser = async (email, password) => {
+  const payload = {
+    email,
+    username: "",
+    phone_number: null,
+    password,
+    device_id: "web"
+  };
+  console.log("Login Payload:", payload);
+  console.log("API URL:", `${API_BASE_URL}/api/v1/auth/login/password`);
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/login/password`,
+    payload,
+    {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+  return response.data;
+};
 const sendOtp = async (identifier, otp_type) => {
   const payload = {
     identifier,
@@ -38,6 +59,7 @@ const registerUser = async (data) => {
     role_name: data.role_name,
     is_terms_condition_accepted: data.is_terms_condition_accepted,
     is_privacy_policy: data.is_privacy_policy
+    //  avatar_url: data.avatar_url,
   };
   const response = await axios.post(
     `${API_BASE_URL}/api/v1/auth/register`,
@@ -127,6 +149,16 @@ const resetPassword = async (email, reset_otp, new_password) => {
       headers: {
         "Content-Type": "application/json"
       }
+    }
+  );
+  return response.data;
+};
+const initializeSubscription = async (user_uuid, plan_uuid) => {
+  const response = await api.post(
+    `${API_BASE_URL}/api/v1/subscriptions/`,
+    {
+      user_uuid,
+      plan_uuid
     }
   );
   return response.data;
@@ -221,11 +253,13 @@ export {
   resetPassword as e,
   forgotPassword as f,
   getTermsCondition as g,
-  getPackageList as h,
-  getUserProfile as i,
-  getTransactionList as j,
-  upgradeSubscription as k,
-  cancelSubscription as l,
+  getUserProfile as h,
+  getTransactionList as i,
+  getPackageList as j,
+  initializeSubscription as k,
+  loginUser as l,
+  upgradeSubscription as m,
+  cancelSubscription as n,
   registerUser as r,
   sendOtp as s,
   updateUserProfile as u

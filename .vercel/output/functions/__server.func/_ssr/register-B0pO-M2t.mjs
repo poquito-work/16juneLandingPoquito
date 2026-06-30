@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { L as Link } from "../_libs/tanstack__react-router.mjs";
-import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-taAcf7RK.mjs";
+import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
+import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-DfoIx9ag.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -9,9 +9,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
+import "crypto";
 import "async_hooks";
 import "util";
-import "crypto";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -95,20 +95,6 @@ function RegisterFooter() {
       /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/terms", className: "text-xs transition-colors hover:opacity-70", style: { color: "rgba(20,51,34,0.4)" }, children: "Terms of Use" })
     ] })
   ] }) });
-}
-const STEP_LABELS = {
-  1: "Account Details",
-  2: "Verify OTP",
-  3: "Choose Plan"
-};
-function StepIndicator({ step }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-stepper", children: [1, 2, 3].map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `reg-step ${step >= s ? "reg-step-active" : "reg-step-inactive"}`, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-step-circle", children: step > s ? /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "20 6 9 17 4 12" }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: s }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-step-label", children: STEP_LABELS[s] })
-    ] }, s),
-    i < 2 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `reg-step-connector ${step > s ? "reg-step-connector-active" : ""}` }, `c${s}`)
-  ] })) });
 }
 function EyeIcon({ visible }) {
   return visible ? /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
@@ -210,26 +196,6 @@ function StepDetails({
         errors.phone && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.phone })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "reg-label", htmlFor: "reg-fullname", children: [
-          "Username ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" }),
-          " "
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            id: "reg-fullname",
-            type: "text",
-            className: `reg-input ${errors.fullName ? "reg-input-error" : ""}`,
-            placeholder: "Your username",
-            value: data.fullName,
-            onChange: (e) => onChange("fullName", e.target.value),
-            autoComplete: "name"
-          }
-        ),
-        errors.fullName && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.fullName })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "reg-label", htmlFor: "reg-city", children: [
           "City ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" })
@@ -255,6 +221,26 @@ function StepDetails({
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-select-arrow", children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "6 9 12 15 18 9" }) }) })
         ] }),
         errors.city && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.city })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "reg-label", htmlFor: "reg-fullname", children: [
+          "Username ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" }),
+          " "
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            id: "reg-fullname",
+            type: "text",
+            className: `reg-input ${errors.fullName ? "reg-input-error" : ""}`,
+            placeholder: "Your username",
+            value: data.fullName,
+            onChange: (e) => onChange("fullName", e.target.value),
+            autoComplete: "name"
+          }
+        ),
+        errors.fullName && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.fullName })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "reg-label", htmlFor: "reg-password", children: [
@@ -315,7 +301,7 @@ function StepDetails({
         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "reg-checkbox-text", children: [
           "I agree to the",
           " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: termsUrl || "/terms", className: "reg-signin-link", target: "_blank", rel: "noreferrer", children: "Terms of Use" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: termsUrl || "/terms", className: "reg-signin-link", target: "_blank", rel: "noreferrer", children: "Terms & Conditions " }),
           " ",
           "and",
           " ",
@@ -328,13 +314,7 @@ function StepDetails({
     /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", className: "reg-next-btn", disabled: isLoading, children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
       "Registering…"
-    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      "Continue",
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 12h14" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l7 7-7 7" })
-      ] })
-    ] }) }),
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "Get Started" }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "reg-signin-hint", children: [
       "Already have an account?",
       " ",
@@ -392,7 +372,7 @@ function StepOTP({
     setVerifying(true);
     setError("");
     try {
-      await registerUser({
+      const response = await registerUser({
         username: formData.fullName,
         email: formData.email,
         phone_number: formData.phone.trim() || null,
@@ -403,6 +383,11 @@ function StepOTP({
         is_terms_condition_accepted: true,
         is_privacy_policy: true
       });
+      if (response?.data?.access_token) {
+        localStorage.setItem("access_token", response.data?.access_token);
+        localStorage.setItem("userData", JSON.stringify(response));
+        window.dispatchEvent(new Event("auth-change"));
+      }
       onVerified();
     } catch (err) {
       setError(
@@ -484,94 +469,10 @@ function StepOTP({
     ] })
   ] });
 }
-function StepPlans({
-  onBack,
-  onSubmit,
-  isLoading
-}) {
-  const [selected, setSelected] = reactExports.useState("annual");
-  const billingDate = (() => {
-    const d = /* @__PURE__ */ new Date();
-    d.setDate(d.getDate() + 15);
-    return d.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
-  })();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans-grid", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "button",
-        {
-          type: "button",
-          className: `reg-plan-card ${selected === "monthly" ? "reg-plan-card-selected" : ""}`,
-          onClick: () => setSelected("monthly"),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-plan-radio", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `reg-plan-radio-dot ${selected === "monthly" ? "reg-plan-radio-dot-active" : ""}` }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plan-body", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-label", children: "Monthly Plan" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plan-price-row", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-currency", children: "Rs" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-price", children: "500" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-period", children: "/ month" })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-plan-note", children: "Excl. GST · Cancel anytime" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "reg-plan-trial", children: [
-                "15-days free trial · Billed from ",
-                billingDate
-              ] })
-            ] })
-          ]
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "button",
-        {
-          type: "button",
-          className: `reg-plan-card ${selected === "annual" ? "reg-plan-card-selected reg-plan-card-featured" : ""}`,
-          onClick: () => setSelected("annual"),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-plan-badge", children: "Best Value" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-plan-radio", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `reg-plan-radio-dot ${selected === "annual" ? "reg-plan-radio-dot-active" : ""}` }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plan-body", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-label", children: "Annual Plan" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plan-price-row", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-currency", children: "Rs" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-price", children: "4,500" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-plan-period", children: "/ year" })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-plan-note", children: "Excl. GST · Save 25% (Rs 375/month)" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "reg-plan-trial", children: [
-                "15-days free trial · Billed from ",
-                billingDate
-              ] })
-            ] })
-          ]
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans-actions", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { type: "button", className: "reg-back-btn", onClick: onBack, disabled: isLoading, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M19 12H5" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l-7 7 7 7" })
-        ] }),
-        "Back"
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-submit-btn", onClick: () => onSubmit(selected), disabled: isLoading, children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
-        "Creating Account…"
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        "Create Account",
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 12h14" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l7 7-7 7" })
-        ] })
-      ] }) })
-    ] })
-  ] });
-}
 const STEP_TITLES = {
-  1: { title: "Create Your Account", sub: "Fill in your details to join Pocket Dragon." },
-  2: { title: "Verify Your Email", sub: "Enter the OTP we sent to your email address." },
-  3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." }
+  1: { title: "Create  Account", sub: "Email verification is required before your account goes live" },
+  2: { title: "Verify Your Email", sub: "Enter the OTP we sent to your email address." }
+  // 3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." },
 };
 function RegisterPage() {
   const [step, setStep] = reactExports.useState(1);
@@ -579,6 +480,7 @@ function RegisterPage() {
   const [apiError, setApiError] = reactExports.useState("");
   const [termsUrl, setTermsUrl] = reactExports.useState("");
   const [privacyUrl, setPrivacyUrl] = reactExports.useState("");
+  const navigate = useNavigate();
   const [formData, setFormData] = reactExports.useState({
     fullName: "",
     city: "",
@@ -633,22 +535,14 @@ function RegisterPage() {
       setIsLoading(false);
     }
   }
-  async function handleSubmit(plan) {
-    setIsLoading(true);
-    console.log("Plan selected:", plan);
-    await new Promise((r) => setTimeout(r, 800));
-    setIsLoading(false);
-  }
   const { title, sub } = STEP_TITLES[step];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "register-page", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(RegisterHeader, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "register-main", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "register-card", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "register-card-top", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "register-eyebrow", children: "Get Started" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "register-title", children: title }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "register-subtitle", children: sub })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "register-subtitle mb-5", children: sub })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(StepIndicator, { step }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "register-step-body", children: [
         step === 1 && /* @__PURE__ */ jsxRuntimeExports.jsx(
           StepDetails,
@@ -668,15 +562,7 @@ function RegisterPage() {
             email: formData.email,
             formData,
             onBack: () => setStep(1),
-            onVerified: () => setStep(3)
-          }
-        ),
-        step === 3 && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          StepPlans,
-          {
-            onBack: () => setStep(2),
-            onSubmit: handleSubmit,
-            isLoading
+            onVerified: () => navigate({ to: "/myaccount/profile" })
           }
         )
       ] })

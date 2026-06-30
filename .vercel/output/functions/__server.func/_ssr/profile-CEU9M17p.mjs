@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashaboardPage-09Yk2IIq.mjs";
+import { D as DashboardPage } from "./DashboardPage-ZNpgD5md.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -10,12 +10,12 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
+import "crypto";
 import "async_hooks";
 import "util";
-import "crypto";
 import "stream";
 import "../_libs/isbot.mjs";
-import "./Logo-taAcf7RK.mjs";
+import "./Logo-DfoIx9ag.mjs";
 import "../_libs/axios.mjs";
 import "../_libs/form-data.mjs";
 import "fs";
@@ -62,8 +62,8 @@ import "./pocket-dragon-logo-B1TjRRiN.mjs";
 import "../_libs/framer-motion.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-import "./Footer-Db9icIKz.mjs";
-const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "subscription" });
+import "./Footer-D89Zb4GD.mjs";
+const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "profile" });
 export {
   SplitComponent as component
 };
