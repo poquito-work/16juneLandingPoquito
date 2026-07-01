@@ -9,9 +9,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
+import "util";
 import "crypto";
 import "async_hooks";
-import "util";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -162,6 +162,7 @@ function StepDetails({
     if (!data.agreed) e.agreed = "You must agree to the Terms & Privacy Policy to continue.";
     return e;
   }
+  const isFormValid = data.fullName.trim() !== "" && data.city !== "" && data.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) && (data.phone.trim() === "" || /^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())) && data.password.length >= 8 && /[A-Z]/.test(data.password) && /[a-z]/.test(data.password) && /[0-9]/.test(data.password) && /[^A-Za-z0-9]/.test(data.password) && data.confirmPassword !== "" && data.password === data.confirmPassword && data.agreed;
   function handleSubmit(e) {
     e.preventDefault();
     const errs = validate();
@@ -325,7 +326,7 @@ function StepDetails({
       errors.agreed && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error reg-error-checkbox", children: errors.agreed })
     ] }),
     apiError && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg px-4 py-3 text-sm mb-2", style: { background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }, children: apiError }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", className: "reg-next-btn", disabled: isLoading, children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", className: "reg-next-btn", disabled: isLoading || !isFormValid, children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
       "Registering…"
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "Get Started" }) }),

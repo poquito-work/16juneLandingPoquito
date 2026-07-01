@@ -4,9 +4,9 @@ import { c as createRouter, a as createRootRouteWithContext, u as useRouter, L a
 import { Q as redirect } from "../_libs/tanstack__router-core.mjs";
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import "../_libs/react-dom.mjs";
+import "util";
 import "crypto";
 import "async_hooks";
-import "util";
 import "stream";
 import "node:stream";
 import "../_libs/isbot.mjs";
@@ -161,7 +161,7 @@ const $$splitComponentImporter$9 = () => import("./terms-tERwfyDW.mjs");
 const Route$9 = createFileRoute("/terms")({
   component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
-const $$splitComponentImporter$8 = () => import("./register-SN1_CbcB.mjs");
+const $$splitComponentImporter$8 = () => import("./register-BJGS_bmN.mjs");
 const Route$8 = createFileRoute("/register")({
   head: () => ({
     meta: [{
