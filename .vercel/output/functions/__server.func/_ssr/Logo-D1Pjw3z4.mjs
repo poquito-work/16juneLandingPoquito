@@ -2,7 +2,7 @@ import { a as axios } from "../_libs/axios.mjs";
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
 import { m as motion } from "../_libs/framer-motion.mjs";
-const API_BASE_URL = "http://ec2-13-207-123-199.ap-south-1.compute.amazonaws.com:8080";
+const API_BASE_URL = "https://backend.poquito.review-link.in";
 const api = axios.create({ baseURL: API_BASE_URL });
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");

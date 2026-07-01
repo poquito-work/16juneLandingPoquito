@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-rNH89EBJ.mjs";
+import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-D1Pjw3z4.mjs";
 import { a as avtarBoy } from "./poquito-boy-DDfs1Mfd.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";

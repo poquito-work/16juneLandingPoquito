@@ -1,12 +1,12 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-COJ_HNpy.mjs";
+import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3 } from "./Footer-dvOUueAr.mjs";
 import { a as avtarBoy } from "./poquito-boy-DDfs1Mfd.mjs";
 import { R as Root, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
 import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
-import { P as PocketDragonLogo, l as loginUser } from "./Logo-rNH89EBJ.mjs";
+import { P as PocketDragonLogo, l as loginUser } from "./Logo-D1Pjw3z4.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { A as ArrowUp, W as WifiOff, T as Trophy, R as Radar, X } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__primitive.mjs";

@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { P as PocketDragonLogo, f as forgotPassword, e as resetPassword } from "./Logo-rNH89EBJ.mjs";
+import { P as PocketDragonLogo, f as forgotPassword, e as resetPassword } from "./Logo-D1Pjw3z4.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
