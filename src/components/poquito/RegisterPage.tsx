@@ -203,6 +203,24 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
     return e;
   }
 
+  const isFormValid =
+  data.fullName.trim() !== "" &&
+  data.city !== "" &&
+  data.email.trim() !== "" &&
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) &&
+  (
+    data.phone.trim() === "" ||
+    /^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())
+  ) &&
+  data.password.length >= 8 &&
+  /[A-Z]/.test(data.password) &&
+  /[a-z]/.test(data.password) &&
+  /[0-9]/.test(data.password) &&
+  /[^A-Za-z0-9]/.test(data.password) &&
+  data.confirmPassword !== "" &&
+  data.password === data.confirmPassword &&
+  data.agreed;
+
   function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     const errs = validate();
@@ -383,7 +401,7 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
         </div>
       )}
 
-      <button type="submit" className="reg-next-btn" disabled={isLoading}>
+      <button type="submit" className="reg-next-btn"  disabled={isLoading || !isFormValid}>
         {isLoading ? (
           <><span className="reg-spinner" />Registering…</>
         ) : (
