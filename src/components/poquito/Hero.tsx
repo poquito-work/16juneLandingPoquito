@@ -4,6 +4,10 @@ import { DownloadButtons } from "./DownloadButtons";
 import heroVideo from "@/assets/1782469897969_original-c7032776-010c-49e4-8b35-e7234191ebb3.mp4";
 import tile1 from "@/assets/Mpt1z.png";
 import tile2 from "@/assets/Mpt3z.png";
+import avtarBoy from "@/assets/poquito-boy.png";
+import avtarGirl from "@/assets/poquito-girl.png";
+import avtarBunny from "@/assets/poquito-bunny.png";
+
 
 const EASE = [0.22, 0.61, 0.36, 1] as const;
 
@@ -144,22 +148,28 @@ export function Hero() {
 
             {/* Social proof */}
             <motion.div variants={itemVariants} className="flex items-center gap-2 pt-1 heroText">
-              <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
+              {/* <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
                  <strong>10,000+ Players</strong>
-              </span>
+              </span> */}
               <div className="flex -space-x-2 socialRound">
-                {avatarGradients.map((g, i) => (
+                <img src={avtarBoy} className="height-30"/>
+                     <img src={avtarGirl}/>
+                      <img src={avtarBunny}/>
+                {/* {avatarGradients.map((g, i) => (
                   <div 
                     key={i}
                     className="w-8 h-8 rounded-full border-2 border-white/80 flex items-center justify-center text-[10px] font-bold text-white"
                     style={{ background: g }}
                   >
+                    <img src={avtarBoy}/>
+                     <img src={avtarGirl}/>
+                      <img src={avtarBunny}/>
                     {["A", "M", "R"][i]}
                   </div>
-                ))}
+                ))} */}
               </div>
               <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
-                 <span> ‘Join our growing community’</span>
+                 <span> Join our growing community</span>
               </span>
             </motion.div>
           </motion.div>

@@ -43,7 +43,7 @@ function RegisterFooter() {
     <footer className="border-t border-foreground/8 py-8">
       <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-xs" style={{ color: "rgba(20,51,34,0.35)" }}>
-          © 2026 [Pocket Dragon/Poquito]. All Rights Reserved.
+          © 2026  Poquito Project LLP. All Rights Reserved.
         </p>
         <div className="flex items-center gap-6">
           <Link to="/privacy" className="text-xs transition-colors hover:opacity-70" style={{ color: "rgba(20,51,34,0.4)" }}>
@@ -159,6 +159,13 @@ function StepDetails({
 const fileInputRef = useRef<HTMLInputElement>(null);
 const [avatarList, setAvatarList] = useState<any[]>([]);
 const [showAvatarDialog, setShowAvatarDialog] = useState(false);
+const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
+
+
+ useEffect(() => {
+  setSelectedAvatar(data.avatar_url);
+}, [data.avatar_url]);
+
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -241,7 +248,7 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   return (
     
     <form className="reg-form" onSubmit={handleSubmit} noValidate>
- {/* <div className="avatar-wrapper">
+ <div className="avatar-wrapper">
   <img
     src={data.avatar_url || uploadLogo}
     alt="Avatar"
@@ -257,9 +264,9 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   </button>
 </div>
 
-<p className="avatar-text">
+<p className="avatar-text mb-5">
   Tap to choose your avatar
-</p> */}
+</p>
 
       <div className="reg-form-grid">
 
@@ -282,7 +289,7 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
 
         {/* Phone */}
         <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-phone">Phone Number <span style={{ color: "rgba(20,51,34,0.4)", fontWeight: 400 }}></span></label>
+          <label className="reg-label" htmlFor="reg-phone">Phone Number <span style={{ color: "rgba(20,51,34,0.4)",marginLeft:"5px", fontWeight: 400 }}>Optional</span></label>
           <input
             id="reg-phone"
             type="tel"
@@ -427,41 +434,61 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
       </p>
 
 
-       {showAvatarDialog && (
+{showAvatarDialog && (
   <div
     className="avatar-modal-overlay"
-    onClick={() => setShowAvatarDialog(false)}
+    onClick={() => {
+      setSelectedAvatar(data.avatar_url);
+      setShowAvatarDialog(false);
+    }}
   >
     <div
       className="avatar-modal"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="avatar-modal-header">
-        <h3>Select Avatar</h3>
+       <h3>CHOOSE AVATAR</h3>
 
         <button
           type="button"
-          onClick={() => setShowAvatarDialog(false)}
+          onClick={() => {
+            setSelectedAvatar(data.avatar_url);
+            setShowAvatarDialog(false);
+          }}
         >
           ✕
         </button>
       </div>
 
       <div className="avatar-grid">
-        {avatarList.map((avatar) => (
+        {avatarList.map((avatar: any) => (
           <img
             key={avatar.id}
             src={avatar.url}
+            alt="Avatar"
             className={`avatar-item ${
-              data.avatar_url === avatar.url ? "selected" : ""
+              selectedAvatar === avatar.url ? "selected" : ""
             }`}
-            onClick={() => {
-              onChange("avatar_url", avatar.url);
-              setShowAvatarDialog(false);
-            }}
+            onClick={() => setSelectedAvatar(avatar.url)}
           />
         ))}
       </div>
+
+      <button
+        type="button"
+        className="avatar-save-btn"
+        onClick={() => {
+          onChange("avatar_url", selectedAvatar);
+          setShowAvatarDialog(false);
+        }}
+      >
+        <span className="avatar-save-title">
+          FEELS CUTE
+        </span>
+        <span className="avatar-save-subtitle">
+          Might change later
+        </span>
+      </button>
     </div>
   </div>
 )}
@@ -642,7 +669,24 @@ function StepOTP({
       {/* Resend */}
       <div className="reg-otp-resend">
         {resendSeconds > 0 ? (
-          <span className="reg-otp-resend-timer">Resend OTP in {resendSeconds}s</span>
+          <span className="reg-otp-resend-timer">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </svg>
+
+  Resend Code in <span className="time">{resendSeconds}s</span>
+</span>
         ) : (
           <button type="button" className="reg-otp-resend-btn" onClick={handleResend}>
             Resend code

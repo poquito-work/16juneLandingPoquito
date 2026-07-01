@@ -500,7 +500,7 @@ function Footer() {
               viewport: { once: true },
               transition: { delay: 0.2, duration: 0.6 },
               className: "flex items-center justify-center py-5",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-cream text-xs font-normal tracking-wide hover:font-bold hover:scale-[1.03] transition-all duration-200", children: "© 2026 [Pocket Dragon/Poquito]. All Rights Reserved." })
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-pq-cream text-xs font-normal tracking-wide hover:font-bold hover:scale-[1.03] transition-all duration-200", children: "© 2026  Poquito Project LLP. All Rights Reserved." })
             }
           )
         ] })

@@ -233,7 +233,7 @@ const [error, setError] = useState("");
                     <label className="text-green text-xs tracking-[0.14em] uppercase font-normal">
                       Password
                     </label>
-                    <a href="#" className="text-offwhite text-xs hover:underline underline-offset-2 font-normal">
+                    <a href="#" className="text-rust f-w-600 text-xs hover:underline underline-offset-2 font-normal">
                       Forgot password?
                     </a>
                   </div>
@@ -312,7 +312,7 @@ const [error, setError] = useState("");
 
               <p className="text-center text-pq-green/70 text-sm font-normal">
                 New to Poquito?{' '}
-                <Link   to="/register" className="text-offwhite font-normal hover:underline underline-offset-2">
+                <Link   to="/register" className="f-w-600 text-rust font-normal hover:underline underline-offset-2">
                   Create an account
                 </Link>
               </p>

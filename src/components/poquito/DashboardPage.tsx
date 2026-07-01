@@ -210,13 +210,17 @@ function ProfileTab({ user }: { user: UserProfile }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
 const [avatarList, setAvatarList] = useState<any[]>([]);
 const [showAvatarDialog, setShowAvatarDialog] = useState(false);
-
+const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
   useEffect(() => {
     getPredefinedListByType("city")
       .then((res) => setCityList(res.data.content ?? []))
       .catch(() => { });
   }, []);
 
+  const openAvatarDialog = () => {
+  setSelectedAvatar(user.avatar_url); // current avatar
+  setShowAvatarDialog(true);
+};
 
    useEffect(() => {
     const fetchAvtarList = async () => {
@@ -302,7 +306,7 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
       <div className="dash-profile-hero">
         <div className="dash-avatar">
           <span className="dash-avatar-initials">{initials}</span>
-          {/* {form.avatar_url ? (
+          {form.avatar_url ? (
 <>
 
 <div className="avatar-wrapper">
@@ -315,7 +319,8 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   <button
     type="button"
     className="avatar-plus"
-    onClick={() => setShowAvatarDialog(true)}
+    // onClick={() => setShowAvatarDialog(true)}
+    onClick={openAvatarDialog}
   >
     +
   </button>
@@ -324,7 +329,7 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
             // <img src={user.avatar_url} alt={user.name ?? "Avatar"} className="dash-avatar-img" />
           ) : (
             <span className="dash-avatar-initials">{initials}</span>
-          )} */}
+          )}
         </div>
         <div>
           <p className="dash-profile-name">{form.name || user.name || "—"}</p>
@@ -442,22 +447,27 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
             )}
           </button>
         </div>
-
-              {showAvatarDialog && (
+{showAvatarDialog && (
   <div
     className="avatar-modal-overlay"
-    onClick={() => setShowAvatarDialog(false)}
+    onClick={() => {
+      setSelectedAvatar(user.avatar_url);
+      setShowAvatarDialog(false);
+    }}
   >
     <div
       className="avatar-modal"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="avatar-modal-header">
-        <h3>Select Avatar</h3>
+        <h3>CHOOSE AVATAR</h3>
 
         <button
           type="button"
-          onClick={() => setShowAvatarDialog(false)}
+          onClick={() => {
+            setSelectedAvatar(user.avatar_url);
+            setShowAvatarDialog(false);
+          }}
         >
           ✕
         </button>
@@ -468,19 +478,31 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
           <img
             key={avatar.id}
             src={avatar.url}
+            alt="Avatar"
             className={`avatar-item ${
-              user.avatar_url === avatar.url ? "selected" : ""
+              selectedAvatar === avatar.url ? "selected" : ""
             }`}
-           onClick={() => {
-  setForm((prev) => ({
-    ...prev,
-    avatar_url: avatar.url,
-  }));
-  setShowAvatarDialog(false);
-}}
+            onClick={() => setSelectedAvatar(avatar.url)}
           />
         ))}
       </div>
+
+      <button
+        type="button"
+        className="avatar-save-btn"
+       onClick={() => {
+  setForm((prev) => ({
+    ...prev,
+    avatar_url: selectedAvatar || prev.avatar_url,
+  }));
+  setShowAvatarDialog(false);
+}}
+      >
+        <span className="avatar-save-title">FEELS CUTE</span>
+        <span className="avatar-save-subtitle">
+          Might change later
+        </span>
+      </button>
     </div>
   </div>
 )}
@@ -794,8 +816,8 @@ function SubscriptionTab({
         const profile = await getUserProfile();
         const sub = profile.data.subscription;
         const hasActive = profile.data.has_active_subscription;
-
-        const isPlanActive = hasActive || (sub && (sub.status === "active" || sub.status === "trialing"));
+  const isPlanActive =(sub && (sub.status === "active" || sub.status === "trialing"))
+        // const isPlanActive = hasActive || (sub && (sub.status === "active" || sub.status === "trialing"));
         const isTargetPlan = targetPlanUuid ? sub?.plan?.uuid === targetPlanUuid : true;
 
         if (isPlanActive && isTargetPlan) {
@@ -821,42 +843,77 @@ function SubscriptionTab({
   }
 
 
-  async function handleChangePlan() {
-    const planToApply = plans.find((p) => p.id === selectedPlanId);
-    if (!planToApply) return;
+ async function handleChangePlan() {
+  const planToApply = plans.find((p) => p.id === selectedPlanId);
+  if (!planToApply || !subscription) return;
 
-    setChanging(true);
-    try {
-      const res = await upgradeSubscription(planToApply.uuid);
-      const paymentUrl = res.data.data?.razorpay_short_url;
+  const confirm = await Swal.fire({
+    icon: "question",
+    title: `Switch to ${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"} Plan?`,
+    html: `
+      <div style="text-align:center; line-height:1.6">
+        <p>
+          <strong>Rs ${planToApply.price.toLocaleString()}/${planToApply.billing_cycle}</strong>
+          ${
+            planToApply.billing_cycle === "annual"
+              ? "<br><span style='color:#666'>Save 25% | Rs 375/month</span>"
+              : ""
+          }
+        </p>
 
-      const paymentWindow = window.open(
-        paymentUrl,
-        "_blank",
-        "width=900,height=700"
-      );
+        <br>
 
-      console.log(res, "paymentUrl")
+        <p>
+          Your current <strong>${subscription.plan.name}</strong> will remain active until
+          <strong>${formatDate(subscription.current_period_end)}</strong>.
+        </p>
 
-      pollSubscriptionStatus(paymentWindow, planToApply.uuid);
+        <br>
 
-      // setChanged(true);
-      // setTimeout(() => setChanged(false), 3000);
-      // Swal.fire({ icon: "success",title:"Subscription upgraded successfully."});
-      // // refresh subscription state from server
-      // await onSubscriptionChanged?.();
-    } catch (err: any) {
-      if (err?.response?.data?.errorCode === "400" || err?.response?.data?.errorCode === "404") {
-        Swal.fire({
-          icon: "error",
-          title: "Upgrade Failed",
-          text: err.response.data.message,
-        });
-      }
-    } finally {
-      setChanging(false);
-    }
+        <p>
+          Starting <strong>${formatDate(subscription.current_period_end)}</strong>,
+          your subscription will automatically switch to the
+          <strong>${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"}</strong> Plan.
+        </p>
+      </div>
+    `,
+    showCancelButton: true,
+    confirmButtonText: "Yes, Switch",
+    cancelButtonText: "No, Go back",
+    confirmButtonColor: "#b65a2f",
+    cancelButtonColor: "#143322",
+    // reverseButtons: true,
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  setChanging(true);
+
+  try {
+    const res = await upgradeSubscription(planToApply.uuid);
+
+    const paymentUrl = res.data.data?.razorpay_short_url;
+
+    const paymentWindow = window.open(
+      paymentUrl,
+      "_blank",
+      "width=900,height=700"
+    );
+
+    pollSubscriptionStatus(paymentWindow, planToApply.uuid);
+
+  } catch (err: any) {
+    Swal.fire({
+      icon: "error",
+      title: "Upgrade Failed",
+      text:
+        err?.response?.data?.message ??
+        "Unable to upgrade your subscription.",
+    });
+  } finally {
+    setChanging(false);
   }
+}
 
 
   async function handleCancelPlan() {
@@ -865,18 +922,29 @@ function SubscriptionTab({
     const remaining = daysUntil(subscription.current_period_end);
     const withinRenewalWindow = remaining !== null && remaining <= 3;
 
-    const confirmResult = await Swal.fire({
-      icon: "warning",
-      title: "Cancel Subscription?",
-      html: `If your next renewal is 3 or more days away, your subscription will end on your current renewal date.<br><br>If your next renewal is less than 3 days away, your upcoming payment will still be processed, and your subscription will end after the following billing cycle.`,    // html: withinRenewalWindow
-      //   ? `If your next renewal is 3 or more days away, your subscription will end on your current renewal date.`
-      //   : `You're about to cancel your <b>${subscription.plan.name}</b> plan. You'll continue to have access until ${formatDate(subscription.current_period_end)}.`,
-      showCancelButton: true,
-      confirmButtonText: "Yes, cancel",
-      cancelButtonText: "Keep my plan",
-      confirmButtonColor: "#b3261e",
-      cancelButtonColor: "#143322",
-    });
+ const confirmResult = await Swal.fire({
+  icon: "warning",
+  title: "Cancel Subscription?",
+  html: `
+    <div style="text-align:center; line-height:1.6;">
+      <p>
+        Your subscription will remain active until
+        <b>${formatDate(subscription.current_period_end)}</b>.
+      </p>
+      <p>
+        After this date, your plan will not renew automatically.
+      </p>
+      <p style="margin-top:16px;">
+        Come back anytime.
+      </p>
+    </div>
+  `,
+  showCancelButton: true,
+  confirmButtonText: "Yes Cancel",
+  cancelButtonText: "No,Go Back",
+  confirmButtonColor: "#b65a2f",
+  cancelButtonColor: "#143322",
+});
 
     if (!confirmResult.isConfirmed) return;
 
@@ -938,8 +1006,12 @@ function SubscriptionTab({
 
   const selectedPlan = plans.find((p) => p.id === selectedPlanId);
 
+  const isSubscriptionActive =
+  subscription?.status === "active" ||
+  subscription?.status === "trialing";
 
 const isDowngrade =
+   isSubscriptionActive &&
   subscription?.plan?.billing_cycle === "annual" &&
   selectedPlan?.billing_cycle === "monthly";
   return (
@@ -1118,9 +1190,13 @@ const isDowngrade =
               </>
             )}
           </div>
-          {!trialEndedWithoutSubscription && subscription && selectedPlanId === subscription.plan.id && (
-            <p className="dash-sub-same-note">This is your current plan.</p>
-          )}
+         {!trialEndedWithoutSubscription &&
+  subscription &&
+  (subscription.status === "active" ||
+    subscription.status === "trialing") &&
+  selectedPlanId === subscription.plan.id && (
+    <p className="dash-sub-same-note">This is your current plan.</p>
+)}
         </div>
       </div>
 

@@ -89,7 +89,7 @@ function RegisterHeader() {
 }
 function RegisterFooter() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("footer", { className: "border-t border-foreground/8 py-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs", style: { color: "rgba(20,51,34,0.35)" }, children: "© 2026 [Pocket Dragon/Poquito]. All Rights Reserved." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs", style: { color: "rgba(20,51,34,0.35)" }, children: "© 2026  Poquito Project LLP. All Rights Reserved." }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-6", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/privacy", className: "text-xs transition-colors hover:opacity-70", style: { color: "rgba(20,51,34,0.4)" }, children: "Privacy Policy" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/terms", className: "text-xs transition-colors hover:opacity-70", style: { color: "rgba(20,51,34,0.4)" }, children: "Terms of Use" })
