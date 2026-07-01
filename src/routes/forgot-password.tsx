@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { PocketDragonLogo } from "@/components/poquito/Logo";
 import { useEffect, useRef, useState } from "react";
 import { forgotPassword, resetPassword } from "@/services/auth";
@@ -27,6 +27,48 @@ function RouteComponent() {
    const [apiOTPError, setApiOtpError] = useState("");
   
   const [showPassword, setShowPassword] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState("");
+const [confirmPasswordError, setConfirmPasswordError] = useState("");
+const navigate = useNavigate();
+
+const validateReset = () => {
+  let valid = true;
+
+  setPasswordError("");
+  setConfirmPasswordError("");
+
+  if (!newPassword) {
+    setPasswordError("Password is required.");
+    valid = false;
+  } else if (newPassword.length < 8) {
+    setPasswordError("Must be at least 8 characters.");
+    valid = false;
+  } else if (!/[A-Z]/.test(newPassword)) {
+    setPasswordError("Must include at least one uppercase letter.");
+    valid = false;
+  } else if (!/[a-z]/.test(newPassword)) {
+    setPasswordError("Must include at least one lowercase letter.");
+    valid = false;
+  } else if (!/[0-9]/.test(newPassword)) {
+    setPasswordError("Must include at least one digit.");
+    valid = false;
+  } else if (!/[^A-Za-z0-9]/.test(newPassword)) {
+    setPasswordError("Must include at least one special character.");
+    valid = false;
+  }
+
+  if (!confirmPassword) {
+    setConfirmPasswordError("Please confirm your password.");
+    valid = false;
+  } else if (newPassword !== confirmPassword) {
+    setConfirmPasswordError("Passwords do not match.");
+    valid = false;
+  }
+
+  return valid;
+};
+
 
   function EyeIcon({ visible }: { visible: boolean }) {
     return visible ? (
@@ -82,6 +124,8 @@ function RouteComponent() {
     }
   }
 
+  
+
   const validateEmail = () => {
     setEmailError("");
 
@@ -112,7 +156,7 @@ function RouteComponent() {
       await forgotPassword(email);
 
       setStep("otp");
-      // setResendSeconds(30);
+      setResendSeconds(30);
     } catch (err: any) {
       setApiOtpError(err?.response?.data?.message || "Failed to send OTP.");
     } finally {
@@ -132,69 +176,93 @@ function RouteComponent() {
     inputRefs.current[lastFilled]?.focus();
   }
 
-  const handleResetPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
+ 
 
-    if (!validateReset()) return;
 
-    // await resetPassword(email, otp.join(""), newPassword);
+const handleResetPassword = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-  await resetPassword(email, otp.join(""), newPassword);
-} catch (err: any) {
-  setApiError(
-    err?.response?.data?.message ||
-    "Something went wrong."
-  );
-}
+  if (!validateReset()) return;
 
-  };
+  setApiError("");
 
-  const validateReset = () => {
-    let valid = true;
+  try {
+    setVerifying(true);
 
-    setEmailError("");
-    setOtpError("");
-    setPasswordError("");
+    await resetPassword(email, otp.join(""), newPassword);
 
-    // Email
-    if (!email.trim()) {
-      setEmailError("Email is required.");
-      valid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError("Please enter a valid email address.");
-      valid = false;
-    }
+    navigate({ to: "/" });
+  } catch (err: any) {
+    setApiError(
+      err?.response?.data?.message || "Something went wrong."
+    );
+  } finally {
+    setVerifying(false);
+  }
+};
 
-    // OTP
-    if (otp.join("").length !== 6) {
-      setOtpError("Please enter the 6-digit OTP.");
-      valid = false;
-    }
+async function handleResend() {
+        setOtp(["", "", "", "", "", ""]);
+        setError("");
+        setResendSeconds(30);
+        inputRefs.current[0]?.focus();
+        setResending(true);
+        try {
+          await forgotPassword(email);
+        } catch {
+          // silently ignore resend errors
+        } finally {
+          setResending(false);
+        }
+      }
+  // const validateReset = () => {
+  //   let valid = true;
 
-    // Password
-    if (!newPassword) {
-      setPasswordError("Password is required.");
-      valid = false;
-    } else if (newPassword.length < 8) {
-      setPasswordError("Must be at least 8 characters.");
-      valid = false;
-    } else if (!/[A-Z]/.test(newPassword)) {
-      setPasswordError("Must include at least one uppercase letter.");
-      valid = false;
-    } else if (!/[a-z]/.test(newPassword)) {
-      setPasswordError("Must include at least one lowercase letter.");
-      valid = false;
-    } else if (!/[0-9]/.test(newPassword)) {
-      setPasswordError("Must include at least one digit.");
-      valid = false;
-    } else if (!/[^A-Za-z0-9]/.test(newPassword)) {
-      setPasswordError("Must include at least one special character.");
-      valid = false;
-    }
+  //   setEmailError("");
+  //   setOtpError("");
+  //   setPasswordError("");
 
-    return valid;
-  };
+  //   // Email
+  //   if (!email.trim()) {
+  //     setEmailError("Email is required.");
+  //     valid = false;
+  //   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  //     setEmailError("Please enter a valid email address.");
+  //     valid = false;
+  //   }
+
+
+     
+
+  //   // OTP
+  //   if (otp.join("").length !== 6) {
+  //     setOtpError("Please enter the 6-digit OTP.");
+  //     valid = false;
+  //   }
+
+  //   // Password
+  //   if (!newPassword) {
+  //     setPasswordError("Password is required.");
+  //     valid = false;
+  //   } else if (newPassword.length < 8) {
+  //     setPasswordError("Must be at least 8 characters.");
+  //     valid = false;
+  //   } else if (!/[A-Z]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one uppercase letter.");
+  //     valid = false;
+  //   } else if (!/[a-z]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one lowercase letter.");
+  //     valid = false;
+  //   } else if (!/[0-9]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one digit.");
+  //     valid = false;
+  //   } else if (!/[^A-Za-z0-9]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one special character.");
+  //     valid = false;
+  //   }
+
+  //   return valid;
+  // };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -232,11 +300,15 @@ function RouteComponent() {
 
       <main className="flex-1 flex items-center justify-center px-6">
         <div className="forgot-wrap w-full max-w-md rounded-2xl bg-white/50 backdrop-blur-xl p-8">
-          <h1 className="register-title text-center  mb-4">Forgot Password</h1>
+          
 
           {step === "email" ? (
+            <>
+            <h1 className="register-title text-center  mb-4">Reset Password</h1>
+          <p className="register-subtitle">Enter the email linked to your account and we'll send a reset code.</p>
+         
             <form className="space-y-5 mt-4" onSubmit={handleSendOtp}>
-              <p className="reg-label mt-6">Enter your email address</p>
+              <p className="reg-label mt-6">Email Address</p>
               <input
                 type="email"
                 value={email}
@@ -279,11 +351,15 @@ function RouteComponent() {
                 </svg>
               </button>
             </form>
+            </>
           ) : (
+            <>
+            <h1 className="register-title text-center  mb-4">VERIFY OTP</h1>
+          <p className="register-subtitle">Enter the 6-digit code sent to<span>{email}</span> </p>
             <form onSubmit={handleResetPassword} className="space-y-5 mt-4">
               <div className="space-y-5">
                 {/* Email */}
-                <div>
+                {/* <div>
                   <label className="reg-label">Email Address</label>
                   <input
                     type="email"
@@ -298,11 +374,11 @@ function RouteComponent() {
                     placeholder="Enter email"
                   />
                   {emailError && <p className="mt-1 text-sm text-red-500">{emailError}</p>}
-                </div>
+                </div> */}
 
                 {/* OTP */}
                 <div>
-                  <label className="reg-label">OTP</label>
+                  {/* <label className="reg-label">OTP</label> */}
 
                   <div className="reg-otp-boxes">
                     {otp.map((digit, i) => (
@@ -326,7 +402,34 @@ function RouteComponent() {
                     ))}
                   </div>
 
-                  {otpError && <p className="mt-1 text-sm text-red-500">{otpError}</p>}
+                   <div className="reg-otp-resend resendPass">
+        {resendSeconds > 0 ? (
+          <span className="reg-otp-resend-timer">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </svg>
+
+  Resend Code in <span className="time">{resendSeconds}s</span>
+</span>
+        ) : (
+          <button type="button" className="reg-otp-resend-btn" onClick={handleResend}>
+            Resend code
+          </button>
+        )}
+      </div>
+
+                  {otpError && <p className="mt-1 text-sm text-red-500 mt-2">{otpError}</p>}
                 </div>
 
                 {/* New Password */}
@@ -336,10 +439,11 @@ function RouteComponent() {
                     <input
                       type={showPassword ? "text" : "password"}
                       value={newPassword}
-                      onChange={(e) => {
-                        setNewPassword(e.target.value);
-                        setPasswordError("");
-                      }}
+                     onChange={(e) => {
+  setNewPassword(e.target.value);
+  setPasswordError("");
+  setApiError("");
+}}
                       className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
                         passwordError ? "border-red-500" : "border-pq-green/15"
                       }`}
@@ -354,8 +458,46 @@ function RouteComponent() {
                       <EyeIcon visible={showPassword} />
                     </button>
                   </div>
-                  {passwordError && <p className="mt-1 text-sm text-red-500">{passwordError}</p>}
+                  {passwordError && <p className="mt-1 text-sm text-red-500 mt-2">{passwordError}</p>}
                 </div>
+
+          <div>
+  <label className="reg-label">
+    Confirm Password
+  </label>
+
+  <div className="reg-input-wrap">
+    <input
+      type={showConfirm ? "text" : "password"}
+      value={confirmPassword}
+     onChange={(e) => {
+  setConfirmPassword(e.target.value);
+  setConfirmPasswordError("");
+  setApiError("");
+}}
+      className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
+        confirmPasswordError
+          ? "border-red-500"
+          : "border-pq-green/15"
+      }`}
+      placeholder="Confirm password"
+    />
+
+    <button
+      type="button"
+      className="reg-eye-btn"
+      onClick={() => setShowConfirm((v) => !v)}
+    >
+      <EyeIcon visible={showConfirm} />
+    </button>
+  </div>
+
+  {confirmPasswordError && (
+    <p className="mt-1 text-sm text-red-500 mt-2">
+      {confirmPasswordError}
+    </p>
+  )}
+</div>
 
                 {apiError && (
                        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
@@ -440,7 +582,7 @@ function RouteComponent() {
                     </>
                   ) : (
                     <>
-                      Continue
+                      VERIFY OTP
                       <svg
                         width="16"
                         height="16"
@@ -459,6 +601,7 @@ function RouteComponent() {
                 </button>
               </div>
             </form>
+            </>
           )}
         </div>
       </main>

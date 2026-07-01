@@ -759,12 +759,9 @@ function SubscriptionTab({
     !subscription ||
     ["stopped", "expired", "cancelling"].includes(subscription.status);
 
-  async function handleSubscribe() {
-    if (!selectedPlanId) return;
-
-    const selectedPlan = plans.find((p) => p.id === selectedPlanId);
-
-    if (!selectedPlan) return;
+async function handleSubscribe(planId: number) {
+  const selectedPlan = plans.find((p) => p.id === planId);
+  if (!selectedPlan) return;
 
     setChanging(true);
     const profileRes = await getUserProfile();
@@ -843,8 +840,9 @@ function SubscriptionTab({
   }
 
 
- async function handleChangePlan() {
-  const planToApply = plans.find((p) => p.id === selectedPlanId);
+async function handleChangePlan(planId: number) {
+  const planToApply = plans.find((p) => p.id === planId);
+
   if (!planToApply || !subscription) return;
 
   const confirm = await Swal.fire({
@@ -941,7 +939,7 @@ function SubscriptionTab({
   `,
   showCancelButton: true,
   confirmButtonText: "Yes Cancel",
-  cancelButtonText: "No,Go Back",
+  cancelButtonText: "No, Go Back",
   confirmButtonColor: "#b65a2f",
   cancelButtonColor: "#143322",
 });
@@ -1010,10 +1008,12 @@ function SubscriptionTab({
   subscription?.status === "active" ||
   subscription?.status === "trialing";
 
-const isDowngrade =
-   isSubscriptionActive &&
-  subscription?.plan?.billing_cycle === "annual" &&
-  selectedPlan?.billing_cycle === "monthly";
+// const isDowngrade =
+//    isSubscriptionActive &&
+//   subscription?.plan?.billing_cycle === "annual" &&
+//   selectedPlan?.billing_cycle === "monthly";
+
+
   return (
     <div className="dash-section">
       <div className="dash-section-head">
@@ -1094,44 +1094,227 @@ const isDowngrade =
         <p className="dash-sub-change-title">
           {trialEndedWithoutSubscription || isTrialActive ? "Choose a Plan" : "Change Plan"}
         </p>
+        <div className="">
         <div className="dash-sub-plans-grid">
-          {plans.map((plan) => {
-            const isSelected = selectedPlanId !== null
-              ? selectedPlanId === plan.id
-              : subscription?.plan.id === plan.id;
-            const isBestValue = plan.billing_cycle === "annual";
+  {plans.map((plan) => {
+    const isCurrentPlan = subscription?.plan.id === plan.id;
 
-            return (
-              <button
-                key={plan.id}
-                type="button"
-                className={`reg-plan-card  ${isSelected ? "reg-plan-card-selected" : ""} ${isBestValue ? "reg-plan-card-featured" : "regMonthly"}`}
-                onClick={() => setSelectedPlanId(plan.id)}
-              >
-                {isBestValue && <div className="reg-plan-badge">Best Value</div>}
-                <div className="reg-plan-radio">
-                  <div className={`reg-plan-radio-dot ${isSelected ? "reg-plan-radio-dot-active" : ""}`} />
-                </div>
-                <div>
-                  <p className="reg-plan-label">{plan.name}</p>
-                  <p className="reg-plan-price-row">
-                    <span className="reg-plan-currency">Rs</span>
-                    <span className="reg-plan-price">{plan.price.toLocaleString("en-IN")}</span>
-                    <span className="reg-plan-period">
-                      / {plan.billing_cycle === "monthly" ? "month" : plan.billing_cycle === "annual" ? "year" : plan.billing_cycle}
-                    </span>
-                  </p>
-                  <p className="reg-plan-note">
-                    {plan.gst_excluded ? "Excl. GST" : "Incl. GST"}
-                    {plan.discount_percent ? ` · Save ${plan.discount_percent}%` : ""}
-                  </p>
-                </div>
-              </button>
-            );
-          })}
+const isDowngrade =
+  subscription?.plan.billing_cycle === "annual" &&
+  plan.billing_cycle === "monthly";
+
+const isUpgrade =
+  subscription?.plan.billing_cycle === "monthly" &&
+  plan.billing_cycle === "annual";
+    const isSelected = selectedPlanId === plan.id;
+    const isBestValue = plan.billing_cycle === "annual";
+
+    return (
+      <div
+        key={plan.id}
+       className={`reg-plan-card
+    ${plan.billing_cycle === "annual" ? "reg-plan-card-featured" : "regMonthly"}
+    ${subscription?.plan.id === plan.id ? "reg-plan-card-selected" : ""}`}
+        onClick={() => setSelectedPlanId(plan.id)}
+      >
+        {isBestValue && (
+          <div className="reg-plan-badge rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">BEST VALUE</div>
+        )}
+
+{!trialEndedWithoutSubscription &&
+  subscription &&
+  (subscription.status === "active" ||
+    subscription.status === "trialing") &&
+  plan.id === subscription.plan.id && (
+    <p
+      className={
+        plan.billing_cycle === "annual"
+          ? "dash-sub-same-note annual"
+          : "dash-sub-same-note monthly"
+      }
+    >
+      Active
+    </p>
+)}
+      {plan.billing_cycle === "annual" ? (
+  <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85 mb-4">{plan.name}</p>
+) : (
+  <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70 mb-4">{plan.name}</p>
+)}
+
+
+        <div>
+  
+
+          <p className="reg-plan-price-row">
+<span
+  className={`reg-plan-currency ${
+    plan.billing_cycle === "monthly"
+      ? "text-sm font-bold"
+      : "text-sm font-bold text-cream/85"
+  }`}
+>
+  Rs
+</span>            
+ {plan.billing_cycle === "annual" && (
+            <span className="font-display text-5xl font-bold leading-none text-cream">
+              {plan.price.toLocaleString("en-IN")}
+            </span>
+            )}
+
+               {plan.billing_cycle === "monthly" && (
+            <span className="font-display text-5xl font-bold leading-none" style={{ color: 'var(--foreground)' }}>
+              {plan.price.toLocaleString("en-IN")}
+            </span>
+            )}
+       <span
+  className={`reg-plan-period ${
+    plan.billing_cycle === "monthly"
+      ? "ml-1 text-sm text-foreground/65"
+      : "ml-1 text-sm text-cream/75"
+  }`}
+>
+  / {plan.billing_cycle === "monthly" ? "month" : "year"}
+</span>
+          </p>
+
+          {plan.billing_cycle === "annual" && (
+            // <p className="reg-plan-save">
+            //   Save {plan.discount_percent}% | Rs{" "}
+            //   {plan.price_per_month_equiv}/month
+            // </p>
+
+             <p className="mt-2 text-xs text-cream/75">
+              Save 25% | Rs 375/month
+              
+            </p>
+
+          )}
+
+            {plan.billing_cycle === "annual" && (
+          <p className="mt-2 text-xs text-cream/75">
+            {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+          </p>
+          )}
+          
+            {plan.billing_cycle === "monthly" && (
+          <p className="mt-2 text-xs text-foreground/65">
+            {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+          </p>
+          )}
+
+          {plan.billing_cycle === "monthly" && (
+          <p className="mt-2 text-xs text-foreground/65">
+          Billed monthly. Cancel anytime.
+          </p>
+          )}
+
+        </div>
+          {plan.billing_cycle === "annual" ? (
+   <hr className="reg-plan-divider" />
+) : (
+  <hr className="reg-plan-divider monthlyHr" />
+)}
+
+
+
+{showSubscribeButton ? (
+  <button
+    type="button"
+    className="reg-plan-btn"
+    onClick={(e) => {
+      e.stopPropagation();
+      setSelectedPlanId(plan.id);
+      handleSubscribe(plan.id);
+    }}
+    disabled={changing}
+  >
+    {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+  </button>
+) : subscription?.plan.id === plan.id ? (
+  <>
+    {/* <p className="reg-current-plan-text">CURRENT PLAN</p> */}
+
+    <button
+      type="button"
+      className="reg-plan-btn"
+      disabled={changing}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleCancelPlan();
+      }}
+    >
+      {changing ? "Cancelling..." : "Cancel Subscription"}
+    </button>
+  </>
+) : (
+
+  <button
+  type="button"
+   className={`reg-plan-btn ${isDowngrade ? "opacity-50 cursor-not-allowed disabled" : ""}`}
+
+  onClick={(e) => {
+    e.stopPropagation();
+    handleChangePlan(plan.id);
+  }}
+  disabled={changing}
+>
+  {changing
+    ? "Updating..."
+    : isDowngrade
+    ? "DOWNGRADE"
+    : "UPGRADE"}
+</button>
+
+  // <button
+  //   type="button"
+  //   className="reg-plan-btn"
+  //   onClick={(e) => {
+  //     e.stopPropagation();
+  //     handleChangePlan(plan.id);
+  //   }}
+  //   disabled={changing}
+  // >
+  //   {changing ? "Updating..." : "UPGRADE"}
+  // </button>
+)}
+
+
+        {/* <button
+          type="button"
+          className="reg-plan-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedPlanId(plan.id);
+
+            if (showSubscribeButton) {
+              handleSubscribe();
+            } else {
+              handleChangePlan();
+            }
+          }}
+         disabled={
+  changing ||
+  (!!subscription && selectedPlanId === subscription.plan.id)
+}
+        >
+          {showSubscribeButton
+            ? "SUBSCRIBE NOW"
+            : subscription?.plan.id === plan.id
+            ? "CURRENT PLAN"
+            : "UPGRADE"}
+        </button> */}
+
+        {/* <p className="reg-plan-terms">
+          ⓘ Terms of cancellation
+        </p> */}
+      </div>
+    );
+  })}
+</div>
         </div>
      
-        <div className="dash-sub-actions">
+        {/* <div className="dash-sub-actions">
                {isDowngrade && (
   <p className="text-sm text-red-500 mb-3">
     You cannot downgrade from the Annual plan to the Monthly plan.
@@ -1139,7 +1322,6 @@ const isDowngrade =
 )}
           <div className="flex gap-2">
   
-            {/* {trialEndedWithoutSubscription || isTrialActive ? ( */}
             {showSubscribeButton ? (
               <button
                 type="button"
@@ -1160,14 +1342,12 @@ const isDowngrade =
               <>
                 <button
                   type="button"
-                  // className="dash-cta-btn"
                   className={`dash-cta-btn ${isDowngrade ? "noUpgrade" : ""}`}
                   onClick={handleChangePlan}
                     disabled={
     changing ||
     !selectedPlanId ||
     isCurrentPlanSelected
-    // || isDowngrade
   }
                 >
                   {changing ? (
@@ -1197,7 +1377,7 @@ const isDowngrade =
   selectedPlanId === subscription.plan.id && (
     <p className="dash-sub-same-note">This is your current plan.</p>
 )}
-        </div>
+        </div> */}
       </div>
 
       <p className="dash-info-note">
