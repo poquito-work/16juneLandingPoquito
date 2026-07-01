@@ -1,1 +1,0 @@
-import{j as o}from"./index-C8c0VSgX.js";import{D as t}from"./DashboardPage-BnCUeGWU.js";import"./Logo-B58ASoQt.js";import"./pocket-dragon-logo-C3S7ZUm-.js";import"./Footer-ir0LnmiG.js";const s=()=>o.jsx(t,{activeTab:"profile"});export{s as component};
