@@ -839,7 +839,7 @@ export function RegisterPage() {
     password: "",
     confirmPassword: "",
     agreed: false,
-    avatar_url:"http://13.207.123.199/avatar/poquito-boy.png"
+    avatar_url:"https://backend.poquito.review-link.in/avatar/poquito-boy.png"
   });
 
   useEffect(() => {
