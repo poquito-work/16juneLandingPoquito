@@ -188,6 +188,7 @@ export const updateUserProfile = async (data: {
   is_mfa_enabled?: boolean;
   is_biometric_enabled?: boolean;
   
+  
 }) => {
   const response = await api.put(`/api/v1/users/profile`, data);
   return response.data;

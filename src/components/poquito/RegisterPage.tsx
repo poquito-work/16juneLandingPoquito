@@ -4,17 +4,7 @@ import { checkEmailExists, checkUserExists, getPredefinedListByType, getPrivacyP
 import { PocketDragonLogo } from "./Logo";
 import uploadLogo from "@/assets/poquito-boy.png";
 
-// ─── City list ───────────────────────────────────────────────────────────────
 
-const CITIES = [
-  "Ahmedabad", "Bengaluru", "Bhopal", "Bhubaneswar", "Chandigarh",
-  "Chennai", "Coimbatore", "Delhi", "Faridabad", "Ghaziabad",
-  "Gurugram", "Hyderabad", "Indore", "Jaipur", "Kochi",
-  "Kolkata", "Lucknow", "Ludhiana", "Mumbai", "Nagpur",
-  "Nashik", "Noida", "Patna", "Pune", "Rajkot",
-  "Surat", "Thane", "Vadodara", "Varanasi", "Visakhapatnam",
-  "Other",
-];
 
 // ─── Register Header ─────────────────────────────────────────────────────────
 
@@ -167,6 +157,8 @@ function StepDetails({
   const [showConfirm, setShowConfirm] = useState(false);
   const [cityList, setCityList] = useState([]);
 const fileInputRef = useRef<HTMLInputElement>(null);
+const [avatarList, setAvatarList] = useState<any[]>([]);
+const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -177,6 +169,19 @@ const fileInputRef = useRef<HTMLInputElement>(null);
       }
     };
     fetchCities();
+  }, []);
+
+
+   useEffect(() => {
+    const fetchAvtarList = async () => {
+      try {
+        const response = await getPredefinedListByType("AVATAR");
+        setAvatarList(response.data.content);
+      } catch (error) {
+        console.error("Error fetching city list:", error);
+      }
+    };
+    fetchAvtarList();
   }, []);
 
   function validate(): RegisterFormErrors {
@@ -205,13 +210,31 @@ const fileInputRef = useRef<HTMLInputElement>(null);
     if (Object.keys(errs).length === 0) onNext();
   }
 
+ 
+
   return (
+    
     <form className="reg-form" onSubmit={handleSubmit} noValidate>
-    {/* <img
-  src={uploadLogo}
-  className="uploadLogo"
-  onClick={() => onChange("avatar_url", uploadLogo)}
-/> */}
+ {/* <div className="avatar-wrapper">
+  <img
+    src={data.avatar_url || uploadLogo}
+    alt="Avatar"
+    className="uploadLogo"
+  />
+
+  <button
+    type="button"
+    className="avatar-plus"
+    onClick={() => setShowAvatarDialog(true)}
+  >
+    +
+  </button>
+</div>
+
+<p className="avatar-text">
+  Tap to choose your avatar
+</p> */}
+
       <div className="reg-form-grid">
 
     
@@ -376,8 +399,54 @@ const fileInputRef = useRef<HTMLInputElement>(null);
         Already have an account?{" "}
         <Link to="/" className="reg-signin-link">Sign In</Link>
       </p>
+
+
+       {showAvatarDialog && (
+  <div
+    className="avatar-modal-overlay"
+    onClick={() => setShowAvatarDialog(false)}
+  >
+    <div
+      className="avatar-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="avatar-modal-header">
+        <h3>Select Avatar</h3>
+
+        <button
+          type="button"
+          onClick={() => setShowAvatarDialog(false)}
+        >
+          ✕
+        </button>
+      </div>
+
+      <div className="avatar-grid">
+        {avatarList.map((avatar) => (
+          <img
+            key={avatar.id}
+            src={avatar.url}
+            className={`avatar-item ${
+              data.avatar_url === avatar.url ? "selected" : ""
+            }`}
+            onClick={() => {
+              onChange("avatar_url", avatar.url);
+              setShowAvatarDialog(false);
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
     </form>
+
+
+
   );
+
+  
   
 }
 
@@ -683,7 +752,7 @@ export function RegisterPage() {
     password: "",
     confirmPassword: "",
     agreed: false,
-    avatar_url:""
+    avatar_url:"http://13.207.123.199/avatar/poquito-boy.png"
   });
 
   useEffect(() => {

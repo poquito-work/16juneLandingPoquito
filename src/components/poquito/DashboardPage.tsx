@@ -202,11 +202,14 @@ function ProfileTab({ user }: { user: UserProfile }) {
     email: user.email ?? "",
     phone_number: user.phone_number ?? "",
     city: user.city ?? "",
+    avatar_url: user.avatar_url ?? "",
   });
   const [cityList, setCityList] = useState<{ id: number; uuid: string; name: string }[]>([]);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+const [avatarList, setAvatarList] = useState<any[]>([]);
+const [showAvatarDialog, setShowAvatarDialog] = useState(false);
 
   useEffect(() => {
     getPredefinedListByType("city")
@@ -214,6 +217,18 @@ function ProfileTab({ user }: { user: UserProfile }) {
       .catch(() => { });
   }, []);
 
+
+   useEffect(() => {
+    const fetchAvtarList = async () => {
+      try {
+        const response = await getPredefinedListByType("AVATAR");
+        setAvatarList(response.data.content);
+      } catch (error) {
+        console.error("Error fetching city list:", error);
+      }
+    };
+    fetchAvtarList();
+  }, []);
 
   // Sync when parent user data loads
   useEffect(() => {
@@ -225,6 +240,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
       email: user.email ?? prev.email,
       phone_number: user.phone_number ?? prev.phone_number,
       city: matchedCity?.name ?? prev.city,
+       avatar_url: user.avatar_url ?? prev.avatar_url,
     }));
   }, [user.name, user.username, user.email, user.phone_number, user.city_id, cityList]);
   function validate() {
@@ -253,6 +269,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
         username: form.username,
        phone_number: form.phone_number.trim() || null,
         city_id: selectedCity?.id,
+         avatar_url: form.avatar_url,
       });
 
       setSaved(true);
@@ -284,11 +301,30 @@ function ProfileTab({ user }: { user: UserProfile }) {
       {/* Avatar card */}
       <div className="dash-profile-hero">
         <div className="dash-avatar">
-          {user.avatar_url ? (
-            <img src={user.avatar_url} alt={user.name ?? "Avatar"} className="dash-avatar-img" />
+          <span className="dash-avatar-initials">{initials}</span>
+          {/* {form.avatar_url ? (
+<>
+
+<div className="avatar-wrapper">
+  <img
+   src={form.avatar_url || user.avatar_url}
+    alt="Avatar"
+    className="uploadLogo"
+  />
+
+  <button
+    type="button"
+    className="avatar-plus"
+    onClick={() => setShowAvatarDialog(true)}
+  >
+    +
+  </button>
+</div>
+</>
+            // <img src={user.avatar_url} alt={user.name ?? "Avatar"} className="dash-avatar-img" />
           ) : (
             <span className="dash-avatar-initials">{initials}</span>
-          )}
+          )} */}
         </div>
         <div>
           <p className="dash-profile-name">{form.name || user.name || "—"}</p>
@@ -406,7 +442,52 @@ function ProfileTab({ user }: { user: UserProfile }) {
             )}
           </button>
         </div>
+
+              {showAvatarDialog && (
+  <div
+    className="avatar-modal-overlay"
+    onClick={() => setShowAvatarDialog(false)}
+  >
+    <div
+      className="avatar-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="avatar-modal-header">
+        <h3>Select Avatar</h3>
+
+        <button
+          type="button"
+          onClick={() => setShowAvatarDialog(false)}
+        >
+          ✕
+        </button>
+      </div>
+
+      <div className="avatar-grid">
+        {avatarList.map((avatar) => (
+          <img
+            key={avatar.id}
+            src={avatar.url}
+            className={`avatar-item ${
+              user.avatar_url === avatar.url ? "selected" : ""
+            }`}
+           onClick={() => {
+  setForm((prev) => ({
+    ...prev,
+    avatar_url: avatar.url,
+  }));
+  setShowAvatarDialog(false);
+}}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
       </form>
+
+      
     </div>
   );
 }

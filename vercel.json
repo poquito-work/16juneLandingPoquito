@@ -6,5 +6,7 @@
     "env": {
       "NODE_VERSION": "22"
     }
-  }
+  },
+  "json" :{  "rewrites": [    {      "source": "/api/:path*",      "destination": "http://ec2-13-207-123-199.ap-south-1.compute.amazonaws.com:8080/api/:path*"    }  ]}
+ 
 }
