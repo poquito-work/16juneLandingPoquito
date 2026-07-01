@@ -180,7 +180,7 @@ const $$splitComponentImporter$9 = () => import("./terms-CLJ64UY8.mjs");
 const Route$9 = createFileRoute("/terms")({
   component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
-const $$splitComponentImporter$8 = () => import("./register-BFpzX4aB.mjs");
+const $$splitComponentImporter$8 = () => import("./register-DNFiBhNl.mjs");
 const Route$8 = createFileRoute("/register")({
   head: () => ({
     meta: [{

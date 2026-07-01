@@ -1,1 +1,0 @@
-import{j as o}from"./index-BLenjAGZ.js";import{D as t}from"./DashboardPage-DcA9Mfqd.js";import"./Logo-BHdX-GtI.js";import"./pocket-dragon-logo-C3S7ZUm-.js";import"./Footer-DQAtjZnT.js";const a=()=>o.jsx(t,{activeTab:"subscription"});export{a as component};
