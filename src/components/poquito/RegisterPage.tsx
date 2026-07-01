@@ -207,19 +207,27 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   data.fullName.trim() !== "" &&
   data.city !== "" &&
   data.email.trim() !== "" &&
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) &&
-  (
-    data.phone.trim() === "" ||
-    /^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())
-  ) &&
-  data.password.length >= 8 &&
-  /[A-Z]/.test(data.password) &&
-  /[a-z]/.test(data.password) &&
-  /[0-9]/.test(data.password) &&
-  /[^A-Za-z0-9]/.test(data.password) &&
+  data.password !== "" &&
   data.confirmPassword !== "" &&
-  data.password === data.confirmPassword &&
   data.agreed;
+
+  // const isFormValid =
+  // data.fullName.trim() !== "" &&
+  // data.city !== "" &&
+  // data.email.trim() !== "" &&
+  // /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) &&
+  // (
+  //   data.phone.trim() === "" ||
+  //   /^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())
+  // ) &&
+  // data.password.length >= 8 &&
+  // /[A-Z]/.test(data.password) &&
+  // /[a-z]/.test(data.password) &&
+  // /[0-9]/.test(data.password) &&
+  // /[^A-Za-z0-9]/.test(data.password) &&
+  // data.confirmPassword !== "" &&
+  // data.password === data.confirmPassword &&
+  // data.agreed;
 
   function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -414,7 +422,7 @@ const [showAvatarDialog, setShowAvatarDialog] = useState(false);
       </button>
 
       <p className="reg-signin-hint">
-        Already have an account?{" "}
+        Been here before?{" "}
         <Link to="/" className="reg-signin-link">Sign In</Link>
       </p>
 
@@ -583,13 +591,13 @@ function StepOTP({
   return (
     <div className="reg-otp-wrap">
       <div className="reg-otp-hint">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--rust)", flexShrink: 0 }}>
+        {/* <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--rust)", flexShrink: 0 }}>
           <rect x="2" y="4" width="20" height="16" rx="2" />
           <path d="M22 7l-10 7L2 7" />
-        </svg>
+        </svg> */}
         <p>
-          We sent a 6-digit code to <strong>{email || "your email"}</strong>.<br />
-          Enter it below to verify your account.
+          Enter the 6 digit code we sent to <strong>{email || "your email"}</strong>.<br />
+         
         </p>
       </div>
 
@@ -611,6 +619,23 @@ function StepOTP({
           />
         ))}
       </div>
+      <p className="codesendText">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ marginRight: "8px", flexShrink: 0 }}
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+  Code sent – check your inbox
+</p>
 
       {error && <p className="reg-otp-error">{error}</p>}
 
@@ -620,7 +645,7 @@ function StepOTP({
           <span className="reg-otp-resend-timer">Resend OTP in {resendSeconds}s</span>
         ) : (
           <button type="button" className="reg-otp-resend-btn" onClick={handleResend}>
-            Resend OTP
+            Resend code
           </button>
         )}
       </div>
@@ -637,7 +662,7 @@ function StepOTP({
           {verifying ? (
             <><span className="reg-spinner" />Verifying…</>
           ) : (
-            <>Verify & Continue
+            <>Verify Email
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
               </svg>
@@ -747,8 +772,8 @@ function StepPlans({
 // ─── Step titles ─────────────────────────────────────────────────────────────
 
 const STEP_TITLES: Record<Step, { title: string; sub: string }> = {
-  1: { title: "Create  Account", sub: "Email verification is required before your account goes live" },
-  2: { title: "Verify Your Email", sub: "Enter the OTP we sent to your email address." },
+  1: { title: "Create Account", sub: "Email verification is required before your account goes live" },
+  2: { title: "Verify Email", sub: "" },
   // 3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." },
 };
 
