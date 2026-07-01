@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-DdpRQwZb.mjs";
+import { D as DashboardPage } from "./DashboardPage-BqWElHQO.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -15,7 +15,7 @@ import "crypto";
 import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
-import "./Logo-XhUeaTmY.mjs";
+import "./Logo-BV4hGwA1.mjs";
 import "../_libs/axios.mjs";
 import "../_libs/form-data.mjs";
 import "fs";
@@ -62,7 +62,7 @@ import "./pocket-dragon-logo-B1TjRRiN.mjs";
 import "../_libs/framer-motion.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-import "./Footer-2GQZll1V.mjs";
+import "./Footer-CLACDUKU.mjs";
 const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "profile" });
 export {
   SplitComponent as component

@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-XhUeaTmY.mjs";
+import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-BV4hGwA1.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -162,7 +162,7 @@ function StepDetails({
     if (!data.agreed) e.agreed = "You must agree to the Terms & Privacy Policy to continue.";
     return e;
   }
-  const isFormValid = data.fullName.trim() !== "" && data.city !== "" && data.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) && (data.phone.trim() === "" || /^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())) && data.password.length >= 8 && /[A-Z]/.test(data.password) && /[a-z]/.test(data.password) && /[0-9]/.test(data.password) && /[^A-Za-z0-9]/.test(data.password) && data.confirmPassword !== "" && data.password === data.confirmPassword && data.agreed;
+  const isFormValid = data.fullName.trim() !== "" && data.city !== "" && data.email.trim() !== "" && data.password !== "" && data.confirmPassword !== "" && data.agreed;
   function handleSubmit(e) {
     e.preventDefault();
     const errs = validate();
@@ -331,7 +331,7 @@ function StepDetails({
       "Registering…"
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "Get Started" }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "reg-signin-hint", children: [
-      "Already have an account?",
+      "Been here before?",
       " ",
       /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/", className: "reg-signin-link", children: "Sign In" })
     ] }),
@@ -466,19 +466,12 @@ function StepOTP({
     }
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-otp-wrap", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-otp-hint", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", style: { color: "var(--rust)", flexShrink: 0 }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { x: "2", y: "4", width: "20", height: "16", rx: "2" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22 7l-10 7L2 7" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-        "We sent a 6-digit code to ",
-        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: email || "your email" }),
-        ".",
-        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-        "Enter it below to verify your account."
-      ] })
-    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-otp-hint", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "Enter the 6 digit code we sent to ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: email || "your email" }),
+      ".",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {})
+    ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-otp-boxes", children: otp.map((digit, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
       "input",
       {
@@ -497,12 +490,31 @@ function StepOTP({
       },
       i
     )) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "codesendText", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "svg",
+        {
+          xmlns: "http://www.w3.org/2000/svg",
+          width: "18",
+          height: "18",
+          viewBox: "0 0 24 24",
+          fill: "none",
+          stroke: "currentColor",
+          strokeWidth: "2.5",
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          style: { marginRight: "8px", flexShrink: 0 },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "20 6 9 17 4 12" })
+        }
+      ),
+      "Code sent – check your inbox"
+    ] }),
     error && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-otp-error", children: error }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reg-otp-resend", children: resendSeconds > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "reg-otp-resend-timer", children: [
       "Resend OTP in ",
       resendSeconds,
       "s"
-    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-otp-resend-btn", onClick: handleResend, children: "Resend OTP" }) }),
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-otp-resend-btn", onClick: handleResend, children: "Resend code" }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans-actions", style: { marginTop: "1.5rem" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { type: "button", className: "reg-back-btn", onClick: onBack, disabled: verifying, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
@@ -515,7 +527,7 @@ function StepOTP({
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
         "Verifying…"
       ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        "Verify & Continue",
+        "Verify Email",
         /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 12h14" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l7 7-7 7" })
@@ -525,8 +537,8 @@ function StepOTP({
   ] });
 }
 const STEP_TITLES = {
-  1: { title: "Create  Account", sub: "Email verification is required before your account goes live" },
-  2: { title: "Verify Your Email", sub: "Enter the OTP we sent to your email address." }
+  1: { title: "Create Account", sub: "Email verification is required before your account goes live" },
+  2: { title: "Verify Email", sub: "" }
   // 3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." },
 };
 function RegisterPage() {

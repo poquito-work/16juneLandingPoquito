@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { P as PocketDragonLogo } from "./Logo-XhUeaTmY.mjs";
+import { P as PocketDragonLogo } from "./Logo-BV4hGwA1.mjs";
 import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 const NAV = [

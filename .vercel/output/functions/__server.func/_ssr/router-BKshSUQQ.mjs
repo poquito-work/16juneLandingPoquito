@@ -15,7 +15,7 @@ import "../_libs/cookie-es.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
-const appCss = "/assets/styles-BA7zUuYc.css";
+const appCss = "/assets/styles-BcvUCagx.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -161,7 +161,7 @@ const $$splitComponentImporter$9 = () => import("./terms-tERwfyDW.mjs");
 const Route$9 = createFileRoute("/terms")({
   component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
-const $$splitComponentImporter$8 = () => import("./register-BJGS_bmN.mjs");
+const $$splitComponentImporter$8 = () => import("./register-CFggBjgE.mjs");
 const Route$8 = createFileRoute("/register")({
   head: () => ({
     meta: [{
@@ -194,7 +194,7 @@ const Route$6 = createFileRoute("/myaccount")({
   // },
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./forgot-password-K8JJG8fy.mjs");
+const $$splitComponentImporter$5 = () => import("./forgot-password-Ds6gCTPS.mjs");
 const Route$5 = createFileRoute("/forgot-password")({
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
@@ -212,7 +212,7 @@ const Route$4 = createFileRoute("/dashboard")({
   },
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-e3WR9Y1e.mjs");
+const $$splitComponentImporter$3 = () => import("./index-Dksp-YNZ.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -236,7 +236,7 @@ const Route$3 = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./transaction-history-B-a641mo.mjs");
+const $$splitComponentImporter$2 = () => import("./transaction-history-BFJa95YN.mjs");
 const Route$2 = createFileRoute("/myaccount/transaction-history")({
   head: () => ({
     meta: [{
@@ -245,7 +245,7 @@ const Route$2 = createFileRoute("/myaccount/transaction-history")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./profile-BgXxea-K.mjs");
+const $$splitComponentImporter$1 = () => import("./profile-A3vWKP2o.mjs");
 const Route$1 = createFileRoute("/myaccount/profile")({
   head: () => ({
     meta: [{
@@ -254,7 +254,7 @@ const Route$1 = createFileRoute("/myaccount/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./manage-subscription-DvNAZAVm.mjs");
+const $$splitComponentImporter = () => import("./manage-subscription-Ctnzx121.mjs");
 const Route = createFileRoute("/myaccount/manage-subscription")({
   head: () => ({
     meta: [{
