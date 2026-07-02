@@ -2,6 +2,7 @@ import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
 import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-D1Pjw3z4.mjs";
 import { a as avtarBoy } from "./poquito-boy-DDfs1Mfd.mjs";
+import { M as Mail, S as Smartphone, a as MapPin, U as User, L as Lock } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -201,18 +202,21 @@ function StepDetails({
           "Email Address ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            id: "reg-email",
-            type: "email",
-            className: `reg-input ${errors.email ? "reg-input-error" : ""}`,
-            placeholder: "you@example.com",
-            value: data.email,
-            onChange: (e) => onChange("email", e.target.value),
-            autoComplete: "email"
-          }
-        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap password", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "reg-input-icon", size: 18 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              id: "reg-email",
+              type: "email",
+              className: `reg-input ${errors.email ? "reg-input-error" : ""}`,
+              placeholder: "you@example.com",
+              value: data.email,
+              onChange: (e) => onChange("email", e.target.value),
+              autoComplete: "email"
+            }
+          )
+        ] }),
         errors.email && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.email })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
@@ -220,19 +224,24 @@ function StepDetails({
           "Phone Number ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "rgba(20,51,34,0.4)", marginLeft: "5px", fontWeight: 400 }, children: "Optional" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            id: "reg-phone",
-            type: "tel",
-            className: `reg-input ${errors.phone ? "reg-input-error" : ""}`,
-            placeholder: "Your phone",
-            value: data.phone,
-            onChange: (e) => onChange("phone", e.target.value),
-            autoComplete: "tel",
-            maxLength: 10
-          }
-        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input phone-input", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Smartphone, { className: "reg-input-icon", size: 18 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "country-code", children: "+91" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "phone-divider" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              id: "reg-phone",
+              type: "tel",
+              className: `inputPhn ${errors.phone ? "reg-input-error" : ""}`,
+              placeholder: "Your phone",
+              value: data.phone,
+              onChange: (e) => onChange("phone", e.target.value),
+              autoComplete: "tel",
+              maxLength: 10
+            }
+          )
+        ] }),
         errors.phone && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.phone })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
@@ -240,6 +249,7 @@ function StepDetails({
           "City ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" })
         ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "reg-input-icon", size: 18 }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-select-wrap", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "select",
@@ -268,6 +278,7 @@ function StepDetails({
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" }),
           " "
         ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(User, { className: "reg-input-icon", size: 18 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "input",
           {
@@ -287,7 +298,8 @@ function StepDetails({
           "Password ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap password", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Lock, { className: "reg-input-icon", size: 18 }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
@@ -309,7 +321,8 @@ function StepDetails({
           "Confirm Password ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap password", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Lock, { className: "reg-input-icon", size: 18 }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
@@ -350,7 +363,7 @@ function StepDetails({
       ] }),
       errors.agreed && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error reg-error-checkbox", children: errors.agreed })
     ] }),
-    apiError && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg px-4 py-3 text-sm mb-2", style: { background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }, children: apiError }),
+    apiError && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg px-4 py-3 text-sm mb-2", style: { color: "#DC2626" }, children: apiError }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", className: "reg-next-btn", disabled: isLoading || !isFormValid, children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
       "Registering…"
@@ -547,7 +560,7 @@ function StepOTP({
           strokeWidth: "2.5",
           strokeLinecap: "round",
           strokeLinejoin: "round",
-          style: { marginRight: "8px", flexShrink: 0 },
+          style: { flexShrink: 0 },
           children: /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "20 6 9 17 4 12" })
         }
       ),
@@ -580,23 +593,11 @@ function StepOTP({
       ] })
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-otp-resend-btn", onClick: handleResend, children: "Resend code" }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans-actions", style: { marginTop: "1.5rem" }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { type: "button", className: "reg-back-btn", onClick: onBack, disabled: verifying, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M19 12H5" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l-7 7 7 7" })
-        ] }),
-        "Back"
-      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-back-btn", onClick: onBack, disabled: verifying, children: "Back" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-submit-btn", onClick: handleVerify, disabled: verifying || otp.join("").length < 6, children: verifying ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
         "Verifying…"
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        "Verify Email",
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 12h14" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l7 7-7 7" })
-        ] })
-      ] }) })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "Verify Email" }) })
     ] })
   ] });
 }

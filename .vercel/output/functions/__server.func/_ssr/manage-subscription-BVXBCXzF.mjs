@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-xQgTmSRN.mjs";
+import { D as DashboardPage } from "./DashboardPage-COz9FG0Q.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -63,6 +63,7 @@ import "../_libs/framer-motion.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
 import "./Footer-dvOUueAr.mjs";
+import "../_libs/lucide-react.mjs";
 const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "subscription" });
 export {
   SplitComponent as component

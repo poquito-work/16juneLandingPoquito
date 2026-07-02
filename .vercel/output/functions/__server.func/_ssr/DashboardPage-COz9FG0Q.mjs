@@ -3,6 +3,7 @@ import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs
 import { h as getUserProfile, d as getPredefinedListByType, i as getTransactionList, j as getPackageList, u as updateUserProfile, k as initializeSubscription, m as cancelSubscription, n as upgradeSubscription } from "./Logo-D1Pjw3z4.mjs";
 import { H as Header, F as Footer } from "./Footer-dvOUueAr.mjs";
 import { S as Swal } from "../_libs/sweetalert2.mjs";
+import { U as User, M as Mail, S as Smartphone, a as MapPin } from "../_libs/lucide-react.mjs";
 function decodeJwtPayload(token) {
   try {
     const base64 = token.split(".")[1];
@@ -214,6 +215,7 @@ function ProfileTab({ user }) {
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-fields-grid", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-field", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "dash-field-label", htmlFor: "dp-username", children: "Username" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(User, { className: "reg-input-icon", size: 18 }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
@@ -230,6 +232,7 @@ function ProfileTab({ user }) {
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-field", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "dash-field-label", htmlFor: "dp-email", children: "Email Address" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "reg-input-icon", size: 18 }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
@@ -244,25 +247,34 @@ function ProfileTab({ user }) {
           ),
           errors.email && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "dash-field-error", children: errors.email })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-field", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "dash-field-label", htmlFor: "dp-phone", children: "Phone Number" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              id: "dp-phone",
-              type: "tel",
-              className: `dash-input ${errors.phone_number ? "dash-input-error" : ""}`,
-              value: form.phone_number,
-              maxLength: 10,
-              onChange: (e) => setForm((p) => ({ ...p, phone_number: e.target.value })),
-              placeholder: "+91 98765 43210"
-            }
-          ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-field password", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "dash-field-label", htmlFor: "dp-phone", children: [
+            "Phone Number ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "rgba(20,51,34,0.4)", marginLeft: "5px", fontWeight: 400 }, children: "Optional" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input phone-input", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Smartphone, { className: "reg-input-icon", size: 18 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "country-code", children: "+91" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "phone-divider" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                id: "dp-phone",
+                type: "tel",
+                className: `inputPhn ${errors.phone_number ? "dash-input-error" : ""}`,
+                value: form.phone_number,
+                maxLength: 10,
+                onChange: (e) => setForm((p) => ({ ...p, phone_number: e.target.value })),
+                placeholder: "+91 98765 43210"
+              }
+            )
+          ] }),
           errors.phone_number && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "dash-field-error", children: errors.phone_number })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-field", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-field password", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "dash-field-label", htmlFor: "dp-city", children: "City" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-select-wrap", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "reg-input-icon", size: 18 }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "select",
               {
@@ -383,7 +395,7 @@ function TransactionsTab() {
   function handleDownloadInvoice(invoiceUrl, txId) {
     const link = document.createElement("a");
     link.href = invoiceUrl;
-    link.download = `invoice-${txId}.pdf`;
+    link.download = `invoice.pdf`;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     document.body.appendChild(link);
@@ -418,13 +430,13 @@ function TransactionsTab() {
             "₹",
             tx.amount.toLocaleString("en-IN")
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: tx.failure_reason }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: tx.failure_reason || "-" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: statusChip(tx.status) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: tx.invoice_url ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "button",
             {
               type: "button",
-              className: "dash-invoice-btn",
+              className: "dash-invoice-btn cursor-pointer",
               onClick: () => handleDownloadInvoice(tx.invoice_url, tx.id),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
@@ -802,7 +814,7 @@ function SubscriptionTab({
                     setSelectedPlanId(plan.id);
                     handleSubscribe(plan.id);
                   },
-                  disabled: changing,
+                  disabled: changing || isTrialActive,
                   children: changing ? "Redirecting..." : "SUBSCRIBE NOW"
                 }
               ) : subscription?.plan.id === plan.id ? /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(

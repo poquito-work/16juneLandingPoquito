@@ -1,6 +1,8 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
 import { P as PocketDragonLogo, f as forgotPassword, e as resetPassword } from "./Logo-D1Pjw3z4.mjs";
+import { S as Swal } from "../_libs/sweetalert2.mjs";
+import { M as Mail, L as Lock } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -80,13 +82,13 @@ function RouteComponent() {
   const [showConfirm, setShowConfirm] = reactExports.useState(false);
   const [confirmPassword, setConfirmPassword] = reactExports.useState("");
   const [confirmPasswordError, setConfirmPasswordError] = reactExports.useState("");
-  const navigate = useNavigate();
+  useNavigate();
   const validateReset = () => {
     let valid = true;
     setPasswordError("");
     setConfirmPasswordError("");
     if (!newPassword) {
-      setPasswordError("Password is required.");
+      setPasswordError("New password is required.");
       valid = false;
     } else if (newPassword.length < 8) {
       setPasswordError("Must be at least 8 characters.");
@@ -105,7 +107,7 @@ function RouteComponent() {
       valid = false;
     }
     if (!confirmPassword) {
-      setConfirmPasswordError("Please confirm your password.");
+      setConfirmPasswordError("Confirm password is required");
       valid = false;
     } else if (newPassword !== confirmPassword) {
       setConfirmPasswordError("Passwords do not match.");
@@ -161,10 +163,10 @@ function RouteComponent() {
     if (!validateEmail()) return;
     try {
       setLoading(true);
-      setApiOtpError("");
       await forgotPassword(email);
       setStep("otp");
       setResendSeconds(30);
+      setApiOtpError("");
     } catch (err) {
       setApiOtpError(err?.response?.data?.message || "Failed to send OTP.");
     } finally {
@@ -189,9 +191,15 @@ function RouteComponent() {
     try {
       setVerifying(true);
       await resetPassword(email, otp.join(""), newPassword);
-      navigate({
-        to: "/"
+      Swal.fire({
+        icon: "success",
+        title: "Password Updated",
+        // text: "Your changes have been saved successfully.",
+        confirmButtonColor: "#143322",
+        timer: 2500,
+        timerProgressBar: true
       });
+      window.location.assign("/#login");
     } catch (err) {
       setApiError(err?.response?.data?.message || "Something went wrong.");
     } finally {
@@ -226,33 +234,27 @@ function RouteComponent() {
     /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1 flex items-center justify-center px-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "forgot-wrap w-full max-w-md rounded-2xl bg-white/50 backdrop-blur-xl p-8", children: step === "email" ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "register-title text-center  mb-4", children: "Reset Password" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "register-subtitle", children: "Enter the email linked to your account and we'll send a reset code." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "space-y-5 mt-4", onSubmit: handleSendOtp, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "space-y-5 mt-4 relative formForgot", onSubmit: handleSendOtp, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reg-label mt-6", children: "Email Address" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", value: email, onChange: (e) => {
-          setEmail(e.target.value);
-          setEmailError("");
-          setApiOtpError("");
-        }, placeholder: "Email Address", className: `dash-input w-full rounded-xl border px-4 py-3 outline-none ${emailError ? "border-red-500" : "border-pq-green/15"}` }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "reg-input-icon", size: 18 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", value: email, onChange: (e) => {
+            setEmail(e.target.value);
+            setEmailError("");
+            setApiOtpError("");
+          }, placeholder: "Email Address", className: `dash-input w-full rounded-xl border px-4 py-3 outline-none ${emailError ? "border-red-500" : "border-pq-green/15"}` })
+        ] }),
         emailError && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-red-500 text-sm", children: emailError }),
         apiOTPError && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg px-4 py-3 text-sm mb-2", style: {
-          background: "#FEE2E2",
-          color: "#DC2626",
-          border: "1px solid #FCA5A5"
+          color: "#DC2626"
         }, children: apiOTPError }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { type: "submit", className: "w-full reg-next-btn rounded-xl bg-[#B65A2F] py-3 text-white", disabled: loading, children: [
-          "Continue",
-          " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 12h14" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l7 7-7 7" })
-          ] })
-        ] })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", className: "w-full reg-next-btn rounded-xl bg-[#B65A2F] py-3 text-white disabled:opacity-50 disabled:cursor-not-allowed", disabled: loading || !email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), children: loading ? "Sending..." : "Send OTP" })
       ] })
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "register-title text-center  mb-4", children: "VERIFY OTP" }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "register-subtitle", children: [
-        "Enter the 6-digit code sent to",
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: email }),
+        "Enter the 6-digit code sent to ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-black", children: email }),
         " "
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleResetPassword, className: "space-y-5 mt-4", children: [
@@ -277,9 +279,10 @@ function RouteComponent() {
             ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-otp-resend-btn", onClick: handleResend, children: "Resend code" }) }),
             otpError && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-red-500 mt-2", children: otpError })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative password", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "reg-label", children: "New Password" }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Lock, { className: "reg-input-icon", size: 18 }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: showPassword ? "text" : "password", value: newPassword, onChange: (e) => {
                 setNewPassword(e.target.value);
                 setPasswordError("");
@@ -289,9 +292,10 @@ function RouteComponent() {
             ] }),
             passwordError && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-red-500 mt-2", children: passwordError })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative password", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "reg-label", children: "Confirm Password" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap ", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Lock, { className: "reg-input-icon", size: 18 }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: showConfirm ? "text" : "password", value: confirmPassword, onChange: (e) => {
                 setConfirmPassword(e.target.value);
                 setConfirmPasswordError("");
@@ -302,31 +306,17 @@ function RouteComponent() {
             confirmPasswordError && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-red-500 mt-2", children: confirmPasswordError })
           ] }),
           apiError && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg px-4 py-3 text-sm mb-2", style: {
-            background: "#FEE2E2",
-            color: "#DC2626",
-            border: "1px solid #FCA5A5"
+            color: "#DC2626"
           }, children: apiError })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-plans-actions", style: {
           marginTop: "1.5rem"
         }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { type: "button", className: "reg-back-btn", onClick: () => setStep("email"), disabled: verifying, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M19 12H5" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l-7 7 7 7" })
-            ] }),
-            "Change Email"
-          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-back-btn", onClick: () => setStep("email"), disabled: verifying, children: "Change Email" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", className: "reg-submit-btn", disabled: verifying || otp.join("").length < 6, children: verifying ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-spinner" }),
             "Verifying…"
-          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-            "VERIFY OTP",
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5 12h14" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 5l7 7-7 7" })
-            ] })
-          ] }) })
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "Update password" }) })
         ] })
       ] })
     ] }) }) }),

@@ -141,7 +141,7 @@ function DownloadButtons({
 }
 const heroVideo = "/assets/1782469897969_original-c7032776-010c-49e4-8b35-e7234191ebb3-CFy0k-JJ.mp4";
 const avtarGirl = "/assets/poquito-girl-D0DjCdPM.png";
-const avtarBunny = "/assets/poquito-bunny-DisWB3Qw.png";
+const avtarBunny = "/assets/poquito-owl-VneLnk7F.png";
 const EASE$3 = [0.22, 0.61, 0.36, 1];
 const containerVariants = {
   hidden: {},
@@ -1356,7 +1356,7 @@ function LoginSection() {
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-green text-xs tracking-[0.14em] uppercase font-normal", children: "Password" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "text-rust f-w-600 text-xs hover:underline underline-offset-2 font-normal", children: "Forgot password?" })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/forgot-password", className: "f-w-600 text-xs text-rust font-normal hover:underline underline-offset-2", children: "Forgot password?" })
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(
                       "div",
@@ -1404,9 +1404,9 @@ function LoginSection() {
                     {
                       className: "rounded-lg px-4 py-3 text-sm",
                       style: {
-                        background: "#FEE2E2",
-                        color: "#DC2626",
-                        border: "1px solid #FCA5A5"
+                        // background: "#FEE2E2",
+                        color: "#DC2626"
+                        // border: "1px solid #FCA5A5",
                       },
                       children: error
                     }
