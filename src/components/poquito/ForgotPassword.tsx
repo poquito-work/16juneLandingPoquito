@@ -340,7 +340,7 @@ function StepDetails({
       </div>
 
       {apiError && (
-        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
+        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626"}}>
           {apiError}
         </div>
       )}

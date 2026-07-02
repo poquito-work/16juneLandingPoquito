@@ -6,7 +6,7 @@ import tile1 from "@/assets/Mpt1z.png";
 import tile2 from "@/assets/Mpt3z.png";
 import avtarBoy from "@/assets/poquito-boy.png";
 import avtarGirl from "@/assets/poquito-girl.png";
-import avtarBunny from "@/assets/poquito-bunny.png";
+import avtarBunny from "@/assets/poquito-owl.png";
 
 
 const EASE = [0.22, 0.61, 0.36, 1] as const;

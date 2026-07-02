@@ -3,6 +3,13 @@ import { Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { checkEmailExists, checkUserExists, getPredefinedListByType, getPrivacyPolicy, getTermsCondition, registerUser, sendOtp, verifyOtp } from "@/services/auth";
 import { PocketDragonLogo } from "./Logo";
 import uploadLogo from "@/assets/poquito-boy.png";
+import {
+  Mail,
+  Smartphone,
+  MapPin,
+  User,
+  Lock,
+} from "lucide-react";
 
 
 
@@ -275,6 +282,8 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
         {/* Email */}
         <div className="reg-field">
           <label className="reg-label" htmlFor="reg-email">Email Address <span className="color-red">*</span></label>
+          <div className="reg-input-wrap password">
+           <Mail className="reg-input-icon" size={18} />
           <input
             id="reg-email"
             type="email"
@@ -284,28 +293,38 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
             onChange={(e) => onChange("email", e.target.value)}
             autoComplete="email"
           />
+          </div>
           {errors.email && <span className="reg-error">{errors.email}</span>}
         </div>
 
         {/* Phone */}
         <div className="reg-field">
           <label className="reg-label" htmlFor="reg-phone">Phone Number <span style={{ color: "rgba(20,51,34,0.4)",marginLeft:"5px", fontWeight: 400 }}>Optional</span></label>
+            <div className="reg-input phone-input">
+            <Smartphone className="reg-input-icon" size={18} />
+            <span className="country-code">+91</span>
+
+  <span className="phone-divider"></span>
+ 
           <input
             id="reg-phone"
             type="tel"
-            className={`reg-input ${errors.phone ? "reg-input-error" : ""}`}
+            className={`inputPhn ${errors.phone ? "reg-input-error" : ""}`}
             placeholder="Your phone"
             value={data.phone}
             onChange={(e) => onChange("phone", e.target.value)}
             autoComplete="tel"
             maxLength={10}
           />
-          {errors.phone && <span className="reg-error">{errors.phone}</span>}
         </div>
+                  {errors.phone && <span className="reg-error">{errors.phone}</span>}
 
+ </div>
             <div className="reg-field">
           <label className="reg-label" htmlFor="reg-city">City <span className="color-red">*</span></label>
+            <MapPin className="reg-input-icon" size={18} />
           <div className="reg-select-wrap">
+           
             <select
               id="reg-city"
               className={`reg-input reg-select ${errors.city ? "reg-input-error" : ""} ${!data.city ? "reg-select-placeholder" : ""}`}
@@ -333,6 +352,7 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
         {/* Full Name */}
         <div className="reg-field">
           <label className="reg-label" htmlFor="reg-fullname">Username <span className="color-red">*</span> </label>
+           <User className="reg-input-icon" size={18} />
           <input
             id="reg-fullname"
             type="text"
@@ -352,7 +372,9 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
         {/* Password */}
         <div className="reg-field">
           <label className="reg-label" htmlFor="reg-password">Password <span className="color-red">*</span></label>
-          <div className="reg-input-wrap">
+          
+          <div className="reg-input-wrap password">
+             <Lock className="reg-input-icon" size={18} />
             <input
               id="reg-password"
               type={showPassword ? "text" : "password"}
@@ -372,7 +394,9 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
         {/* Confirm Password */}
         <div className="reg-field">
           <label className="reg-label" htmlFor="reg-confirm">Confirm Password <span className="color-red">*</span></label>
-          <div className="reg-input-wrap">
+         
+          <div className="reg-input-wrap password">
+             <Lock className="reg-input-icon" size={18} />
             <input
               id="reg-confirm"
               type={showConfirm ? "text" : "password"}
@@ -411,7 +435,7 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
       </div>
 
       {apiError && (
-        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
+        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626"}}>
           {apiError}
         </div>
       )}
@@ -657,7 +681,7 @@ function StepOTP({
     strokeWidth="2.5"
     strokeLinecap="round"
     strokeLinejoin="round"
-    style={{ marginRight: "8px", flexShrink: 0 }}
+    style={{flexShrink: 0 }}
   >
     <polyline points="20 6 9 17 4 12" />
   </svg>
@@ -697,9 +721,9 @@ function StepOTP({
       {/* Actions */}
       <div className="reg-plans-actions" style={{ marginTop: "1.5rem" }}>
         <button type="button" className="reg-back-btn" onClick={onBack} disabled={verifying}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
-          </svg>
+          </svg> */}
           Back
         </button>
         <button type="button" className="reg-submit-btn" onClick={handleVerify} disabled={verifying || otp.join("").length < 6}>
@@ -707,9 +731,9 @@ function StepOTP({
             <><span className="reg-spinner" />Verifying…</>
           ) : (
             <>Verify Email
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
-              </svg>
+              </svg> */}
             </>
           )}
         </button>

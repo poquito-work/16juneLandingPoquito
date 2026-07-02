@@ -233,9 +233,12 @@ const [error, setError] = useState("");
                     <label className="text-green text-xs tracking-[0.14em] uppercase font-normal">
                       Password
                     </label>
-                    <a href="#" className="text-rust f-w-600 text-xs hover:underline underline-offset-2 font-normal">
+                    {/* <a href="#" className="text-rust f-w-600 text-xs hover:underline underline-offset-2 font-normal">
                       Forgot password?
-                    </a>
+                    </a> */}
+                    <Link   to="/forgot-password" className="f-w-600 text-xs text-rust font-normal hover:underline underline-offset-2">
+                  Forgot password?
+                </Link>
                   </div>
                   <div
                     className="relative rounded-xl transition-all duration-300"
@@ -280,9 +283,9 @@ const [error, setError] = useState("");
   <div
     className="rounded-lg px-4 py-3 text-sm"
     style={{
-      background: "#FEE2E2",
+      // background: "#FEE2E2",
       color: "#DC2626",
-      border: "1px solid #FCA5A5",
+      // border: "1px solid #FCA5A5",
     }}
   >
     {error}

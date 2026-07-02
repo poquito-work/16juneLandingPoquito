@@ -5,6 +5,13 @@ import { cancelSubscription, getPackageList, getPredefinedListByType, getTransac
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import Swal from "sweetalert2";
+import {
+  Mail,
+  Smartphone,
+  MapPin,
+  User,
+  Lock,
+} from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -356,6 +363,7 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
 
           <div className="dash-field">
             <label className="dash-field-label" htmlFor="dp-username">Username</label>
+             <User className="reg-input-icon" size={18} />
             <input
               id="dp-username"
               type="text"
@@ -370,6 +378,7 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
 
           <div className="dash-field">
             <label className="dash-field-label" htmlFor="dp-email">Email Address</label>
+              <Mail className="reg-input-icon" size={18} />
             <input
               id="dp-email"
               disabled
@@ -382,23 +391,31 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
             {errors.email && <span className="dash-field-error">{errors.email}</span>}
           </div>
 
-          <div className="dash-field">
-            <label className="dash-field-label" htmlFor="dp-phone">Phone Number</label>
+          <div className="dash-field password">
+            <label className="dash-field-label" htmlFor="dp-phone">Phone Number <span style={{ color: "rgba(20,51,34,0.4)",marginLeft:"5px", fontWeight: 400 }}>Optional</span></label>
+            <div className="reg-input phone-input">
+            <Smartphone className="reg-input-icon" size={18} />
+                 <span className="country-code">+91</span>
+
+              <span className="phone-divider"></span>
             <input
               id="dp-phone"
               type="tel"
-              className={`dash-input ${errors.phone_number ? "dash-input-error" : ""}`}
+              className={`inputPhn ${errors.phone_number ? "dash-input-error" : ""}`}
               value={form.phone_number}
               maxLength={10}
               onChange={(e) => setForm((p) => ({ ...p, phone_number: e.target.value }))}
               placeholder="+91 98765 43210"
             />
+            </div>
             {errors.phone_number && <span className="dash-field-error">{errors.phone_number}</span>}
           </div>
 
-          <div className="dash-field">
+          <div className="dash-field password">
             <label className="dash-field-label" htmlFor="dp-city">City</label>
+           
             <div className="reg-select-wrap">
+               <MapPin className="reg-input-icon" size={18} />
               <select
                 id="dp-city"
                 className={`dash-input reg-select ${!form.city ? "reg-select-placeholder" : ""}`}
@@ -586,7 +603,7 @@ function TransactionsTab() {
   function handleDownloadInvoice(invoiceUrl: string, txId: string) {
     const link = document.createElement("a");
     link.href = invoiceUrl;
-    link.download = `invoice-${txId}.pdf`;
+    link.download = `invoice.pdf`;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     document.body.appendChild(link);
@@ -628,14 +645,14 @@ function TransactionsTab() {
                   <td className="dash-td-mono">{tx.razorpay_payment_id}</td>
                   <td>{tx.created_at}</td>
                   <td className="dash-td-amount">₹{tx.amount.toLocaleString("en-IN")}</td>
-                  <td>{tx.failure_reason}</td>
+                  <td>{tx.failure_reason || "-" }</td>
 
                   <td>{statusChip(tx.status)}</td>
                   <td>
                     {tx.invoice_url ? (
                       <button
                         type="button"
-                        className="dash-invoice-btn"
+                        className="dash-invoice-btn cursor-pointer"
                         onClick={() => handleDownloadInvoice(tx.invoice_url!, tx.id)}
                       >
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1220,17 +1237,29 @@ const isUpgrade =
 
 {showSubscribeButton ? (
   <button
-    type="button"
-    className="reg-plan-btn"
-    onClick={(e) => {
-      e.stopPropagation();
-      setSelectedPlanId(plan.id);
-      handleSubscribe(plan.id);
-    }}
-    disabled={changing}
-  >
-    {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
-  </button>
+  type="button"
+  className="reg-plan-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    setSelectedPlanId(plan.id);
+    handleSubscribe(plan.id);
+  }}
+  disabled={changing || isTrialActive}
+>
+  {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+</button>
+  // <button
+  //   type="button"
+  //   className="reg-plan-btn"
+  //   onClick={(e) => {
+  //     e.stopPropagation();
+  //     setSelectedPlanId(plan.id);
+  //     handleSubscribe(plan.id);
+  //   }}
+  //   disabled={changing}
+  // >
+  //   {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+  // </button>
 ) : subscription?.plan.id === plan.id ? (
   <>
     {/* <p className="reg-current-plan-text">CURRENT PLAN</p> */}

@@ -2,7 +2,17 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { PocketDragonLogo } from "@/components/poquito/Logo";
 import { useEffect, useRef, useState } from "react";
 import { forgotPassword, resetPassword } from "@/services/auth";
-import { EyeIcon } from "lucide-react";
+// import { , Mail } from "lucide-react";
+import Swal from "sweetalert2";
+import {
+  Mail,
+  User,
+  Smartphone,
+  MapPin,
+  Lock,
+  EyeIcon
+  
+} from "lucide-react";
 
 export const Route = createFileRoute("/forgot-password")({
   component: RouteComponent,
@@ -39,7 +49,7 @@ const validateReset = () => {
   setConfirmPasswordError("");
 
   if (!newPassword) {
-    setPasswordError("Password is required.");
+    setPasswordError("New password is required.");
     valid = false;
   } else if (newPassword.length < 8) {
     setPasswordError("Must be at least 8 characters.");
@@ -59,7 +69,7 @@ const validateReset = () => {
   }
 
   if (!confirmPassword) {
-    setConfirmPasswordError("Please confirm your password.");
+    setConfirmPasswordError("Confirm password is required");
     valid = false;
   } else if (newPassword !== confirmPassword) {
     setConfirmPasswordError("Passwords do not match.");
@@ -151,12 +161,14 @@ const validateReset = () => {
 
     try {
       setLoading(true);
-      setApiOtpError("");
+    
+      
 
       await forgotPassword(email);
 
       setStep("otp");
       setResendSeconds(30);
+        setApiOtpError("");
     } catch (err: any) {
       setApiOtpError(err?.response?.data?.message || "Failed to send OTP.");
     } finally {
@@ -190,8 +202,15 @@ const handleResetPassword = async (e: React.FormEvent) => {
     setVerifying(true);
 
     await resetPassword(email, otp.join(""), newPassword);
-
-    navigate({ to: "/" });
+     Swal.fire({
+            icon: "success",
+            title: "Password Updated",
+            // text: "Your changes have been saved successfully.",
+            confirmButtonColor: "#143322",
+            timer: 2500,
+            timerProgressBar: true,
+          });
+    window.location.assign("/#login");
   } catch (err: any) {
     setApiError(
       err?.response?.data?.message || "Something went wrong."
@@ -307,8 +326,10 @@ async function handleResend() {
             <h1 className="register-title text-center  mb-4">Reset Password</h1>
           <p className="register-subtitle">Enter the email linked to your account and we'll send a reset code.</p>
          
-            <form className="space-y-5 mt-4" onSubmit={handleSendOtp}>
+            <form className="space-y-5 mt-4 relative formForgot" onSubmit={handleSendOtp}>
               <p className="reg-label mt-6">Email Address</p>
+              <div className="relative">
+              <Mail className="reg-input-icon" size={18} />
               <input
                 type="email"
                 value={email}
@@ -321,41 +342,33 @@ async function handleResend() {
                 className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
                   emailError ? "border-red-500" : "border-pq-green/15"
                 }`}
+                
               />
-
+  </div>
               {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
 
-                 {apiOTPError && (  <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
+                 {apiOTPError && (  <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626"}}>
           {apiOTPError}
         </div>
           )}
 
               <button
-                type="submit"
-                className="w-full reg-next-btn rounded-xl bg-[#B65A2F] py-3 text-white"
-                disabled={loading}
-              >
-                Continue{" "}
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M12 5l7 7-7 7" />
-                </svg>
-              </button>
+  type="submit"
+  className="w-full reg-next-btn rounded-xl bg-[#B65A2F] py-3 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+  disabled={
+    loading ||
+    !email.trim() ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
+>
+  {loading ? "Sending..." : "Send OTP"}
+</button>
             </form>
             </>
           ) : (
             <>
             <h1 className="register-title text-center  mb-4">VERIFY OTP</h1>
-          <p className="register-subtitle">Enter the 6-digit code sent to<span>{email}</span> </p>
+          <p className="register-subtitle">Enter the 6-digit code sent to <span className="text-black">{email}</span> </p>
             <form onSubmit={handleResetPassword} className="space-y-5 mt-4">
               <div className="space-y-5">
                 {/* Email */}
@@ -433,9 +446,11 @@ async function handleResend() {
                 </div>
 
                 {/* New Password */}
-                <div>
+                <div className="relative password">
                   <label className="reg-label">New Password</label>
+                   
                   <div className="reg-input-wrap">
+                    <Lock className="reg-input-icon" size={18} />
                     <input
                       type={showPassword ? "text" : "password"}
                       value={newPassword}
@@ -461,12 +476,14 @@ async function handleResend() {
                   {passwordError && <p className="mt-1 text-sm text-red-500 mt-2">{passwordError}</p>}
                 </div>
 
-          <div>
+          <div className="relative password">
   <label className="reg-label">
     Confirm Password
   </label>
+         
+  <div className="reg-input-wrap ">
+   <Lock className="reg-input-icon" size={18} />             
 
-  <div className="reg-input-wrap">
     <input
       type={showConfirm ? "text" : "password"}
       value={confirmPassword}
@@ -500,7 +517,7 @@ async function handleResend() {
 </div>
 
                 {apiError && (
-                       <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
+                       <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626"}}>
           {apiError}
         </div>
                 )}
@@ -555,7 +572,7 @@ async function handleResend() {
                   onClick={() => setStep("email")}
                   disabled={verifying}
                 >
-                  <svg
+                  {/* <svg
                     width="16"
                     height="16"
                     viewBox="0 0 24 24"
@@ -567,7 +584,7 @@ async function handleResend() {
                   >
                     <path d="M19 12H5" />
                     <path d="M12 5l-7 7 7 7" />
-                  </svg>
+                  </svg> */}
                   Change Email
                 </button>
                 <button
@@ -582,8 +599,8 @@ async function handleResend() {
                     </>
                   ) : (
                     <>
-                      VERIFY OTP
-                      <svg
+                      Update password
+                      {/* <svg
                         width="16"
                         height="16"
                         viewBox="0 0 24 24"
@@ -595,7 +612,7 @@ async function handleResend() {
                       >
                         <path d="M5 12h14" />
                         <path d="M12 5l7 7-7 7" />
-                      </svg>
+                      </svg> */}
                     </>
                   )}
                 </button>
