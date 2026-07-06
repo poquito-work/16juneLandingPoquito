@@ -1,20 +1,29 @@
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { Link, Navigate, useNavigate } from "@tanstack/react-router";
-import { cancelSubscription, getPackageList, getPredefinedListByType, getTransactionList, getUserProfile, initializeSubscription, updateUserProfile, upgradeSubscription } from "@/services/auth";
+import {
+  cancelSubscription,
+  getPackageList,
+  getPredefinedListByType,
+  getTransactionList,
+  getUserProfile,
+  initializeSubscription,
+  updateUserProfile,
+  upgradeSubscription,
+} from "@/services/auth";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import Swal from "sweetalert2";
+import { Mail, Smartphone, MapPin, User, Lock } from "lucide-react";
 import {
-  Mail,
-  Smartphone,
-  MapPin,
-  User,
-  Lock,
-} from "lucide-react";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
-
 
 interface UserProfile {
   id?: string;
@@ -44,7 +53,6 @@ interface Transaction {
   status: "success" | "pending" | "failed";
   type: "subscription" | "renewal" | "refund";
   invoice_url?: string | null;
-
 }
 
 // interface Subscription {
@@ -53,7 +61,6 @@ interface Transaction {
 //   next_billing?: string;
 //   started_at?: string;
 // }
-
 
 interface SubscriptionPlan {
   id: number;
@@ -104,11 +111,15 @@ function getUserFromToken(): UserProfile {
     name: (payload?.name as string) ?? (payload?.full_name as string) ?? "Player",
     username: (payload?.username as string) ?? (payload?.preferred_username as string) ?? "—",
     email: (payload?.email as string) ?? "—",
-    phone_number: (payload?.phone_number as string),
+    phone_number: payload?.phone_number as string,
     city: (payload?.city as string) ?? "",
     avatar_url: (payload?.picture as string) ?? "",
     joined_at: payload?.iat
-      ? new Date((payload.iat as number) * 1000).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })
+      ? new Date((payload.iat as number) * 1000).toLocaleDateString("en-IN", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
       : "—",
   };
 }
@@ -123,7 +134,16 @@ const TABS: { id: Tab; label: string; href: string; icon: ReactNode }[] = [
     label: "Profile",
     href: "/myaccount/profile",
     icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="12" cy="8" r="4" />
         <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
       </svg>
@@ -134,7 +154,16 @@ const TABS: { id: Tab; label: string; href: string; icon: ReactNode }[] = [
     label: "Transactions",
     href: "/myaccount/transaction",
     icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="2" y="5" width="20" height="14" rx="2" />
         <line x1="2" y1="10" x2="22" y2="10" />
       </svg>
@@ -145,7 +174,16 @@ const TABS: { id: Tab; label: string; href: string; icon: ReactNode }[] = [
     label: "Subscription",
     href: "/myaccount/subscription",
     icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" />
       </svg>
     ),
@@ -215,21 +253,21 @@ function ProfileTab({ user }: { user: UserProfile }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-const [avatarList, setAvatarList] = useState<any[]>([]);
-const [showAvatarDialog, setShowAvatarDialog] = useState(false);
-const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
+  const [avatarList, setAvatarList] = useState<any[]>([]);
+  const [showAvatarDialog, setShowAvatarDialog] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
   useEffect(() => {
     getPredefinedListByType("city")
       .then((res) => setCityList(res.data.content ?? []))
-      .catch(() => { });
+      .catch(() => {});
   }, []);
 
   const openAvatarDialog = () => {
-  setSelectedAvatar(user.avatar_url); // current avatar
-  setShowAvatarDialog(true);
-};
+    setSelectedAvatar(user.avatar_url); // current avatar
+    setShowAvatarDialog(true);
+  };
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchAvtarList = async () => {
       try {
         const response = await getPredefinedListByType("AVATAR");
@@ -251,7 +289,7 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
       email: user.email ?? prev.email,
       phone_number: user.phone_number ?? prev.phone_number,
       city: matchedCity?.name ?? prev.city,
-       avatar_url: user.avatar_url ?? prev.avatar_url,
+      avatar_url: user.avatar_url ?? prev.avatar_url,
     }));
   }, [user.name, user.username, user.email, user.phone_number, user.city_id, cityList]);
   function validate() {
@@ -260,8 +298,10 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
     if (!form.username.trim()) e.username = "Username is required.";
     else if (form.username.trim().length < 3) e.username = "Min. 3 characters.";
     if (!form.email.trim()) e.email = "Email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = "Enter a valid email.";
-    if (form.phone_number && !/^\+?[\d\s\-()]{7,15}$/.test(form.phone_number.trim())) e.phone_number = "Enter a valid phone number.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
+      e.email = "Enter a valid email.";
+    if (form.phone_number && !/^\+?[\d\s\-()]{7,15}$/.test(form.phone_number.trim()))
+      e.phone_number = "Enter a valid phone number.";
     return e;
   }
 
@@ -278,9 +318,9 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
       await updateUserProfile({
         name: form.name,
         username: form.username,
-       phone_number: form.phone_number.trim() || null,
+        phone_number: form.phone_number.trim() || null,
         city_id: selectedCity?.id,
-         avatar_url: form.avatar_url,
+        avatar_url: form.avatar_url,
       });
 
       setSaved(true);
@@ -314,40 +354,34 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
         <div className="dash-avatar">
           <span className="dash-avatar-initials">{initials}</span>
           {form.avatar_url ? (
-<>
+            <>
+              <div className="avatar-wrapper">
+                <img src={form.avatar_url || user.avatar_url} alt="Avatar" className="uploadLogo" />
 
-<div className="avatar-wrapper">
-  <img
-   src={form.avatar_url || user.avatar_url}
-    alt="Avatar"
-    className="uploadLogo"
-  />
-
-  <button
-    type="button"
-    className="avatar-plus"
-    // onClick={() => setShowAvatarDialog(true)}
-    onClick={openAvatarDialog}
-  >
-    +
-  </button>
-</div>
-</>
-            // <img src={user.avatar_url} alt={user.name ?? "Avatar"} className="dash-avatar-img" />
+                <button
+                  type="button"
+                  className="avatar-plus"
+                  // onClick={() => setShowAvatarDialog(true)}
+                  onClick={openAvatarDialog}
+                >
+                  +
+                </button>
+              </div>
+            </>
           ) : (
+            // <img src={user.avatar_url} alt={user.name ?? "Avatar"} className="dash-avatar-img" />
             <span className="dash-avatar-initials">{initials}</span>
           )}
         </div>
         <div>
-          <p className="dash-profile-name">{form.name || user.name || "—"}</p>
-          <p className="dash-profile-handle">@{form.username || user.username || "—"}</p>
+          {/* <p className="dash-profile-name">{form.name || user.name || "—"}</p> */}
+          <p className="dash-profile-name">{form.username || user.username || "—"}</p>
         </div>
       </div>
 
       {/* Editable fields */}
       <form className="dash-profile-form" onSubmit={handleSave} noValidate>
         <div className="dash-fields-grid">
-
           {/* <div className="dash-field">
             <label className="dash-field-label" htmlFor="dp-name">Full Name</label>
             <input
@@ -362,8 +396,10 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
           </div> */}
 
           <div className="dash-field">
-            <label className="dash-field-label" htmlFor="dp-username">Username</label>
-             <User className="reg-input-icon" size={18} />
+            <label className="dash-field-label" htmlFor="dp-username">
+              Username
+            </label>
+            <User className="reg-input-icon" size={18} />
             <input
               id="dp-username"
               type="text"
@@ -377,8 +413,10 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
           </div>
 
           <div className="dash-field">
-            <label className="dash-field-label" htmlFor="dp-email">Email Address</label>
-              <Mail className="reg-input-icon" size={18} />
+            <label className="dash-field-label" htmlFor="dp-email">
+              Email Address
+            </label>
+            <Mail className="reg-input-icon" size={18} />
             <input
               id="dp-email"
               disabled
@@ -392,43 +430,63 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
           </div>
 
           <div className="dash-field password">
-            <label className="dash-field-label" htmlFor="dp-phone">Phone Number <span style={{ color: "rgba(20,51,34,0.4)",marginLeft:"5px", fontWeight: 400 }}>Optional</span></label>
+            <label className="dash-field-label" htmlFor="dp-phone">
+              Phone Number{" "}
+              <span style={{ color: "rgba(20,51,34,0.4)", marginLeft: "5px", fontWeight: 400 }}>
+                Optional
+              </span>
+            </label>
             <div className="reg-input phone-input">
-            <Smartphone className="reg-input-icon" size={18} />
-                 <span className="country-code">+91</span>
+              <Smartphone className="reg-input-icon" size={18} />
+              <span className="country-code">+91</span>
 
               <span className="phone-divider"></span>
-            <input
-              id="dp-phone"
-              type="tel"
-              className={`inputPhn ${errors.phone_number ? "dash-input-error" : ""}`}
-              value={form.phone_number}
-              maxLength={10}
-              onChange={(e) => setForm((p) => ({ ...p, phone_number: e.target.value }))}
-              placeholder="+91 98765 43210"
-            />
+              <input
+                id="dp-phone"
+                type="tel"
+                className={`inputPhn ${errors.phone_number ? "dash-input-error" : ""}`}
+                value={form.phone_number}
+                maxLength={10}
+                onChange={(e) => setForm((p) => ({ ...p, phone_number: e.target.value }))}
+                placeholder="+91 98765 43210"
+              />
             </div>
             {errors.phone_number && <span className="dash-field-error">{errors.phone_number}</span>}
           </div>
 
           <div className="dash-field password">
-            <label className="dash-field-label" htmlFor="dp-city">City</label>
-           
+            <label className="dash-field-label" htmlFor="dp-city">
+              City
+            </label>
+
             <div className="reg-select-wrap">
-               <MapPin className="reg-input-icon" size={18} />
+              <MapPin className="reg-input-icon" size={18} />
               <select
                 id="dp-city"
                 className={`dash-input reg-select ${!form.city ? "reg-select-placeholder" : ""}`}
                 value={form.city}
                 onChange={(e) => setForm((p) => ({ ...p, city: e.target.value }))}
               >
-                <option value="" disabled>Select your city</option>
+                <option value="" disabled>
+                  Select your city
+                </option>
                 {cityList.map((c) => (
-                  <option key={c.uuid} value={c.name}>{c.name}</option>
+                  <option key={c.uuid} value={c.name}>
+                    {c.name}
+                  </option>
                 ))}
               </select>
               <span className="reg-select-arrow">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </span>
@@ -445,16 +503,27 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
             <span className="dash-field-label">Account ID</span>
             <span className="dash-field-value dash-field-mono">{user.id ?? "—"}</span>
           </div> */}
-
         </div>
 
         <div className="dash-profile-actions">
           <button type="submit" className="dash-cta-btn" disabled={saving}>
             {saving ? (
-              <><span className="reg-spinner" />Saving…</>
+              <>
+                <span className="reg-spinner" />
+                Saving…
+              </>
             ) : saved ? (
               <>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 Saved
@@ -464,69 +533,59 @@ const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
             )}
           </button>
         </div>
-{showAvatarDialog && (
-  <div
-    className="avatar-modal-overlay"
-    onClick={() => {
-      setSelectedAvatar(user.avatar_url);
-      setShowAvatarDialog(false);
-    }}
-  >
-    <div
-      className="avatar-modal"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="avatar-modal-header">
-        <h3>CHOOSE AVATAR</h3>
+        {showAvatarDialog && (
+          <div
+            className="avatar-modal-overlay"
+            onClick={() => {
+              setSelectedAvatar(user.avatar_url);
+              setShowAvatarDialog(false);
+            }}
+          >
+            <div className="avatar-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="avatar-modal-header">
+                <h3>CHOOSE AVATAR</h3>
 
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedAvatar(user.avatar_url);
-            setShowAvatarDialog(false);
-          }}
-        >
-          ✕
-        </button>
-      </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedAvatar(user.avatar_url);
+                    setShowAvatarDialog(false);
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
 
-      <div className="avatar-grid">
-        {avatarList.map((avatar) => (
-          <img
-            key={avatar.id}
-            src={avatar.url}
-            alt="Avatar"
-            className={`avatar-item ${
-              selectedAvatar === avatar.url ? "selected" : ""
-            }`}
-            onClick={() => setSelectedAvatar(avatar.url)}
-          />
-        ))}
-      </div>
+              <div className="avatar-grid">
+                {avatarList.map((avatar) => (
+                  <img
+                    key={avatar.id}
+                    src={avatar.url}
+                    alt="Avatar"
+                    className={`avatar-item ${selectedAvatar === avatar.url ? "selected" : ""}`}
+                    onClick={() => setSelectedAvatar(avatar.url)}
+                  />
+                ))}
+              </div>
 
-      <button
-        type="button"
-        className="avatar-save-btn"
-       onClick={() => {
-  setForm((prev) => ({
-    ...prev,
-    avatar_url: selectedAvatar || prev.avatar_url,
-  }));
-  setShowAvatarDialog(false);
-}}
-      >
-        <span className="avatar-save-title">FEELS CUTE</span>
-        <span className="avatar-save-subtitle">
-          Might change later
-        </span>
-      </button>
-    </div>
-  </div>
-)}
-
+              <button
+                type="button"
+                className="avatar-save-btn"
+                onClick={() => {
+                  setForm((prev) => ({
+                    ...prev,
+                    avatar_url: selectedAvatar || prev.avatar_url,
+                  }));
+                  setShowAvatarDialog(false);
+                }}
+              >
+                <span className="avatar-save-title">FEELS CUTE</span>
+                <span className="avatar-save-subtitle">Might change later</span>
+              </button>
+            </div>
+          </div>
+        )}
       </form>
-
-      
     </div>
   );
 }
@@ -592,7 +651,7 @@ function TransactionsTab() {
   const loadTransactions = async (pageNumber: number) => {
     try {
       const res = await getTransactionList(pageNumber, pageSize);
-      console.log(res, "res")
+      console.log(res, "res");
       setTransactionList(res.data.data.content ?? []);
       setTotalPages(res.data.data.totalPages);
       setTotalElements(res.data.data.totalElements);
@@ -619,8 +678,19 @@ function TransactionsTab() {
 
       {transactionList?.length === 0 ? (
         <div className="dash-empty">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" style={{ color: "rgba(20,51,34,0.2)" }}>
-            <rect x="2" y="5" width="20" height="14" rx="2" /><line x1="2" y1="10" x2="22" y2="10" />
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ color: "rgba(20,51,34,0.2)" }}
+          >
+            <rect x="2" y="5" width="20" height="14" rx="2" />
+            <line x1="2" y1="10" x2="22" y2="10" />
           </svg>
           <p>No transactions yet.</p>
         </div>
@@ -639,13 +709,12 @@ function TransactionsTab() {
               </tr>
             </thead>
             <tbody>
-
               {transactionList?.map((tx) => (
                 <tr key={tx.id}>
                   <td className="dash-td-mono">{tx.razorpay_payment_id}</td>
                   <td>{tx.created_at}</td>
                   <td className="dash-td-amount">₹{tx.amount.toLocaleString("en-IN")}</td>
-                  <td>{tx.failure_reason || "-" }</td>
+                  <td>{tx.failure_reason || "-"}</td>
 
                   <td>{statusChip(tx.status)}</td>
                   <td>
@@ -655,7 +724,16 @@ function TransactionsTab() {
                         className="dash-invoice-btn cursor-pointer"
                         onClick={() => handleDownloadInvoice(tx.invoice_url!, tx.id)}
                       >
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <svg
+                          width="15"
+                          height="15"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
                           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                           <polyline points="7 10 12 15 17 10" />
                           <line x1="12" y1="15" x2="12" y2="3" />
@@ -673,10 +751,7 @@ function TransactionsTab() {
 
           {totalPages > 1 && (
             <div className="dash-pagination">
-              <button
-                onClick={() => setPage((p) => p - 1)}
-                disabled={page === 0}
-              >
+              <button onClick={() => setPage((p) => p - 1)} disabled={page === 0}>
                 Previous
               </button>
 
@@ -684,22 +759,20 @@ function TransactionsTab() {
                 Page {page + 1} of {totalPages}
               </span>
 
-              <button
-                onClick={() => setPage((p) => p + 1)}
-                disabled={page + 1 >= totalPages}
-              >
+              <button onClick={() => setPage((p) => p + 1)} disabled={page + 1 >= totalPages}>
                 Next
               </button>
             </div>
           )}
         </div>
-
-
       )}
 
       <p className="dash-info-note">
-        For billing disputes or refund requests, contact{" "}
-        <a href="mailto:hello@pocketdragon.app" className="dash-link">hello@pocketdragon.app</a>.
+        For any issues regarding billing, please contact us at{" "}
+        <a href="mailto:support@pocketdragon.in" className="dash-link">
+          support@pocketdragon.in
+        </a>
+        .
       </p>
     </div>
   );
@@ -728,7 +801,11 @@ interface Plan {
 }
 function formatDate(iso: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" });
+  return new Date(iso).toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 const SUB_STATUS_MAP: Record<string, { label: string; cls: string }> = {
@@ -765,6 +842,80 @@ function SubscriptionTab({
   const [changing, setChanging] = useState(false);
   const [changed, setChanged] = useState(false);
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [monthlyDialog, setMonthlyDialog] = useState(false);
+  const [annualDialog, setAnnualDialog] = useState(false);
+
+  function CancellationDialog({
+    open,
+    onClose,
+    plan,
+  }: {
+    open: boolean;
+    onClose: () => void;
+    plan: "monthly" | "annual";
+  }) {
+  
+  
+  
+    return (
+      <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+        <DialogContent className="modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-foreground [&>button]:hover:text-foreground/70" style={{ background: "var(--green)" }}>
+          <div className=" flex flex-col gap-5">
+            {/* Title */}
+            <DialogHeader>
+              <DialogTitle
+                className="font-display font-bold uppercase tracking-[0.18em] text-rust"
+                style={{ fontSize: "1rem" }}
+              >
+                Terms of Cancellation
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                {plan === "monthly" ? "Monthly Plan" : "Annual Plan"} cancellation terms
+              </DialogDescription>
+            </DialogHeader>
+  
+            {/* Body */}
+            <div className=" space-y-3 text-[0.95rem] text-cream/85 leading-relaxed">
+              {plan === "monthly" ? (
+                <>
+                  <p>
+                   Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter
+                  </p>
+                  <p>
+                    No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
+                  </p>
+                  <p className="text-cream/55 text-[0.95rem]">
+                    To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+  Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter</p>
+                  <p>
+                   No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
+                  </p>
+                  <p className="text-cream/55 text-[0.95rem]">
+                    To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’ 
+                  </p>
+                </>
+              )}
+            </div>
+  
+            {/* Button */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="cursor-pointer mt-2 inline-flex w-full items-center justify-center rounded-full bg-rust px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cream transition-opacity hover:opacity-90"
+            >
+              Got It
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
 
   function daysUntil(dateStr: string | null): number | null {
     if (!dateStr) return null;
@@ -773,12 +924,11 @@ function SubscriptionTab({
   }
 
   const showSubscribeButton =
-    !subscription ||
-    ["stopped", "expired", "cancelling"].includes(subscription.status);
+    !subscription || ["stopped", "expired", "cancelling"].includes(subscription.status);
 
-async function handleSubscribe(planId: number) {
-  const selectedPlan = plans.find((p) => p.id === planId);
-  if (!selectedPlan) return;
+  async function handleSubscribe(planId: number) {
+    const selectedPlan = plans.find((p) => p.id === planId);
+    if (!selectedPlan) return;
 
     setChanging(true);
     const profileRes = await getUserProfile();
@@ -787,40 +937,30 @@ async function handleSubscribe(planId: number) {
     try {
       const res = await initializeSubscription(
         userUuid, // current logged in user uuid
-        selectedPlan.uuid
+        selectedPlan.uuid,
       );
 
       const paymentUrl = res.data.razorpay_short_url;
 
-      const paymentWindow = window.open(
-        paymentUrl,
-        "_blank",
-        "width=900,height=700"
-      );
+      const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
 
       pollSubscriptionStatus(paymentWindow, selectedPlan.uuid);
-
     } catch (err: any) {
       Swal.fire({
         icon: "error",
         title: "Failed",
-        text:
-          err?.response?.data?.message ??
-          "Unable to initialize subscription.",
+        text: err?.response?.data?.message ?? "Unable to initialize subscription.",
       });
     } finally {
       setChanging(false);
     }
   }
 
-
   async function pollSubscriptionStatus(paymentWindow: Window | null, targetPlanUuid?: string) {
     if (!paymentWindow) return;
 
     const interval = setInterval(async () => {
-
       try {
-
         // user closed popup manually
         if (paymentWindow.closed) {
           clearInterval(interval);
@@ -830,12 +970,11 @@ async function handleSubscribe(planId: number) {
         const profile = await getUserProfile();
         const sub = profile.data.subscription;
         const hasActive = profile.data.has_active_subscription;
-  const isPlanActive =(sub && (sub.status === "active" || sub.status === "trialing"))
+        const isPlanActive = sub && (sub.status === "active" || sub.status === "trialing");
         // const isPlanActive = hasActive || (sub && (sub.status === "active" || sub.status === "trialing"));
         const isTargetPlan = targetPlanUuid ? sub?.plan?.uuid === targetPlanUuid : true;
 
         if (isPlanActive && isTargetPlan) {
-
           clearInterval(interval);
 
           paymentWindow.close();
@@ -846,26 +985,22 @@ async function handleSubscribe(planId: number) {
             icon: "success",
             title: "Subscription Activated",
           });
-
         }
-
       } catch (e) {
         console.log(e);
       }
-
     }, 3000);
   }
 
+  async function handleChangePlan(planId: number) {
+    const planToApply = plans.find((p) => p.id === planId);
 
-async function handleChangePlan(planId: number) {
-  const planToApply = plans.find((p) => p.id === planId);
+    if (!planToApply || !subscription) return;
 
-  if (!planToApply || !subscription) return;
-
-  const confirm = await Swal.fire({
-    icon: "question",
-    title: `Switch to ${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"} Plan?`,
-    html: `
+    const confirm = await Swal.fire({
+      icon: "question",
+      title: `Switch to ${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"} Plan?`,
+      html: `
       <div style="text-align:center; line-height:1.6">
         <p>
           <strong>Rs ${planToApply.price.toLocaleString()}/${planToApply.billing_cycle}</strong>
@@ -892,44 +1027,36 @@ async function handleChangePlan(planId: number) {
         </p>
       </div>
     `,
-    showCancelButton: true,
-    confirmButtonText: "Yes, Switch",
-    cancelButtonText: "No, Go back",
-    confirmButtonColor: "#b65a2f",
-    cancelButtonColor: "#143322",
-    // reverseButtons: true,
-  });
-
-  if (!confirm.isConfirmed) return;
-
-  setChanging(true);
-
-  try {
-    const res = await upgradeSubscription(planToApply.uuid);
-
-    const paymentUrl = res.data.data?.razorpay_short_url;
-
-    const paymentWindow = window.open(
-      paymentUrl,
-      "_blank",
-      "width=900,height=700"
-    );
-
-    pollSubscriptionStatus(paymentWindow, planToApply.uuid);
-
-  } catch (err: any) {
-    Swal.fire({
-      icon: "error",
-      title: "Upgrade Failed",
-      text:
-        err?.response?.data?.message ??
-        "Unable to upgrade your subscription.",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Switch",
+      cancelButtonText: "No, Go back",
+      confirmButtonColor: "#b65a2f",
+      cancelButtonColor: "#143322",
+      // reverseButtons: true,
     });
-  } finally {
-    setChanging(false);
-  }
-}
 
+    if (!confirm.isConfirmed) return;
+
+    setChanging(true);
+
+    try {
+      const res = await upgradeSubscription(planToApply.uuid);
+
+      const paymentUrl = res.data.data?.razorpay_short_url;
+
+      const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+
+      pollSubscriptionStatus(paymentWindow, planToApply.uuid);
+    } catch (err: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Upgrade Failed",
+        text: err?.response?.data?.message ?? "Unable to upgrade your subscription.",
+      });
+    } finally {
+      setChanging(false);
+    }
+  }
 
   async function handleCancelPlan() {
     if (!subscription) return;
@@ -937,10 +1064,10 @@ async function handleChangePlan(planId: number) {
     const remaining = daysUntil(subscription.current_period_end);
     const withinRenewalWindow = remaining !== null && remaining <= 3;
 
- const confirmResult = await Swal.fire({
-  icon: "warning",
-  title: "Cancel Subscription?",
-  html: `
+    const confirmResult = await Swal.fire({
+      icon: "warning",
+      title: "Cancel Subscription?",
+      html: `
     <div style="text-align:center; line-height:1.6;">
       <p>
         Your subscription will remain active until
@@ -954,12 +1081,12 @@ async function handleChangePlan(planId: number) {
       </p>
     </div>
   `,
-  showCancelButton: true,
-  confirmButtonText: "Yes Cancel",
-  cancelButtonText: "No, Go Back",
-  confirmButtonColor: "#b65a2f",
-  cancelButtonColor: "#143322",
-});
+      showCancelButton: true,
+      confirmButtonText: "Yes Cancel",
+      cancelButtonText: "No, Go Back",
+      confirmButtonColor: "#b65a2f",
+      cancelButtonColor: "#143322",
+    });
 
     if (!confirmResult.isConfirmed) return;
 
@@ -974,9 +1101,11 @@ async function handleChangePlan(planId: number) {
       });
       await onSubscriptionChanged?.();
     } catch (err: any) {
-
       console.error("Failed to cancel subscription", err);
-      const message = err?.response?.data?.message ?? err?.message ?? "Failed to cancel subscription. Please try again.";
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        "Failed to cancel subscription. Please try again.";
       Swal.fire({
         icon: "error",
         title: "Cancellation Failed",
@@ -988,21 +1117,20 @@ async function handleChangePlan(planId: number) {
     }
   }
 
-
   useEffect(() => {
-  getPackageList()
-    .then((res) => {
-      const loadedPlans = res.data?.content ?? [];
-      setPlans(loadedPlans);
+    getPackageList()
+      .then((res) => {
+        const loadedPlans = res.data?.content ?? [];
+        setPlans(loadedPlans);
 
-      if (subscription?.plan?.id) {
-        setSelectedPlanId(subscription.plan.id);
-      } else if (loadedPlans.length > 0) {
-        setSelectedPlanId(loadedPlans[0].id);
-      }
-    })
-    .catch((err) => console.error("Failed to load plans", err));
-}, [subscription]);
+        if (subscription?.plan?.id) {
+          setSelectedPlanId(subscription.plan.id);
+        } else if (loadedPlans.length > 0) {
+          setSelectedPlanId(loadedPlans[0].id);
+        }
+      })
+      .catch((err) => console.error("Failed to load plans", err));
+  }, [subscription]);
 
   const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
   const annualPlan = plans.find((p) => p.billing_cycle === "annual");
@@ -1011,7 +1139,6 @@ async function handleChangePlan(planId: number) {
   const planPrice = { monthly: "₹500 / month", annual: "₹4,500 / year", none: "—" };
   const isCurrentPlanSelected = !!subscription && selectedPlanId === subscription.plan.id;
   const isDifferentPlanSelected = !!selectedPlanId && !isCurrentPlanSelected;
-
 
   const statusMap = {
     active: { label: "Active", cls: "dash-chip-success" },
@@ -1022,21 +1149,21 @@ async function handleChangePlan(planId: number) {
   const selectedPlan = plans.find((p) => p.id === selectedPlanId);
 
   const isSubscriptionActive =
-  subscription?.status === "active" ||
-  subscription?.status === "trialing";
+    subscription?.status === "active" || subscription?.status === "trialing";
 
-// const isDowngrade =
-//    isSubscriptionActive &&
-//   subscription?.plan?.billing_cycle === "annual" &&
-//   selectedPlan?.billing_cycle === "monthly";
-
+  // const isDowngrade =
+  //    isSubscriptionActive &&
+  //   subscription?.plan?.billing_cycle === "annual" &&
+  //   selectedPlan?.billing_cycle === "monthly";
 
   return (
     <div className="dash-section">
       <div className="dash-section-head">
         <h2 className="dash-section-title">Subscription</h2>
         <p className="dash-section-sub">
-          {trialEndedWithoutSubscription ? "Choose a plan to continue." : "Manage your current plan."}
+          {trialEndedWithoutSubscription
+            ? "Choose a plan to continue."
+            : "Manage your current plan."}
         </p>
       </div>
 
@@ -1055,13 +1182,14 @@ async function handleChangePlan(planId: number) {
             </p>
 
             {isTrialActive ? (
-              <div className="dash-sub-meta">
-                <h3 className="">Free trial active</h3>
-                <p className="">
-                  Your {trialDaysLeft}-day trial ends {formatDate(subscription.trial_end_at)}.
-                </p>
-              </div>
+              <></>
             ) : (
+              // <div className="dash-sub-meta">
+              //   <h3 className="">Free trial active</h3>
+              //   <p className="">
+              //     Your {trialDaysLeft}-day trial ends {formatDate(subscription.trial_end_at)}.
+              //   </p>
+              // </div>
               <div className="dash-sub-meta">
                 {subscription.current_period_end && (
                   <span>Renews/ends: {formatDate(subscription.current_period_end)}</span>
@@ -1070,32 +1198,39 @@ async function handleChangePlan(planId: number) {
             )}
           </div>
           <div>
-            <span className={`dash-chip ${(SUB_STATUS_MAP[subscription.status] ?? { label: subscription.status, cls: "dash-chip-pending" }).cls}`}>
-              {(SUB_STATUS_MAP[subscription.status] ?? { label: subscription.status, cls: "dash-chip-pending" }).label}
+            <span
+              className={`dash-chip ${(SUB_STATUS_MAP[subscription.status] ?? { label: subscription.status, cls: "dash-chip-pending" }).cls}`}
+            >
+              {
+                (
+                  SUB_STATUS_MAP[subscription.status] ?? {
+                    label: subscription.status,
+                    cls: "dash-chip-pending",
+                  }
+                ).label
+              }
             </span>
           </div>
         </div>
       )}
-
 
       {!trialEndedWithoutSubscription && !subscription && isTrialActive && (
         <div className="dash-sub-current">
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">Free Trial</p>
-            <div className="dash-sub-meta">
+            {/* <div className="dash-sub-meta">
               <h3 className="">Free trial active</h3>
               <p className="">
                 Your {trialDaysLeft}-day trial ends {formatDate(trialEndAt)}.
               </p>
-            </div>
+            </div> */}
           </div>
-          <div>
+          {/* <div>
             <span className="dash-chip dash-chip-pending">Trial</span>
-          </div>
+          </div> */}
         </div>
       )}
-
 
       {/* {!trialEndedWithoutSubscription && !subscription && (
   <div className="dash-sub-current">
@@ -1112,204 +1247,193 @@ async function handleChangePlan(planId: number) {
           {trialEndedWithoutSubscription || isTrialActive ? "Choose a Plan" : "Change Plan"}
         </p>
         <div className="">
-        <div className="dash-sub-plans-grid">
-  {plans.map((plan) => {
-    const isCurrentPlan = subscription?.plan.id === plan.id;
+          <div className="dash-sub-plans-grid">
+            {plans.map((plan) => {
+              const isCurrentPlan = subscription?.plan.id === plan.id;
 
-const isDowngrade =
-  subscription?.plan.billing_cycle === "annual" &&
-  plan.billing_cycle === "monthly";
+              const isDowngrade =
+                subscription?.plan.billing_cycle === "annual" && plan.billing_cycle === "monthly";
 
-const isUpgrade =
-  subscription?.plan.billing_cycle === "monthly" &&
-  plan.billing_cycle === "annual";
-    const isSelected = selectedPlanId === plan.id;
-    const isBestValue = plan.billing_cycle === "annual";
+              const isUpgrade =
+                subscription?.plan.billing_cycle === "monthly" && plan.billing_cycle === "annual";
+              const isSelected = selectedPlanId === plan.id;
+              const isBestValue = plan.billing_cycle === "annual";
 
-    return (
-      <div
-        key={plan.id}
-       className={`reg-plan-card
+              return (
+                <div
+                  key={plan.id}
+                  className={`reg-plan-card
     ${plan.billing_cycle === "annual" ? "reg-plan-card-featured" : "regMonthly"}
     ${subscription?.plan.id === plan.id ? "reg-plan-card-selected" : ""}`}
-        onClick={() => setSelectedPlanId(plan.id)}
-      >
-        {isBestValue && (
-          <div className="reg-plan-badge rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">BEST VALUE</div>
-        )}
+                  onClick={() => setSelectedPlanId(plan.id)}
+                >
+                  {isBestValue && (
+                    <div className="reg-plan-badge rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">
+                      BEST VALUE
+                    </div>
+                  )}
 
-{!trialEndedWithoutSubscription &&
-  subscription &&
-  (subscription.status === "active" ||
-    subscription.status === "trialing") &&
-  plan.id === subscription.plan.id && (
-    <p
-      className={
-        plan.billing_cycle === "annual"
-          ? "dash-sub-same-note annual"
-          : "dash-sub-same-note monthly"
-      }
-    >
-      Active
-    </p>
-)}
-      {plan.billing_cycle === "annual" ? (
-  <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85 mb-4">{plan.name}</p>
-) : (
-  <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70 mb-4">{plan.name}</p>
-)}
+                  {!trialEndedWithoutSubscription &&
+                    subscription &&
+                    (subscription.status === "active" || subscription.status === "trialing") &&
+                    plan.id === subscription.plan.id && (
+                      <p
+                        className={
+                          plan.billing_cycle === "annual"
+                            ? "dash-sub-same-note annual"
+                            : "dash-sub-same-note monthly"
+                        }
+                      >
+                        Active
+                      </p>
+                    )}
+                  {plan.billing_cycle === "annual" ? (
+                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85 mb-4">
+                      {plan.name}
+                    </p>
+                  ) : (
+                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70 mb-4">
+                      {plan.name}
+                    </p>
+                  )}
 
+                  <div>
+                    <p className="reg-plan-price-row">
+                      <span
+                        className={`reg-plan-currency ${
+                          plan.billing_cycle === "monthly"
+                            ? "text-sm font-bold"
+                            : "text-sm font-bold text-cream/85"
+                        }`}
+                      >
+                        Rs
+                      </span>
+                      {plan.billing_cycle === "annual" && (
+                        <span className="font-display text-5xl font-bold leading-none text-cream">
+                          {plan.price.toLocaleString("en-IN")}
+                        </span>
+                      )}
 
-        <div>
-  
+                      {plan.billing_cycle === "monthly" && (
+                        <span
+                          className="font-display text-5xl font-bold leading-none"
+                          style={{ color: "var(--foreground)" }}
+                        >
+                          {plan.price.toLocaleString("en-IN")}
+                        </span>
+                      )}
+                      <span
+                        className={`reg-plan-period ${
+                          plan.billing_cycle === "monthly"
+                            ? "ml-1 text-sm text-foreground/65"
+                            : "ml-1 text-sm text-cream/75"
+                        }`}
+                      >
+                        / {plan.billing_cycle === "monthly" ? "month" : "year"}
+                      </span>
+                    </p>
 
-          <p className="reg-plan-price-row">
-<span
-  className={`reg-plan-currency ${
-    plan.billing_cycle === "monthly"
-      ? "text-sm font-bold"
-      : "text-sm font-bold text-cream/85"
-  }`}
->
-  Rs
-</span>            
- {plan.billing_cycle === "annual" && (
-            <span className="font-display text-5xl font-bold leading-none text-cream">
-              {plan.price.toLocaleString("en-IN")}
-            </span>
-            )}
+                    {plan.billing_cycle === "annual" && (
+                      // <p className="reg-plan-save">
+                      //   Save {plan.discount_percent}% | Rs{" "}
+                      //   {plan.price_per_month_equiv}/month
+                      // </p>
 
-               {plan.billing_cycle === "monthly" && (
-            <span className="font-display text-5xl font-bold leading-none" style={{ color: 'var(--foreground)' }}>
-              {plan.price.toLocaleString("en-IN")}
-            </span>
-            )}
-       <span
-  className={`reg-plan-period ${
-    plan.billing_cycle === "monthly"
-      ? "ml-1 text-sm text-foreground/65"
-      : "ml-1 text-sm text-cream/75"
-  }`}
->
-  / {plan.billing_cycle === "monthly" ? "month" : "year"}
-</span>
-          </p>
+                      <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month</p>
+                    )}
 
-          {plan.billing_cycle === "annual" && (
-            // <p className="reg-plan-save">
-            //   Save {plan.discount_percent}% | Rs{" "}
-            //   {plan.price_per_month_equiv}/month
-            // </p>
+                    {plan.billing_cycle === "annual" && (
+                      <p className="mt-2 text-xs text-cream/75">
+                        {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+                      </p>
+                    )}
 
-             <p className="mt-2 text-xs text-cream/75">
-              Save 25% | Rs 375/month
-              
-            </p>
+                    {plan.billing_cycle === "monthly" && (
+                      <p className="mt-2 text-xs text-foreground/65">
+                        {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+                      </p>
+                    )}
 
-          )}
+                    {plan.billing_cycle === "monthly" && (
+                      <p className="mt-2 text-xs text-foreground/65">
+                        Billed monthly. Cancel anytime.
+                      </p>
+                    )}
+                  </div>
+                  {plan.billing_cycle === "annual" ? (
+                    <hr className="reg-plan-divider" />
+                  ) : (
+                    <hr className="reg-plan-divider monthlyHr" />
+                  )}
 
-            {plan.billing_cycle === "annual" && (
-          <p className="mt-2 text-xs text-cream/75">
-            {plan.gst_excluded ? "Excl GST" : "Incl GST"}
-          </p>
-          )}
-          
-            {plan.billing_cycle === "monthly" && (
-          <p className="mt-2 text-xs text-foreground/65">
-            {plan.gst_excluded ? "Excl GST" : "Incl GST"}
-          </p>
-          )}
+                  {showSubscribeButton ? (
+                    <button
+                      type="button"
+                      className="reg-plan-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedPlanId(plan.id);
+                        handleSubscribe(plan.id);
+                      }}
+                      disabled={changing || isTrialActive}
+                    >
+                      {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+                    </button>
+                  ) : // <button
+                  //   type="button"
+                  //   className="reg-plan-btn"
+                  //   onClick={(e) => {
+                  //     e.stopPropagation();
+                  //     setSelectedPlanId(plan.id);
+                  //     handleSubscribe(plan.id);
+                  //   }}
+                  //   disabled={changing}
+                  // >
+                  //   {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+                  // </button>
+                  subscription?.plan.id === plan.id ? (
+                    <>
+                      {/* <p className="reg-current-plan-text">CURRENT PLAN</p> */}
 
-          {plan.billing_cycle === "monthly" && (
-          <p className="mt-2 text-xs text-foreground/65">
-          Billed monthly. Cancel anytime.
-          </p>
-          )}
+                      <button
+                        type="button"
+                        className="reg-plan-btn"
+                        disabled={changing}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCancelPlan();
+                        }}
+                      >
+                        {changing ? "Cancelling..." : "Cancel Subscription"}
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      className={`reg-plan-btn ${isDowngrade ? "opacity-50 cursor-not-allowed disabled" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleChangePlan(plan.id);
+                      }}
+                      disabled={changing}
+                    >
+                      {changing ? "Updating..." : isDowngrade ? "DOWNGRADE" : "UPGRADE"}
+                    </button>
 
-        </div>
-          {plan.billing_cycle === "annual" ? (
-   <hr className="reg-plan-divider" />
-) : (
-  <hr className="reg-plan-divider monthlyHr" />
-)}
+                    // <button
+                    //   type="button"
+                    //   className="reg-plan-btn"
+                    //   onClick={(e) => {
+                    //     e.stopPropagation();
+                    //     handleChangePlan(plan.id);
+                    //   }}
+                    //   disabled={changing}
+                    // >
+                    //   {changing ? "Updating..." : "UPGRADE"}
+                    // </button>
+                  )}
 
-
-
-{showSubscribeButton ? (
-  <button
-  type="button"
-  className="reg-plan-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    setSelectedPlanId(plan.id);
-    handleSubscribe(plan.id);
-  }}
-  disabled={changing || isTrialActive}
->
-  {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
-</button>
-  // <button
-  //   type="button"
-  //   className="reg-plan-btn"
-  //   onClick={(e) => {
-  //     e.stopPropagation();
-  //     setSelectedPlanId(plan.id);
-  //     handleSubscribe(plan.id);
-  //   }}
-  //   disabled={changing}
-  // >
-  //   {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
-  // </button>
-) : subscription?.plan.id === plan.id ? (
-  <>
-    {/* <p className="reg-current-plan-text">CURRENT PLAN</p> */}
-
-    <button
-      type="button"
-      className="reg-plan-btn"
-      disabled={changing}
-      onClick={(e) => {
-        e.stopPropagation();
-        handleCancelPlan();
-      }}
-    >
-      {changing ? "Cancelling..." : "Cancel Subscription"}
-    </button>
-  </>
-) : (
-
-  <button
-  type="button"
-   className={`reg-plan-btn ${isDowngrade ? "opacity-50 cursor-not-allowed disabled" : ""}`}
-
-  onClick={(e) => {
-    e.stopPropagation();
-    handleChangePlan(plan.id);
-  }}
-  disabled={changing}
->
-  {changing
-    ? "Updating..."
-    : isDowngrade
-    ? "DOWNGRADE"
-    : "UPGRADE"}
-</button>
-
-  // <button
-  //   type="button"
-  //   className="reg-plan-btn"
-  //   onClick={(e) => {
-  //     e.stopPropagation();
-  //     handleChangePlan(plan.id);
-  //   }}
-  //   disabled={changing}
-  // >
-  //   {changing ? "Updating..." : "UPGRADE"}
-  // </button>
-)}
-
-
-        {/* <button
+                  {/* <button
           type="button"
           className="reg-plan-btn"
           onClick={(e) => {
@@ -1334,15 +1458,75 @@ const isUpgrade =
             : "UPGRADE"}
         </button> */}
 
-        {/* <p className="reg-plan-terms">
+                  {/* <p className="reg-plan-terms">
           ⓘ Terms of cancellation
         </p> */}
-      </div>
-    );
-  })}
-</div>
+                  {plan.billing_cycle === "monthly" ? (
+                    <div className="w-full text-center">
+                      <button
+                        type="button"
+                        onClick={() => setMonthlyDialog(true)}
+                        className="cursor-pointer mt-3 inline-flex items-center justify-center gap-1.5 text-[0.80rem] text-foreground/50  underline-offset-2 hover:text-foreground/75 transition-colors"
+                      >
+                        <svg
+                          width="13"
+                          height="13"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="16" x2="12" y2="12" />
+                          <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                        Terms of cancellation
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full text-center">
+                      <button
+                        type="button"
+                        onClick={() => setAnnualDialog(true)}
+                        className="mt-3 inline-flex items-center cursor-pointer justify-center gap-1.5 text-[0.80rem] text-cream/50  underline-offset-2 hover:text-cream/80 transition-colors"
+                      >
+                        <svg
+                          width="13"
+                          height="13"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="16" x2="12" y2="12" />
+                          <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                        Terms of cancellation
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-     
+
+          <CancellationDialog
+        open={monthlyDialog}
+        onClose={() => setMonthlyDialog(false)}
+        plan="monthly"
+      />
+      <CancellationDialog
+        open={annualDialog}
+        onClose={() => setAnnualDialog(false)}
+        plan="annual"
+      />
+
         {/* <div className="dash-sub-actions">
                {isDowngrade && (
   <p className="text-sm text-red-500 mb-3">
@@ -1410,9 +1594,11 @@ const isUpgrade =
       </div>
 
       <p className="dash-info-note">
-        To cancel your subscription, go to Account Settings in the Pocket Dragon app and select "Manage Subscription".
-        See our{" "}
-        <Link to="/terms" className="dash-link">Terms of Use</Link>{" "}
+        To cancel your subscription, go to Account Settings in the Pocket Dragon app and select
+        "Manage Subscription". See our{" "}
+        <Link to="/terms" className="dash-link">
+          Terms of Use
+        </Link>{" "}
         for cancellation policy.
       </p>
     </div>
@@ -1421,7 +1607,10 @@ const isUpgrade =
 
 // ─── Main DashboardPage ───────────────────────────────────────────────────────
 
-const TAB_ROUTES: Record<Tab, "/myaccount/profile" | "/myaccount/transaction-history" | "/myaccount/manage-subscription"> = {
+const TAB_ROUTES: Record<
+  Tab,
+  "/myaccount/profile" | "/myaccount/transaction-history" | "/myaccount/manage-subscription"
+> = {
   profile: "/myaccount/profile",
   transactions: "/myaccount/transaction-history",
   subscription: "/myaccount/manage-subscription",
@@ -1432,9 +1621,7 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
   const [user, setUser] = useState<UserProfile>({});
   const navigate = useNavigate();
 
-
   function fetchUserProfile() {
-
     return getUserProfile()
       .then((res) => {
         const data = res.data;
@@ -1450,7 +1637,8 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
           avatar_url: data.avatar_url ?? prev.avatar_url,
           joined_at: data.joined_at ?? prev.joined_at,
           has_active_subscription: data.has_active_subscription ?? prev.has_active_subscription,
-          trial_ended_without_subscription: data.trial_ended_without_subscription ?? prev.trial_ended_without_subscription,
+          trial_ended_without_subscription:
+            data.trial_ended_without_subscription ?? prev.trial_ended_without_subscription,
           is_trial_active: data.is_trial_active ?? prev.is_trial_active,
           trial_days_left: data.trial_days_left ?? prev.trial_days_left,
           trial_end_at: data.trial_end_at ?? prev.trial_end_at,
@@ -1503,7 +1691,6 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
               trialDaysLeft={user.trial_days_left ?? 0}
               trialEndAt={user.trial_end_at ?? null}
               onSubscriptionChanged={fetchUserProfile}
-
             />
           )}
         </main>
@@ -1513,7 +1700,3 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
     </div>
   );
 }
-
-
-
-

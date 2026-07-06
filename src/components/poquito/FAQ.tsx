@@ -43,7 +43,7 @@ const faqs = [
   },
    {
     q: "How do I report bugs or unfair behavior?",
-    a: "You may contact us at <a href='mailto:hello@pocketdragon.app' class='text-rust hover:opacity-75 transition-opacity'>hello@pocketdragon.app</a>",
+    a: "You may contact us at <a href='mailto:support@pocketdragon.app' class='text-rust hover:opacity-75 transition-opacity'>hello@pocketdragon.app</a>",
     defaultOpen: false,
   },
    {

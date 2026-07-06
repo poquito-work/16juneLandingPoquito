@@ -5,7 +5,7 @@ import { PocketDragonLogo } from "./Logo";
 
 const NAV = [
   { label: "Home", href: "#home" },
-  { label: "About Us", href: "#playground" },
+  { label: "Explore", href: "#playground" },
   { label: "Contact Us", href: "#contact" },
 ];
 
@@ -26,6 +26,9 @@ function getCurrentSectionId(): string {
   return current;
 }
 
+
+
+
 export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -35,6 +38,39 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
 
   const isDark = DARK_SECTION_IDS.includes(sectionId);
   const isRust = RUST_SECTION_IDS.includes(sectionId);
+useEffect(() => {
+  if (!window.location.hash) return;
+
+  const id = window.location.hash.substring(1);
+
+  // Wait until the page has rendered
+  requestAnimationFrame(() => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "auto", // instant jump
+      block: "start",
+    });
+  });
+}, []);
+
+  const handleNavClick = (
+  e: React.MouseEvent<HTMLAnchorElement>,
+  hash: string
+) => {
+  e.preventDefault();
+  setOpen(false);
+
+  if (window.location.pathname === "/") {
+    document.getElementById(hash)?.scrollIntoView({
+      behavior: "auto",
+    });
+  } else {
+    navigate({
+      to: "/",
+      hash,
+    });
+  }
+};
+
 
   useEffect(() => {
     function update() {
@@ -68,19 +104,19 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
 
   const lightStyle = {
     background: "rgba(249, 242, 228, 0.85)",
-    backdropFilter: "blur(20px) saturate(180%)",
+    backdropFilter: "blur(4px) saturate(180%)",
     borderBottom: "1px solid rgba(20, 51, 34, 0.09)",
     // boxShadow: "rgba(20, 51, 34, 0.06) 0px 4px 20px",
   };
   const darkStyle = {
     background: "rgba(13, 31, 21, 0.88)",
-    backdropFilter: "blur(20px) saturate(180%)",
+    backdropFilter: "blur(4px) saturate(180%)",
     borderBottom: "1px solid rgba(249, 242, 228, 0.06)",
     boxShadow: "rgba(0, 0, 0, 0.3) 0px 4px 20px",
   };
   const rustStyle = {
     background: "rgba(122, 50, 20, 0.88)",
-    backdropFilter: "blur(20px) saturate(180%)",
+    backdropFilter: "blur(4px) saturate(180%)",
     borderBottom: "1px solid rgba(249, 242, 228, 0.08)",
     boxShadow: "rgba(0, 0, 0, 0.25) 0px 4px 20px",
   };
@@ -146,7 +182,7 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
                     <motion.a
                       key={item.label}
                       href={item.href}
-                      onClick={() => setOpen(false)}
+                      onClick={(e) => handleNavClick(e, item.href.replace("#", ""))}
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05, duration: 0.18, ease: "easeOut" }}

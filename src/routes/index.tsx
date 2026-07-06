@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const handleLoginClick = useCallback(() => {
-    document.getElementById("login")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("login")?.scrollIntoView({ behavior: "auto" });
   }, []);
 
   return (

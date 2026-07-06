@@ -206,11 +206,11 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) e.email = "Please enter a valid email.";
     if (data.phone.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())) e.phone = "Please enter a valid phone number.";
     if (!data.password) e.password = "Password is required.";
-    else if (data.password.length < 8) e.password = "Must be at least 8 characters.";
-    else if (!/[A-Z]/.test(data.password)) e.password = "Must include at least one uppercase letter.";
-    else if (!/[a-z]/.test(data.password)) e.password = "Must include at least one lowercase letter.";
-    else if (!/[0-9]/.test(data.password)) e.password = "Must include at least one digit.";
-    else if (!/[^A-Za-z0-9]/.test(data.password)) e.password = "Must include at least one special character.";
+    // else if (data.password.length < 8) e.password = "Must be at least 8 characters.";
+    // else if (!/[A-Z]/.test(data.password)) e.password = "Must include at least one uppercase letter.";
+    // else if (!/[a-z]/.test(data.password)) e.password = "Must include at least one lowercase letter.";
+    // else if (!/[0-9]/.test(data.password)) e.password = "Must include at least one digit.";
+    // else if (!/[^A-Za-z0-9]/.test(data.password)) e.password = "Must include at least one special character.";
     if (!data.confirmPassword) e.confirmPassword = "Please confirm your password.";
     else if (data.password !== data.confirmPassword) e.confirmPassword = "Passwords do not match.";
     if (!data.agreed) e.agreed = "You must agree to the Terms & Privacy Policy to continue.";
@@ -454,7 +454,13 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
 
       <p className="reg-signin-hint">
         Been here before?{" "}
-        <Link to="/" className="reg-signin-link">Sign In</Link>
+        <Link
+  to="/"
+  hash="login"
+  className="reg-signin-link"
+>
+  Sign In
+</Link>
       </p>
 
 
