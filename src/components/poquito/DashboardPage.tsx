@@ -1375,7 +1375,8 @@ function SubscriptionTab({
                         setSelectedPlanId(plan.id);
                         handleSubscribe(plan.id);
                       }}
-                      disabled={changing || isTrialActive}
+                      // || isTrialActive
+                      disabled={changing }
                     >
                       {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
                     </button>

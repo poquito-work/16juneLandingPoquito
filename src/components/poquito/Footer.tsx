@@ -186,10 +186,10 @@ export function Footer() {
           {/* Links: email · socials · Privacy · Terms — stacked on mobile, single row on desktop */}
           <div className="flex flex-col items-end gap-3 text-xs text-pq-cream md:col-start-2 md:flex-row md:items-center md:gap-6 md:justify-self-center">
             <a
-              href="mailto:support@pocketdragon.app"
+              href="mailto:support@pocketdragon.in"
               className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
             >
-              support@pocketdragon.app
+              support@pocketdragon.in
             </a>
             <div className="flex items-center gap-3">
               <a
