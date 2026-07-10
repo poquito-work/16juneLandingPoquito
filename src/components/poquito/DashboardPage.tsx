@@ -257,7 +257,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
   const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
   useEffect(() => {
-    getPredefinedListByType("city")
+    getPredefinedListByType("CITY")
       .then((res) => setCityList(res.data.content ?? []))
       .catch(() => {});
   }, []);
@@ -1042,11 +1042,11 @@ function SubscriptionTab({
     try {
       const res = await upgradeSubscription(planToApply.uuid);
 
-      const paymentUrl = res.data.data?.razorpay_short_url;
+      // const paymentUrl = res.data.data?.razorpay_short_url;
 
-      const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+      // const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
 
-      pollSubscriptionStatus(paymentWindow, planToApply.uuid);
+      // pollSubscriptionStatus(paymentWindow, planToApply.uuid);
     } catch (err: any) {
       Swal.fire({
         icon: "error",

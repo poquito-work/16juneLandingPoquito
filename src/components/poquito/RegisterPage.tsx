@@ -17,6 +17,7 @@ import {
 
 function RegisterHeader() {
   return (
+ 
     <header
       className="register-header"
       style={{
@@ -40,7 +41,11 @@ function RegisterHeader() {
         </Link>
       </div>
     </header>
+
+    
   );
+
+  
 }
 
 // ─── Register Footer ─────────────────────────────────────────────────────────
@@ -176,7 +181,7 @@ const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await getPredefinedListByType("city");
+        const response = await getPredefinedListByType("CITY");
         setCityList(response.data.content);
       } catch (error) {
         console.error("Error fetching city list:", error);

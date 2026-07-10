@@ -12,10 +12,10 @@ import avtarBunny from "@/assets/poquito-owl.png";
 const EASE = [0.22, 0.61, 0.36, 1] as const;
 
 const bgTiles = [
-  { src: tile1, left: "4%",  top: "14%", w: 54, rot: -12, op: 0.13, dur: 7.5, delay: 0   },
-  { src: tile2, left: "10%", top: "72%", w: 44, rot: 20,  op: 0.10, dur: 8.5, delay: 1.2 },
+  { src: tile1, left: "4%", top: "14%", w: 54, rot: -12, op: 0.13, dur: 7.5, delay: 0 },
+  { src: tile2, left: "10%", top: "72%", w: 44, rot: 20, op: 0.10, dur: 8.5, delay: 1.2 },
   { src: tile1, left: "32%", top: "91%", w: 38, rot: -22, op: 0.08, dur: 8.0, delay: 2.4 },
-  { src: tile2, left: "1%",  top: "42%", w: 46, rot: 15,  op: 0.12, dur: 9.5, delay: 0.3 },
+  { src: tile2, left: "1%", top: "42%", w: 46, rot: 15, op: 0.12, dur: 9.5, delay: 0.3 },
 ];
 
 const containerVariants = {
@@ -41,25 +41,33 @@ export function Hero() {
       id="home"
       ref={ref}
       className="relative min-h-screen overflow-hidden"
-      style={{ background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)" }}
+      // style={{ background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)" }}
+      style={{ background: "#ebe3d1db" }}
     >
       {/* Video — right half, full height, absolutely positioned */}
       <div
         aria-hidden
         className="absolute top-0 right-0 h-full hidden lg:block"
-        style={{ width: "50%", zIndex: 0 }}
+        style={{
+          width: "50%", zIndex: 0, background: "transparent",
+          boxShadow: "none",
+          filter: "none",
+        }}
       >
         <video
           src={heroVideo}
           autoPlay
           muted
           playsInline
+
           loop
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
             display: "block",
+            filter: "brightness(1.08) contrast(1.03)",
+
           }}
         />
         {/* Fade left edge so it blends into the text area */}
@@ -67,13 +75,15 @@ export function Hero() {
           style={{
             position: "absolute",
             inset: 0,
-             background: `
-              linear-gradient(to right,  #EDE5D0 0%, #EDE5D0cc 15%, transparent 55%),
-              linear-gradient(to bottom, #F9F2E4 0%, transparent 18%),
-              linear-gradient(to top,    #E5DABB 0%, transparent 18%)
+            background: `
+               linear-gradient(to right, #EDE5D0 0%, rgba(237,229,208,.8) 15%, transparent 55%),
+  linear-gradient(to bottom, rgba(249,242,228,.25) 0%, transparent 10%),
+  linear-gradient(to top, rgba(229,218,187,.25) 0%, transparent 10%)
             `,
           }}
         />
+        {/* Fade left edge so it blends into the text area */}
+        
       </div>
 
       {/* Ambient background tiles — left side only */}
@@ -106,7 +116,7 @@ export function Hero() {
             <motion.div variants={itemVariants} className="flex items-center gap-3">
               <span className="h-px w-8" style={{ background: "var(--rust)" }} />
               <span className="text-[0.72rem] uppercase tracking-[0.22em]" style={{ color: "var(--rust)" }}>
-                 Play through tunnels, clouds, and signal tantrums
+                Play through tunnels, clouds, and signal tantrums
               </span>
               {/* <span className="h-px w-8" style={{ background: "var(--rust)" }} /> */}
             </motion.div>
@@ -123,7 +133,7 @@ export function Hero() {
             >
               Mahjong on{" "}
               <span style={{ color: "var(--rust)" }}>your time,</span>{" "}
-             <span style={{ color: "var(--rust)" }}>anywhere</span>  you are!
+              <span style={{ color: "var(--rust)" }}>anywhere</span>  you are!
             </motion.h1>
 
             {/* Body */}
@@ -152,9 +162,9 @@ export function Hero() {
                  <strong>10,000+ Players</strong>
               </span> */}
               <div className="flex -space-x-2 socialRound">
-                <img src={avtarBoy} className="height-30"/>
-                     <img src={avtarGirl}/>
-                      <img src={avtarBunny}/>
+                <img src={avtarBoy} className="height-30" />
+                <img src={avtarGirl} />
+                <img src={avtarBunny} />
                 {/* {avatarGradients.map((g, i) => (
                   <div 
                     key={i}
@@ -169,7 +179,7 @@ export function Hero() {
                 ))} */}
               </div>
               <span className="text-sm" style={{ color: "var(--foreground)", opacity: 0.7 }}>
-                 <span> Join our growing community</span>
+                <span> Join our growing community</span>
               </span>
             </motion.div>
           </motion.div>
