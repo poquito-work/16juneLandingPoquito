@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-D1Pjw3z4.mjs";
+import { g as getTermsCondition, a as getPrivacyPolicy, P as PocketDragonLogo, c as checkEmailExists, b as checkUserExists, s as sendOtp, d as getPredefinedListByType, r as registerUser } from "./Logo-HL8VV5jC.mjs";
 import { a as avtarBoy } from "./poquito-boy-DDfs1Mfd.mjs";
 import { M as Mail, S as Smartphone, a as MapPin, U as User, L as Lock } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -11,9 +11,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
+import "util";
 import "crypto";
 import "async_hooks";
-import "util";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -131,7 +131,7 @@ function StepDetails({
   reactExports.useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await getPredefinedListByType("city");
+        const response = await getPredefinedListByType("CITY");
         setCityList(response.data.content);
       } catch (error) {
         console.error("Error fetching city list:", error);

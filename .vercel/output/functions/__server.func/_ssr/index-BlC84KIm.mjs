@@ -1,9 +1,9 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3, D as Dialog, c as DialogContent, d as DialogHeader, e as DialogTitle, f as DialogDescription } from "./Footer-CqHE7f2H.mjs";
+import { H as Header, F as Footer, t as tile1, a as tile2, b as tile3, D as Dialog, c as DialogContent, d as DialogHeader, e as DialogTitle, f as DialogDescription } from "./Footer-CRSAsCG3.mjs";
 import { a as avtarBoy } from "./poquito-boy-DDfs1Mfd.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
 import { l as logoSrc } from "./pocket-dragon-logo-B1TjRRiN.mjs";
-import { P as PocketDragonLogo, l as loginUser } from "./Logo-D1Pjw3z4.mjs";
+import { P as PocketDragonLogo, l as loginUser } from "./Logo-HL8VV5jC.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { A as ArrowUp, W as WifiOff, T as Trophy, R as Radar } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__react-dialog.mjs";
@@ -16,9 +16,9 @@ import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
 import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
 import "../_libs/radix-ui__react-primitive.mjs";
 import "../_libs/react-dom.mjs";
+import "util";
 import "crypto";
 import "async_hooks";
-import "util";
 import "stream";
 import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
@@ -159,14 +159,20 @@ function Hero() {
       id: "home",
       ref,
       className: "relative min-h-screen overflow-hidden",
-      style: { background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)" },
+      style: { background: "#ebe3d1db" },
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
             "aria-hidden": true,
             className: "absolute top-0 right-0 h-full hidden lg:block",
-            style: { width: "50%", zIndex: 0 },
+            style: {
+              width: "50%",
+              zIndex: 0,
+              background: "transparent",
+              boxShadow: "none",
+              filter: "none"
+            },
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "video",
@@ -180,7 +186,8 @@ function Hero() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    display: "block"
+                    display: "block",
+                    filter: "brightness(1.08) contrast(1.03)"
                   }
                 }
               ),
@@ -191,9 +198,9 @@ function Hero() {
                     position: "absolute",
                     inset: 0,
                     background: `
-              linear-gradient(to right,  #EDE5D0 0%, #EDE5D0cc 15%, transparent 55%),
-              linear-gradient(to bottom, #F9F2E4 0%, transparent 18%),
-              linear-gradient(to top,    #E5DABB 0%, transparent 18%)
+               linear-gradient(to right, #EDE5D0 0%, rgba(237,229,208,.8) 15%, transparent 55%),
+  linear-gradient(to bottom, rgba(249,242,228,.25) 0%, transparent 10%),
+  linear-gradient(to top, rgba(229,218,187,.25) 0%, transparent 10%)
             `
                   }
                 }

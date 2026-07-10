@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { h as getUserProfile, d as getPredefinedListByType, i as getTransactionList, j as getPackageList, u as updateUserProfile, k as initializeSubscription, m as cancelSubscription, n as upgradeSubscription } from "./Logo-D1Pjw3z4.mjs";
-import { H as Header, F as Footer, D as Dialog, c as DialogContent, d as DialogHeader, e as DialogTitle, f as DialogDescription } from "./Footer-CqHE7f2H.mjs";
+import { h as getUserProfile, d as getPredefinedListByType, i as getTransactionList, j as getPackageList, u as updateUserProfile, k as initializeSubscription, m as cancelSubscription, n as upgradeSubscription } from "./Logo-HL8VV5jC.mjs";
+import { H as Header, F as Footer, D as Dialog, c as DialogContent, d as DialogHeader, e as DialogTitle, f as DialogDescription } from "./Footer-CRSAsCG3.mjs";
 import { S as Swal } from "../_libs/sweetalert2.mjs";
 import { U as User, M as Mail, S as Smartphone, a as MapPin } from "../_libs/lucide-react.mjs";
 function decodeJwtPayload(token) {
@@ -147,7 +147,7 @@ function ProfileTab({ user }) {
   const [showAvatarDialog, setShowAvatarDialog] = reactExports.useState(false);
   const [selectedAvatar, setSelectedAvatar] = reactExports.useState(user.avatar_url);
   reactExports.useEffect(() => {
-    getPredefinedListByType("city").then((res) => setCityList(res.data.content ?? [])).catch(() => {
+    getPredefinedListByType("CITY").then((res) => setCityList(res.data.content ?? [])).catch(() => {
     });
   }, []);
   const openAvatarDialog = () => {
@@ -720,9 +720,6 @@ function SubscriptionTab({
     setChanging(true);
     try {
       const res = await upgradeSubscription(planToApply.uuid);
-      const paymentUrl = res.data.data?.razorpay_short_url;
-      const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
-      pollSubscriptionStatus(paymentWindow, planToApply.uuid);
     } catch (err) {
       Swal.fire({
         icon: "error",
