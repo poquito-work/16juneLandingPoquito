@@ -208,7 +208,7 @@ export const updateUserProfile = async (data: {
 };
 
 export async function getPackageList() {
-  const response = await api.get(`/api/v1/package-master`);
+  const response = await api.get(`/api/v1/package-master/`);
   return response.data;
 }
 
