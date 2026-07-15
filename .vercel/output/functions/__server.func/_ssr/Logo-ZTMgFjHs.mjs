@@ -121,7 +121,7 @@ const updateUserProfile = async (data) => {
   return response.data;
 };
 async function getPackageList() {
-  const response = await api.get(`/api/v1/package-master`);
+  const response = await api.get(`/api/v1/package-master/`);
   return response.data;
 }
 const getTransactionList = async (page = 0, size = 10) => {
