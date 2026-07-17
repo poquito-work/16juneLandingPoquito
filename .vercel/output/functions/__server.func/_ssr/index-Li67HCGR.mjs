@@ -139,7 +139,7 @@ function DownloadButtons({
     )
   ] }) });
 }
-const heroVideo = "/assets/IMG_6280-p1NWQJ6P.mp4";
+const heroVideo = "/assets/hero-video-p1NWQJ6P.mp4";
 const avtarGirl = "/assets/poquito-girl-D0DjCdPM.png";
 const avtarBunny = "/assets/poquito-owl-VneLnk7F.png";
 const EASE$3 = [0.22, 0.61, 0.36, 1];
