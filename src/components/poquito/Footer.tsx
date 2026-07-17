@@ -225,11 +225,15 @@ export function Footer() {
               <Link
                 to="/privacy"
                 className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
+                 target="_blank"
+  rel="noopener noreferrer"
               >
                 Privacy Policy
               </Link>
               <Link
                 to="/terms"
+                 target="_blank"
+  rel="noopener noreferrer"
                 className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
               >
                 Terms of Use

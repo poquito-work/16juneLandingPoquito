@@ -153,7 +153,7 @@ useEffect(() => {
           <a
             href="/"
             aria-label="Go to home"
-            className="shrink-0"
+            className="shrink-0 cursor-none"
             onClick={(e) => {
               e.preventDefault();
               navigate({ to: "/" });

@@ -110,7 +110,7 @@ function TermsPage() {
         <section>
           <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">10. Governing Law &amp; Disputes</h2>
           <p>These Terms are governed by the laws of India. Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Mumbai, India.</p>
-          <p>We encourage you to contact us first at <a href="mailto:admin@pocketdragon.in" className="text-rust hover:opacity-75 transition-opacity">admin@pocketdragon.in</a> before initiating any legal proceedings. Most issues can be resolved quickly and fairly.</p>
+          <p>We encourage you to contact us first at <a href="mailto:support@pocketdragon.in" className="text-rust hover:opacity-75 transition-opacity">support@pocketdragon.in</a> before initiating any legal proceedings. Most issues can be resolved quickly and fairly.</p>
         </section>
 
         <section>
@@ -121,7 +121,7 @@ function TermsPage() {
 
         <section>
           <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">12. Contact</h2>
-          <p>If you have any questions about these Terms, please reach out to <a href="mailto:hello@pocketdragon.app" className="text-rust hover:opacity-75 transition-opacity">hello@pocketdragon.app</a>.</p>
+          <p>If you have any questions about these Terms, please reach out to <a href="mailto:support@pocketdragon.in" className="text-rust hover:opacity-75 transition-opacity">support@pocketdragon.in</a>.</p>
         </section>
 
       </div>

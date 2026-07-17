@@ -42,6 +42,7 @@ interface UserProfile {
   trial_days_left?: number;
   subscription?: UserSubscription | null;
   trial_end_at?: string | null;
+  other_city?:string | null;
 }
 
 interface Transaction {
@@ -112,6 +113,7 @@ function getUserFromToken(): UserProfile {
     username: (payload?.username as string) ?? (payload?.preferred_username as string) ?? "—",
     email: (payload?.email as string) ?? "—",
     phone_number: payload?.phone_number as string,
+    other_city: payload?.other_city as string,
     city: (payload?.city as string) ?? "",
     avatar_url: (payload?.picture as string) ?? "",
     joined_at: payload?.iat
@@ -233,7 +235,7 @@ function MobileTabBar({ active, onSelect }: { active: Tab; onSelect: (t: Tab) =>
 
 // ─── Profile Tab ──────────────────────────────────────────────────────────────
 
-function ProfileTab({ user }: { user: UserProfile }) {
+function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUpdated?: () => Promise<any> }) {
   const initials = (user.username ?? "P")
     .split(" ")
     .map((w) => w[0])
@@ -248,6 +250,7 @@ function ProfileTab({ user }: { user: UserProfile }) {
     phone_number: user.phone_number ?? "",
     city: user.city ?? "",
     avatar_url: user.avatar_url ?? "",
+    other_city: user.other_city ?? "",
   });
   const [cityList, setCityList] = useState<{ id: number; uuid: string; name: string }[]>([]);
   const [saving, setSaving] = useState(false);
@@ -281,17 +284,25 @@ function ProfileTab({ user }: { user: UserProfile }) {
 
   // Sync when parent user data loads
   useEffect(() => {
+    console.log("Effect user.other_city:", user.other_city);
     const matchedCity = cityList.find((c) => c.id === user.city_id);
     setForm((prev) => ({
       ...prev,
       name: user.name ?? prev.name,
       username: user.username ?? prev.username,
       email: user.email ?? prev.email,
-      phone_number: user.phone_number ?? prev.phone_number,
+      phone_number: user.phone_number !== undefined ? (user.phone_number ?? "") : prev.phone_number,
       city: matchedCity?.name ?? prev.city,
       avatar_url: user.avatar_url ?? prev.avatar_url,
+      other_city: user.other_city !== undefined ? (user.other_city ?? "") : prev.other_city,
     }));
-  }, [user.name, user.username, user.email, user.phone_number, user.city_id, cityList]);
+    console.log({
+  city: form.city,
+  other_city: form.other_city,
+  userOtherCity: user.other_city,
+  matchedCity,
+});
+  }, [user.name, user.username, user.email, user.phone_number,user.other_city, user.city_id, cityList]);
   function validate() {
     const e: Record<string, string> = {};
     // if (!form.name.trim()) e.name = "Full name is required.";
@@ -321,11 +332,12 @@ function ProfileTab({ user }: { user: UserProfile }) {
         phone_number: form.phone_number.trim() || null,
         city_id: selectedCity?.id,
         avatar_url: form.avatar_url,
+        other_city:form.other_city
       });
 
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-      await getUserProfile();
+      await onProfileUpdated?.();
       Swal.fire({
         icon: "success",
         title: "Profile Updated",
@@ -492,6 +504,30 @@ function ProfileTab({ user }: { user: UserProfile }) {
               </span>
             </div>
           </div>
+
+
+           {form.city.toLowerCase() === "other" && (
+          <div className="reg-field">
+            <label className="reg-label" htmlFor="reg-city">
+              Other City
+            </label>
+            <MapPin className="reg-input-icon" size={18} />
+            <input
+  type="text"
+  className="reg-input"
+  placeholder="Enter other city"
+  value={form.other_city}
+  onChange={(e) =>
+    setForm((prev) => ({
+      ...prev,
+      other_city: e.target.value,
+    }))
+  }
+/>
+            {errors.other_city && <span className="reg-error">{errors.other_city}</span>}
+          </div>
+        )}
+
 
           {/* Read-only fields */}
           {/* <div className="dash-field">
@@ -968,6 +1004,7 @@ function SubscriptionTab({
         }
 
         const profile = await getUserProfile();
+       
         const sub = profile.data.subscription;
         const hasActive = profile.data.has_active_subscription;
         const isPlanActive = sub && (sub.status === "active" || sub.status === "trialing");
@@ -1635,6 +1672,7 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
           email: data.email ?? prev.email,
           phone_number: data.phone_number ?? prev.phone_number,
           city_id: data.city_id ?? prev.city_id,
+          other_city: data.other_city !== undefined ? data.other_city : prev.other_city,
           avatar_url: data.avatar_url ?? prev.avatar_url,
           joined_at: data.joined_at ?? prev.joined_at,
           has_active_subscription: data.has_active_subscription ?? prev.has_active_subscription,
@@ -1681,7 +1719,7 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
         <Sidebar active={activeTab} onSelect={handleTabSelect} />
 
         <main className="dash-main">
-          {activeTab === "profile" && <ProfileTab user={user} />}
+          {activeTab === "profile" && <ProfileTab user={user} onProfileUpdated={fetchUserProfile} />}
           {activeTab === "transactions" && <TransactionsTab />}
           {activeTab === "subscription" && (
             <SubscriptionTab

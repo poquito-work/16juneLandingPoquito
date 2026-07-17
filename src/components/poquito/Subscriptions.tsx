@@ -51,7 +51,7 @@ function CancellationDialog({
                   No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
                 </p>
                 <p className="text-cream/55 text-[0.95rem]">
-                  To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’
+                  To cancel, go to My Account in the Pocket Dragon app and select ‘Subscription’
                 </p>
               </>
             ) : (
@@ -62,7 +62,7 @@ Subscriptions are non-refundable. Upon cancellation, benefits will remain active
                  No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
                 </p>
                 <p className="text-cream/55 text-[0.95rem]">
-                  To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’ 
+                  To cancel, go to My Account in the Pocket Dragon app and select ‘Subscription’
                 </p>
               </>
             )}

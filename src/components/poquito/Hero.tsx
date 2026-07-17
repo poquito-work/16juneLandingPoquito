@@ -147,8 +147,7 @@ export function Hero() {
                 maxWidth: "44ch",
               }}
             >
-              Practice, play, and compete your way to the top!
-              Enjoy real-time Traditional Mahjong action at your fingertips
+             Practice, play, and compete your way to the top! Enjoy real-time and offline Mahjong action at your fingertips
             </motion.p>
 
             {/* Download buttons */}

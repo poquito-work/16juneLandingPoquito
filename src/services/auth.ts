@@ -94,6 +94,7 @@ export const registerUser = async (data: {
   is_terms_condition_accepted: boolean;
   is_privacy_policy: boolean;
   avatar_url: string;
+  other_city:string;
   
 }) => {
   const payload = {
@@ -107,6 +108,7 @@ export const registerUser = async (data: {
     is_terms_condition_accepted: data.is_terms_condition_accepted,
     is_privacy_policy: data.is_privacy_policy,
      avatar_url: data.avatar_url,
+      other_city: data.other_city,
   };
 
   const response = await axios.post(
@@ -161,7 +163,7 @@ export const checkUserExists = async (email: string) => {
 
 export const getPredefinedListByType = async (entity_type: string) => {
   const response = await axios.get(
-    `${API_BASE_URL}/api/v1/admin/predefined/?entity_type=${entity_type}`
+   `${API_BASE_URL}/api/v1/admin/predefined/?entity_type=${entity_type}&is_sorted_alpha=${true}`
   );
 
   return response.data;
@@ -200,6 +202,7 @@ export const updateUserProfile = async (data: {
   city_id?: number;
   is_mfa_enabled?: boolean;
   is_biometric_enabled?: boolean;
+  other_city?:string | null;
   
   
 }) => {

@@ -314,7 +314,7 @@ const [error, setError] = useState("");
               </div>
 
               <p className="text-center text-pq-green/70 text-sm font-normal">
-                New to Poquito?{' '}
+                New to Pocket Dragon?{' '}
                 <Link   to="/register" className="f-w-600 text-rust font-normal hover:underline underline-offset-2">
                   Create an account
                 </Link>

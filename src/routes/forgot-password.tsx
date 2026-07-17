@@ -280,6 +280,7 @@ function RouteComponent() {
           </Link>
           <Link
             to="/"
+            hash="login"
             className="register-back-link text-xs tracking-[0.12em] uppercase transition-colors flex items-center gap-1.5 hover:opacity-70"
           >
             <svg
@@ -292,7 +293,7 @@ function RouteComponent() {
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Back to Home
+            Back to Login
           </Link>
         </div>
       </header>
@@ -598,21 +599,31 @@ function RouteComponent() {
 
       <footer className="border-t border-foreground/8 py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs" style={{ color: "rgba(20,51,34,0.35)" }}>
+          <p className="text-xs" style={{ color: "#6e6a5e" }}>
             © 2026 Poquito Project LLP. All Rights Reserved.
           </p>
           <div className="flex items-center gap-6">
+             <a
+              href="mailto:support@pocketdragon.in"
+              className="text-xs transition-colors hover:opacity-70" style={{ color: "#6e6a5e" }}
+            >
+              support@pocketdragon.in
+            </a>
             <Link
               to="/privacy"
               className="text-xs transition-colors hover:opacity-70"
-              style={{ color: "rgba(20,51,34,0.4)" }}
+              style={{ color: "#6e6a5e" }}
+               target="_blank"
+  rel="noopener noreferrer"
             >
               Privacy Policy
             </Link>
             <Link
               to="/terms"
               className="text-xs transition-colors hover:opacity-70"
-              style={{ color: "rgba(20,51,34,0.4)" }}
+              style={{ color: "#6e6a5e" }}
+               target="_blank"
+  rel="noopener noreferrer"
             >
               Terms of Use
             </Link>

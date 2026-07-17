@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "Can I switch between monthly and annual plans?",
-    a: "Yes — you can switch from a monthly plan to an annual plan at any time. Your annual subscription will begin once your current monthly billing period ends ",
+    a: "Yes, you can switch between plans. Your new subscription plan will begin once your current plan's billing period ends",
     defaultOpen: false,
   },
    {
@@ -43,7 +43,7 @@ const faqs = [
   },
    {
     q: "How do I report bugs or unfair behavior?",
-    a: "You may contact us at <a href='mailto:hello@pocketdragon.app' class='text-rust hover:opacity-75 transition-opacity'>hello@pocketdragon.app</a>",
+    a: "You may contact us at <a href='mailto:support@pocketdragon.in' class='text-rust hover:opacity-75 transition-opacity'>support@pocketdragon.in</a>",
     defaultOpen: false,
   },
    {
