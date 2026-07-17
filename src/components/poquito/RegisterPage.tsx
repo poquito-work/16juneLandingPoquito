@@ -1,19 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "@tanstack/react-router";
-import { checkEmailExists, checkUserExists, getPredefinedListByType, getPrivacyPolicy, getTermsCondition, registerUser, sendOtp, verifyOtp } from "@/services/auth";
+import { Link, Navigate, useNavigate } from "@tanstack/react-router";
+import {
+  checkEmailExists,
+  checkUserExists,
+  getPredefinedListByType,
+  getPrivacyPolicy,
+  getTermsCondition,
+  registerUser,
+  sendOtp,
+  verifyOtp,
+} from "@/services/auth";
 import { PocketDragonLogo } from "./Logo";
-
-// ─── City list ───────────────────────────────────────────────────────────────
-
-const CITIES = [
-  "Ahmedabad", "Bengaluru", "Bhopal", "Bhubaneswar", "Chandigarh",
-  "Chennai", "Coimbatore", "Delhi", "Faridabad", "Ghaziabad",
-  "Gurugram", "Hyderabad", "Indore", "Jaipur", "Kochi",
-  "Kolkata", "Lucknow", "Ludhiana", "Mumbai", "Nagpur",
-  "Nashik", "Noida", "Patna", "Pune", "Rajkot",
-  "Surat", "Thane", "Vadodara", "Varanasi", "Visakhapatnam",
-  "Other",
-];
+import uploadLogo from "@/assets/poquito-boy.png";
+import { Mail, Smartphone, MapPin, User, Lock } from "lucide-react";
 
 // ─── Register Header ─────────────────────────────────────────────────────────
 
@@ -32,13 +31,20 @@ function RegisterHeader() {
           <PocketDragonLogo size="lg" />
         </Link>
         <Link
-          to="/"
+          to="/" hash="login"
           className="register-back-link text-xs tracking-[0.12em] uppercase transition-colors flex items-center gap-1.5 hover:opacity-70"
         >
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg
+            width="14"
+            height="14"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Back to Home
+          Back to Login
         </Link>
       </div>
     </header>
@@ -52,13 +58,31 @@ function RegisterFooter() {
     <footer className="border-t border-foreground/8 py-8">
       <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-xs" style={{ color: "rgba(20,51,34,0.35)" }}>
-          © 2026 [Pocket Dragon/Poquito]. All Rights Reserved.
+          © 2026 Poquito Project LLP. All Rights Reserved.
         </p>
         <div className="flex items-center gap-6">
-          <Link to="/privacy" className="text-xs transition-colors hover:opacity-70" style={{ color: "rgba(20,51,34,0.4)" }}>
+           <a
+              href="mailto:support@pocketdragon.in"
+              className="text-xs transition-colors hover:opacity-70" style={{ color: "#6e6a5e" }}
+            >
+              support@pocketdragon.in
+            </a>
+          <Link
+            to="/privacy"
+            className="text-xs transition-colors hover:opacity-70"
+            style={{ color: "#6e6a5e" }}
+             target="_blank"
+  rel="noopener noreferrer"
+          >
             Privacy Policy
           </Link>
-          <Link to="/terms" className="text-xs transition-colors hover:opacity-70" style={{ color: "rgba(20,51,34,0.4)" }}>
+          <Link
+            to="/terms"
+            className="text-xs transition-colors hover:opacity-70"
+            style={{ color: "#6e6a5e" }}
+             target="_blank"
+  rel="noopener noreferrer"
+          >
             Terms of Use
           </Link>
         </div>
@@ -69,50 +93,68 @@ function RegisterFooter() {
 
 // ─── Step Indicator (3 steps) ────────────────────────────────────────────────
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 
-const STEP_LABELS: Record<Step, string> = {
-  1: "Account Details",
-  2: "Verify OTP",
-  3: "Choose Plan",
-};
+// const STEP_LABELS: Record<Step, string> = {
+//   1: "Account Details",
+//   2: "Verify OTP",
+//   // 3: "Choose Plan",
+// };
 
-function StepIndicator({ step }: { step: Step }) {
-  return (
-    <div className="reg-stepper">
-      {([1, 2, 3] as Step[]).map((s, i) => (
-        <>
-          <div key={s} className={`reg-step ${step >= s ? "reg-step-active" : "reg-step-inactive"}`}>
-            <div className="reg-step-circle">
-              {step > s ? (
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              ) : (
-                <span>{s}</span>
-              )}
-            </div>
-            <span className="reg-step-label">{STEP_LABELS[s]}</span>
-          </div>
-          {i < 2 && (
-            <div key={`c${s}`} className={`reg-step-connector ${step > s ? "reg-step-connector-active" : ""}`} />
-          )}
-        </>
-      ))}
-    </div>
-  );
-}
+// function StepIndicator({ step }: { step: Step }) {
+//   return (
+//     <div className="reg-stepper">
+//       {([1, 2] as Step[]).map((s, i) => (
+//         <>
+//           <div key={s} className={`reg-step ${step >= s ? "reg-step-active" : "reg-step-inactive"}`}>
+//             <div className="reg-step-circle">
+//               {step > s ? (
+//                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+//                   <polyline points="20 6 9 17 4 12" />
+//                 </svg>
+//               ) : (
+//                 <span>{s}</span>
+//               )}
+//             </div>
+//             <span className="reg-step-label">{STEP_LABELS[s]}</span>
+//           </div>
+//           {i < 1 && (
+//             <div key={`c${s}`} className={`reg-step-connector ${step > s ? "reg-step-connector-active" : ""}`} />
+//           )}
+//         </>
+//       ))}
+//     </div>
+//   );
+// }
 
 // ─── Eye icon ────────────────────────────────────────────────────────────────
 
 function EyeIcon({ visible }: { visible: boolean }) {
   return visible ? (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
       <circle cx="12" cy="12" r="3" />
     </svg>
   ) : (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
       <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
       <line x1="1" y1="1" x2="23" y2="23" />
@@ -131,6 +173,8 @@ interface RegisterFormData {
   password: string;
   confirmPassword: string;
   agreed: boolean;
+  avatar_url: string;
+  other_city: string;
 }
 
 interface RegisterFormErrors {
@@ -141,6 +185,7 @@ interface RegisterFormErrors {
   password?: string;
   confirmPassword?: string;
   agreed?: string;
+  other_city?: string;
 }
 
 function StepDetails({
@@ -164,11 +209,19 @@ function StepDetails({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [cityList, setCityList] = useState([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [avatarList, setAvatarList] = useState<any[]>([]);
+  const [showAvatarDialog, setShowAvatarDialog] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
+
+  useEffect(() => {
+    setSelectedAvatar(data.avatar_url);
+  }, [data.avatar_url]);
 
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await getPredefinedListByType("city");
+        const response = await getPredefinedListByType("CITY");
         setCityList(response.data.content);
       } catch (error) {
         console.error("Error fetching city list:", error);
@@ -177,24 +230,66 @@ function StepDetails({
     fetchCities();
   }, []);
 
+  useEffect(() => {
+    const fetchAvtarList = async () => {
+      try {
+        const response = await getPredefinedListByType("AVATAR");
+        setAvatarList(response.data.content);
+      } catch (error) {
+        console.error("Error fetching city list:", error);
+      }
+    };
+    fetchAvtarList();
+  }, []);
+
   function validate(): RegisterFormErrors {
     const e: RegisterFormErrors = {};
     if (!data.fullName.trim()) e.fullName = "Username is required.";
     if (!data.city) e.city = "Please select your city.";
     if (!data.email.trim()) e.email = "Email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) e.email = "Please enter a valid email.";
-    if (data.phone.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())) e.phone = "Please enter a valid phone number.";
+    // if (!data.other_city.trim()) e.other_city = "Other city is required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()))
+      e.email = "Please enter a valid email.";
+    if (data.phone.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim()))
+      e.phone = "Please enter a valid phone number.";
     if (!data.password) e.password = "Password is required.";
-    else if (data.password.length < 8) e.password = "Must be at least 8 characters.";
-    else if (!/[A-Z]/.test(data.password)) e.password = "Must include at least one uppercase letter.";
-    else if (!/[a-z]/.test(data.password)) e.password = "Must include at least one lowercase letter.";
-    else if (!/[0-9]/.test(data.password)) e.password = "Must include at least one digit.";
-    else if (!/[^A-Za-z0-9]/.test(data.password)) e.password = "Must include at least one special character.";
+    // else if (data.password.length < 8) e.password = "Must be at least 8 characters.";
+    // else if (!/[A-Z]/.test(data.password)) e.password = "Must include at least one uppercase letter.";
+    // else if (!/[a-z]/.test(data.password)) e.password = "Must include at least one lowercase letter.";
+    // else if (!/[0-9]/.test(data.password)) e.password = "Must include at least one digit.";
+    // else if (!/[^A-Za-z0-9]/.test(data.password)) e.password = "Must include at least one special character.";
     if (!data.confirmPassword) e.confirmPassword = "Please confirm your password.";
     else if (data.password !== data.confirmPassword) e.confirmPassword = "Passwords do not match.";
     if (!data.agreed) e.agreed = "You must agree to the Terms & Privacy Policy to continue.";
     return e;
   }
+
+  const isFormValid =
+    data.fullName.trim() !== "" &&
+    data.city !== "" &&
+    data.email.trim() !== "" &&
+    data.password !== "" &&
+    data.confirmPassword !== "" &&
+    data.agreed;
+  // data.other_city.trim() !== ""
+
+  // const isFormValid =
+  // data.fullName.trim() !== "" &&
+  // data.city !== "" &&
+  // data.email.trim() !== "" &&
+  // /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) &&
+  // (
+  //   data.phone.trim() === "" ||
+  //   /^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim())
+  // ) &&
+  // data.password.length >= 8 &&
+  // /[A-Z]/.test(data.password) &&
+  // /[a-z]/.test(data.password) &&
+  // /[0-9]/.test(data.password) &&
+  // /[^A-Za-z0-9]/.test(data.password) &&
+  // data.confirmPassword !== "" &&
+  // data.password === data.confirmPassword &&
+  // data.agreed;
 
   function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -205,43 +300,130 @@ function StepDetails({
 
   return (
     <form className="reg-form" onSubmit={handleSubmit} noValidate>
-      <div className="reg-form-grid">
+      <div className="avatar-wrapper">
+        <img src={data.avatar_url || uploadLogo} alt="Avatar" className="uploadLogo" />
 
-      
+        <button type="button" className="avatar-plus" onClick={() => setShowAvatarDialog(true)}>
+          +
+        </button>
+      </div>
+
+      <p className="avatar-text mb-5">Tap to choose your look</p>
+
+      <div className="reg-form-grid">
         {/* Email */}
         <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-email">Email Address <span className="color-red">*</span></label>
-          <input
-            id="reg-email"
-            type="email"
-            className={`reg-input ${errors.email ? "reg-input-error" : ""}`}
-            placeholder="you@example.com"
-            value={data.email}
-            onChange={(e) => onChange("email", e.target.value)}
-            autoComplete="email"
-          />
+          <label className="reg-label" htmlFor="reg-email">
+            Email Address <span className="color-red">*</span>
+          </label>
+          <div className="reg-input-wrap password">
+            <Mail className="reg-input-icon" size={18} />
+            <input
+              id="reg-email"
+              type="email"
+              className={`reg-input ${errors.email ? "reg-input-error" : ""}`}
+              placeholder="you@example.com"
+              value={data.email}
+              onChange={(e) => onChange("email", e.target.value)}
+              autoComplete="email"
+            />
+          </div>
           {errors.email && <span className="reg-error">{errors.email}</span>}
         </div>
 
         {/* Phone */}
         <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-phone">Phone Number <span style={{ color: "rgba(20,51,34,0.4)", fontWeight: 400 }}></span></label>
-          <input
-            id="reg-phone"
-            type="tel"
-            className={`reg-input ${errors.phone ? "reg-input-error" : ""}`}
-            placeholder="Your phone"
-            value={data.phone}
-            onChange={(e) => onChange("phone", e.target.value)}
-            autoComplete="tel"
-            maxLength={10}
-          />
+          <label className="reg-label" htmlFor="reg-phone">
+            Phone Number{" "}
+            <span style={{ color: "rgba(20,51,34,0.4)", marginLeft: "5px", fontWeight: 400 }}>
+              Optional
+            </span>
+          </label>
+          <div className="reg-input phone-input">
+            <Smartphone className="reg-input-icon" size={18} />
+            <span className="country-code">+91</span>
+
+            <span className="phone-divider"></span>
+
+            <input
+              id="reg-phone"
+              type="tel"
+              className={`inputPhn ${errors.phone ? "reg-input-error" : ""}`}
+              placeholder="Your phone"
+              value={data.phone}
+              onChange={(e) => onChange("phone", e.target.value)}
+              autoComplete="tel"
+              maxLength={10}
+            />
+          </div>
           {errors.phone && <span className="reg-error">{errors.phone}</span>}
         </div>
+        <div className="reg-field">
+          <label className="reg-label" htmlFor="reg-city">
+            City <span className="color-red">*</span>
+          </label>
+          <MapPin className="reg-input-icon" size={18} />
+          <div className="reg-select-wrap">
+            <select
+              id="reg-city"
+              className={`reg-input reg-select ${errors.city ? "reg-input-error" : ""} ${!data.city ? "reg-select-placeholder" : ""}`}
+              value={data.city}
+              onChange={(e) => {
+                const selected = cityList.find((c: any) => c.name === e.target.value) as any;
+                onChange("city", e.target.value);
+                onChange("cityId", selected?.id ?? 0);
+              }}
+            >
+              <option value="" disabled>
+                Select your city
+              </option>
+              {cityList?.map((c: any) => (
+                <option key={c.uuid} value={c.name}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+            <span className="reg-select-arrow">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </div>
+          {errors.city && <span className="reg-error">{errors.city}</span>}
+        </div>
+
+        {data.city.toLowerCase() === "other" && (
+          <div className="reg-field">
+            <label className="reg-label" htmlFor="reg-city">
+              Other City
+            </label>
+            <MapPin className="reg-input-icon" size={18} />
+            <input
+              type="text"
+              className="reg-input"
+              placeholder="Enter other city"
+              value={data.other_city}
+              onChange={(e) => onChange("other_city", e.target.value)}
+            />
+            {errors.other_city && <span className="reg-error">{errors.other_city}</span>}
+          </div>
+        )}
 
         {/* Full Name */}
         <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-fullname">Username <span className="color-red">*</span> </label>
+          <label className="reg-label" htmlFor="reg-fullname">
+            Username <span className="color-red">*</span>{" "}
+          </label>
+          <User className="reg-input-icon" size={18} />
           <input
             id="reg-fullname"
             type="text"
@@ -255,48 +437,30 @@ function StepDetails({
         </div>
 
         {/* City dropdown */}
-        <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-city">City <span className="color-red">*</span></label>
-          <div className="reg-select-wrap">
-            <select
-              id="reg-city"
-              className={`reg-input reg-select ${errors.city ? "reg-input-error" : ""} ${!data.city ? "reg-select-placeholder" : ""}`}
-              value={data.city}
-              onChange={(e) => {
-                const selected = cityList.find((c: any) => c.name === e.target.value) as any;
-                onChange("city", e.target.value);
-                onChange("cityId", selected?.id ?? 0);
-              }}
-            >
-              <option value="" disabled>Select your city</option>
-              {cityList?.map((c: any) => (
-                <option key={c.uuid} value={c.name}>{c.name}</option>
-              ))}
-            </select>
-            <span className="reg-select-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </span>
-          </div>
-          {errors.city && <span className="reg-error">{errors.city}</span>}
-        </div>
-
 
         {/* Password */}
         <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-password">Password <span className="color-red">*</span></label>
-          <div className="reg-input-wrap">
+          <label className="reg-label" htmlFor="reg-password">
+            Password <span className="color-red">*</span>
+          </label>
+
+          <div className="reg-input-wrap password">
+            <Lock className="reg-input-icon" size={18} />
             <input
               id="reg-password"
               type={showPassword ? "text" : "password"}
               className={`reg-input reg-input-padded ${errors.password ? "reg-input-error" : ""}`}
-              placeholder="Min. 8 chars, A-Z, a-z, 0-9, @#$…"
+              placeholder="Your Password"
               value={data.password}
               onChange={(e) => onChange("password", e.target.value)}
               autoComplete="new-password"
             />
-            <button type="button" className="reg-eye-btn" onClick={() => setShowPassword((v) => !v)} aria-label={showPassword ? "Hide password" : "Show password"}>
+            <button
+              type="button"
+              className="reg-eye-btn"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
               <EyeIcon visible={showPassword} />
             </button>
           </div>
@@ -305,8 +469,12 @@ function StepDetails({
 
         {/* Confirm Password */}
         <div className="reg-field">
-          <label className="reg-label" htmlFor="reg-confirm">Confirm Password <span className="color-red">*</span></label>
-          <div className="reg-input-wrap">
+          <label className="reg-label" htmlFor="reg-confirm">
+            Confirm Password <span className="color-red">*</span>
+          </label>
+
+          <div className="reg-input-wrap password">
+            <Lock className="reg-input-icon" size={18} />
             <input
               id="reg-confirm"
               type={showConfirm ? "text" : "password"}
@@ -316,13 +484,17 @@ function StepDetails({
               onChange={(e) => onChange("confirmPassword", e.target.value)}
               autoComplete="new-password"
             />
-            <button type="button" className="reg-eye-btn" onClick={() => setShowConfirm((v) => !v)} aria-label={showConfirm ? "Hide password" : "Show password"}>
+            <button
+              type="button"
+              className="reg-eye-btn"
+              onClick={() => setShowConfirm((v) => !v)}
+              aria-label={showConfirm ? "Hide password" : "Show password"}
+            >
               <EyeIcon visible={showConfirm} />
             </button>
           </div>
           {errors.confirmPassword && <span className="reg-error">{errors.confirmPassword}</span>}
         </div>
-
       </div>
 
       {/* T&C Checkbox — full width below grid */}
@@ -336,39 +508,108 @@ function StepDetails({
           />
           <span className="reg-checkbox-text">
             I agree to the{" "}
-            <a href={termsUrl || "/terms"} className="reg-signin-link" target="_blank" rel="noreferrer">Terms of Use</a>
-            {" "}and{" "}
-            <a href={privacyUrl || "/privacy"} className="reg-signin-link" target="_blank" rel="noreferrer">Privacy Policy</a>
+            <a
+              href={termsUrl || "/terms"}
+              className="reg-signin-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Terms & Conditions{" "}
+            </a>{" "}
+            and{" "}
+            <a
+              href={privacyUrl || "/privacy"}
+              className="reg-signin-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Privacy Policy
+            </a>
           </span>
         </label>
         {errors.agreed && <span className="reg-error reg-error-checkbox">{errors.agreed}</span>}
       </div>
 
       {apiError && (
-        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
+        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626" }}>
           {apiError}
         </div>
       )}
 
-      <button type="submit" className="reg-next-btn" disabled={isLoading}>
+      <button type="submit" className="reg-next-btn" disabled={isLoading || !isFormValid}>
         {isLoading ? (
-          <><span className="reg-spinner" />Registering…</>
+          <>
+            <span className="reg-spinner" />
+            Registering…
+          </>
         ) : (
-          <>Continue
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <>
+            Get Started
+            {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
-            </svg>
+            </svg> */}
           </>
         )}
       </button>
 
       <p className="reg-signin-hint">
-        Already have an account?{" "}
-        <Link to="/" className="reg-signin-link">Sign In</Link>
+        Been here before?{" "}
+        <Link to="/" hash="login" className="reg-signin-link">
+          Sign In
+        </Link>
       </p>
+
+      {showAvatarDialog && (
+        <div
+          className="avatar-modal-overlay"
+          onClick={() => {
+            setSelectedAvatar(data.avatar_url);
+            setShowAvatarDialog(false);
+          }}
+        >
+          <div className="avatar-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="avatar-modal-header">
+              <h3>MEET YOUR ALTER EGO</h3>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedAvatar(data.avatar_url);
+                  setShowAvatarDialog(false);
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="avatar-grid">
+              {avatarList.map((avatar: any) => (
+                <img
+                  key={avatar.id}
+                  src={avatar.url}
+                  alt="Avatar"
+                  className={`avatar-item ${selectedAvatar === avatar.url ? "selected" : ""}`}
+                  onClick={() => setSelectedAvatar(avatar.url)}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="avatar-save-btn"
+              onClick={() => {
+                onChange("avatar_url", selectedAvatar);
+                setShowAvatarDialog(false);
+              }}
+            >
+              <span className="avatar-save-title">FEELS CUTE</span>
+              <span className="avatar-save-subtitle">Might change later</span>
+            </button>
+          </div>
+        </div>
+      )}
     </form>
   );
-  
 }
 
 // ─── Step 2: OTP Verification ────────────────────────────────────────────────
@@ -398,10 +639,6 @@ function StepOTP({
     return () => clearTimeout(t);
   }, [resendSeconds]);
 
-
-
-
-
   function handleOtpChange(i: number, val: string) {
     const digit = val.replace(/\D/g, "").slice(-1);
     const next = [...otp];
@@ -421,7 +658,9 @@ function StepOTP({
     e.preventDefault();
     const digits = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6).split("");
     const next = [...otp];
-    digits.forEach((d, i) => { next[i] = d; });
+    digits.forEach((d, i) => {
+      next[i] = d;
+    });
     setOtp(next);
     const lastFilled = Math.min(digits.length, 5);
     inputRefs.current[lastFilled]?.focus();
@@ -429,12 +668,15 @@ function StepOTP({
 
   async function handleVerify() {
     const code = otp.join("");
-    if (code.length < 6) { setError("Please enter the 6-digit OTP."); return; }
+    if (code.length < 6) {
+      setError("Please enter the 6-digit OTP.");
+      return;
+    }
     setVerifying(true);
     setError("");
     try {
       // await verifyOtp({ identifier: email, otp: code, otp_type: "EMAIL_OTP" });
-      await registerUser({
+      const response = await registerUser({
         username: formData.fullName,
         email: formData.email,
         phone_number: formData.phone.trim() || null,
@@ -444,13 +686,22 @@ function StepOTP({
         role_name: "user",
         is_terms_condition_accepted: true,
         is_privacy_policy: true,
+        avatar_url: formData.avatar_url,
+        other_city: formData.other_city,
       });
+
+      if (response?.data?.access_token) {
+        localStorage.setItem("access_token", response.data?.access_token);
+        localStorage.setItem("userData", JSON.stringify(response));
+        window.dispatchEvent(new Event("auth-change"));
+      }
+
       onVerified();
     } catch (err: any) {
       setError(
         err?.response?.data?.message ||
-        err?.response?.data?.error ||
-        "Verification failed. Please try again."
+          err?.response?.data?.error ||
+          "Verification failed. Please try again.",
       );
     } finally {
       setVerifying(false);
@@ -472,19 +723,15 @@ function StepOTP({
     }
   }
 
-  
-
-
   return (
     <div className="reg-otp-wrap">
       <div className="reg-otp-hint">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--rust)", flexShrink: 0 }}>
+        {/* <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--rust)", flexShrink: 0 }}>
           <rect x="2" y="4" width="20" height="16" rx="2" />
           <path d="M22 7l-10 7L2 7" />
-        </svg>
+        </svg> */}
         <p>
-          We sent a 6-digit code to <strong>{email || "your email"}</strong>.<br />
-          Enter it below to verify your account.
+          Enter the 6 digit code we sent to <strong>{email || "your email"}</strong>.<br />
         </p>
       </div>
 
@@ -493,7 +740,9 @@ function StepOTP({
         {otp.map((digit, i) => (
           <input
             key={i}
-            ref={(el) => { inputRefs.current[i] = el; }}
+            ref={(el) => {
+              inputRefs.current[i] = el;
+            }}
             type="text"
             inputMode="numeric"
             maxLength={1}
@@ -506,16 +755,49 @@ function StepOTP({
           />
         ))}
       </div>
+      <p className="codesendText">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ flexShrink: 0 }}
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        Code sent – check your inbox
+      </p>
 
       {error && <p className="reg-otp-error">{error}</p>}
 
       {/* Resend */}
       <div className="reg-otp-resend">
         {resendSeconds > 0 ? (
-          <span className="reg-otp-resend-timer">Resend OTP in {resendSeconds}s</span>
+          <span className="reg-otp-resend-timer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+            Resend Code in <span className="time">{resendSeconds}s</span>
+          </span>
         ) : (
           <button type="button" className="reg-otp-resend-btn" onClick={handleResend}>
-            Resend OTP
+            Resend code
           </button>
         )}
       </div>
@@ -523,19 +805,28 @@ function StepOTP({
       {/* Actions */}
       <div className="reg-plans-actions" style={{ marginTop: "1.5rem" }}>
         <button type="button" className="reg-back-btn" onClick={onBack} disabled={verifying}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
-          </svg>
+          </svg> */}
           Back
         </button>
-        <button type="button" className="reg-submit-btn" onClick={handleVerify} disabled={verifying || otp.join("").length < 6}>
+        <button
+          type="button"
+          className="reg-submit-btn"
+          onClick={handleVerify}
+          disabled={verifying || otp.join("").length < 6}
+        >
           {verifying ? (
-            <><span className="reg-spinner" />Verifying…</>
+            <>
+              <span className="reg-spinner" />
+              Verifying…
+            </>
           ) : (
-            <>Verify & Continue
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <>
+              Verify Email
+              {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
-              </svg>
+              </svg> */}
             </>
           )}
         </button>
@@ -571,7 +862,9 @@ function StepPlans({
           onClick={() => setSelected("monthly")}
         >
           <div className="reg-plan-radio">
-            <div className={`reg-plan-radio-dot ${selected === "monthly" ? "reg-plan-radio-dot-active" : ""}`} />
+            <div
+              className={`reg-plan-radio-dot ${selected === "monthly" ? "reg-plan-radio-dot-active" : ""}`}
+            />
           </div>
           <div className="reg-plan-body">
             <span className="reg-plan-label">Monthly Plan</span>
@@ -581,7 +874,7 @@ function StepPlans({
               <span className="reg-plan-period">/ month</span>
             </div>
             <p className="reg-plan-note">Excl. GST · Cancel anytime</p>
-             <p className="reg-plan-trial">15-days free trial · Billed from {billingDate}</p>
+            <p className="reg-plan-trial">15-days free trial · Billed from {billingDate}</p>
           </div>
         </button>
 
@@ -593,7 +886,9 @@ function StepPlans({
         >
           <div className="reg-plan-badge">Best Value</div>
           <div className="reg-plan-radio">
-            <div className={`reg-plan-radio-dot ${selected === "annual" ? "reg-plan-radio-dot-active" : ""}`} />
+            <div
+              className={`reg-plan-radio-dot ${selected === "annual" ? "reg-plan-radio-dot-active" : ""}`}
+            />
           </div>
           <div className="reg-plan-body">
             <span className="reg-plan-label">Annual Plan</span>
@@ -603,26 +898,54 @@ function StepPlans({
               <span className="reg-plan-period">/ year</span>
             </div>
             <p className="reg-plan-note">Excl. GST · Save 25% (Rs 375/month)</p>
-                         <p className="reg-plan-trial">15-days free trial · Billed from {billingDate}</p>
-
+            <p className="reg-plan-trial">15-days free trial · Billed from {billingDate}</p>
           </div>
         </button>
       </div>
 
       <div className="reg-plans-actions">
         <button type="button" className="reg-back-btn" onClick={onBack} disabled={isLoading}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5" />
+            <path d="M12 5l-7 7 7 7" />
           </svg>
           Back
         </button>
-        <button type="button" className="reg-submit-btn" onClick={() => onSubmit(selected)} disabled={isLoading}>
+        <button
+          type="button"
+          className="reg-submit-btn"
+          onClick={() => onSubmit(selected)}
+          disabled={isLoading}
+        >
           {isLoading ? (
-            <><span className="reg-spinner" />Creating Account…</>
+            <>
+              <span className="reg-spinner" />
+              Creating Account…
+            </>
           ) : (
-            <>Create Account
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14" /><path d="M12 5l7 7-7 7" />
+            <>
+              Create Account
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
               </svg>
             </>
           )}
@@ -642,9 +965,12 @@ function StepPlans({
 // ─── Step titles ─────────────────────────────────────────────────────────────
 
 const STEP_TITLES: Record<Step, { title: string; sub: string }> = {
-  1: { title: "Create Your Account", sub: "Fill in your details to join Pocket Dragon." },
-  2: { title: "Verify Your Email", sub: "Enter the OTP we sent to your email address." },
-  3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." },
+  1: {
+    title: "Create Account",
+    sub: "Email verification is required before your account goes live",
+  },
+  2: { title: "Verify Email", sub: "" },
+  // 3: { title: "Choose Your Plan", sub: "Select the plan that works best for you." },
 };
 
 // ─── Main RegisterPage ────────────────────────────────────────────────────────
@@ -655,6 +981,7 @@ export function RegisterPage() {
   const [apiError, setApiError] = useState("");
   const [termsUrl, setTermsUrl] = useState("");
   const [privacyUrl, setPrivacyUrl] = useState("");
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: "",
     city: "",
@@ -664,15 +991,14 @@ export function RegisterPage() {
     password: "",
     confirmPassword: "",
     agreed: false,
+    avatar_url: "https://backend.poquito.review-link.in/avatar/poquito-boy.png",
+    other_city: "",
   });
 
   useEffect(() => {
     const fetchComplianceDocs = async () => {
       try {
-        const [termsRes, privacyRes] = await Promise.all([
-          getTermsCondition(),
-          getPrivacyPolicy(),
-        ]);
+        const [termsRes, privacyRes] = await Promise.all([getTermsCondition(), getPrivacyPolicy()]);
         if (termsRes?.data?.content_url) setTermsUrl(termsRes.data.content_url);
         if (privacyRes?.data?.content_url) setPrivacyUrl(privacyRes.data.content_url);
       } catch (error) {
@@ -707,10 +1033,7 @@ export function RegisterPage() {
       await sendOtp(formData.email, "EMAIL_OTP");
       setStep(2);
     } catch (err: any) {
-      setApiError(
-        err?.response?.data?.message ||
-        err?.response?.data?.error
-      );
+      setApiError(err?.response?.data?.message || err?.response?.data?.error);
     } finally {
       setIsLoading(false);
     }
@@ -734,12 +1057,12 @@ export function RegisterPage() {
       <main className="register-main">
         <div className="register-card">
           <div className="register-card-top">
-            <span className="register-eyebrow">Get Started</span>
+            {/* <span className="register-eyebrow">Get Started</span> */}
             <h1 className="register-title">{title}</h1>
-            <p className="register-subtitle">{sub}</p>
+            <p className="register-subtitle mb-5">{sub}</p>
           </div>
 
-          <StepIndicator step={step} />
+          {/* <StepIndicator step={step} /> */}
 
           <div className="register-step-body">
             {step === 1 && (
@@ -758,16 +1081,17 @@ export function RegisterPage() {
                 email={formData.email}
                 formData={formData}
                 onBack={() => setStep(1)}
-                onVerified={() => setStep(3)}
+                // onVerified={() => setStep(3)}
+                onVerified={() => navigate({ to: "/myaccount/profile" })}
               />
             )}
-            {step === 3 && (
+            {/* {step === 3 && (
               <StepPlans
                 onBack={() => setStep(2)}
                 onSubmit={handleSubmit}
                 isLoading={isLoading}
               />
-            )}
+            )} */}
           </div>
         </div>
       </main>

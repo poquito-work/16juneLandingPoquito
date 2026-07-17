@@ -186,10 +186,10 @@ export function Footer() {
           {/* Links: email · socials · Privacy · Terms — stacked on mobile, single row on desktop */}
           <div className="flex flex-col items-end gap-3 text-xs text-pq-cream md:col-start-2 md:flex-row md:items-center md:gap-6 md:justify-self-center">
             <a
-              href="mailto:hello@pocketdragon.app"
+              href="mailto:support@pocketdragon.in"
               className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
             >
-              hello@pocketdragon.app
+              support@pocketdragon.in
             </a>
             <div className="flex items-center gap-3">
               <a
@@ -225,11 +225,15 @@ export function Footer() {
               <Link
                 to="/privacy"
                 className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
+                 target="_blank"
+  rel="noopener noreferrer"
               >
                 Privacy Policy
               </Link>
               <Link
                 to="/terms"
+                 target="_blank"
+  rel="noopener noreferrer"
                 className="hover:text-pq-cream hover:font-bold transition-all duration-200 font-normal whitespace-nowrap"
               >
                 Terms of Use
@@ -258,7 +262,7 @@ export function Footer() {
           className="flex items-center justify-center py-5"
         >
           <p className="text-pq-cream text-xs font-normal tracking-wide hover:font-bold hover:scale-[1.03] transition-all duration-200">
-            © 2026 [Pocket Dragon/Poquito]. All Rights Reserved.
+            © 2026  Poquito Project LLP. All Rights Reserved.
           </p>
         </motion.div>
 

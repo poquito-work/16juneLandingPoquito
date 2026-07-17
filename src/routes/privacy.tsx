@@ -191,8 +191,8 @@ function PrivacyPage() {
           </h2>
           <p>
             For privacy-related questions, reach us at{" "}
-            <a href="mailto:hello@pocketdragon.app" className="text-rust hover:opacity-75 transition-opacity">
-              hello@pocketdragon.app
+            <a href="mailto:support@pocketdragon.in" className="text-rust hover:opacity-75 transition-opacity">
+              support@pocketdragon.in
             </a>.
           </p>
         </section>

@@ -19,7 +19,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
           <Link to="/">
             <img src={logoSrc} alt="Pocket Dragon" style={{ height: 70, width: 'auto', opacity: 0.9 }} />
           </Link>
-          <Link
+          {/* <Link
             to="/"
             className="text-xs tracking-[0.12em] uppercase transition-colors flex items-center gap-1.5 hover:opacity-70"
             style={{ color: 'rgba(20,51,34,0.5)' }}
@@ -28,7 +28,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Back to Home
-          </Link>
+          </Link> */}
         </div>
       </header>
 
@@ -62,10 +62,16 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
       {/* Footer */}
       <footer className="border-t border-foreground/8 py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs" style={{ color: 'rgba(20,51,34,0.35)' }}>© 2026 [Pocket Dragon/Poquito]. All Rights Reserved.</p>
+          <p className="text-xs" style={{ color: '#6e6a5e' }}>© 2026  Poquito Project LLP. All Rights Reserved.</p>
           <div className="flex items-center gap-6">
+            <a
+              href="mailto:support@pocketdragon.in"
+              className="text-xs transition-colors hover:opacity-70" style={{ color: "#6e6a5e" }}
+            >
+              support@pocketdragon.in
+            </a>
             {sidebarLinks.map(({ label, to }) => (
-              <Link key={to} to={to} className="text-xs transition-colors hover:opacity-70" style={{ color: 'rgba(20,51,34,0.4)' }}>
+              <Link key={to} to={to} className="text-xs transition-colors hover:opacity-70" style={{ color: '#6e6a5e' }}>
                 {label}
               </Link>
             ))}

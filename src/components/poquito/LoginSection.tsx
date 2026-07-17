@@ -55,7 +55,7 @@ const [error, setError] = useState("");
       localStorage.setItem("access_token", response.data?.access_token);
       localStorage.setItem("userData", response.data);
       window.dispatchEvent(new Event("auth-change"));
-      // navigate({ to: "/myaccount/profile" });
+      navigate({ to: "/myaccount/profile" });
     }
 
   } catch (err: any) {
@@ -194,7 +194,7 @@ const [error, setError] = useState("");
 
               <form className="flex flex-col gap-5"  onSubmit={async (e) => {
     e.preventDefault();
-    // await handleLogin();
+    await handleLogin();
   }}>
 
                 {/* Email */}
@@ -233,9 +233,12 @@ const [error, setError] = useState("");
                     <label className="text-green text-xs tracking-[0.14em] uppercase font-normal">
                       Password
                     </label>
-                    <a href="#" className="text-offwhite text-xs hover:underline underline-offset-2 font-normal">
+                    {/* <a href="#" className="text-rust f-w-600 text-xs hover:underline underline-offset-2 font-normal">
                       Forgot password?
-                    </a>
+                    </a> */}
+                    <Link   to="/forgot-password" className="f-w-600 text-xs text-rust font-normal hover:underline underline-offset-2">
+                  Forgot password?
+                </Link>
                   </div>
                   <div
                     className="relative rounded-xl transition-all duration-300"
@@ -280,9 +283,9 @@ const [error, setError] = useState("");
   <div
     className="rounded-lg px-4 py-3 text-sm"
     style={{
-      background: "#FEE2E2",
+      // background: "#FEE2E2",
       color: "#DC2626",
-      border: "1px solid #FCA5A5",
+      // border: "1px solid #FCA5A5",
     }}
   >
     {error}
@@ -292,7 +295,7 @@ const [error, setError] = useState("");
                 {/* Submit */}
                 <motion.button
                   type="submit"
-                  className="w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal"
+                  className="cursor-pointer w-full py-4 text-pq-cream text-sm tracking-[0.12em] uppercase rounded-xl mt-1 font-normal"
                   style={{
                     background: 'linear-gradient(135deg, #B65A2F 0%, #943f1e 88%)',
                     boxShadow: '0 8px 24px rgba(182,90,47,0.30)',
@@ -311,8 +314,8 @@ const [error, setError] = useState("");
               </div>
 
               <p className="text-center text-pq-green/70 text-sm font-normal">
-                New to Poquito?{' '}
-                <Link   to="/register" className="text-offwhite font-normal hover:underline underline-offset-2">
+                New to Pocket Dragon?{' '}
+                <Link   to="/register" className="f-w-600 text-rust font-normal hover:underline underline-offset-2">
                   Create an account
                 </Link>
               </p>

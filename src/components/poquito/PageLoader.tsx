@@ -48,7 +48,7 @@ function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string 
             pathLength: [0, 1, 1, 0, 0],
             opacity: [0.85, 0.85, 0.4, 0, 0],
           }}
-          transition={{ ...base, times: [0, 0.25, 0.42, 0.52, 1] }}
+          transition={{ ...base, times: [0, 0.18, 0.32, 0.45, 1] }}
         />
         <motion.path
           d={INNER_PATH}
@@ -60,7 +60,7 @@ function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string 
             pathLength: [0, 0, 1, 1, 0, 0],
             opacity: [0, 0.7, 0.7, 0.35, 0, 0],
           }}
-          transition={{ ...base, times: [0, 0.19, 0.40, 0.44, 0.52, 1] }}
+          transition={{ ...base, times: [0, 0.12, 0.25, 0.35, 0.45, 1] }}
         />
       </svg>
 
@@ -87,7 +87,7 @@ export function PageLoader() {
   useEffect(() => {
     if (!visible) return;
     sessionStorage.setItem("loader_shown", "1");
-    const t = setTimeout(() => setVisible(false), 8000);
+    const t = setTimeout(() => setVisible(false), 7000);
     return () => clearTimeout(t);
   }, [visible]);
 
@@ -148,7 +148,7 @@ export function PageLoader() {
     <TileOutlineReveal
       key={src}
       tileSrc={src}
-      delay={(CYCLE / 3) * i}
+      delay={i * 1.5}
     />
   ))}
 </div>

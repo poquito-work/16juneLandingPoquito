@@ -33,7 +33,7 @@ function RegisterHeader() {
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Back to Home
+          Back to Login
         </Link>
       </div>
     </header>
@@ -47,7 +47,7 @@ function RegisterFooter() {
     <footer className="border-t border-foreground/8 py-8">
       <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-xs" style={{ color: "rgba(20,51,34,0.35)" }}>
-          © 2026 [Pocket Dragon/Poquito]. All Rights Reserved.
+          © 2026  Poquito Project LLP. All Rights Reserved.
         </p>
         <div className="flex items-center gap-6">
           <Link to="/privacy" className="text-xs transition-colors hover:opacity-70" style={{ color: "rgba(20,51,34,0.4)" }}>
@@ -340,7 +340,7 @@ function StepDetails({
       </div>
 
       {apiError && (
-        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
+        <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626"}}>
           {apiError}
         </div>
       )}

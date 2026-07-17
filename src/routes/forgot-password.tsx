@@ -1,8 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { PocketDragonLogo } from "@/components/poquito/Logo";
 import { useEffect, useRef, useState } from "react";
 import { forgotPassword, resetPassword } from "@/services/auth";
-import { EyeIcon } from "lucide-react";
+// import { , Mail } from "lucide-react";
+import Swal from "sweetalert2";
+import { Mail, User, Smartphone, MapPin, Lock, EyeIcon } from "lucide-react";
 
 export const Route = createFileRoute("/forgot-password")({
   component: RouteComponent,
@@ -24,9 +26,51 @@ function RouteComponent() {
   const [otpError, setOtpError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [apiError, setApiError] = useState("");
-   const [apiOTPError, setApiOtpError] = useState("");
-  
+  const [apiOTPError, setApiOtpError] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const navigate = useNavigate();
+
+  const validateReset = () => {
+    let valid = true;
+
+    setPasswordError("");
+    setConfirmPasswordError("");
+
+    if (!newPassword) {
+      setPasswordError("New password is required.");
+      valid = false;
+    } 
+    // else if (newPassword.length < 8) {
+    //   setPasswordError("Must be at least 8 characters.");
+    //   valid = false;
+    // } else if (!/[A-Z]/.test(newPassword)) {
+    //   setPasswordError("Must include at least one uppercase letter.");
+    //   valid = false;
+    // } else if (!/[a-z]/.test(newPassword)) {
+    //   setPasswordError("Must include at least one lowercase letter.");
+    //   valid = false;
+    // } else if (!/[0-9]/.test(newPassword)) {
+    //   setPasswordError("Must include at least one digit.");
+    //   valid = false;
+    // } else if (!/[^A-Za-z0-9]/.test(newPassword)) {
+    //   setPasswordError("Must include at least one special character.");
+    //   valid = false;
+    // }
+
+    if (!confirmPassword) {
+      setConfirmPasswordError("Confirm password is required");
+      valid = false;
+    } else if (newPassword !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+      valid = false;
+    }
+
+    return valid;
+  };
 
   function EyeIcon({ visible }: { visible: boolean }) {
     return visible ? (
@@ -107,12 +151,12 @@ function RouteComponent() {
 
     try {
       setLoading(true);
-      setApiOtpError("");
 
       await forgotPassword(email);
 
       setStep("otp");
-      // setResendSeconds(30);
+      setResendSeconds(30);
+      setApiOtpError("");
     } catch (err: any) {
       setApiOtpError(err?.response?.data?.message || "Failed to send OTP.");
     } finally {
@@ -137,64 +181,87 @@ function RouteComponent() {
 
     if (!validateReset()) return;
 
-    // await resetPassword(email, otp.join(""), newPassword);
+    setApiError("");
 
     try {
-  await resetPassword(email, otp.join(""), newPassword);
-} catch (err: any) {
-  setApiError(
-    err?.response?.data?.message ||
-    "Something went wrong."
-  );
-}
+      setVerifying(true);
 
+      await resetPassword(email, otp.join(""), newPassword);
+      Swal.fire({
+        icon: "success",
+        title: "Password Updated",
+        // text: "Your changes have been saved successfully.",
+        confirmButtonColor: "#143322",
+        timer: 2500,
+        timerProgressBar: true,
+      });
+      window.location.assign("/#login");
+    } catch (err: any) {
+      setApiError(err?.response?.data?.message || "Something went wrong.");
+    } finally {
+      setVerifying(false);
+    }
   };
 
-  const validateReset = () => {
-    let valid = true;
-
-    setEmailError("");
-    setOtpError("");
-    setPasswordError("");
-
-    // Email
-    if (!email.trim()) {
-      setEmailError("Email is required.");
-      valid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError("Please enter a valid email address.");
-      valid = false;
+  async function handleResend() {
+    setOtp(["", "", "", "", "", ""]);
+    setError("");
+    setResendSeconds(30);
+    inputRefs.current[0]?.focus();
+    setResending(true);
+    try {
+      await forgotPassword(email);
+    } catch {
+      // silently ignore resend errors
+    } finally {
+      setResending(false);
     }
+  }
+  // const validateReset = () => {
+  //   let valid = true;
 
-    // OTP
-    if (otp.join("").length !== 6) {
-      setOtpError("Please enter the 6-digit OTP.");
-      valid = false;
-    }
+  //   setEmailError("");
+  //   setOtpError("");
+  //   setPasswordError("");
 
-    // Password
-    if (!newPassword) {
-      setPasswordError("Password is required.");
-      valid = false;
-    } else if (newPassword.length < 8) {
-      setPasswordError("Must be at least 8 characters.");
-      valid = false;
-    } else if (!/[A-Z]/.test(newPassword)) {
-      setPasswordError("Must include at least one uppercase letter.");
-      valid = false;
-    } else if (!/[a-z]/.test(newPassword)) {
-      setPasswordError("Must include at least one lowercase letter.");
-      valid = false;
-    } else if (!/[0-9]/.test(newPassword)) {
-      setPasswordError("Must include at least one digit.");
-      valid = false;
-    } else if (!/[^A-Za-z0-9]/.test(newPassword)) {
-      setPasswordError("Must include at least one special character.");
-      valid = false;
-    }
+  //   // Email
+  //   if (!email.trim()) {
+  //     setEmailError("Email is required.");
+  //     valid = false;
+  //   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  //     setEmailError("Please enter a valid email address.");
+  //     valid = false;
+  //   }
 
-    return valid;
-  };
+  //   // OTP
+  //   if (otp.join("").length !== 6) {
+  //     setOtpError("Please enter the 6-digit OTP.");
+  //     valid = false;
+  //   }
+
+  //   // Password
+  //   if (!newPassword) {
+  //     setPasswordError("Password is required.");
+  //     valid = false;
+  //   } else if (newPassword.length < 8) {
+  //     setPasswordError("Must be at least 8 characters.");
+  //     valid = false;
+  //   } else if (!/[A-Z]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one uppercase letter.");
+  //     valid = false;
+  //   } else if (!/[a-z]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one lowercase letter.");
+  //     valid = false;
+  //   } else if (!/[0-9]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one digit.");
+  //     valid = false;
+  //   } else if (!/[^A-Za-z0-9]/.test(newPassword)) {
+  //     setPasswordError("Must include at least one special character.");
+  //     valid = false;
+  //   }
+
+  //   return valid;
+  // };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -213,6 +280,7 @@ function RouteComponent() {
           </Link>
           <Link
             to="/"
+            hash="login"
             className="register-back-link text-xs tracking-[0.12em] uppercase transition-colors flex items-center gap-1.5 hover:opacity-70"
           >
             <svg
@@ -225,65 +293,65 @@ function RouteComponent() {
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Back to Home
+            Back to Login
           </Link>
         </div>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-6">
         <div className="forgot-wrap w-full max-w-md rounded-2xl bg-white/50 backdrop-blur-xl p-8">
-          <h1 className="register-title text-center  mb-4">Forgot Password</h1>
-
           {step === "email" ? (
-            <form className="space-y-5 mt-4" onSubmit={handleSendOtp}>
-              <p className="reg-label mt-6">Enter your email address</p>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setEmailError("");
-                  setApiOtpError("");
-                }}
-                placeholder="Email Address"
-                className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
-                  emailError ? "border-red-500" : "border-pq-green/15"
-                }`}
-              />
+            <>
+              <h1 className="register-title text-center  mb-4">Reset Password</h1>
+              <p className="register-subtitle">
+                Enter the email linked to your account and we'll send a reset code.
+              </p>
 
-              {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+              <form className="space-y-5 mt-4 relative formForgot" onSubmit={handleSendOtp}>
+                <p className="reg-label mt-6">Email Address</p>
+                <div className="relative">
+                  <Mail className="reg-input-icon" size={18} />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setEmailError("");
+                      setApiOtpError("");
+                    }}
+                    placeholder="Email Address"
+                    className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
+                      emailError ? "border-red-500" : "border-pq-green/15"
+                    }`}
+                  />
+                </div>
+                {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
 
-                 {apiOTPError && (  <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
-          {apiOTPError}
-        </div>
-          )}
+                {apiOTPError && (
+                  <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626" }}>
+                    {apiOTPError}
+                  </div>
+                )}
 
-              <button
-                type="submit"
-                className="w-full reg-next-btn rounded-xl bg-[#B65A2F] py-3 text-white"
-                disabled={loading}
-              >
-                Continue{" "}
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                <button
+                  type="submit"
+                  className="w-full reg-next-btn rounded-xl bg-[#B65A2F] py-3 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={loading || !email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)}
                 >
-                  <path d="M5 12h14" />
-                  <path d="M12 5l7 7-7 7" />
-                </svg>
-              </button>
-            </form>
+                  {loading ? "Sending..." : "Send OTP"}
+                </button>
+              </form>
+            </>
           ) : (
-            <form onSubmit={handleResetPassword} className="space-y-5 mt-4">
-              <div className="space-y-5">
-                {/* Email */}
-                <div>
+            <>
+              <h1 className="register-title text-center  mb-4">VERIFY OTP</h1>
+              <p className="register-subtitle">
+                Enter the 6-digit code sent to <span className="text-black">{email}</span>{" "}
+              </p>
+              <form onSubmit={handleResetPassword} className="space-y-5 mt-4">
+                <div className="space-y-5">
+                  {/* Email */}
+                  {/* <div>
                   <label className="reg-label">Email Address</label>
                   <input
                     type="email"
@@ -298,73 +366,138 @@ function RouteComponent() {
                     placeholder="Enter email"
                   />
                   {emailError && <p className="mt-1 text-sm text-red-500">{emailError}</p>}
-                </div>
+                </div> */}
 
-                {/* OTP */}
-                <div>
-                  <label className="reg-label">OTP</label>
+                  {/* OTP */}
+                  <div>
+                    {/* <label className="reg-label">OTP</label> */}
 
-                  <div className="reg-otp-boxes">
-                    {otp.map((digit, i) => (
+                    <div className="reg-otp-boxes">
+                      {otp.map((digit, i) => (
+                        <input
+                          key={i}
+                          ref={(el) => {
+                            inputRefs.current[i] = el;
+                          }}
+                          type="text"
+                          inputMode="numeric"
+                          maxLength={1}
+                          value={digit}
+                          onChange={(e) => {
+                            handleOtpChange(i, e.target.value);
+                            setOtpError("");
+                          }}
+                          onKeyDown={(e) => handleKeyDown(i, e)}
+                          onPaste={handlePaste}
+                          className={`reg-otp-box ${otpError ? "border-red-500" : ""}`}
+                        />
+                      ))}
+                    </div>
+
+                    <div className="reg-otp-resend resendPass">
+                      {resendSeconds > 0 ? (
+                        <span className="reg-otp-resend-timer">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M12 7v5l3 2" />
+                          </svg>
+                          Resend Code in <span className="time">{resendSeconds}s</span>
+                        </span>
+                      ) : (
+                        <button type="button" className="reg-otp-resend-btn" onClick={handleResend}>
+                          Resend code
+                        </button>
+                      )}
+                    </div>
+
+                    {otpError && <p className="mt-1 text-sm text-red-500 mt-2">{otpError}</p>}
+                  </div>
+
+                  {/* New Password */}
+                  <div className="relative password">
+                    <label className="reg-label">New Password</label>
+
+                    <div className="reg-input-wrap">
+                      <Lock className="reg-input-icon" size={18} />
                       <input
-                        key={i}
-                        ref={(el) => {
-                          inputRefs.current[i] = el;
-                        }}
-                        type="text"
-                        inputMode="numeric"
-                        maxLength={1}
-                        value={digit}
+                        type={showPassword ? "text" : "password"}
+                        value={newPassword}
                         onChange={(e) => {
-                          handleOtpChange(i, e.target.value);
-                          setOtpError("");
+                          setNewPassword(e.target.value);
+                          setPasswordError("");
+                          setApiError("");
                         }}
-                        onKeyDown={(e) => handleKeyDown(i, e)}
-                        onPaste={handlePaste}
-                        className={`reg-otp-box ${otpError ? "border-red-500" : ""}`}
+                        className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
+                          passwordError ? "border-red-500" : "border-pq-green/15"
+                        }`}
+                        placeholder="Enter new password"
                       />
-                    ))}
+                      <button
+                        type="button"
+                        className="reg-eye-btn"
+                        onClick={() => setShowPassword((v) => !v)}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        <EyeIcon visible={showPassword} />
+                      </button>
+                    </div>
+                    {passwordError && (
+                      <p className="mt-1 text-sm text-red-500 mt-2">{passwordError}</p>
+                    )}
                   </div>
 
-                  {otpError && <p className="mt-1 text-sm text-red-500">{otpError}</p>}
-                </div>
+                  <div className="relative password">
+                    <label className="reg-label">Confirm Password</label>
 
-                {/* New Password */}
-                <div>
-                  <label className="reg-label">New Password</label>
-                  <div className="reg-input-wrap">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      value={newPassword}
-                      onChange={(e) => {
-                        setNewPassword(e.target.value);
-                        setPasswordError("");
-                      }}
-                      className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
-                        passwordError ? "border-red-500" : "border-pq-green/15"
-                      }`}
-                      placeholder="Enter new password"
-                    />
-                    <button
-                      type="button"
-                      className="reg-eye-btn"
-                      onClick={() => setShowPassword((v) => !v)}
-                      aria-label={showPassword ? "Hide password" : "Show password"}
-                    >
-                      <EyeIcon visible={showPassword} />
-                    </button>
+                    <div className="reg-input-wrap ">
+                      <Lock className="reg-input-icon" size={18} />
+
+                      <input
+                        type={showConfirm ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => {
+                          setConfirmPassword(e.target.value);
+                          setConfirmPasswordError("");
+                          setApiError("");
+                        }}
+                        className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
+                          confirmPasswordError ? "border-red-500" : "border-pq-green/15"
+                        }`}
+                        placeholder="Confirm password"
+                      />
+
+                      <button
+                        type="button"
+                        className="reg-eye-btn"
+                        onClick={() => setShowConfirm((v) => !v)}
+                      >
+                        <EyeIcon visible={showConfirm} />
+                      </button>
+                    </div>
+
+                    {confirmPasswordError && (
+                      <p className="mt-1 text-sm text-red-500 mt-2">{confirmPasswordError}</p>
+                    )}
                   </div>
-                  {passwordError && <p className="mt-1 text-sm text-red-500">{passwordError}</p>}
+
+                  {apiError && (
+                    <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ color: "#DC2626" }}>
+                      {apiError}
+                    </div>
+                  )}
                 </div>
 
-                {apiError && (
-                       <div className="rounded-lg px-4 py-3 text-sm mb-2" style={{ background: "#FEE2E2", color: "#DC2626", border: "1px solid #FCA5A5" }}>
-          {apiError}
-        </div>
-                )}
-              </div>
-
-              {/* <div className="reg-otp-boxes">
+                {/* <div className="reg-otp-boxes">
         {otp.map((digit, i) => (
           <input
             key={i}
@@ -382,21 +515,21 @@ function RouteComponent() {
         ))}
       </div> */}
 
-              {/* <button
+                {/* <button
       type="submit"
       className="w-full rounded-xl bg-[#B65A2F] py-3 text-white"
     >
       Verify OTP
     </button> */}
 
-              {/* <button
+                {/* <button
       type="button"
       onClick={() => setStep("email")}
       className="cursor-pointer w-full text-sm text-pq-green hover:underline"
     >
       Change Email
     </button> */}
-              {/* <div className="reg-otp-resend">
+                {/* <div className="reg-otp-resend">
         {resendSeconds > 0 ? (
           <span className="reg-otp-resend-timer">Resend OTP in {resendSeconds}s</span>
         ) : (
@@ -406,14 +539,14 @@ function RouteComponent() {
         )}
       </div> */}
 
-              <div className="reg-plans-actions" style={{ marginTop: "1.5rem" }}>
-                <button
-                  type="button"
-                  className="reg-back-btn"
-                  onClick={() => setStep("email")}
-                  disabled={verifying}
-                >
-                  <svg
+                <div className="reg-plans-actions" style={{ marginTop: "1.5rem" }}>
+                  <button
+                    type="button"
+                    className="reg-back-btn"
+                    onClick={() => setStep("email")}
+                    disabled={verifying}
+                  >
+                    {/* <svg
                     width="16"
                     height="16"
                     viewBox="0 0 24 24"
@@ -425,23 +558,23 @@ function RouteComponent() {
                   >
                     <path d="M19 12H5" />
                     <path d="M12 5l-7 7 7 7" />
-                  </svg>
-                  Change Email
-                </button>
-                <button
-                  type="submit"
-                  className="reg-submit-btn"
-                  disabled={verifying || otp.join("").length < 6}
-                >
-                  {verifying ? (
-                    <>
-                      <span className="reg-spinner" />
-                      Verifying…
-                    </>
-                  ) : (
-                    <>
-                      Continue
-                      <svg
+                  </svg> */}
+                    Change Email
+                  </button>
+                  <button
+                    type="submit"
+                    className="reg-submit-btn"
+                    disabled={verifying || otp.join("").length < 6}
+                  >
+                    {verifying ? (
+                      <>
+                        <span className="reg-spinner" />
+                        Verifying…
+                      </>
+                    ) : (
+                      <>
+                        Update password
+                        {/* <svg
                         width="16"
                         height="16"
                         viewBox="0 0 24 24"
@@ -453,33 +586,44 @@ function RouteComponent() {
                       >
                         <path d="M5 12h14" />
                         <path d="M12 5l7 7-7 7" />
-                      </svg>
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
+                      </svg> */}
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </>
           )}
         </div>
       </main>
 
       <footer className="border-t border-foreground/8 py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs" style={{ color: "rgba(20,51,34,0.35)" }}>
-            © 2026 [Pocket Dragon/Poquito]. All Rights Reserved.
+          <p className="text-xs" style={{ color: "#6e6a5e" }}>
+            © 2026 Poquito Project LLP. All Rights Reserved.
           </p>
           <div className="flex items-center gap-6">
+             <a
+              href="mailto:support@pocketdragon.in"
+              className="text-xs transition-colors hover:opacity-70" style={{ color: "#6e6a5e" }}
+            >
+              support@pocketdragon.in
+            </a>
             <Link
               to="/privacy"
               className="text-xs transition-colors hover:opacity-70"
-              style={{ color: "rgba(20,51,34,0.4)" }}
+              style={{ color: "#6e6a5e" }}
+               target="_blank"
+  rel="noopener noreferrer"
             >
               Privacy Policy
             </Link>
             <Link
               to="/terms"
               className="text-xs transition-colors hover:opacity-70"
-              style={{ color: "rgba(20,51,34,0.4)" }}
+              style={{ color: "#6e6a5e" }}
+               target="_blank"
+  rel="noopener noreferrer"
             >
               Terms of Use
             </Link>
