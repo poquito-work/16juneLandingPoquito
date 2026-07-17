@@ -16,9 +16,9 @@ import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
 import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
 import "../_libs/radix-ui__react-primitive.mjs";
 import "../_libs/react-dom.mjs";
-import "util";
 import "crypto";
 import "async_hooks";
+import "util";
 import "stream";
 import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
@@ -139,7 +139,7 @@ function DownloadButtons({
     )
   ] }) });
 }
-const heroVideo = "/assets/IMG_6280-p1NWQJ6P.MP4";
+const heroVideo = "/assets/IMG_6280-p1NWQJ6P.mp4";
 const avtarGirl = "/assets/poquito-girl-D0DjCdPM.png";
 const avtarBunny = "/assets/poquito-owl-VneLnk7F.png";
 const EASE$3 = [0.22, 0.61, 0.36, 1];
@@ -151,8 +151,16 @@ const itemVariants = {
   hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE$3 } }
 };
-function Hero() {
+function Hero({ isLoaderFinished = false }) {
   const ref = reactExports.useRef(null);
+  const videoRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    if (isLoaderFinished && videoRef.current) {
+      videoRef.current.play().catch((err) => {
+        console.warn("Video play failed or was interrupted:", err);
+      });
+    }
+  }, [isLoaderFinished]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "section",
     {
@@ -177,8 +185,9 @@ function Hero() {
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "video",
                 {
+                  ref: videoRef,
                   src: heroVideo,
-                  autoPlay: true,
+                  autoPlay: isLoaderFinished,
                   muted: true,
                   playsInline: true,
                   loop: true,
@@ -1611,77 +1620,92 @@ function TileOutlineReveal({ delay, tileSrc }) {
     }
   );
 }
-function PageLoader() {
-  const [visible, setVisible] = reactExports.useState(() => {
-    return !sessionStorage.getItem("loader_shown");
-  });
+function PageLoader({ onComplete }) {
+  const [isSkipped] = reactExports.useState(() => !!sessionStorage.getItem("loader_shown"));
+  const [visible, setVisible] = reactExports.useState(!isSkipped);
+  reactExports.useEffect(() => {
+    if (isSkipped) {
+      onComplete?.();
+    }
+  }, [isSkipped, onComplete]);
   reactExports.useEffect(() => {
     if (!visible) return;
     sessionStorage.setItem("loader_shown", "1");
     const t = setTimeout(() => setVisible(false), 7e3);
     return () => clearTimeout(t);
   }, [visible]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: visible && /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    motion.div,
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    AnimatePresence,
     {
-      initial: { opacity: 1 },
-      exit: { opacity: 0 },
-      transition: { duration: 0.7, ease: "easeInOut" },
-      style: {
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "2rem"
+      onExitComplete: () => {
+        if (!isSkipped) {
+          onComplete?.();
+        }
       },
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          motion.div,
-          {
-            initial: { opacity: 0, y: -10 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.8 },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-8 scale-[3]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, {}) })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            style: {
-              display: "flex",
-              alignItems: "center",
-              gap: "1.25rem"
-            },
-            children: TILE_SRCS.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              TileOutlineReveal,
+      children: visible && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        motion.div,
+        {
+          initial: { opacity: 1 },
+          exit: { opacity: 0 },
+          transition: { duration: 0.7, ease: "easeInOut" },
+          style: {
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "linear-gradient(145deg, #F9F2E4 0%, #EDE5D0 45%, #E5DABB 100%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "2rem"
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              motion.div,
               {
-                tileSrc: src,
-                delay: i * 1.5
-              },
-              src
-            ))
-          }
-        )
-      ]
-    },
-    "page-loader"
-  ) });
+                initial: { opacity: 0, y: -10 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.8 },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-8 scale-[3]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PocketDragonLogo, {}) })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                style: {
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.25rem"
+                },
+                children: TILE_SRCS.map((src, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TileOutlineReveal,
+                  {
+                    tileSrc: src,
+                    delay: i * 1.5
+                  },
+                  src
+                ))
+              }
+            )
+          ]
+        },
+        "page-loader"
+      )
+    }
+  );
 }
 function Index() {
+  const [isLoaderFinished, setIsLoaderFinished] = reactExports.useState(false);
   const handleLoginClick = reactExports.useCallback(() => {
     document.getElementById("login")?.scrollIntoView({
       behavior: "auto"
     });
   }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-background text-foreground", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(PageLoader, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(PageLoader, { onComplete: () => setIsLoaderFinished(true) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Header, { onLoginClick: handleLoginClick }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Hero, {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Hero, { isLoaderFinished }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Playground, {}),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Subscriptions, {}),
       /* @__PURE__ */ jsxRuntimeExports.jsx(LoginSection, {}),
