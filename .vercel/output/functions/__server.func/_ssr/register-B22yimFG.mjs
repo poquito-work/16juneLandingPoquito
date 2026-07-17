@@ -222,7 +222,6 @@ function StepDetails({
     if (!data.fullName.trim()) e.fullName = "Username is required.";
     if (!data.city) e.city = "Please select your city.";
     if (!data.email.trim()) e.email = "Email is required.";
-    if (!data.other_city.trim()) e.other_city = "Other city is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()))
       e.email = "Please enter a valid email.";
     if (data.phone.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim()))
