@@ -79,10 +79,15 @@ function TileOutlineReveal({ delay, tileSrc }: { delay: number; tileSrc: string 
   );
 }
 
-export function PageLoader() {
-  const [visible, setVisible] = useState(() => {
-    return !sessionStorage.getItem("loader_shown");
-  });
+export function PageLoader({ onComplete }: { onComplete?: () => void }) {
+  const [isSkipped] = useState(() => !!sessionStorage.getItem("loader_shown"));
+  const [visible, setVisible] = useState(!isSkipped);
+
+  useEffect(() => {
+    if (isSkipped) {
+      onComplete?.();
+    }
+  }, [isSkipped, onComplete]);
 
   useEffect(() => {
     if (!visible) return;
@@ -92,7 +97,13 @@ export function PageLoader() {
   }, [visible]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence
+      onExitComplete={() => {
+        if (!isSkipped) {
+          onComplete?.();
+        }
+      }}
+    >
       {visible && (
         <motion.div
           key="page-loader"
