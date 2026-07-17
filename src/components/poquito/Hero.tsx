@@ -1,7 +1,8 @@
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DownloadButtons } from "./DownloadButtons";
-import heroVideo from "@/assets/IMG_6280.mp4";
+// import heroVideo from "@/assets/IMG_6280.mp4";
+import heroVideo from "@/assets/hero-video.mp4"
 import tile1 from "@/assets/Mpt1z.png";
 import tile2 from "@/assets/Mpt3z.png";
 import avtarBoy from "@/assets/poquito-boy.png";
