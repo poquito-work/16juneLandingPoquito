@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Header } from "@/components/poquito/Header";
 import { Hero } from "@/components/poquito/Hero";
 import { Subscriptions } from "@/components/poquito/Subscriptions";
@@ -34,16 +34,17 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [isLoaderFinished, setIsLoaderFinished] = useState(false);
   const handleLoginClick = useCallback(() => {
     document.getElementById("login")?.scrollIntoView({ behavior: "auto" });
   }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <PageLoader />
+      <PageLoader onComplete={() => setIsLoaderFinished(true)} />
       <Header onLoginClick={handleLoginClick} />
       <main>
-        <Hero />
+        <Hero isLoaderFinished={isLoaderFinished} />
         <Playground />
         <Subscriptions />
          <LoginSection />

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DownloadButtons } from "./DownloadButtons";
 import heroVideo from "@/assets/IMG_6280.mp4";
@@ -33,8 +33,17 @@ const avatarGradients = [
   "linear-gradient(135deg, #2a4a1a, #4a7a2a)",
 ];
 
-export function Hero() {
+export function Hero({ isLoaderFinished = false }: { isLoaderFinished?: boolean }) {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (isLoaderFinished && videoRef.current) {
+      videoRef.current.play().catch((err) => {
+        console.warn("Video play failed or was interrupted:", err);
+      });
+    }
+  }, [isLoaderFinished]);
 
   return (
     <section
@@ -55,11 +64,11 @@ export function Hero() {
         }}
       >
         <video
+          ref={videoRef}
           src={heroVideo}
-          autoPlay
+          autoPlay={isLoaderFinished}
           muted
           playsInline
-
           loop
           style={{
             width: "100%",
@@ -67,7 +76,6 @@ export function Hero() {
             objectFit: "cover",
             display: "block",
             filter: "brightness(1.08) contrast(1.03)",
-
           }}
         />
         {/* Fade left edge so it blends into the text area */}
