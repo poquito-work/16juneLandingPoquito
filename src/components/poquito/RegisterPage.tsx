@@ -13,7 +13,23 @@ import {
 import { PocketDragonLogo } from "./Logo";
 import uploadLogo from "@/assets/poquito-boy.png";
 import { Mail, Smartphone, MapPin, User, Lock } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
+
+import { Check, ChevronsUpDown } from "lucide-react";
+import { ScrollBar,ScrollArea } from "../ui/scroll-area";
 // ─── Register Header ─────────────────────────────────────────────────────────
 
 function RegisterHeader() {
@@ -215,7 +231,7 @@ function StepDetails({
   const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
   const [emailError, setEmailError] = useState("");
 const [usernameError, setUsernameError] = useState("");
-
+  const [open, setOpen] = useState(false);
 useEffect(() => {
   if (!data.email.trim()) {
     setEmailError("");
@@ -423,7 +439,61 @@ useEffect(() => {
            <div className="reg-input-wrap">
           <MapPin className="reg-input-icon" size={18} />
           <div className="reg-select-wrap ">
-            <select
+       <Popover open={open} onOpenChange={setOpen}>
+  <PopoverTrigger asChild>
+    <Button
+      type="button"
+      variant="outline"
+      role="combobox"
+      aria-expanded={open}
+      className={`reg-input justify-between ${
+        errors.city ? "reg-input-error" : ""
+      } ${!data.city ? "reg-select-placeholder" : ""}`}
+    >
+      {data.city || "Select your city"}
+
+      <ChevronsUpDown className="h-4 w-4 opacity-50" />
+    </Button>
+  </PopoverTrigger>
+
+  <PopoverContent
+    align="start"
+    side="bottom"
+    sideOffset={6}
+    className="w-[var(--radix-popover-trigger-width)] p-0"
+  >
+    <Command>
+      <CommandInput placeholder="Search city..." />
+
+      <CommandEmpty>No city found.</CommandEmpty>
+
+      <CommandGroup className="max-h-64 overflow-y-auto custom-scrollbar">
+        {cityList.map((city: any) => (
+          <CommandItem
+           className={city.name === "Other" ? "text-[#b65a2f] font-semibold" : ""}
+            key={city.uuid}
+            value={city.name}
+            onSelect={() => {
+              onChange("city", city.name);
+              onChange("cityId", city.id);
+
+              setOpen(false);
+            }}
+          >
+            <Check
+              className={`mr-2 h-4 w-4 ${
+                data.city === city.name ? "opacity-100" : "opacity-0"
+              }`}
+            />
+
+            {city.name}
+          </CommandItem>
+        ))}
+      </CommandGroup>
+    </Command>
+  </PopoverContent>
+</Popover>
+            {/* <select
               id="reg-city"
               className={`reg-input reg-select ${errors.city ? "reg-input-error" : ""} ${!data.city ? "reg-select-placeholder" : ""}`}
               value={data.city}
@@ -455,7 +525,7 @@ useEffect(() => {
               >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
-            </span>
+            </span> */}
           </div>
           {errors.city && <span className="reg-error">{errors.city}</span>}
         </div>
