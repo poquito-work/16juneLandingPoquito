@@ -2056,6 +2056,7 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .reg-select {
@@ -3437,11 +3438,14 @@ div:where(.swal2-container).swal2-center>.swal2-popup{
 .reg-input-icon {
   position: absolute;
   left: 18px;
-      top: 68%;
+      top: 50%;
   transform: translateY(-50%);
   color: #8a8479;
   pointer-events: none;
   z-index: 2;
+}
+.dash-section .reg-input-icon{
+  top:66%;
 }
 
 .reg-input-left {

@@ -48,7 +48,7 @@ function TermsPage() {
         <section>
           <h2 className="text-base font-bold uppercase tracking-[0.12em] text-foreground mb-3">4. Gameplay &amp; Fair Play</h2>
           <p>Pocket Dragon is a skill-based game governed by Traditional Mahjong rules. All players are expected to play in good faith.</p>
-          <p>Cheating, exploiting bugs, or using third-party software to gain an unfair advantage is strictly prohibited and will result in immediate account termination. If you discover a bug or exploit, please report it to us immediately at <a href="mailto:admin@pocketdragon.in" className="text-rust hover:opacity-75 transition-opacity">admin@pocketdragon.in</a></p>
+          <p>Cheating, exploiting bugs, or using third-party software to gain an unfair advantage is strictly prohibited and will result in immediate account termination. If you discover a bug or exploit, please report it to us immediately at <a href="mailto:support@pocketdragon.in" className="text-rust hover:opacity-75 transition-opacity">support@pocketdragon.in</a></p>
         </section>
 
         <section>

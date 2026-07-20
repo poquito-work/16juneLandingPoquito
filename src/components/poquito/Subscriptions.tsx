@@ -221,11 +221,11 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
               <span className="font-display text-5xl font-bold leading-none">
-                 {/* {annualPlan.price.toLocaleString("en-IN")} */} 4,500
+                 {/* {annualPlan.price.toLocaleString("en-IN")} */} 5,000
 </span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
-            <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month </p> 
+            <p className="mt-2 text-xs text-cream/75">Save 17% | Rs 417/month </p> 
             {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}% | Rs 375/month </p> */}
                         {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}%  {annualPlan.price_per_month_equiv ? ` | Rs ${annualPlan.price_per_month_equiv}/month` : ""} */}
 
