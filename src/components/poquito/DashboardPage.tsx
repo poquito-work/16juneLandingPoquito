@@ -14,7 +14,7 @@ import {
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import Swal from "sweetalert2";
-import { Mail, Smartphone, MapPin, User, Lock } from "lucide-react";
+import { Mail, Smartphone, MapPin, User, Lock, Trash2} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,24 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
+
+import { Check, ChevronsUpDown } from "lucide-react";
+import { ScrollBar,ScrollArea } from "../ui/scroll-area";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -42,7 +60,7 @@ interface UserProfile {
   trial_days_left?: number;
   subscription?: UserSubscription | null;
   trial_end_at?: string | null;
-  other_city?:string | null;
+  other_city?: string | null;
 }
 
 interface Transaction {
@@ -91,7 +109,6 @@ interface UserSubscription {
   cancel_deferred_to_next_cycle: boolean;
   plan: SubscriptionPlan;
 }
-
 // ─── Mock/fallback data helpers ───────────────────────────────────────────────
 
 function decodeJwtPayload(token: string): Record<string, unknown> | null {
@@ -128,7 +145,7 @@ function getUserFromToken(): UserProfile {
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
-type Tab = "profile" | "transactions" | "subscription";
+type Tab = "profile" | "transactions" | "subscription" | "delete-account";
 
 const TABS: { id: Tab; label: string; href: string; icon: ReactNode }[] = [
   {
@@ -190,40 +207,106 @@ const TABS: { id: Tab; label: string; href: string; icon: ReactNode }[] = [
       </svg>
     ),
   },
+  {
+    id: "delete-account",
+    label: "Delete Account",
+    href: "/myaccount/delete-account",
+    icon: (
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <polyline points="3 6 5 6 21 6" />
+        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+        <path d="M10 11v6" />
+        <path d="M14 11v6" />
+        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+      </svg>
+    ),
+  },
 ];
 
-function Sidebar({ active, onSelect }: { active: Tab; onSelect: (t: Tab) => void }) {
+
+
+function Sidebar({
+  active,
+  onSelect,
+  onDeleteClick,
+}: {
+  active: Tab;
+  onSelect: (t: Tab) => void;
+   onDeleteClick: () => void;
+}) {
+
   return (
-    <aside className="dash-sidebar">
-      <p className="dash-sidebar-label">My Account</p>
-      <nav className="dash-sidebar-nav">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            className={`dash-sidebar-item ${active === tab.id ? "dash-sidebar-item-active" : ""}`}
-            onClick={() => onSelect(tab.id)}
-          >
-            <span className="dash-sidebar-icon">{tab.icon}</span>
-            {tab.label}
-          </button>
-        ))}
-      </nav>
-    </aside>
+    <>
+      <aside className="dash-sidebar">
+        <p className="dash-sidebar-label">My Account</p>
+
+        <nav className="dash-sidebar-nav">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`dash-sidebar-item ${
+                active === tab.id ? "dash-sidebar-item-active" : ""
+              }`}
+              onClick={() => {
+                if (tab.id === "delete-account") {
+                   onDeleteClick();
+                  return;
+                }
+
+                onSelect(tab.id);
+              }}
+            >
+              <span className="dash-sidebar-icon">{tab.icon}</span>
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+      </aside>
+
+  
+    </>
   );
 }
 
+
 // ─── Mobile Tab Bar ────────────────────────────────────────────────────────────
 
-function MobileTabBar({ active, onSelect }: { active: Tab; onSelect: (t: Tab) => void }) {
+function MobileTabBar({
+  active,
+  onSelect,
+  onDeleteClick,
+}: {
+  active: Tab;
+  onSelect: (t: Tab) => void;
+  onDeleteClick: () => void;
+}) {
   return (
     <div className="dash-mobile-tabs mt-7">
       {TABS.map((tab) => (
         <button
           key={tab.id}
           type="button"
-          className={`dash-mobile-tab ${active === tab.id ? "dash-mobile-tab-active" : ""}`}
-          onClick={() => onSelect(tab.id)}
+          className={`dash-mobile-tab ${
+            active === tab.id ? "dash-mobile-tab-active" : ""
+          }`}
+          onClick={() => {
+            if (tab.id === "delete-account") {
+              onDeleteClick();
+              return;
+            }
+
+            onSelect(tab.id);
+          }}
         >
           <span className="dash-mobile-tab-icon">{tab.icon}</span>
           <span className="dash-mobile-tab-label">{tab.label}</span>
@@ -235,7 +318,13 @@ function MobileTabBar({ active, onSelect }: { active: Tab; onSelect: (t: Tab) =>
 
 // ─── Profile Tab ──────────────────────────────────────────────────────────────
 
-function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUpdated?: () => Promise<any> }) {
+function ProfileTab({
+  user,
+  onProfileUpdated,
+}: {
+  user: UserProfile;
+  onProfileUpdated?: () => Promise<any>;
+}) {
   const initials = (user.username ?? "P")
     .split(" ")
     .map((w) => w[0])
@@ -259,6 +348,7 @@ function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUp
   const [avatarList, setAvatarList] = useState<any[]>([]);
   const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     getPredefinedListByType("CITY")
       .then((res) => setCityList(res.data.content ?? []))
@@ -297,12 +387,20 @@ function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUp
       other_city: user.other_city !== undefined ? (user.other_city ?? "") : prev.other_city,
     }));
     console.log({
-  city: form.city,
-  other_city: form.other_city,
-  userOtherCity: user.other_city,
-  matchedCity,
-});
-  }, [user.name, user.username, user.email, user.phone_number,user.other_city, user.city_id, cityList]);
+      city: form.city,
+      other_city: form.other_city,
+      userOtherCity: user.other_city,
+      matchedCity,
+    });
+  }, [
+    user.name,
+    user.username,
+    user.email,
+    user.phone_number,
+    user.other_city,
+    user.city_id,
+    cityList,
+  ]);
   function validate() {
     const e: Record<string, string> = {};
     // if (!form.name.trim()) e.name = "Full name is required.";
@@ -332,7 +430,7 @@ function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUp
         phone_number: form.phone_number.trim() || null,
         city_id: selectedCity?.id,
         avatar_url: form.avatar_url,
-        other_city:form.other_city
+        other_city: form.other_city,
       });
 
       setSaved(true);
@@ -473,7 +571,51 @@ function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUp
 
             <div className="reg-select-wrap">
               <MapPin className="reg-input-icon" size={18} />
-              <select
+              <Popover open={open} onOpenChange={setOpen}>
+  <PopoverTrigger asChild>
+    <Button
+      variant="outline"
+      className="dash-input justify-between"
+    >
+      {form.city || "Select your city"}
+      <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
+    </Button>
+  </PopoverTrigger>
+
+  <PopoverContent className="w-[350px] p-0" side="bottom"
+  align="start"
+  sideOffset={4}
+  avoidCollisions={false}
+  >
+    <Command>
+      <CommandInput placeholder="Search city..." />
+
+      <CommandEmpty>No city found.</CommandEmpty>
+            <ScrollArea className="h-64">
+      <CommandGroup className="max-h-64 overflow-y-auto custom-scrollbar">
+        {cityList.map((city) => (
+          <CommandItem
+          className={city.name === "Other" ? "text-[#b65a2f] font-semibold" : ""}
+            key={city.uuid}
+            value={city.name}
+            onSelect={(value) => {
+              setForm((p) => ({
+                ...p,
+                city: value,
+              }));
+              setOpen(false);
+            }}
+          >
+            {city.name}
+          </CommandItem>
+        ))}
+      </CommandGroup>
+        <ScrollBar className="w-1" orientation="vertical" />
+        </ScrollArea>
+    </Command>
+  </PopoverContent>
+</Popover>
+              {/* <select
                 id="dp-city"
                 className={`dash-input reg-select ${!form.city ? "reg-select-placeholder" : ""}`}
                 value={form.city}
@@ -487,8 +629,8 @@ function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUp
                     {c.name}
                   </option>
                 ))}
-              </select>
-              <span className="reg-select-arrow">
+              </select> */}
+              {/* <span className="reg-select-arrow">
                 <svg
                   width="14"
                   height="14"
@@ -501,33 +643,31 @@ function ProfileTab({ user, onProfileUpdated }: { user: UserProfile; onProfileUp
                 >
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
-              </span>
+              </span> */}
             </div>
           </div>
 
-
-           {form.city.toLowerCase() === "other" && (
-          <div className="reg-field">
-            <label className="reg-label" htmlFor="reg-city">
-              Other City
-            </label>
-            <MapPin className="reg-input-icon" size={18} />
-            <input
-  type="text"
-  className="reg-input"
-  placeholder="Enter other city"
-  value={form.other_city}
-  onChange={(e) =>
-    setForm((prev) => ({
-      ...prev,
-      other_city: e.target.value,
-    }))
-  }
-/>
-            {errors.other_city && <span className="reg-error">{errors.other_city}</span>}
-          </div>
-        )}
-
+          {form.city.toLowerCase() === "other" && (
+            <div className="reg-field">
+              <label className="reg-label" htmlFor="reg-city">
+                Other City
+              </label>
+              <MapPin className="reg-input-icon" size={18} />
+              <input
+                type="text"
+                className="reg-input"
+                placeholder="Enter other city"
+                value={form.other_city}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    other_city: e.target.value,
+                  }))
+                }
+              />
+              {errors.other_city && <span className="reg-error">{errors.other_city}</span>}
+            </div>
+          )}
 
           {/* Read-only fields */}
           {/* <div className="dash-field">
@@ -890,12 +1030,12 @@ function SubscriptionTab({
     onClose: () => void;
     plan: "monthly" | "annual";
   }) {
-  
-  
-  
     return (
       <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-        <DialogContent className="modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-foreground [&>button]:hover:text-foreground/70" style={{ background: "var(--green)" }}>
+        <DialogContent
+          className="modal-card max-w-sm border-0 p-0 overflow-hidden [&>button]:text-foreground [&>button]:hover:text-foreground/70"
+          style={{ background: "var(--green)" }}
+        >
           <div className=" flex flex-col gap-5">
             {/* Title */}
             <DialogHeader>
@@ -909,35 +1049,42 @@ function SubscriptionTab({
                 {plan === "monthly" ? "Monthly Plan" : "Annual Plan"} cancellation terms
               </DialogDescription>
             </DialogHeader>
-  
+
             {/* Body */}
             <div className=" space-y-3 text-[0.95rem] text-cream/85 leading-relaxed">
               {plan === "monthly" ? (
                 <>
                   <p>
-                   Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter
+                    Subscriptions are non-refundable. Upon cancellation, benefits will remain active
+                    until the end of the current subscription term and subscription will not renew
+                    automatically thereafter
                   </p>
                   <p>
-                    No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
+                    No refunds or credits will be issued for any partially used or unused portion of
+                    a monthly or annual subscription term
                   </p>
                   <p className="text-cream/55 text-[0.95rem]">
-                    To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’
+                    To cancel, go to 'My Account' and select 'Subscription'
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-  Subscriptions are non-refundable. Upon cancellation, benefits will remain active until the end of the current subscription term and subscription will not renew automatically thereafter</p>
+                    Subscriptions are non-refundable. Upon cancellation, benefits will remain active
+                    until the end of the current subscription term and subscription will not renew
+                    automatically thereafter
+                  </p>
                   <p>
-                   No refunds or credits will be issued for any partially used or unused portion of a monthly or annual subscription term 
+                    No refunds or credits will be issued for any partially used or unused portion of
+                    a monthly or annual subscription term
                   </p>
                   <p className="text-cream/55 text-[0.95rem]">
-                    To cancel, go to account settings in the Pocket Dragon app and select ‘Manage Subscription’ 
+                    To cancel, go to 'My Account' and select 'Subscription'
                   </p>
                 </>
               )}
             </div>
-  
+
             {/* Button */}
             <button
               type="button"
@@ -951,7 +1098,6 @@ function SubscriptionTab({
       </Dialog>
     );
   }
-
 
   function daysUntil(dateStr: string | null): number | null {
     if (!dateStr) return null;
@@ -1004,7 +1150,7 @@ function SubscriptionTab({
         }
 
         const profile = await getUserProfile();
-       
+
         const sub = profile.data.subscription;
         const hasActive = profile.data.has_active_subscription;
         const isPlanActive = sub && (sub.status === "active" || sub.status === "trialing");
@@ -1033,14 +1179,14 @@ function SubscriptionTab({
     const planToApply = plans.find((p) => p.id === planId);
 
     if (!planToApply || !subscription) return;
-
+    //  <strong>Rs ${planToApply.price.toLocaleString()}/${planToApply.billing_cycle}</strong>
     const confirm = await Swal.fire({
       icon: "question",
       title: `Switch to ${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"} Plan?`,
       html: `
       <div style="text-align:center; line-height:1.6">
         <p>
-          <strong>Rs ${planToApply.price.toLocaleString()}/${planToApply.billing_cycle}</strong>
+          
           ${
             planToApply.billing_cycle === "annual"
               ? "<br><span style='color:#666'>Save 25% | Rs 375/month</span>"
@@ -1048,17 +1194,17 @@ function SubscriptionTab({
           }
         </p>
 
-        <br>
+       
 
         <p>
           Your current <strong>${subscription.plan.name}</strong> will remain active until
-          <strong>${formatDate(subscription.current_period_end)}</strong>.
+          <strong>${formatDate(subscription.current_period_end)}.</strong>.
         </p>
 
-        <br>
+      
 
         <p>
-          Starting <strong>${formatDate(subscription.current_period_end)}</strong>,
+          Starting <strong>${addOneDay(subscription?.current_period_end ?? null)}</strong>,
           your subscription will automatically switch to the
           <strong>${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"}</strong> Plan.
         </p>
@@ -1103,7 +1249,7 @@ function SubscriptionTab({
 
     const confirmResult = await Swal.fire({
       icon: "warning",
-      title: "Cancel Subscription?",
+      title: "We are sorry to see you go",
       html: `
     <div style="text-align:center; line-height:1.6;">
       <p>
@@ -1111,16 +1257,14 @@ function SubscriptionTab({
         <b>${formatDate(subscription.current_period_end)}</b>.
       </p>
       <p>
-        After this date, your plan will not renew automatically.
+        Afterwhich it will not automatically renew
       </p>
-      <p style="margin-top:16px;">
-        Come back anytime.
-      </p>
+     
     </div>
   `,
       showCancelButton: true,
-      confirmButtonText: "Yes Cancel",
-      cancelButtonText: "No, Go Back",
+      confirmButtonText: "Cancel Subscription",
+      cancelButtonText: "Stay Subscribed",
       confirmButtonColor: "#b65a2f",
       cancelButtonColor: "#143322",
     });
@@ -1187,7 +1331,18 @@ function SubscriptionTab({
 
   const isSubscriptionActive =
     subscription?.status === "active" || subscription?.status === "trialing";
+  function addOneDay(date: string | null) {
+    if (!date) return "—";
 
+    const nextDate = new Date(date);
+    nextDate.setDate(nextDate.getDate() + 1);
+
+    return nextDate.toLocaleDateString("en-IN", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
   // const isDowngrade =
   //    isSubscriptionActive &&
   //   subscription?.plan?.billing_cycle === "annual" &&
@@ -1210,13 +1365,14 @@ function SubscriptionTab({
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">{subscription.plan?.name}</p>
-            <p className="dash-sub-plan-price">
+            <p className="dash-sub-plan-price">Next billing on</p>
+            {/* <p className="dash-sub-plan-price">
               ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
               {subscription.plan.billing_cycle === "monthly" ? "month" : "year"}
               {subscription.plan.gst_excluded && (
                 <span className="dash-sub-gst-note"> (incl. ₹{subscription.gst} GST)</span>
               )}
-            </p>
+            </p> */}
 
             {isTrialActive ? (
               <></>
@@ -1234,7 +1390,7 @@ function SubscriptionTab({
               </div>
             )}
           </div>
-          <div>
+          {/* <div>
             <span
               className={`dash-chip ${(SUB_STATUS_MAP[subscription.status] ?? { label: subscription.status, cls: "dash-chip-pending" }).cls}`}
             >
@@ -1247,7 +1403,7 @@ function SubscriptionTab({
                 ).label
               }
             </span>
-          </div>
+          </div> */}
         </div>
       )}
 
@@ -1256,12 +1412,12 @@ function SubscriptionTab({
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">Free Trial</p>
-            {/* <div className="dash-sub-meta">
-              <h3 className="">Free trial active</h3>
-              <p className="">
+            <div className="dash-sub-meta trialText">
+              <h3 className="">Trial end at {formatDate(trialEndAt)}.</h3>
+              {/* <p className="">
                 Your {trialDaysLeft}-day trial ends {formatDate(trialEndAt)}.
-              </p>
-            </div> */}
+              </p> */}
+            </div>
           </div>
           {/* <div>
             <span className="dash-chip dash-chip-pending">Trial</span>
@@ -1283,195 +1439,186 @@ function SubscriptionTab({
         <p className="dash-sub-change-title">
           {trialEndedWithoutSubscription || isTrialActive ? "Choose a Plan" : "Change Plan"}
         </p>
+        {subscription && (
+          <p className="mb-8">
+            If you want to switch to the{" "}
+            <strong>{subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"}</strong>{" "}
+            Plan, your current{" "}
+            <strong>
+              {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan
+            </strong>{" "}
+            will remain active until{" "}
+            <strong>{formatDate(subscription?.current_period_end ?? null)}</strong>. Starting{" "}
+            <strong>{addOneDay(subscription?.current_period_end ?? null)}</strong>, your
+            subscription will automatically switch to the{" "}
+            <strong>
+              {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan
+            </strong>
+          </p>
+        )}
         <div className="">
           <div className="dash-sub-plans-grid">
-            {plans.map((plan) => {
-              const isCurrentPlan = subscription?.plan.id === plan.id;
+            {plans
+              .filter((plan) => {
+                if (!subscription) {
+                  return true;
+                }
 
-              const isDowngrade =
-                subscription?.plan.billing_cycle === "annual" && plan.billing_cycle === "monthly";
+                if (subscription.plan.billing_cycle === "monthly") {
+                  return plan.billing_cycle === "annual";
+                }
 
-              const isUpgrade =
-                subscription?.plan.billing_cycle === "monthly" && plan.billing_cycle === "annual";
-              const isSelected = selectedPlanId === plan.id;
-              const isBestValue = plan.billing_cycle === "annual";
+                if (subscription.plan.billing_cycle === "annual") {
+                  return plan.billing_cycle === "monthly";
+                }
 
-              return (
-                <div
-                  key={plan.id}
-                  className={`reg-plan-card
+                return true;
+              })
+              .map((plan) => {
+                const isCurrentPlan = subscription?.plan.id === plan.id;
+
+                const isDowngrade =
+                  subscription?.plan.billing_cycle === "annual" && plan.billing_cycle === "monthly";
+
+                const isUpgrade =
+                  subscription?.plan.billing_cycle === "monthly" && plan.billing_cycle === "annual";
+                const isSelected = selectedPlanId === plan.id;
+                const isBestValue = plan.billing_cycle === "annual";
+
+                return (
+                  <div
+                    key={plan.id}
+                    className={`reg-plan-card
     ${plan.billing_cycle === "annual" ? "reg-plan-card-featured" : "regMonthly"}
     ${subscription?.plan.id === plan.id ? "reg-plan-card-selected" : ""}`}
-                  onClick={() => setSelectedPlanId(plan.id)}
-                >
-                  {isBestValue && (
-                    <div className="reg-plan-badge rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">
-                      BEST VALUE
-                    </div>
-                  )}
+                    onClick={() => setSelectedPlanId(plan.id)}
+                  >
+                    {isBestValue && (
+                      <div className="reg-plan-badge rounded-full bg-rust px-8 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream shadow-sm">
+                        BEST VALUE
+                      </div>
+                    )}
 
-                  {!trialEndedWithoutSubscription &&
-                    subscription &&
-                    (subscription.status === "active" || subscription.status === "trialing") &&
-                    plan.id === subscription.plan.id && (
-                      <p
-                        className={
-                          plan.billing_cycle === "annual"
-                            ? "dash-sub-same-note annual"
-                            : "dash-sub-same-note monthly"
-                        }
-                      >
-                        Active
+                    {!trialEndedWithoutSubscription &&
+                      subscription &&
+                      (subscription.status === "active" || subscription.status === "trialing") &&
+                      plan.id === subscription.plan.id && (
+                        <p
+                          className={
+                            plan.billing_cycle === "annual"
+                              ? "dash-sub-same-note annual"
+                              : "dash-sub-same-note monthly"
+                          }
+                        >
+                          Active
+                        </p>
+                      )}
+                    {plan.billing_cycle === "annual" ? (
+                      <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85 mb-4">
+                        {plan.name}
+                      </p>
+                    ) : (
+                      <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70 mb-4">
+                        {plan.name}
                       </p>
                     )}
-                  {plan.billing_cycle === "annual" ? (
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85 mb-4">
-                      {plan.name}
-                    </p>
-                  ) : (
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70 mb-4">
-                      {plan.name}
-                    </p>
-                  )}
 
-                  <div>
-                    <p className="reg-plan-price-row">
-                      <span
-                        className={`reg-plan-currency ${
-                          plan.billing_cycle === "monthly"
-                            ? "text-sm font-bold"
-                            : "text-sm font-bold text-cream/85"
-                        }`}
-                      >
-                        Rs
-                      </span>
-                      {plan.billing_cycle === "annual" && (
-                        <span className="font-display text-5xl font-bold leading-none text-cream">
-                          {plan.price.toLocaleString("en-IN")}
+                    <div>
+                      <p className="reg-plan-price-row">
+                        <span
+                          className={`reg-plan-currency ${
+                            plan.billing_cycle === "monthly"
+                              ? "text-sm font-bold"
+                              : "text-sm font-bold text-cream/85"
+                          }`}
+                        >
+                          Rs
                         </span>
+                        {plan.billing_cycle === "annual" && (
+                          <span className="font-display text-5xl font-bold leading-none text-cream">
+                            {plan.price.toLocaleString("en-IN")}
+                          </span>
+                        )}
+
+                        {plan.billing_cycle === "monthly" && (
+                          <span
+                            className="font-display text-5xl font-bold leading-none"
+                            style={{ color: "var(--foreground)" }}
+                          >
+                            {plan.price.toLocaleString("en-IN")}
+                          </span>
+                        )}
+                        <span
+                          className={`reg-plan-period ${
+                            plan.billing_cycle === "monthly"
+                              ? "ml-1 text-sm text-foreground/65"
+                              : "ml-1 text-sm text-cream/75"
+                          }`}
+                        >
+                          / {plan.billing_cycle === "monthly" ? "month" : "year"}
+                        </span>
+                      </p>
+
+                      {plan.billing_cycle === "annual" && (
+                        // <p className="reg-plan-save">
+                        //   Save {plan.discount_percent}% | Rs{" "}
+                        //   {plan.price_per_month_equiv}/month
+                        // </p>
+
+                        <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month</p>
+                      )}
+
+                      {plan.billing_cycle === "annual" && (
+                        <p className="mt-2 text-xs text-cream/75">
+                          {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+                        </p>
                       )}
 
                       {plan.billing_cycle === "monthly" && (
-                        <span
-                          className="font-display text-5xl font-bold leading-none"
-                          style={{ color: "var(--foreground)" }}
-                        >
-                          {plan.price.toLocaleString("en-IN")}
-                        </span>
+                        <p className="mt-2 text-xs text-foreground/65">
+                          {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+                        </p>
                       )}
-                      <span
-                        className={`reg-plan-period ${
-                          plan.billing_cycle === "monthly"
-                            ? "ml-1 text-sm text-foreground/65"
-                            : "ml-1 text-sm text-cream/75"
-                        }`}
-                      >
-                        / {plan.billing_cycle === "monthly" ? "month" : "year"}
-                      </span>
-                    </p>
 
-                    {plan.billing_cycle === "annual" && (
-                      // <p className="reg-plan-save">
-                      //   Save {plan.discount_percent}% | Rs{" "}
-                      //   {plan.price_per_month_equiv}/month
-                      // </p>
-
-                      <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month</p>
+                      {plan.billing_cycle === "monthly" && (
+                        <p className="mt-2 text-xs text-foreground/65">
+                          Billed monthly. Cancel anytime.
+                        </p>
+                      )}
+                    </div>
+                    {plan.billing_cycle === "annual" ? (
+                      <hr className="reg-plan-divider" />
+                    ) : (
+                      <hr className="reg-plan-divider monthlyHr" />
                     )}
 
-                    {plan.billing_cycle === "annual" && (
-                      <p className="mt-2 text-xs text-cream/75">
-                        {plan.gst_excluded ? "Excl GST" : "Incl GST"}
-                      </p>
-                    )}
-
-                    {plan.billing_cycle === "monthly" && (
-                      <p className="mt-2 text-xs text-foreground/65">
-                        {plan.gst_excluded ? "Excl GST" : "Incl GST"}
-                      </p>
-                    )}
-
-                    {plan.billing_cycle === "monthly" && (
-                      <p className="mt-2 text-xs text-foreground/65">
-                        Billed monthly. Cancel anytime.
-                      </p>
-                    )}
-                  </div>
-                  {plan.billing_cycle === "annual" ? (
-                    <hr className="reg-plan-divider" />
-                  ) : (
-                    <hr className="reg-plan-divider monthlyHr" />
-                  )}
-
-                  {showSubscribeButton ? (
-                    <button
-                      type="button"
-                      className="reg-plan-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedPlanId(plan.id);
-                        handleSubscribe(plan.id);
-                      }}
-                      // || isTrialActive
-                      disabled={changing }
-                    >
-                      {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
-                    </button>
-                  ) : // <button
-                  //   type="button"
-                  //   className="reg-plan-btn"
-                  //   onClick={(e) => {
-                  //     e.stopPropagation();
-                  //     setSelectedPlanId(plan.id);
-                  //     handleSubscribe(plan.id);
-                  //   }}
-                  //   disabled={changing}
-                  // >
-                  //   {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
-                  // </button>
-                  subscription?.plan.id === plan.id ? (
-                    <>
-                      {/* <p className="reg-current-plan-text">CURRENT PLAN</p> */}
-
+                    {showSubscribeButton ? (
                       <button
                         type="button"
                         className="reg-plan-btn"
-                        disabled={changing}
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleCancelPlan();
+                          handleSubscribe(plan.id);
                         }}
+                        disabled={changing}
                       >
-                        {changing ? "Cancelling..." : "Cancel Subscription"}
+                        {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
                       </button>
-                    </>
-                  ) : (
-                    <button
-                      type="button"
-                      className={`reg-plan-btn ${isDowngrade ? "opacity-50 cursor-not-allowed disabled" : ""}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleChangePlan(plan.id);
-                      }}
-                      disabled={changing}
-                    >
-                      {changing ? "Updating..." : isDowngrade ? "DOWNGRADE" : "UPGRADE"}
-                    </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="reg-plan-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleChangePlan(plan.id);
+                        }}
+                        disabled={changing}
+                      >
+                        {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+                      </button>
+                    )}
 
-                    // <button
-                    //   type="button"
-                    //   className="reg-plan-btn"
-                    //   onClick={(e) => {
-                    //     e.stopPropagation();
-                    //     handleChangePlan(plan.id);
-                    //   }}
-                    //   disabled={changing}
-                    // >
-                    //   {changing ? "Updating..." : "UPGRADE"}
-                    // </button>
-                  )}
-
-                  {/* <button
+                    {/* <button
           type="button"
           className="reg-plan-btn"
           onClick={(e) => {
@@ -1496,74 +1643,90 @@ function SubscriptionTab({
             : "UPGRADE"}
         </button> */}
 
-                  {/* <p className="reg-plan-terms">
+                    {/* <p className="reg-plan-terms">
           ⓘ Terms of cancellation
         </p> */}
-                  {plan.billing_cycle === "monthly" ? (
-                    <div className="w-full text-center">
-                      <button
-                        type="button"
-                        onClick={() => setMonthlyDialog(true)}
-                        className="cursor-pointer mt-3 inline-flex items-center justify-center gap-1.5 text-[0.80rem] text-foreground/50  underline-offset-2 hover:text-foreground/75 transition-colors"
-                      >
-                        <svg
-                          width="13"
-                          height="13"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                    {plan.billing_cycle === "monthly" ? (
+                      <div className="w-full text-center">
+                        <button
+                          type="button"
+                          onClick={() => setMonthlyDialog(true)}
+                          className="cursor-pointer mt-3 inline-flex items-center justify-center gap-1.5 text-[0.80rem] text-foreground/50  underline-offset-2 hover:text-foreground/75 transition-colors"
                         >
-                          <circle cx="12" cy="12" r="10" />
-                          <line x1="12" y1="16" x2="12" y2="12" />
-                          <line x1="12" y1="8" x2="12.01" y2="8" />
-                        </svg>
-                        Terms of cancellation
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="w-full text-center">
-                      <button
-                        type="button"
-                        onClick={() => setAnnualDialog(true)}
-                        className="mt-3 inline-flex items-center cursor-pointer justify-center gap-1.5 text-[0.80rem] text-cream/50  underline-offset-2 hover:text-cream/80 transition-colors"
-                      >
-                        <svg
-                          width="13"
-                          height="13"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="16" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                          </svg>
+                          Terms of cancellation
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="w-full text-center">
+                        <button
+                          type="button"
+                          onClick={() => setAnnualDialog(true)}
+                          className="mt-3 inline-flex items-center cursor-pointer justify-center gap-1.5 text-[0.80rem] text-cream/50  underline-offset-2 hover:text-cream/80 transition-colors"
                         >
-                          <circle cx="12" cy="12" r="10" />
-                          <line x1="12" y1="16" x2="12" y2="12" />
-                          <line x1="12" y1="8" x2="12.01" y2="8" />
-                        </svg>
-                        Terms of cancellation
-                      </button>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="16" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                          </svg>
+                          Terms of cancellation
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
           </div>
+
+          {subscription &&
+            (subscription.status === "active" || subscription.status === "trialing") && (
+              <p className="dash-info-note">
+                To cancel your subscription,&nbsp;
+                <button
+                  type="button"
+                  onClick={handleCancelPlan}
+                  className="dash-link-btn"
+                  disabled={changing}
+                >
+                  click here
+                </button>
+                .
+              </p>
+            )}
         </div>
 
-          <CancellationDialog
-        open={monthlyDialog}
-        onClose={() => setMonthlyDialog(false)}
-        plan="monthly"
-      />
-      <CancellationDialog
-        open={annualDialog}
-        onClose={() => setAnnualDialog(false)}
-        plan="annual"
-      />
+        <CancellationDialog
+          open={monthlyDialog}
+          onClose={() => setMonthlyDialog(false)}
+          plan="monthly"
+        />
+        <CancellationDialog
+          open={annualDialog}
+          onClose={() => setAnnualDialog(false)}
+          plan="annual"
+        />
 
         {/* <div className="dash-sub-actions">
                {isDowngrade && (
@@ -1631,14 +1794,14 @@ function SubscriptionTab({
         </div> */}
       </div>
 
-      <p className="dash-info-note">
+      {/* <p className="dash-info-note">
         To cancel your subscription, go to Account Settings in the Pocket Dragon app and select
         "Manage Subscription". See our{" "}
         <Link to="/terms" className="dash-link">
           Terms of Use
         </Link>{" "}
         for cancellation policy.
-      </p>
+      </p> */}
     </div>
   );
 }
@@ -1646,8 +1809,10 @@ function SubscriptionTab({
 // ─── Main DashboardPage ───────────────────────────────────────────────────────
 
 const TAB_ROUTES: Record<
-  Tab,
-  "/myaccount/profile" | "/myaccount/transaction-history" | "/myaccount/manage-subscription"
+  Exclude<Tab, "delete-account">,
+  | "/myaccount/profile"
+  | "/myaccount/transaction-history"
+  | "/myaccount/manage-subscription"
 > = {
   profile: "/myaccount/profile",
   transactions: "/myaccount/transaction-history",
@@ -1658,6 +1823,7 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [user, setUser] = useState<UserProfile>({});
   const navigate = useNavigate();
+   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   function fetchUserProfile() {
     return getUserProfile()
@@ -1704,22 +1870,32 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
     setActiveTab(initialTab);
   }, [initialTab]);
 
-  function handleTabSelect(tab: Tab) {
-    setActiveTab(tab);
-    navigate({ to: TAB_ROUTES[tab] });
+ function handleTabSelect(tab: Tab) {
+  if (tab === "delete-account") {
+    return; // Dialog is handled in Sidebar
   }
+
+  setActiveTab(tab);
+  navigate({ to: TAB_ROUTES[tab] });
+}
 
   return (
     <div className="dash-page">
       <Header onLoginClick={() => navigate({ to: "/" })} />
 
-      <MobileTabBar active={activeTab} onSelect={handleTabSelect} />
+      <MobileTabBar
+  active={activeTab}
+  onSelect={handleTabSelect}
+  onDeleteClick={() => setShowDeleteDialog(true)}
+/>
 
       <div className="dash-body">
-        <Sidebar active={activeTab} onSelect={handleTabSelect} />
+        <Sidebar active={activeTab} onSelect={handleTabSelect}  onDeleteClick={() => setShowDeleteDialog(true)}/>
 
         <main className="dash-main">
-          {activeTab === "profile" && <ProfileTab user={user} onProfileUpdated={fetchUserProfile} />}
+          {activeTab === "profile" && (
+            <ProfileTab user={user} onProfileUpdated={fetchUserProfile} />
+          )}
           {activeTab === "transactions" && <TransactionsTab />}
           {activeTab === "subscription" && (
             <SubscriptionTab
@@ -1736,6 +1912,53 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
       </div>
 
       <Footer />
+        <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+  <DialogContent className=" rounded-[32px] border-0 p-0 overflow-hidden">
+    <div className="bg-[#F8F1E7] px-8 py-6 text-center">
+
+      {/* Handle */}
+      <div className="mx-auto mb-6  rounded-full bg-[#D9CCB9]" />
+
+      {/* Icon */}
+      <div className="mx-auto flex h-12 w-12 items-center justify-center radius-full rounded-full border border-[#b65a2f]">
+        <Trash2 className="h-6 w-6 text-[#b65a2f]" />
+      </div>
+
+      {/* Title */}
+      <h2 className="mt-6 text-2xl font-bold tracking-wide text-[#2E2A24]">
+        DELETE ACCOUNT
+      </h2>
+
+      {/* Description */}
+      <p className="mt-5 text-[15px] leading-7 text-[#6A625A]">
+        Deleting your account is permanent and cannot be undone.
+        Your profile, game history, statistics, friends,
+        achievements, and all associated data will be permanently deleted.
+      </p>
+
+      <p className="mt-6 text-lg font-medium text-[#2E2A24]">
+        Are you sure?
+      </p>
+
+      {/* Buttons */}
+      <div className="mt-8  flex items-center gap-4">
+        <button
+          className="dash-delete-btns w-full rounded-xl bg-[#b65a2f] py-4 font-semibold uppercase tracking-wide text-white transition hover:bg-[#b65a2f] hover:opacity-[0.9]"
+          // onClick={handleDeleteAccount}
+        >
+          Yes, I'm Sure
+        </button>
+
+        <button
+          className="dash-cancel-btns w-full rounded-xl border border-[#b65a2f] py-4 font-semibold uppercase tracking-wide text-[#b65a2f] transition hover:bg-[#f9f2e4] hover:opacity-[0.9]"
+          onClick={() => setShowDeleteDialog(false)}
+        >
+          No, I Change My Mind
+        </button>
+      </div>
+    </div>
+  </DialogContent>
+</Dialog>
     </div>
   );
 }

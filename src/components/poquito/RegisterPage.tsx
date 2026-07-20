@@ -13,7 +13,23 @@ import {
 import { PocketDragonLogo } from "./Logo";
 import uploadLogo from "@/assets/poquito-boy.png";
 import { Mail, Smartphone, MapPin, User, Lock } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
+
+import { Check, ChevronsUpDown } from "lucide-react";
+import { ScrollBar,ScrollArea } from "../ui/scroll-area";
 // ─── Register Header ─────────────────────────────────────────────────────────
 
 function RegisterHeader() {
@@ -213,6 +229,59 @@ function StepDetails({
   const [avatarList, setAvatarList] = useState<any[]>([]);
   const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(data.avatar_url);
+  const [emailError, setEmailError] = useState("");
+const [usernameError, setUsernameError] = useState("");
+  const [open, setOpen] = useState(false);
+useEffect(() => {
+  if (!data.email.trim()) {
+    setEmailError("");
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    setEmailError("");
+    return;
+  }
+
+  const timer = setTimeout(async () => {
+    try {
+      const res = await checkEmailExists(data.email);
+
+      if (res?.data?.is_available === false) {
+        setEmailError("Email address already taken");
+      } else {
+        setEmailError("");
+      }
+    } catch {
+      setEmailError("");
+    }
+  }, 500); // wait 500ms after typing
+
+  return () => clearTimeout(timer);
+}, [data.email]);
+
+useEffect(() => {
+  if (!data.fullName.trim()) {
+    setUsernameError("");
+    return;
+  }
+
+  const timer = setTimeout(async () => {
+    try {
+      const res = await checkUserExists(data.fullName);
+
+      if (res?.data?.is_available === false) {
+        setUsernameError("Username already taken");
+      } else {
+        setUsernameError("");
+      }
+    } catch {
+      setUsernameError("");
+    }
+  }, 500);
+
+  return () => clearTimeout(timer);
+}, [data.fullName]);
 
   useEffect(() => {
     setSelectedAvatar(data.avatar_url);
@@ -265,12 +334,14 @@ function StepDetails({
   }
 
   const isFormValid =
-    data.fullName.trim() !== "" &&
-    data.city !== "" &&
-    data.email.trim() !== "" &&
-    data.password !== "" &&
-    data.confirmPassword !== "" &&
-    data.agreed;
+ data.fullName.trim() !== "" &&
+  data.city !== "" &&
+  data.email.trim() !== "" &&
+  data.password !== "" &&
+  data.confirmPassword !== "" &&
+  data.agreed &&
+  !emailError &&
+  !usernameError;
   // data.other_city.trim() !== ""
 
   // const isFormValid =
@@ -329,6 +400,9 @@ function StepDetails({
             />
           </div>
           {errors.email && <span className="reg-error">{errors.email}</span>}
+          {!errors.email && emailError && (
+            <span className="reg-error">{emailError}</span>
+          )}
         </div>
 
         {/* Phone */}
@@ -362,9 +436,64 @@ function StepDetails({
           <label className="reg-label" htmlFor="reg-city">
             City <span className="color-red">*</span>
           </label>
+           <div className="reg-input-wrap">
           <MapPin className="reg-input-icon" size={18} />
-          <div className="reg-select-wrap">
-            <select
+          <div className="reg-select-wrap ">
+       <Popover open={open} onOpenChange={setOpen}>
+  <PopoverTrigger asChild>
+    <Button
+      type="button"
+      variant="outline"
+      role="combobox"
+      aria-expanded={open}
+      className={`reg-input justify-between ${
+        errors.city ? "reg-input-error" : ""
+      } ${!data.city ? "reg-select-placeholder" : ""}`}
+    >
+      {data.city || "Select your city"}
+
+      <ChevronsUpDown className="h-4 w-4 opacity-50" />
+    </Button>
+  </PopoverTrigger>
+
+  <PopoverContent
+    align="start"
+    side="bottom"
+    sideOffset={6}
+    className="w-[var(--radix-popover-trigger-width)] p-0"
+  >
+    <Command>
+      <CommandInput placeholder="Search city..." />
+
+      <CommandEmpty>No city found.</CommandEmpty>
+
+      <CommandGroup className="max-h-64 overflow-y-auto custom-scrollbar">
+        {cityList.map((city: any) => (
+          <CommandItem
+           className={city.name === "Other" ? "text-[#b65a2f] font-semibold" : ""}
+            key={city.uuid}
+            value={city.name}
+            onSelect={() => {
+              onChange("city", city.name);
+              onChange("cityId", city.id);
+
+              setOpen(false);
+            }}
+          >
+            <Check
+              className={`mr-2 h-4 w-4 ${
+                data.city === city.name ? "opacity-100" : "opacity-0"
+              }`}
+            />
+
+            {city.name}
+          </CommandItem>
+        ))}
+      </CommandGroup>
+    </Command>
+  </PopoverContent>
+</Popover>
+            {/* <select
               id="reg-city"
               className={`reg-input reg-select ${errors.city ? "reg-input-error" : ""} ${!data.city ? "reg-select-placeholder" : ""}`}
               value={data.city}
@@ -396,9 +525,10 @@ function StepDetails({
               >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
-            </span>
+            </span> */}
           </div>
           {errors.city && <span className="reg-error">{errors.city}</span>}
+        </div>
         </div>
 
         {data.city.toLowerCase() === "other" && (
@@ -406,6 +536,7 @@ function StepDetails({
             <label className="reg-label" htmlFor="reg-city">
               Other City
             </label>
+            <div className="reg-input-wrap">
             <MapPin className="reg-input-icon" size={18} />
             <input
               type="text"
@@ -416,6 +547,7 @@ function StepDetails({
             />
             {errors.other_city && <span className="reg-error">{errors.other_city}</span>}
           </div>
+          </div>
         )}
 
         {/* Full Name */}
@@ -423,6 +555,7 @@ function StepDetails({
           <label className="reg-label" htmlFor="reg-fullname">
             Username <span className="color-red">*</span>{" "}
           </label>
+           <div className="reg-input-wrap password">
           <User className="reg-input-icon" size={18} />
           <input
             id="reg-fullname"
@@ -433,7 +566,11 @@ function StepDetails({
             onChange={(e) => onChange("fullName", e.target.value)}
             autoComplete="name"
           />
+          </div>
           {errors.fullName && <span className="reg-error">{errors.fullName}</span>}
+          {!errors.fullName && usernameError && (
+            <span className="reg-error">{usernameError}</span>
+          )}
         </div>
 
         {/* City dropdown */}
@@ -1012,32 +1149,23 @@ export function RegisterPage() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
-  async function handleStep1Next() {
-    setIsLoading(true);
-    setApiError("");
-    try {
-      const [emailRes, usernameRes] = await Promise.all([
-        checkEmailExists(formData.email),
-        checkUserExists(formData.fullName),
-      ]);
+ async function handleStep1Next() {
+  setIsLoading(true);
+  setApiError("");
 
-      if (emailRes?.data?.is_available === false) {
-        setApiError("An account with this email already exists. Please sign in.");
-        return;
-      }
-      if (usernameRes?.data?.is_available === false) {
-        setApiError("An account with this username already exists. Please sign in.");
-        return;
-      }
-
-      await sendOtp(formData.email, "EMAIL_OTP");
-      setStep(2);
-    } catch (err: any) {
-      setApiError(err?.response?.data?.message || err?.response?.data?.error);
-    } finally {
-      setIsLoading(false);
-    }
+  try {
+    await sendOtp(formData.email, "EMAIL_OTP");
+    setStep(2);
+  } catch (err: any) {
+    setApiError(
+      err?.response?.data?.message ||
+      err?.response?.data?.error ||
+      "Something went wrong."
+    );
+  } finally {
+    setIsLoading(false);
   }
+}
 
   async function handleSubmit(plan: "monthly" | "annual") {
     setIsLoading(true);

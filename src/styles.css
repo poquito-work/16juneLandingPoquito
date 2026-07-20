@@ -1598,6 +1598,8 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
   transition: border-color 0.18s, box-shadow 0.18s;
   outline: none;
       padding-left: 46px;
+      background: transparent;
+      box-shadow: none;
 }
 
 .reg-input::placeholder {
@@ -2056,6 +2058,7 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .reg-select {
@@ -2560,8 +2563,8 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
 }
 
 .dash-info-note {
-  font-size: 0.75rem;
-  color: rgba(20, 51, 34, 0.4);
+  font-size: 1rem;
+  color: #143322;
   line-height: 1.55;
   margin: 0;
   padding-top: 1.25rem;
@@ -2627,6 +2630,8 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
   outline: none;
   transition: border-color 0.18s, box-shadow 0.18s;
   padding-left: 30px;
+      background: transparent;
+    box-shadow: none;
 }
 
 .dash-input::placeholder {
@@ -3190,9 +3195,10 @@ input:-webkit-autofill:active {
 
 .avatar-modal {
   width: 500px;
-  background: white;
+  /* background: white; */
   border-radius: 12px;
   padding: 20px;
+  background: linear-gradient(160deg,#f9f2e4,#ede5d0);
 }
 
 .avatar-modal-header {
@@ -3215,6 +3221,7 @@ input:-webkit-autofill:active {
   cursor: pointer;
   border: 3px solid transparent;
   object-fit: cover;
+  margin: auto;
 }
 
 .avatar-item:hover {
@@ -3437,11 +3444,14 @@ div:where(.swal2-container).swal2-center>.swal2-popup{
 .reg-input-icon {
   position: absolute;
   left: 18px;
-      top: 68%;
+      top: 50%;
   transform: translateY(-50%);
   color: #8a8479;
   pointer-events: none;
   z-index: 2;
+}
+.dash-section .reg-input-icon{
+  top:66%;
 }
 
 .reg-input-left {
@@ -3576,4 +3586,58 @@ div:where(.swal2-container).swal2-center>.swal2-popup{
   border: 2px solid #fff;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+}
+.trialText{
+  margin-top: 0px;
+  h3{
+    font-weight: 500;
+  }
+}
+.dash-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #b65a2f;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.dash-link-btn:hover {
+  opacity: 0.8;
+}
+
+.dash-link-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.dash-cancel-btns{
+  color:#b65a2f ;
+  border:1px solid #b65a2f;
+  background: transparent;
+   font-size: 14px;
+   padding: 10px 4px;
+   cursor: pointer;
+    border-radius: 12px;
+}
+.dash-delete-btns{
+  background: linear-gradient(135deg, #b65a2f 0%, #943f1e 88%);
+  border-radius: 12px;
+  padding: 10px 4px;
+  color: #f9f2e4;
+  font-size: 14px;
+  cursor: pointer;
+}
+.radius-full{
+  border-radius: 50%;
+}
+.custom-scrollbar {
+  scrollbar-width: thin;              /* Firefox */
+  scrollbar-color: #b65a2f transparent;
+}
+
+/* Chrome, Edge, Safari */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
 }
