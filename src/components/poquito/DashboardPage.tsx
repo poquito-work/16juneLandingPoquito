@@ -108,6 +108,7 @@ interface UserSubscription {
   ended_at: string | null;
   cancel_deferred_to_next_cycle: boolean;
   plan: SubscriptionPlan;
+  next_billing_date:string | null
 }
 // ─── Mock/fallback data helpers ───────────────────────────────────────────────
 
@@ -350,7 +351,7 @@ function ProfileTab({
   const [selectedAvatar, setSelectedAvatar] = useState(user.avatar_url);
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    getPredefinedListByType("CITY")
+    getPredefinedListByType("CITY",true)
       .then((res) => setCityList(res.data.content ?? []))
       .catch(() => {});
   }, []);
@@ -363,7 +364,7 @@ function ProfileTab({
   useEffect(() => {
     const fetchAvtarList = async () => {
       try {
-        const response = await getPredefinedListByType("AVATAR");
+        const response = await getPredefinedListByType("AVATAR",true);
         setAvatarList(response.data.content);
       } catch (error) {
         console.error("Error fetching city list:", error);
@@ -1365,7 +1366,7 @@ function SubscriptionTab({
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">{subscription.plan?.name}</p>
-            <p className="dash-sub-plan-price">Next billing on</p>
+            <p className="dash-sub-plan-price">Next billing on {formatDate(subscription?.next_billing_date)}</p>
             {/* <p className="dash-sub-plan-price">
               ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
               {subscription.plan.billing_cycle === "monthly" ? "month" : "year"}
@@ -1602,7 +1603,8 @@ function SubscriptionTab({
                         }}
                         disabled={changing}
                       >
-                        {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+                        SUBSCRIBE NOW
+                        {/* {changing ? "Redirecting..." : "SUBSCRIBE NOW"} */}
                       </button>
                     ) : (
                       <button
@@ -1614,7 +1616,8 @@ function SubscriptionTab({
                         }}
                         disabled={changing}
                       >
-                        {changing ? "Redirecting..." : "SUBSCRIBE NOW"}
+                        SUBSCRIBE NOW
+                        {/* {changing ? "Redirecting..." : "SUBSCRIBE NOW"} */}
                       </button>
                     )}
 
