@@ -364,7 +364,7 @@ function ProfileTab({
   useEffect(() => {
     const fetchAvtarList = async () => {
       try {
-        const response = await getPredefinedListByType("AVATAR",true);
+        const response = await getPredefinedListByType("AVATAR");
         setAvatarList(response.data.content);
       } catch (error) {
         console.error("Error fetching city list:", error);
