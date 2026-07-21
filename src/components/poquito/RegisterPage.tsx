@@ -290,7 +290,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await getPredefinedListByType("CITY");
+        const response = await getPredefinedListByType("CITY",true);
         setCityList(response.data.content);
       } catch (error) {
         console.error("Error fetching city list:", error);
@@ -298,18 +298,26 @@ useEffect(() => {
     };
     fetchCities();
   }, []);
+useEffect(() => {
+  const fetchAvtarList = async () => {
+    try {
+      const response = await getPredefinedListByType("AVATAR");
+      const avatars = response.data.content;
 
-  useEffect(() => {
-    const fetchAvtarList = async () => {
-      try {
-        const response = await getPredefinedListByType("AVATAR");
-        setAvatarList(response.data.content);
-      } catch (error) {
-        console.error("Error fetching city list:", error);
+      setAvatarList(avatars);
+
+      // Set first avatar as default only once
+      if (!data.avatar_url && avatars.length > 0) {
+        onChange("avatar_url", avatars[0].url);
+        setSelectedAvatar(avatars[0].url);
       }
-    };
-    fetchAvtarList();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching avatar list:", error);
+    }
+  };
+
+  fetchAvtarList();
+}, []);
 
   function validate(): RegisterFormErrors {
     const e: RegisterFormErrors = {};
@@ -372,7 +380,7 @@ useEffect(() => {
   return (
     <form className="reg-form" onSubmit={handleSubmit} noValidate>
       <div className="avatar-wrapper">
-        <img src={data.avatar_url || uploadLogo} alt="Avatar" className="uploadLogo" />
+        <img src={data.avatar_url} alt="Avatar" className="uploadLogo" />
 
         <button type="button" className="avatar-plus" onClick={() => setShowAvatarDialog(true)}>
           +
@@ -1128,7 +1136,7 @@ export function RegisterPage() {
     password: "",
     confirmPassword: "",
     agreed: false,
-    avatar_url: "https://backend.poquito.review-link.in/avatar/poquito-boy.png",
+    avatar_url: "",
     other_city: "",
   });
 

@@ -161,13 +161,26 @@ export const checkUserExists = async (email: string) => {
   return response.data;
 };
 
-export const getPredefinedListByType = async (entity_type: string) => {
+export const getPredefinedListByType = async (
+  entity_type: string,
+  isSortedAlpha?: boolean
+) => {
   const response = await axios.get(
-   `${API_BASE_URL}/api/v1/admin/predefined/?entity_type=${entity_type}&is_sorted_alpha=${true}`
+    `${API_BASE_URL}/api/v1/admin/predefined/`,
+    {
+      params: {
+        entity_type,
+        ...(isSortedAlpha !== undefined && {
+          is_sorted_alpha: isSortedAlpha,
+        }),
+      },
+    }
   );
 
   return response.data;
 };
+
+
 
 
 
