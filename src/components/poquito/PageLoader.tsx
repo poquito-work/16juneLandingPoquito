@@ -4,6 +4,7 @@ import tile1 from "@/assets/White Dragon.png";
 import tile2 from "@/assets/Red Dragon.png";
 import tile3 from "@/assets/Green Dragon.png";
 import logoSrc from '@/assets/pocket-dragon-logo.png'
+// import logoSrc from '@/assets/pocketdragon-tm.png'
 import { PocketDragonLogo } from "./Logo";
 
 const OUTER_PATH =
@@ -130,7 +131,8 @@ export function PageLoader({ onComplete }: { onComplete?: () => void }) {
   transition={{ duration: 0.8 }}
 >
     <div className="mb-8 scale-[3]">
-  <PocketDragonLogo />
+        <img src={logoSrc} alt="Pocket Dragon" style={{ height: "56px", width: 'auto', opacity: 0.9 }} />
+  {/* <PocketDragonLogo /> */}
 </div>
  {/* <motion.img
   src={logoSrc}

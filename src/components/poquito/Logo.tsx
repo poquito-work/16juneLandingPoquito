@@ -1,4 +1,4 @@
-import logoSrc from "@/assets/pocket-dragon-logo.png";
+import logoSrc from "@/assets/pocketdragon-tm.png";
 import { motion } from "framer-motion";
 
 type Size = "sm" | "md" | "lg" | "xl" | "hero";
@@ -43,7 +43,7 @@ export function PocketDragonLogo({
         width={1024}
         height={768}
         decoding="async"
-        className={`${sizeClasses[size]} object-contain shrink-0 select-none transition-all duration-500 ${className}`}
+        className={`${sizeClasses[size]} object-contain shrink-0 select-none transition-all duration-500 logoImg ${className}`}
         style={light ? { filter: lightFilter } : undefined}
         draggable={false}
       />
