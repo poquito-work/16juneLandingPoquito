@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
-import logoSrc from '@/assets/pocket-dragon-logo.png'
+// import logoSrc from '@/assets/pocket-dragon-logo.png'
+import logoSrc from '@/assets/pocketdragon-tm.png'
 
 const sidebarLinks = [
   { label: 'Privacy Policy', to: '/privacy' },
@@ -17,7 +18,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
       >
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/">
-            <img src={logoSrc} alt="Pocket Dragon" style={{ height: 70, width: 'auto', opacity: 0.9 }} />
+            <img src={logoSrc} alt="Pocket Dragon" style={{ height: 50, width: 'auto', opacity: 0.9 }} />
           </Link>
           {/* <Link
             to="/"

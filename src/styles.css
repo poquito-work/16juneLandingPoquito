@@ -3641,3 +3641,9 @@ div:where(.swal2-container).swal2-center>.swal2-popup{
 .custom-scrollbar::-webkit-scrollbar {
   width: 2px;
 }
+.logoImg{
+      height: 46px;
+    width: 112px;
+    margin-left: 5px;
+    margin-top: 11px;
+}
