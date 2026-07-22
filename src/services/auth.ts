@@ -298,3 +298,9 @@ export const initializeSubscription = async (
 
   return response.data;
 };
+
+
+export async function deleteAccount() {
+  const response = await api.post(`/api/v1/users/delete-account`);
+  return response.data;
+}
