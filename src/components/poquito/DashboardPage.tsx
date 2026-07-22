@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Link, Navigate, useNavigate } from "@tanstack/react-router";
 import {
   cancelSubscription,
+  deleteAccount,
   getPackageList,
   getPredefinedListByType,
   getTransactionList,
@@ -1863,6 +1864,23 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
       });
   }
 
+  const handleDeleteAccount = async () => {
+  try {
+    const response = await deleteAccount();
+     Swal.fire({
+      icon: "success",
+      title: "Account deleted",
+      text:"Your account has been deleted successfully.",
+    });
+    localStorage.removeItem("access_token");
+    // localStorage.removeItem("auth_refresh_token");
+    navigate({ to: "/" });
+    console.log("Delete account response:", response);
+  } catch (error) {
+    console.error("Delete account failed:", error);
+  }
+};
+
   useEffect(() => {
     setUser(getUserFromToken());
     fetchUserProfile();
@@ -1947,7 +1965,7 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
       <div className="mt-8  flex items-center gap-4">
         <button
           className="dash-delete-btns w-full rounded-xl bg-[#b65a2f] py-4 font-semibold uppercase tracking-wide text-white transition hover:bg-[#b65a2f] hover:opacity-[0.9]"
-          // onClick={handleDeleteAccount}
+          onClick={handleDeleteAccount}
         >
           Yes, I'm Sure
         </button>
