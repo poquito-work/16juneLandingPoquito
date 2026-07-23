@@ -335,7 +335,7 @@ function ProfileTab({
             "button",
             {
               type: "button",
-              className: "avatar-plus",
+              className: "avatar-plus avtardash",
               onClick: openAvatarDialog,
               children: "+"
             }

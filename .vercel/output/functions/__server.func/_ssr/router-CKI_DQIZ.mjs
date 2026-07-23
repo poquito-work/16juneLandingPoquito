@@ -15,7 +15,7 @@ import "../_libs/cookie-es.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
-const appCss = "/assets/styles-yzhlA70F.css";
+const appCss = "/assets/styles-CQqZsJyp.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -261,7 +261,7 @@ const Route$3 = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./transaction-history-CcJhqcWh.mjs");
+const $$splitComponentImporter$2 = () => import("./transaction-history-D7LOAl5C.mjs");
 const Route$2 = createFileRoute("/myaccount/transaction-history")({
   head: () => ({
     meta: [{
@@ -270,7 +270,7 @@ const Route$2 = createFileRoute("/myaccount/transaction-history")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./profile-CijAzwfC.mjs");
+const $$splitComponentImporter$1 = () => import("./profile-oHBREHxX.mjs");
 const Route$1 = createFileRoute("/myaccount/profile")({
   head: () => ({
     meta: [{
@@ -279,7 +279,7 @@ const Route$1 = createFileRoute("/myaccount/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./manage-subscription-Cq6yNP3T.mjs");
+const $$splitComponentImporter = () => import("./manage-subscription-8GzyR6Ig.mjs");
 const Route = createFileRoute("/myaccount/manage-subscription")({
   head: () => ({
     meta: [{
