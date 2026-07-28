@@ -1,4 +1,6 @@
+
 @import "tailwindcss" source(none);
+
 @source "../src";
 @import "tw-animate-css";
 
@@ -3655,5 +3657,8 @@ div:where(.swal2-container).swal2-center>.swal2-popup{
 @media screen and (max-width: 768px) {
   input, select, textarea {
     font-size: 16px !important;
+  }
+ .passwordInput {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
   }
 }

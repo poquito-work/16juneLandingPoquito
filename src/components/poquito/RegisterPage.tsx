@@ -594,7 +594,9 @@ useEffect(() => {
             <input
               id="reg-password"
               type={showPassword ? "text" : "password"}
-              className={`reg-input reg-input-padded ${errors.password ? "reg-input-error" : ""}`}
+               className={`reg-input reg-input-padded ${
+    errors.password ? "reg-input-error" : ""
+  } ${showPassword ? "font-hero" : "passwordInput"}`}
               placeholder="Your Password"
               value={data.password}
               onChange={(e) => onChange("password", e.target.value)}
@@ -623,7 +625,9 @@ useEffect(() => {
             <input
               id="reg-confirm"
               type={showConfirm ? "text" : "password"}
-              className={`reg-input reg-input-padded ${errors.confirmPassword ? "reg-input-error" : ""}`}
+               className={`reg-input reg-input-padded ${
+    errors.confirmPassword ? "reg-input-error" : ""
+  } ${showConfirm ? "font-hero" : "passwordInput"}`}
               placeholder="Re-enter your password"
               value={data.confirmPassword}
               onChange={(e) => onChange("confirmPassword", e.target.value)}
