@@ -15,7 +15,7 @@ import "../_libs/cookie-es.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
-const appCss = "/assets/styles-CKqExsDh.css";
+const appCss = "/assets/styles-Dj6v1Z_d.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -131,7 +131,7 @@ const Route$b = createRootRouteWithContext()({
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap"
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&family=Open+Sans:wght@300..800&display=swap"
       },
       {
         rel: "stylesheet",
@@ -180,7 +180,7 @@ const $$splitComponentImporter$a = () => import("./terms-CqGbugcS.mjs");
 const Route$a = createFileRoute("/terms")({
   component: lazyRouteComponent($$splitComponentImporter$a, "component")
 });
-const $$splitComponentImporter$9 = () => import("./register-g1aLc6gR.mjs");
+const $$splitComponentImporter$9 = () => import("./register-DEU5sWc9.mjs");
 const Route$9 = createFileRoute("/register")({
   head: () => ({
     meta: [{
@@ -215,7 +215,7 @@ const Route$7 = createFileRoute("/myaccount")({
   },
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$6 = () => import("./forgot-password-DJi9j-Be.mjs");
+const $$splitComponentImporter$6 = () => import("./forgot-password-DtU2mE-F.mjs");
 const Route$6 = createFileRoute("/forgot-password")({
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
@@ -237,7 +237,7 @@ const $$splitComponentImporter$4 = () => import("../_-CYYLdHfV.mjs");
 const Route$4 = createFileRoute("/$")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-C7sSOuuQ.mjs");
+const $$splitComponentImporter$3 = () => import("./index-CzQJQfr1.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{

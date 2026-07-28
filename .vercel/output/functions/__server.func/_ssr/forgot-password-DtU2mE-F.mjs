@@ -272,7 +272,7 @@ function RouteComponent() {
                 setNewPassword(e.target.value);
                 setPasswordError("");
                 setApiError("");
-              }, className: `dash-input w-full rounded-xl border px-4 py-3 outline-none ${passwordError ? "border-red-500" : "border-pq-green/15"}`, placeholder: "Enter new password" }),
+              }, className: `dash-input w-full rounded-xl border px-4 py-3 outline-none ${passwordError ? "border-red-500" : "border-pq-green/15"} ${showPassword ? "font-hero" : "passwordInput"}`, placeholder: "Enter new password" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-eye-btn", onClick: () => setShowPassword((v) => !v), "aria-label": showPassword ? "Hide password" : "Show password", children: /* @__PURE__ */ jsxRuntimeExports.jsx(EyeIcon2, { visible: showPassword }) })
             ] }),
             passwordError && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-red-500 mt-2", children: passwordError })
@@ -285,7 +285,7 @@ function RouteComponent() {
                 setConfirmPassword(e.target.value);
                 setConfirmPasswordError("");
                 setApiError("");
-              }, className: `dash-input w-full rounded-xl border px-4 py-3 outline-none ${confirmPasswordError ? "border-red-500" : "border-pq-green/15"}`, placeholder: "Confirm password" }),
+              }, className: `dash-input w-full rounded-xl border px-4 py-3 outline-none ${confirmPasswordError ? "border-red-500" : "border-pq-green/15"} ${showConfirm ? "font-hero" : "passwordInput"}`, placeholder: "Confirm password" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "reg-eye-btn", onClick: () => setShowConfirm((v) => !v), children: /* @__PURE__ */ jsxRuntimeExports.jsx(EyeIcon2, { visible: showConfirm }) })
             ] }),
             confirmPasswordError && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-red-500 mt-2", children: confirmPasswordError })

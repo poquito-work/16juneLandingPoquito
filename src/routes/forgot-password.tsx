@@ -437,9 +437,9 @@ function RouteComponent() {
                           setPasswordError("");
                           setApiError("");
                         }}
-                        className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
-                          passwordError ? "border-red-500" : "border-pq-green/15"
-                        }`}
+                         className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
+    passwordError ? "border-red-500" : "border-pq-green/15"
+  } ${showPassword ? "font-hero" : "passwordInput"}`}
                         placeholder="Enter new password"
                       />
                       <button
@@ -471,8 +471,8 @@ function RouteComponent() {
                           setApiError("");
                         }}
                         className={`dash-input w-full rounded-xl border px-4 py-3 outline-none ${
-                          confirmPasswordError ? "border-red-500" : "border-pq-green/15"
-                        }`}
+    confirmPasswordError ? "border-red-500" : "border-pq-green/15"
+  } ${showConfirm ? "font-hero" : "passwordInput"}`}
                         placeholder="Confirm password"
                       />
 

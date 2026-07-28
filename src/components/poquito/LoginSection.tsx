@@ -293,7 +293,9 @@ const [error, setError] = useState("");
                       onFocus={() => setFocused('password')}
                       onBlur={() => setFocused(null)}
                       placeholder="••••••••"
-                      className="w-full px-4 py-3.5 bg-transparent text-pq-green text-base md:text-sm placeholder:text-pq-green/30 outline-none font-hero pr-12"
+                      
+                      className={`w-full px-4 py-3.5 bg-transparent text-pq-green text-base md:text-sm placeholder:text-pq-green/30 outline-none pr-12 ${
+    showPass ? "font-hero" : "passwordInput"}`}
                     />
                     <button
                       type="button"
