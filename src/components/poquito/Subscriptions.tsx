@@ -85,6 +85,7 @@ Subscriptions are non-refundable. Upon cancellation, benefits will remain active
 export function Subscriptions() {
   const [monthlyDialog, setMonthlyDialog] = useState(false);
   const [annualDialog, setAnnualDialog] = useState(false);
+  
 
   interface Plan {
   id: number;
@@ -100,14 +101,15 @@ export function Subscriptions() {
 }
 
     const [plans, setPlans] = useState<Plan[]>([]);
-    // useEffect(() => {
-    //   getPackageList()
-    //     .then((res) => {
-    //       setPlans(res.data?.content ?? []);
-    //     })
-    //     .catch((err) => console.error("Failed to load plans", err));
-    // }, []);
+    useEffect(() => {
+      getPackageList()
+        .then((res) => {
+          setPlans(res.data?.content ?? []);
+        })
+        .catch((err) => console.error("Failed to load plans", err));
+    }, []);
 
+ 
 
     const navigate = useNavigate();
 
@@ -144,12 +146,12 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
            {/* {monthlyPlan && ( */}
           <article className="plan-monthly-card relative flex flex-col rounded-2xl border border-foreground/15  p-7">
             <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-foreground/70">
-              Monthly Plan
+                {monthlyPlan?.name || "Monthly Plan"}
             </span>
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold" style={{ color: 'var(--foreground)' }}>Rs</span>
               <span className="font-display text-5xl font-bold leading-none" style={{ color: 'var(--foreground)' }}>
-                 {/* {monthlyPlan.price.toLocaleString("en-IN")} */} 500
+                 {/* {monthlyPlan.price.toLocaleString("en-IN")} */}  {monthlyPlan?.price}
               </span>
               <span className="ml-1 text-sm text-foreground/65">/ month</span>
             </div>
@@ -214,18 +216,18 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 
             <div className="flex items-center justify-between">
               <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85">
-                Annual Plan
+                  {monthlyPlan?.name || "Monthly Plan"}
               </span>
             </div>
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-sm font-bold text-cream/85">Rs</span>
               <span className="font-display text-5xl font-bold leading-none">
-                 {/* {annualPlan.price.toLocaleString("en-IN")} */} 5,000
+                 {/* {annualPlan.price.toLocaleString("en-IN")} */}  {annualPlan?.price}
 </span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
-            <p className="mt-2 text-xs text-cream/75">Save 17% | Rs 417/month </p> 
+            <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month </p> 
             {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}% | Rs 375/month </p> */}
                         {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}%  {annualPlan.price_per_month_equiv ? ` | Rs ${annualPlan.price_per_month_equiv}/month` : ""} */}
 
