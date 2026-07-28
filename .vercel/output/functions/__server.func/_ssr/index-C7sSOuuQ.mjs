@@ -1352,7 +1352,7 @@ function LoginSection() {
                             onFocus: () => setFocused("email"),
                             onBlur: () => setFocused(null),
                             placeholder: "you@example.com",
-                            className: "w-full px-4 py-3.5 bg-transparent text-pq-green text-sm placeholder:text-pq-green/30 outline-none font-hero"
+                            className: "w-full px-4 py-3.5 bg-transparent text-pq-green text-base md:text-sm placeholder:text-pq-green/30 outline-none font-hero"
                           }
                         )
                       }
@@ -1385,7 +1385,7 @@ function LoginSection() {
                               onFocus: () => setFocused("password"),
                               onBlur: () => setFocused(null),
                               placeholder: "••••••••",
-                              className: "w-full px-4 py-3.5 bg-transparent text-pq-green text-sm placeholder:text-pq-green/30 outline-none font-hero pr-12"
+                              className: "w-full px-4 py-3.5 bg-transparent text-pq-green text-base md:text-sm placeholder:text-pq-green/30 outline-none font-hero pr-12"
                             }
                           ),
                           /* @__PURE__ */ jsxRuntimeExports.jsx(

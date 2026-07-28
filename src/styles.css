@@ -3650,3 +3650,10 @@ div:where(.swal2-container).swal2-center>.swal2-popup{
     margin-left: 5px;
     margin-top: 11px;
 }
+
+/* Prevent iOS Safari from auto-zooming when form inputs/selects/textareas are focused */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}

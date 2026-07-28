@@ -15,7 +15,7 @@ import "../_libs/cookie-es.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
-const appCss = "/assets/styles-CQqZsJyp.css";
+const appCss = "/assets/styles-CKqExsDh.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -237,7 +237,7 @@ const $$splitComponentImporter$4 = () => import("../_-CYYLdHfV.mjs");
 const Route$4 = createFileRoute("/$")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-CDrOetpg.mjs");
+const $$splitComponentImporter$3 = () => import("./index-C7sSOuuQ.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
