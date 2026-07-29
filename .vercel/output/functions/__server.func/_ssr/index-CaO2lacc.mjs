@@ -1,5 +1,5 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { H as Header, F as Footer, l as logoSrc, t as tile1, a as tile2, b as tile3 } from "./Footer-sPuPyWim.mjs";
+import { H as Header, F as Footer, l as logoSrc, t as tile1, a as tile2, b as tile3 } from "./Footer-TDZ2Bc6J.mjs";
 import { D as Dialog, a as DialogContent, b as DialogHeader, d as DialogTitle, e as DialogDescription } from "./dialog-DyVH2Cto.mjs";
 import { h as getPackageList, l as loginUser } from "./Logo-CzRMYiNj.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
