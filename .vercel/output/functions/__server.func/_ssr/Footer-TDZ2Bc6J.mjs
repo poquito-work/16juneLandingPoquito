@@ -253,7 +253,7 @@ function Header({ onLoginClick }) {
               motion.a,
               {
                 href: item.href,
-                onClick: () => setOpen(false),
+                onClick: (e) => handleNavClick(e, item.href.replace("#", "")),
                 initial: { opacity: 0, x: -18 },
                 animate: { opacity: 1, x: 0 },
                 transition: { delay: 0.12 + i * 0.07, duration: 0.28, ease: "easeOut" },

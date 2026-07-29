@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate } from "../_libs/tanstack__react-router.mjs";
 import { i as getUserProfile, d as getPredefinedListByType, j as getTransactionList, h as getPackageList, k as deleteAccount, u as updateUserProfile, m as initializeSubscription, n as upgradeSubscription, o as cancelSubscription } from "./Logo-CzRMYiNj.mjs";
-import { H as Header, F as Footer } from "./Footer-sPuPyWim.mjs";
+import { H as Header, F as Footer } from "./Footer-TDZ2Bc6J.mjs";
 import { S as Swal } from "../_libs/sweetalert2.mjs";
 import { D as Dialog, a as DialogContent, c as cn, b as DialogHeader, d as DialogTitle, e as DialogDescription } from "./dialog-DyVH2Cto.mjs";
 import { P as Popover, a as PopoverTrigger, B as Button, b as PopoverContent, C as Command, c as CommandInput, d as CommandEmpty, e as CommandGroup, f as CommandItem } from "./button-BkXM3wY8.mjs";
