@@ -216,7 +216,7 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 
             <div className="flex items-center justify-between">
               <span className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-cream/85">
-                  {monthlyPlan?.name || "Monthly Plan"}
+                  {annualPlan?.name || "Monthly Plan"}
               </span>
             </div>
 
@@ -227,7 +227,7 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 </span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
-            <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month </p> 
+            <p className="mt-2 text-xs text-cream/75">Save 17% | Rs 417/month </p> 
             {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}% | Rs 375/month </p> */}
                         {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}%  {annualPlan.price_per_month_equiv ? ` | Rs ${annualPlan.price_per_month_equiv}/month` : ""} */}
 
