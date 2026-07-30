@@ -1567,7 +1567,7 @@ function SubscriptionTab({
                         //   {plan.price_per_month_equiv}/month
                         // </p>
 
-                        <p className="mt-2 text-xs text-cream/75">Save 25% | Rs 375/month</p>
+                        <p className="mt-2 text-xs text-cream/75">Save 17% | Rs 417/month</p>
                       )}
 
                       {plan.billing_cycle === "annual" && (
