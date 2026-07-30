@@ -1071,7 +1071,7 @@ function SubscriptionTab({
                   //   Save {plan.discount_percent}% | Rs{" "}
                   //   {plan.price_per_month_equiv}/month
                   // </p>
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save 25% | Rs 375/month" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save 17% | Rs 417/month" }),
                   plan.billing_cycle === "annual" && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: plan.gst_excluded ? "Excl GST" : "Incl GST" }),
                   plan.billing_cycle === "monthly" && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: plan.gst_excluded ? "Excl GST" : "Incl GST" }),
                   plan.billing_cycle === "monthly" && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Billed monthly. Cancel anytime." })
