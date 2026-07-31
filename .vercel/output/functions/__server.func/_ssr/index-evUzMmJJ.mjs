@@ -367,6 +367,7 @@ function Subscriptions() {
   const [monthlyDialog, setMonthlyDialog] = reactExports.useState(false);
   const [annualDialog, setAnnualDialog] = reactExports.useState(false);
   const [plans, setPlans] = reactExports.useState([]);
+  console.log(plans, "plans");
   reactExports.useEffect(() => {
     getPackageList().then((res) => {
       setPlans(res.data?.content ?? []);
@@ -383,7 +384,7 @@ function Subscriptions() {
   };
   const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
   const annualPlan = plans.find((p) => p.billing_cycle === "annual");
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }, children: [
+  return plans.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto max-w-5xl px-5 py-14 sm:px-8 md:py-16", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-3 text-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(SectionEyebrow, { children: "Membership" }),
@@ -503,7 +504,7 @@ function Subscriptions() {
         plan: "annual"
       }
     )
-  ] });
+  ] }) : null;
 }
 let audioCtx = null;
 function playTick() {
