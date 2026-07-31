@@ -93,6 +93,8 @@ interface SubscriptionPlan {
   gst_excluded: boolean;
   is_active: boolean;
   trial_days: number;
+   price_per_unit_equiv:number;
+  price_unit:string;
 }
 
 interface UserSubscription {
@@ -976,6 +978,8 @@ interface Plan {
   gst_excluded: boolean;
   is_active: boolean;
   trial_days: number;
+   price_per_unit_equiv:number;
+  price_unit:string;
 }
 function formatDate(iso: string | null) {
   if (!iso) return "—";
@@ -1567,18 +1571,33 @@ function SubscriptionTab({
                         //   {plan.price_per_month_equiv}/month
                         // </p>
 
-                        <p className="mt-2 text-xs text-cream/75">Save 17% | Rs 417/month</p>
-                      )}
+                        <p className="mt-2 text-xs text-cream/75">
+                          {plan?.price_per_unit_equiv ? (
+  <p className="mt-2 text-xs text-cream/75">
+    {plan?.discount_percent ? `Save ${plan.discount_percent}% | ` : ""}
+    Rs {plan.price_per_unit_equiv}
+    {plan.price_unit ? `/${plan.price_unit.toLowerCase()}` : ""}
+  </p>
+) : (
+  <p className="mt-2 text-xs text-cream/75">
+    Billed yearly. Cancel anytime.
+  </p>
+)}
+ </p>
+    )}
+                          {/* Save  {plan?.discount_percent}% | Rs {plan?.price_per_unit_equiv}/{plan?.price_unit?.toLowerCase()} */}
+                         
+                   
 
                       {plan.billing_cycle === "annual" && (
                         <p className="mt-2 text-xs text-cream/75">
-                          {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+                          {plan.gst_excluded ? "Excl GST" : ""}
                         </p>
                       )}
 
                       {plan.billing_cycle === "monthly" && (
                         <p className="mt-2 text-xs text-foreground/65">
-                          {plan.gst_excluded ? "Excl GST" : "Incl GST"}
+                          {plan.gst_excluded ? "Excl GST" : ""}
                         </p>
                       )}
 
