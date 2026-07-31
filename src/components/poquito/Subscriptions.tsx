@@ -98,6 +98,8 @@ export function Subscriptions() {
   gst_excluded: boolean;
   is_active: boolean;
   trial_days: number;
+  price_per_unit_equiv:number;
+  price_unit:string;
 }
 
     const [plans, setPlans] = useState<Plan[]>([]);
@@ -153,10 +155,11 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
               <span className="font-display text-5xl font-bold leading-none" style={{ color: 'var(--foreground)' }}>
                  {/* {monthlyPlan.price.toLocaleString("en-IN")} */}  {monthlyPlan?.price}
               </span>
-              <span className="ml-1 text-sm text-foreground/65">/ month</span>
+              <span className="ml-1 text-sm text-foreground/65"> {monthlyPlan?.billing_cycle === "monthly" && "/ month"}</span>
             </div>
              <p className="mt-2 text-xs text-foreground/65">
-              Excl GST
+              {monthlyPlan?.gst_excluded ? "Excl GST" : ""}
+              {/* Excl GST */}
             </p>
             <p className="mt-2 text-xs text-foreground/65">
               Billed monthly. Cancel anytime.
@@ -227,11 +230,26 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 </span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
-            <p className="mt-2 text-xs text-cream/75">Save 17% | Rs 417/month </p> 
+            {annualPlan?.price_per_unit_equiv ? (
+  <p className="mt-2 text-xs text-cream/75">
+    {annualPlan?.discount_percent
+      ? `Save ${annualPlan.discount_percent}% | `
+      : ""}
+    Rs {annualPlan.price_per_unit_equiv}
+    {annualPlan.price_unit
+      ? `/${annualPlan.price_unit.toLowerCase()}`
+      : ""}
+  </p>
+) : (
+  <p className="mt-2 text-xs text-cream/75">
+    Billed yearly. Cancel anytime.
+  </p>
+)}
+            {/* <p className="mt-2 text-xs text-cream/75">Save {annualPlan?.discount_percent}% | Rs {annualPlan?.price_per_unit_equiv}/{annualPlan?.price_unit?.toLowerCase()} </p>  */}
             {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}% | Rs 375/month </p> */}
                         {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}%  {annualPlan.price_per_month_equiv ? ` | Rs ${annualPlan.price_per_month_equiv}/month` : ""} */}
 
-            <p className="mt-2 text-xs text-cream/75">Excl GST</p>
+            <p className="mt-2 text-xs text-cream/75"> {annualPlan?.gst_excluded ? "Excl GST" : ""}</p>
 
             <div className="my-6 h-px w-full bg-cream/15" />
 
