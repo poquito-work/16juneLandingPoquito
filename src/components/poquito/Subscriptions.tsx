@@ -103,6 +103,7 @@ export function Subscriptions() {
 }
 
     const [plans, setPlans] = useState<Plan[]>([]);
+    console.log(plans,"plans")
     useEffect(() => {
       getPackageList()
         .then((res) => {
@@ -132,7 +133,8 @@ const handleSubscribeClick = () => {
 
 const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
 const annualPlan = plans.find((p) => p.billing_cycle === "annual");
-  return (
+  return plans.length > 0 ? (
+    
     <section id="plans"  style={{ background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }}>
       <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 md:py-16">
 
@@ -311,5 +313,5 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
         plan="annual"
       />
     </section>
-  );
+  ): null;
 }
