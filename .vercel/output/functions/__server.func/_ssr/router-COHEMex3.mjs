@@ -15,7 +15,7 @@ import "../_libs/cookie-es.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
-const appCss = "/assets/styles-Dj6v1Z_d.css";
+const appCss = "/assets/styles-B0a_EuKY.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -237,7 +237,7 @@ const $$splitComponentImporter$4 = () => import("../_-CYYLdHfV.mjs");
 const Route$4 = createFileRoute("/$")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-evUzMmJJ.mjs");
+const $$splitComponentImporter$3 = () => import("./index-DBnFk8EJ.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -261,7 +261,7 @@ const Route$3 = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./transaction-history-CSaM-Db5.mjs");
+const $$splitComponentImporter$2 = () => import("./transaction-history-uxLbzslS.mjs");
 const Route$2 = createFileRoute("/myaccount/transaction-history")({
   head: () => ({
     meta: [{
@@ -270,7 +270,7 @@ const Route$2 = createFileRoute("/myaccount/transaction-history")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./profile-CGtm4EE0.mjs");
+const $$splitComponentImporter$1 = () => import("./profile-NC-cXGBD.mjs");
 const Route$1 = createFileRoute("/myaccount/profile")({
   head: () => ({
     meta: [{
@@ -279,7 +279,7 @@ const Route$1 = createFileRoute("/myaccount/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./manage-subscription-CEHmG2Ao.mjs");
+const $$splitComponentImporter = () => import("./manage-subscription-C6jKIQ6x.mjs");
 const Route = createFileRoute("/myaccount/manage-subscription")({
   head: () => ({
     meta: [{

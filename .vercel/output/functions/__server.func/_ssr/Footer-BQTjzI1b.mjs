@@ -440,7 +440,7 @@ function Footer() {
                     alt: "Poquito Mahjong",
                     width: 150,
                     height: 34,
-                    className: "brightness-0 invert opacity-70"
+                    className: "brightness-0 invert opacity-70 footerLogo"
                   }
                 ) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-end gap-3 text-xs text-pq-cream md:col-start-2 md:flex-row md:items-center md:gap-6 md:justify-self-center", children: [
