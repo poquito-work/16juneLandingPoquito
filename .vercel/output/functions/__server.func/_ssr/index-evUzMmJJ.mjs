@@ -367,6 +367,7 @@ function Subscriptions() {
   const [monthlyDialog, setMonthlyDialog] = reactExports.useState(false);
   const [annualDialog, setAnnualDialog] = reactExports.useState(false);
   const [plans, setPlans] = reactExports.useState([]);
+  console.log(plans, "plans");
   reactExports.useEffect(() => {
     getPackageList().then((res) => {
       setPlans(res.data?.content ?? []);
@@ -383,7 +384,7 @@ function Subscriptions() {
   };
   const monthlyPlan = plans.find((p) => p.billing_cycle === "monthly");
   const annualPlan = plans.find((p) => p.billing_cycle === "annual");
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }, children: [
+  return plans.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "plans", style: { background: "linear-gradient(145deg, rgb(249, 242, 228) 0%, rgb(237, 229, 208) 45%, rgb(229, 218, 187) 100%)" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto max-w-5xl px-5 py-14 sm:px-8 md:py-16", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-3 text-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(SectionEyebrow, { children: "Membership" }),
@@ -401,9 +402,12 @@ function Subscriptions() {
               "  ",
               monthlyPlan?.price
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-foreground/65", children: "/ month" })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-1 text-sm text-foreground/65", children: [
+              " ",
+              monthlyPlan?.billing_cycle === "monthly" && "/ month"
+            ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Excl GST" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: monthlyPlan?.gst_excluded ? "Excl GST" : "" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-foreground/65", children: "Billed monthly. Cancel anytime." }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "my-6 h-px w-full bg-foreground/10" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -446,8 +450,16 @@ function Subscriptions() {
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-cream/75", children: "/ year" })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Save 17% | Rs 417/month " }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Excl GST" }),
+          annualPlan?.price_per_unit_equiv ? /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-2 text-xs text-cream/75", children: [
+            annualPlan?.discount_percent ? `Save ${annualPlan.discount_percent}% | ` : "",
+            "Rs ",
+            annualPlan.price_per_unit_equiv,
+            annualPlan.price_unit ? `/${annualPlan.price_unit.toLowerCase()}` : ""
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Billed yearly. Cancel anytime." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-2 text-xs text-cream/75", children: [
+            " ",
+            annualPlan?.gst_excluded ? "Excl GST" : ""
+          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "my-6 h-px w-full bg-cream/15" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
@@ -492,7 +504,7 @@ function Subscriptions() {
         plan: "annual"
       }
     )
-  ] });
+  ] }) : null;
 }
 let audioCtx = null;
 function playTick() {

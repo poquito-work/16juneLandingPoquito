@@ -2050,7 +2050,10 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
     padding-left: 1.25rem;
     padding-right: 1.25rem;
   }
-
+  .footerLogo{
+        position: relative;
+    right: 15px;
+  }
   .register-title {
     font-size: 1.2rem;
   }

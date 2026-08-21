@@ -179,7 +179,7 @@ export function Footer() {
               alt="Poquito Mahjong"
               width={150}
               height={34}
-              className="brightness-0 invert opacity-70"
+              className="brightness-0 invert opacity-70 footerLogo"
             />
           </div>
 
