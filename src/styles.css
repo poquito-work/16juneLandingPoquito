@@ -2756,7 +2756,7 @@ background: linear-gradient(160deg, #f9f2e4 0%, #ede5d0 100%);
 }
 
 .dash-chip-pending {
-  background: rgba(182, 90, 47, 0.1);
+  background: #b65a2ff7;
   color: #fff;
 }
 
