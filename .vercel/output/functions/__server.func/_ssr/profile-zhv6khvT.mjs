@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-39ClmFM1.mjs";
+import { D as DashboardPage } from "./DashboardPage-Dz-M0Nad.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -10,9 +10,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
-import "util";
 import "crypto";
 import "async_hooks";
+import "util";
 import "stream";
 import "../_libs/isbot.mjs";
 import "./Logo-CzRMYiNj.mjs";
@@ -105,7 +105,7 @@ import "../_libs/class-variance-authority.mjs";
 import "../_libs/radix-ui__react-scroll-area.mjs";
 import "../_libs/radix-ui__react-direction.mjs";
 import "../_libs/radix-ui__number.mjs";
-const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "transactions" });
+const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "profile" });
 export {
   SplitComponent as component
 };

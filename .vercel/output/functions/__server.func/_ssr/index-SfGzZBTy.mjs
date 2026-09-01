@@ -15,9 +15,9 @@ import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
 import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
 import "../_libs/radix-ui__react-primitive.mjs";
 import "../_libs/react-dom.mjs";
-import "util";
 import "crypto";
 import "async_hooks";
+import "util";
 import "stream";
 import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
@@ -591,7 +591,7 @@ function Playground() {
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-stage", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-features orbit-left", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card active", id: "ofc-practice", "data-screen": "practice", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card ", id: "ofc-practice", "data-screen": "practice", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ofc-connector ofc-connector-right" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", className: "lucide lucide-graduation-cap text-rust transition-transform duration-300 group-hover:scale-110", "aria-hidden": "true", children: [
@@ -630,7 +630,7 @@ function Playground() {
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ofc-tag", children: "Custom Sessions " })
           ] })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card", id: "ofc-match", "data-screen": "match", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "orbit-feature-card active", id: "ofc-match", "data-screen": "match", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ofc-connector ofc-connector-right" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ofc-text", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", className: "lucide lucide-target text-rust transition-transform duration-300 group-hover:scale-110", "aria-hidden": "true", children: [

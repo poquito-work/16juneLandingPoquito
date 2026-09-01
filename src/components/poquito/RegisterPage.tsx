@@ -248,7 +248,7 @@ useEffect(() => {
       const res = await checkEmailExists(data.email);
 
       if (res?.data?.is_available === false) {
-        setEmailError("Email address already taken");
+        setEmailError("Email already registered");
       } else {
         setEmailError("");
       }

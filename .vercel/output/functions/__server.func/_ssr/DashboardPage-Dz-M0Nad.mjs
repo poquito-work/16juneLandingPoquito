@@ -598,7 +598,7 @@ function TransactionsTab() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-section", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-section-head", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "dash-section-title", children: "Transactions" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "dash-section-sub", children: "Your payment history." })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "dash-section-sub", children: "Your payment history" })
     ] }),
     transactionList?.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-empty", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -619,7 +619,7 @@ function TransactionsTab() {
           ]
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No transactions yet." })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No transactions yet" })
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-table-wrap", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("table", { className: "dash-table", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
@@ -631,8 +631,12 @@ function TransactionsTab() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("th", { children: "Invoice" })
         ] }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: transactionList?.map((tx) => /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "dash-td-mono", children: tx.razorpay_payment_id }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: tx.created_at }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: tx.invoice_number }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "dash-td-date", children: new Date(tx.created_at).toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+          }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { className: "dash-td-amount", children: [
             "₹",
             tx.amount.toLocaleString("en-IN")
@@ -684,8 +688,7 @@ function TransactionsTab() {
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-info-note", children: [
       "For any issues regarding billing, please contact us at",
       " ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "mailto:support@pocketdragon.in", className: "dash-link", children: "support@pocketdragon.in" }),
-      "."
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "mailto:support@pocketdragon.in", className: "dash-link", children: "support@pocketdragon.in" })
     ] })
   ] });
 }
@@ -971,7 +974,7 @@ function SubscriptionTab({
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "dash-sub-plan-eyebrow", children: "Current Plan" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "dash-sub-plan-name", children: "Free Trial" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "dash-sub-meta trialText", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "", children: [
-        "Trial end at ",
+        "Ends on ",
         formatDate(trialEndAt),
         "."
       ] }) })
@@ -985,10 +988,7 @@ function SubscriptionTab({
         " ",
         "Plan, your current",
         " ",
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
-          subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly",
-          " plan"
-        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: subscription.plan?.name }),
         " ",
         "will remain active until",
         " ",
