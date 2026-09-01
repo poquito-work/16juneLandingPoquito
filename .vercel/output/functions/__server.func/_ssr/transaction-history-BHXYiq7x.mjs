@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-39ClmFM1.mjs";
+import { D as DashboardPage } from "./DashboardPage-Dz-M0Nad.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
