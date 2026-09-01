@@ -68,6 +68,7 @@ interface Transaction {
   id: string;
   created_at: string;
   failure_reason: string;
+  invoice_number:number;
   amount: number;
   razorpay_payment_id: number;
   status: "success" | "pending" | "failed";
@@ -853,7 +854,7 @@ function TransactionsTab() {
     <div className="dash-section">
       <div className="dash-section-head">
         <h2 className="dash-section-title">Transactions</h2>
-        <p className="dash-section-sub">Your payment history.</p>
+        <p className="dash-section-sub">Your payment history</p>
       </div>
 
       {transactionList?.length === 0 ? (
@@ -872,7 +873,7 @@ function TransactionsTab() {
             <rect x="2" y="5" width="20" height="14" rx="2" />
             <line x1="2" y1="10" x2="22" y2="10" />
           </svg>
-          <p>No transactions yet.</p>
+          <p>No transactions yet</p>
         </div>
       ) : (
         <div className="dash-table-wrap">
@@ -891,8 +892,14 @@ function TransactionsTab() {
             <tbody>
               {transactionList?.map((tx) => (
                 <tr key={tx.id}>
-                  <td className="dash-td-mono">{tx.razorpay_payment_id}</td>
-                  <td>{tx.created_at}</td>
+                  <td >{tx.invoice_number}</td>
+                 <td className="dash-td-date">
+  {new Date(tx.created_at).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })}
+</td>
                   <td className="dash-td-amount">₹{tx.amount.toLocaleString("en-IN")}</td>
                   <td>{tx.failure_reason || "-"}</td>
 
@@ -952,7 +959,7 @@ function TransactionsTab() {
         <a href="mailto:support@pocketdragon.in" className="dash-link">
           support@pocketdragon.in
         </a>
-        .
+        
       </p>
     </div>
   );
@@ -1419,7 +1426,7 @@ function SubscriptionTab({
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">Free Trial</p>
             <div className="dash-sub-meta trialText">
-              <h3 className="">Trial end at {formatDate(trialEndAt)}.</h3>
+              <h3 className="">Ends on {formatDate(trialEndAt)}.</h3>
               {/* <p className="">
                 Your {trialDaysLeft}-day trial ends {formatDate(trialEndAt)}.
               </p> */}
@@ -1451,7 +1458,8 @@ function SubscriptionTab({
             <strong>{subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"}</strong>{" "}
             Plan, your current{" "}
             <strong>
-              {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan
+              {subscription.plan?.name} 
+              {/* {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan */}
             </strong>{" "}
             will remain active until{" "}
             <strong>{formatDate(subscription?.current_period_end ?? null)}</strong>. Starting{" "}

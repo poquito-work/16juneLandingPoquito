@@ -139,7 +139,7 @@ export function Playground() {
           {/* LEFT FEATURES */}
           <div className="orbit-features orbit-left">
 
-            <div className="orbit-feature-card active" id="ofc-practice" data-screen="practice">
+            <div className="orbit-feature-card " id="ofc-practice" data-screen="practice">
               <div className="ofc-connector ofc-connector-right"></div>
               <div className="ofc-text">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-graduation-cap text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>
@@ -174,7 +174,7 @@ export function Playground() {
                   </div>
             </div>
 
-            <div className="orbit-feature-card" id="ofc-match" data-screen="match">
+            <div className="orbit-feature-card active" id="ofc-match" data-screen="match">
               <div className="ofc-connector ofc-connector-right"></div>
               <div className="ofc-text">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-target text-rust transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
