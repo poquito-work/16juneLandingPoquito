@@ -11,9 +11,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
-import "util";
 import "crypto";
 import "async_hooks";
+import "util";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -245,7 +245,7 @@ function StepDetails({
       try {
         const res = await checkEmailExists(data.email);
         if (res?.data?.is_available === false) {
-          setEmailError("Email address already taken");
+          setEmailError("Email already registered");
         } else {
           setEmailError("");
         }
