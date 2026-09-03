@@ -1419,6 +1419,7 @@ function SubscriptionTab({
           </div> */}
         </div>
       )}
+      
 
       {!trialEndedWithoutSubscription && !subscription && isTrialActive && (
         <div className="dash-sub-current">
