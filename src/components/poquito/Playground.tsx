@@ -202,7 +202,7 @@ export function Playground() {
                 <div className="orbit-phone-screen" id="orbit-screen">
 
                   {/* SCREEN: Practice Mode */}
-                  <div className="app-screen screen-practice active" id="screen-practice">
+                  <div className="app-screen screen-practice " id="screen-practice">
                     <div className="app-statusbar">
                       <span className="app-time">9:41</span>
                       <span className="app-signal">●●●</span>
@@ -347,7 +347,7 @@ export function Playground() {
                   </div>
 
                   {/* SCREEN: Smart Matchmaking */}
-                  <div className="app-screen screen-match" id="screen-match">
+                  <div className="app-screen screen-match active" id="screen-match">
                     <div className="app-statusbar">
                       <span className="app-time">9:41</span>
                       <span className="app-signal">●●●</span>

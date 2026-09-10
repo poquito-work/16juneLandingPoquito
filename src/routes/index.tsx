@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Header } from "@/components/poquito/Header";
 import { Hero } from "@/components/poquito/Hero";
 import { Subscriptions } from "@/components/poquito/Subscriptions";
@@ -35,6 +35,21 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [isLoaderFinished, setIsLoaderFinished] = useState(false);
+
+  useEffect(() => {
+    if (!isLoaderFinished) return;
+    if (!window.location.hash) return;
+    const id = window.location.hash.substring(1);
+    const scrollToHash = () => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "auto", block: "start" });
+      }
+    };
+    // Use rAF + small timeout to ensure layout is complete before scrolling
+    requestAnimationFrame(() => setTimeout(scrollToHash, 50));
+  }, [isLoaderFinished]);
+
   const handleLoginClick = useCallback(() => {
     document.getElementById("login")?.scrollIntoView({ behavior: "auto" });
   }, []);
