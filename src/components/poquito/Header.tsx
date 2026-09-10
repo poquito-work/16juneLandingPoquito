@@ -50,6 +50,8 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
     document.getElementById(hash)?.scrollIntoView({
       behavior: "auto",
     });
+    // Update the URL hash so it reflects the current section and doesn't re-trigger old hash scrolls
+    history.replaceState(null, "", hash === "home" ? window.location.pathname : `#${hash}`);
   } else {
     navigate({
       to: "/",
