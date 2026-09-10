@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-C60D5-Zb.mjs";
+import { D as DashboardPage } from "./DashboardPage-BzRrR5S4.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -62,7 +62,7 @@ import "./pocketdragon-tm-d0kS12XR.mjs";
 import "../_libs/framer-motion.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-import "./Footer-brwiANrK.mjs";
+import "./Footer-Ie2U5l_-.mjs";
 import "./dialog-DyVH2Cto.mjs";
 import "../_libs/radix-ui__react-dialog.mjs";
 import "../_libs/radix-ui__primitive.mjs";

@@ -237,7 +237,7 @@ const $$splitComponentImporter$4 = () => import("../_-CYYLdHfV.mjs");
 const Route$4 = createFileRoute("/$")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-8-QmFYZQ.mjs");
+const $$splitComponentImporter$3 = () => import("./index-Cc9-oSXS.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -261,7 +261,7 @@ const Route$3 = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./transaction-history-CzvJCH6_.mjs");
+const $$splitComponentImporter$2 = () => import("./transaction-history-n15AUNva.mjs");
 const Route$2 = createFileRoute("/myaccount/transaction-history")({
   head: () => ({
     meta: [{
@@ -270,7 +270,7 @@ const Route$2 = createFileRoute("/myaccount/transaction-history")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./profile-CN0XZ4WH.mjs");
+const $$splitComponentImporter$1 = () => import("./profile-yVoaPf5U.mjs");
 const Route$1 = createFileRoute("/myaccount/profile")({
   head: () => ({
     meta: [{
@@ -279,7 +279,7 @@ const Route$1 = createFileRoute("/myaccount/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./manage-subscription-TxrW9ozq.mjs");
+const $$splitComponentImporter = () => import("./manage-subscription-CHugBQP_.mjs");
 const Route = createFileRoute("/myaccount/manage-subscription")({
   head: () => ({
     meta: [{
@@ -367,7 +367,7 @@ const getRouter = () => {
   const router = createRouter({
     routeTree,
     context: { queryClient },
-    scrollRestoration: true,
+    scrollRestoration: false,
     defaultPreloadStaleTime: 0
   });
   return router;

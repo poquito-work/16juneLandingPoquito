@@ -35,6 +35,7 @@ function Header({ onLoginClick }) {
       document.getElementById(hash)?.scrollIntoView({
         behavior: "auto"
       });
+      history.replaceState(null, "", hash === "home" ? window.location.pathname : `#${hash}`);
     } else {
       navigate({
         to: "/",
