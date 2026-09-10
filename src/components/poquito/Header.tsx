@@ -38,19 +38,6 @@ export function Header({ onLoginClick }: { onLoginClick?: () => void }) {
 
   const isDark = DARK_SECTION_IDS.includes(sectionId);
   const isRust = RUST_SECTION_IDS.includes(sectionId);
-useEffect(() => {
-  if (!window.location.hash) return;
-
-  const id = window.location.hash.substring(1);
-
-  // Wait until the page has rendered
-  requestAnimationFrame(() => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "auto", // instant jump
-      block: "start",
-    });
-  });
-}, []);
 
   const handleNavClick = (
   e: React.MouseEvent<HTMLAnchorElement>,
@@ -63,6 +50,8 @@ useEffect(() => {
     document.getElementById(hash)?.scrollIntoView({
       behavior: "auto",
     });
+    // Update the URL hash so it reflects the current section and doesn't re-trigger old hash scrolls
+    history.replaceState(null, "", hash === "home" ? window.location.pathname : `#${hash}`);
   } else {
     navigate({
       to: "/",
