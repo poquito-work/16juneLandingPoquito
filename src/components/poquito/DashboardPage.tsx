@@ -112,7 +112,8 @@ interface UserSubscription {
   ended_at: string | null;
   cancel_deferred_to_next_cycle: boolean;
   plan: SubscriptionPlan;
-  next_billing_date:string | null
+  next_billing_date:string | null;
+   is_upgraded?: boolean;
 }
 // ─── Mock/fallback data helpers ───────────────────────────────────────────────
 
@@ -1236,13 +1237,17 @@ function SubscriptionTab({
     setChanging(true);
 
     try {
-      const res = await upgradeSubscription(planToApply.uuid);
+      await upgradeSubscription(planToApply.uuid);
 
-      // const paymentUrl = res.data.data?.razorpay_short_url;
+      await getUserProfile();
 
-      // const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
-
-      // pollSubscriptionStatus(paymentWindow, planToApply.uuid);
+      Swal.fire({
+        icon: "success",
+        title: "Plan Updated!",
+        text:`Your subscription upgraded`,
+        // text: `Your subscription will switch to the ${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"} Plan starting ${addOneDay(subscription?.current_period_end ?? null)}.`,
+        confirmButtonColor: "#b65a2f",
+      });
     } catch (err: any) {
       Swal.fire({
         icon: "error",
@@ -1630,7 +1635,7 @@ function SubscriptionTab({
                           e.stopPropagation();
                           handleSubscribe(plan.id);
                         }}
-                        disabled={changing}
+                         disabled={subscription?.is_upgraded || changing}
                       >
                         SUBSCRIBE NOW
                         {/* {changing ? "Redirecting..." : "SUBSCRIBE NOW"} */}
@@ -1643,7 +1648,7 @@ function SubscriptionTab({
                           e.stopPropagation();
                           handleChangePlan(plan.id);
                         }}
-                        disabled={changing}
+                         disabled={subscription?.is_upgraded || changing}
                       >
                         SUBSCRIBE NOW
                         {/* {changing ? "Redirecting..." : "SUBSCRIBE NOW"} */}
