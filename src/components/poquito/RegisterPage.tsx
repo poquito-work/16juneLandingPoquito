@@ -323,9 +323,8 @@ useEffect(() => {
     const e: RegisterFormErrors = {};
     if (!data.fullName.trim()) e.fullName = "Username is required.";
     if (!data.city) e.city = "Please select your city.";
-    if (data.city.toLowerCase() === "other" && !data.other_city.trim())
-      e.other_city = "Other city is required.";
     if (!data.email.trim()) e.email = "Email is required.";
+    // if (!data.other_city.trim()) e.other_city = "Other city is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()))
       e.email = "Please enter a valid email.";
     if (data.phone.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(data.phone.trim()))
@@ -350,8 +349,8 @@ useEffect(() => {
   data.confirmPassword !== "" &&
   data.agreed &&
   !emailError &&
-  !usernameError &&
-  (data.city.toLowerCase() !== "other" || data.other_city.trim() !== "");
+  !usernameError;
+  // data.other_city.trim() !== ""
 
   // const isFormValid =
   // data.fullName.trim() !== "" &&
@@ -542,21 +541,20 @@ useEffect(() => {
 
         {data.city.toLowerCase() === "other" && (
           <div className="reg-field">
-            <label className="reg-label" htmlFor="reg-other-city">
-              Other City <span className="color-red">*</span>
+            <label className="reg-label" htmlFor="reg-city">
+              Other City
             </label>
             <div className="reg-input-wrap">
             <MapPin className="reg-input-icon" size={18} />
             <input
-              id="reg-other-city"
               type="text"
-              className={`reg-input ${errors.other_city ? "reg-input-error" : ""}`}
+              className="reg-input"
               placeholder="Enter other city"
               value={data.other_city}
               onChange={(e) => onChange("other_city", e.target.value)}
             />
+            {errors.other_city && <span className="reg-error">{errors.other_city}</span>}
           </div>
-          {errors.other_city && <span className="reg-error">{errors.other_city}</span>}
           </div>
         )}
 
