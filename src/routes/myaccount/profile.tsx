@@ -5,7 +5,7 @@ export const Route = createFileRoute("/myaccount/profile")({
   head: () => ({ meta: [{ title: "Profile — Pocket Dragon" }],links: [
       {
         rel: "canonical",
-        href: "https://www.pocketdragon.in/myaccount/profile",
+        href: "https://pocketdragon.in/myaccount/profile",
       },
     ], }),
   component: () => <DashboardPage activeTab="profile" />,

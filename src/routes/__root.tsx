@@ -87,7 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
        {
     property: "og:url",
-    content: "https://www.pocketdragon.in/",
+    content: "https://pocketdragon.in/",
   },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -99,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
         {
         rel: "canonical",
-        href: "https://www.pocketdragon.in/",
+        href: "https://pocketdragon.in/",
       },
       {
         rel: "icon",

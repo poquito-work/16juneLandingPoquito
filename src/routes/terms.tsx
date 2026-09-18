@@ -6,7 +6,7 @@ export const Route = createFileRoute("/terms")({
     links: [
       {
         rel: "canonical",
-        href: "https://www.pocketdragon.in/terms",
+        href: "https://pocketdragon.in/terms",
       },
     ],
   }),

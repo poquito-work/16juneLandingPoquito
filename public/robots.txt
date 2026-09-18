@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.pocketdragon.in/sitemap.xml
+Sitemap: https://pocketdragon.in/sitemap.xml
