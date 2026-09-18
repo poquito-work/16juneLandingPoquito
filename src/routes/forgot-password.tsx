@@ -11,7 +11,7 @@ export const Route = createFileRoute("/forgot-password")({
     links: [
       {
         rel: "canonical",
-        href: "https://www.pocketdragon.in/forgot-password",
+        href: "https://pocketdragon.in/forgot-password",
       },
     ],
   }),

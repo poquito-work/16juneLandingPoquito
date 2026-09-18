@@ -6,7 +6,7 @@ export const Route = createFileRoute("/privacy")({
     links: [
       {
         rel: "canonical",
-        href: "https://www.pocketdragon.in/privacy",
+        href: "https://pocketdragon.in/privacy",
       },
     ],
   }),

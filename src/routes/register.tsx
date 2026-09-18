@@ -13,7 +13,7 @@ export const Route = createFileRoute("/register")({
     links: [
       {
         rel: "canonical",
-        href: "https://www.pocketdragon.in/register",
+        href: "https://pocketdragon.in/register",
       },
     ],
   }),
