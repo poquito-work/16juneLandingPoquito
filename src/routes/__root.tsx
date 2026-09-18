@@ -85,6 +85,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Pocket Dragon — Mahjong on your time, anywhere you are!" },
       { property: "og:description", content: "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips" },
       { property: "og:type", content: "website" },
+       {
+    property: "og:url",
+    content: "https://www.pocketdragon.in/",
+  },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Pocket Dragon — Mahjong on your time, anywhere you are!" },
@@ -93,6 +97,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9c0c8e13-e83f-4e5d-9cea-2039c1d937a9/id-preview-fa053274--f6866870-e808-4724-a4cd-a8f7aec82a5a.lovable.app-1780846784316.png" },
     ],
     links: [
+        {
+        rel: "canonical",
+        href: "https://www.pocketdragon.in/",
+      },
       {
         rel: "icon",
         type: "image/x-icon",
