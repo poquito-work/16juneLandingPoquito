@@ -2,6 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import LegalLayout from "@/components/poquito/layout";
 
 export const Route = createFileRoute("/privacy")({
+  head: () => ({
+    links: [
+      {
+        rel: "canonical",
+        href: "https://pocketdragon.in/privacy",
+      },
+    ],
+  }),
   component: PrivacyPage,
 });
 

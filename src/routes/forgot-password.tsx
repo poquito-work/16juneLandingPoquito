@@ -7,6 +7,14 @@ import Swal from "sweetalert2";
 import { Mail, User, Smartphone, MapPin, Lock, EyeIcon } from "lucide-react";
 
 export const Route = createFileRoute("/forgot-password")({
+  head: () => ({
+    links: [
+      {
+        rel: "canonical",
+        href: "https://pocketdragon.in/forgot-password",
+      },
+    ],
+  }),
   component: RouteComponent,
 });
 

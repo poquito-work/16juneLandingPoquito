@@ -10,6 +10,12 @@ export const Route = createFileRoute("/register")({
         content: "Create your Pocket Dragon account and choose your plan.",
       },
     ],
+    links: [
+      {
+        rel: "canonical",
+        href: "https://pocketdragon.in/register",
+      },
+    ],
   }),
   component: RegisterPage,
 });
