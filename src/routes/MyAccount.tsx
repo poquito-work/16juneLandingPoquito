@@ -1,6 +1,6 @@
 import { createFileRoute, redirect, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/myaccount")({
+export const Route = createFileRoute("/MyAccount")({
   head: () => ({
     meta: [{ title: "My Account — Pocket Dragon" }],
   }),
