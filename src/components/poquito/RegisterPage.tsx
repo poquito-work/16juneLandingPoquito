@@ -291,7 +291,10 @@ useEffect(() => {
     const fetchCities = async () => {
       try {
         const response = await getPredefinedListByType("CITY",true);
-        setCityList(response.data.content);
+        const cities = response.data.content ?? [];
+        const other = cities.filter((c: any) => c.name.toLowerCase() === "other");
+        const rest = cities.filter((c: any) => c.name.toLowerCase() !== "other");
+        setCityList([...other, ...rest]);
       } catch (error) {
         console.error("Error fetching city list:", error);
       }

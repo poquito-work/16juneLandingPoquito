@@ -357,7 +357,12 @@ function ProfileTab({
   const [open, setOpen] = useState(false);
   useEffect(() => {
     getPredefinedListByType("CITY",true)
-      .then((res) => setCityList(res.data.content ?? []))
+      .then((res) => {
+        const cities = res.data.content ?? [];
+        const other = cities.filter((c: any) => c.name.toLowerCase() === "other");
+        const rest = cities.filter((c: any) => c.name.toLowerCase() !== "other");
+        setCityList([...other, ...rest]);
+      })
       .catch(() => {});
   }, []);
 

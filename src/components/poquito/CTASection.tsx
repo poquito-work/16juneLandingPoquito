@@ -119,7 +119,7 @@ export function CTASection() {
           </motion.a> */}
 
           <div className="flex items-center gap-3">
-                        <StoreBadge icon={appStoreLogo} label="App Store" sub="Coming Soon on" />
+                        <StoreBadge icon={appStoreLogo} label="App Store" sub="Now on" />
 
             <StoreBadge icon={googlePlayLogo} label="Google Play" sub="Coming Soon on" />
 
