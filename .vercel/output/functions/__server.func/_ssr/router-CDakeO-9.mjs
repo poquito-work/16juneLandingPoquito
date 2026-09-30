@@ -4,9 +4,9 @@ import { c as createRouter, a as createRootRouteWithContext, u as useRouter, L a
 import { Q as redirect } from "../_libs/tanstack__router-core.mjs";
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import "../_libs/react-dom.mjs";
-import "async_hooks";
 import "util";
 import "crypto";
+import "async_hooks";
 import "stream";
 import "node:stream";
 import "../_libs/isbot.mjs";
@@ -90,6 +90,10 @@ const Route$b = createRootRouteWithContext()({
       { property: "og:title", content: "Pocket Dragon — Mahjong on your time, anywhere you are!" },
       { property: "og:description", content: "Practice, play, and complete your way to the top! Enjoy real-time Traditional Mahjong action at your fingertips" },
       { property: "og:type", content: "website" },
+      {
+        property: "og:url",
+        content: "https://pocketdragon.in/"
+      },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Pocket Dragon — Mahjong on your time, anywhere you are!" },
@@ -98,6 +102,10 @@ const Route$b = createRootRouteWithContext()({
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9c0c8e13-e83f-4e5d-9cea-2039c1d937a9/id-preview-fa053274--f6866870-e808-4724-a4cd-a8f7aec82a5a.lovable.app-1780846784316.png" }
     ],
     links: [
+      {
+        rel: "canonical",
+        href: "https://pocketdragon.in/"
+      },
       {
         rel: "icon",
         type: "image/x-icon",
@@ -178,9 +186,15 @@ function RootComponent() {
 }
 const $$splitComponentImporter$a = () => import("./terms-CqGbugcS.mjs");
 const Route$a = createFileRoute("/terms")({
+  head: () => ({
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/terms"
+    }]
+  }),
   component: lazyRouteComponent($$splitComponentImporter$a, "component")
 });
-const $$splitComponentImporter$9 = () => import("./register-DYZjY5ia.mjs");
+const $$splitComponentImporter$9 = () => import("./register-D7S0dBcY.mjs");
 const Route$9 = createFileRoute("/register")({
   head: () => ({
     meta: [{
@@ -188,19 +202,57 @@ const Route$9 = createFileRoute("/register")({
     }, {
       name: "description",
       content: "Create your Pocket Dragon account and choose your plan."
+    }],
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/register"
     }]
   }),
   component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
 const $$splitComponentImporter$8 = () => import("./privacy-DnSHASsj.mjs");
 const Route$8 = createFileRoute("/privacy")({
+  head: () => ({
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/privacy"
+    }]
+  }),
   component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
-const $$splitComponentImporter$7 = () => import("./myaccount-BFsOu0JM.mjs");
-const Route$7 = createFileRoute("/myaccount")({
+const $$splitComponentImporter$7 = () => import("./forgot-password-CbXJ1jwC.mjs");
+const Route$7 = createFileRoute("/forgot-password")({
+  head: () => ({
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/forgot-password"
+    }]
+  }),
+  component: lazyRouteComponent($$splitComponentImporter$7, "component")
+});
+const $$splitComponentImporter$6 = () => import("./dashboard-BTU5dmpx.mjs");
+const Route$6 = createFileRoute("/dashboard")({
   head: () => ({
     meta: [{
       title: "My Account — Pocket Dragon"
+    }]
+  }),
+  beforeLoad: () => {
+    throw redirect({
+      to: "/myaccount/profile"
+    });
+  },
+  component: lazyRouteComponent($$splitComponentImporter$6, "component")
+});
+const $$splitComponentImporter$5 = () => import("./MyAccount-BFsOu0JM.mjs");
+const Route$5 = createFileRoute("/MyAccount")({
+  head: () => ({
+    meta: [{
+      title: "My Account — Pocket Dragon"
+    }],
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/myaccount"
     }]
   }),
   beforeLoad: () => {
@@ -213,31 +265,13 @@ const Route$7 = createFileRoute("/myaccount")({
       }
     }
   },
-  component: lazyRouteComponent($$splitComponentImporter$7, "component")
-});
-const $$splitComponentImporter$6 = () => import("./forgot-password-CoDG7u2k.mjs");
-const Route$6 = createFileRoute("/forgot-password")({
-  component: lazyRouteComponent($$splitComponentImporter$6, "component")
-});
-const $$splitComponentImporter$5 = () => import("./dashboard-BTU5dmpx.mjs");
-const Route$5 = createFileRoute("/dashboard")({
-  head: () => ({
-    meta: [{
-      title: "My Account — Pocket Dragon"
-    }]
-  }),
-  beforeLoad: () => {
-    throw redirect({
-      to: "/myaccount/profile"
-    });
-  },
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
 const $$splitComponentImporter$4 = () => import("../_-CYYLdHfV.mjs");
 const Route$4 = createFileRoute("/$")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-D3ZGcJV6.mjs");
+const $$splitComponentImporter$3 = () => import("./index-BcJ6A3lZ.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -261,29 +295,41 @@ const Route$3 = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./transaction-history-Bsj19Fqx.mjs");
+const $$splitComponentImporter$2 = () => import("./transaction-history-BX7pa1p-.mjs");
 const Route$2 = createFileRoute("/myaccount/transaction-history")({
   head: () => ({
     meta: [{
       title: "Transactions — Pocket Dragon"
+    }],
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/myaccount/transaction-history"
     }]
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./profile-BsahheTv.mjs");
+const $$splitComponentImporter$1 = () => import("./profile-BDS4Zmd1.mjs");
 const Route$1 = createFileRoute("/myaccount/profile")({
   head: () => ({
     meta: [{
       title: "Profile — Pocket Dragon"
+    }],
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/myaccount/profile"
     }]
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./manage-subscription-BOYLVq4m.mjs");
+const $$splitComponentImporter = () => import("./manage-subscription-FeN7vbRR.mjs");
 const Route = createFileRoute("/myaccount/manage-subscription")({
   head: () => ({
     meta: [{
       title: "Subscription — Pocket Dragon"
+    }],
+    links: [{
+      rel: "canonical",
+      href: "https://pocketdragon.in/myaccount/manage-subscription"
     }]
   }),
   component: lazyRouteComponent($$splitComponentImporter, "component")
@@ -303,19 +349,19 @@ const PrivacyRoute = Route$8.update({
   path: "/privacy",
   getParentRoute: () => Route$b
 });
-const MyaccountRoute = Route$7.update({
-  id: "/myaccount",
-  path: "/myaccount",
-  getParentRoute: () => Route$b
-});
-const ForgotPasswordRoute = Route$6.update({
+const ForgotPasswordRoute = Route$7.update({
   id: "/forgot-password",
   path: "/forgot-password",
   getParentRoute: () => Route$b
 });
-const DashboardRoute = Route$5.update({
+const DashboardRoute = Route$6.update({
   id: "/dashboard",
   path: "/dashboard",
+  getParentRoute: () => Route$b
+});
+const MyAccountRoute = Route$5.update({
+  id: "/MyAccount",
+  path: "/MyAccount",
   getParentRoute: () => Route$b
 });
 const SplatRoute = Route$4.update({
@@ -329,37 +375,32 @@ const IndexRoute = Route$3.update({
   getParentRoute: () => Route$b
 });
 const MyaccountTransactionHistoryRoute = Route$2.update({
-  id: "/transaction-history",
-  path: "/transaction-history",
-  getParentRoute: () => MyaccountRoute
+  id: "/myaccount/transaction-history",
+  path: "/myaccount/transaction-history",
+  getParentRoute: () => Route$b
 });
 const MyaccountProfileRoute = Route$1.update({
-  id: "/profile",
-  path: "/profile",
-  getParentRoute: () => MyaccountRoute
+  id: "/myaccount/profile",
+  path: "/myaccount/profile",
+  getParentRoute: () => Route$b
 });
 const MyaccountManageSubscriptionRoute = Route.update({
-  id: "/manage-subscription",
-  path: "/manage-subscription",
-  getParentRoute: () => MyaccountRoute
+  id: "/myaccount/manage-subscription",
+  path: "/myaccount/manage-subscription",
+  getParentRoute: () => Route$b
 });
-const MyaccountRouteChildren = {
-  MyaccountManageSubscriptionRoute,
-  MyaccountProfileRoute,
-  MyaccountTransactionHistoryRoute
-};
-const MyaccountRouteWithChildren = MyaccountRoute._addFileChildren(
-  MyaccountRouteChildren
-);
 const rootRouteChildren = {
   IndexRoute,
   SplatRoute,
+  MyAccountRoute,
   DashboardRoute,
   ForgotPasswordRoute,
-  MyaccountRoute: MyaccountRouteWithChildren,
   PrivacyRoute,
   RegisterRoute,
-  TermsRoute
+  TermsRoute,
+  MyaccountManageSubscriptionRoute,
+  MyaccountProfileRoute,
+  MyaccountTransactionHistoryRoute
 };
 const routeTree = Route$b._addFileChildren(rootRouteChildren)._addFileTypes();
 const getRouter = () => {

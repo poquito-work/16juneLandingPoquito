@@ -1,7 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
 import { P as PocketDragonLogo, f as forgotPassword, e as resetPassword } from "./Logo-CBqgdkSE.mjs";
-import { S as Swal } from "../_libs/sweetalert2.mjs";
 import { M as Mail, L as Lock } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
@@ -11,9 +10,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
-import "async_hooks";
 import "util";
 import "crypto";
+import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -176,14 +175,6 @@ function RouteComponent() {
     try {
       setVerifying(true);
       await resetPassword(email, otp.join(""), newPassword);
-      Swal.fire({
-        icon: "success",
-        title: "Password Updated",
-        // text: "Your changes have been saved successfully.",
-        confirmButtonColor: "#143322",
-        timer: 2500,
-        timerProgressBar: true
-      });
       window.location.assign("/#login");
     } catch (err) {
       setApiError(err?.response?.data?.message || "Something went wrong.");

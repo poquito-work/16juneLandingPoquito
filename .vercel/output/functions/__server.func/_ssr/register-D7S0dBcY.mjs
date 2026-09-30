@@ -11,9 +11,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
-import "async_hooks";
 import "util";
 import "crypto";
+import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
 import "../_libs/axios.mjs";
@@ -281,7 +281,10 @@ function StepDetails({
     const fetchCities = async () => {
       try {
         const response = await getPredefinedListByType("CITY", true);
-        setCityList(response.data.content);
+        const cities = response.data.content ?? [];
+        const other = cities.filter((c) => c.name.toLowerCase() === "other");
+        const rest = cities.filter((c) => c.name.toLowerCase() !== "other");
+        setCityList([...other, ...rest]);
       } catch (error) {
         console.error("Error fetching city list:", error);
       }
@@ -308,6 +311,8 @@ function StepDetails({
     const e = {};
     if (!data.fullName.trim()) e.fullName = "Username is required.";
     if (!data.city) e.city = "Please select your city.";
+    if (data.city.toLowerCase() === "other" && !data.other_city.trim())
+      e.other_city = "Other city is required.";
     if (!data.email.trim()) e.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()))
       e.email = "Please enter a valid email.";
@@ -319,7 +324,7 @@ function StepDetails({
     if (!data.agreed) e.agreed = "You must agree to the Terms & Privacy Policy to continue.";
     return e;
   }
-  const isFormValid = data.fullName.trim() !== "" && data.city !== "" && data.email.trim() !== "" && data.password !== "" && data.confirmPassword !== "" && data.agreed && !emailError && !usernameError;
+  const isFormValid = data.fullName.trim() !== "" && data.city !== "" && data.email.trim() !== "" && data.password !== "" && data.confirmPassword !== "" && data.agreed && !emailError && !usernameError && (data.city.toLowerCase() !== "other" || data.other_city.trim() !== "");
   function handleSubmit(e) {
     e.preventDefault();
     const errs = validate();
@@ -444,21 +449,25 @@ function StepDetails({
         ] })
       ] }),
       data.city.toLowerCase() === "other" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "reg-label", htmlFor: "reg-city", children: "Other City" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "reg-label", htmlFor: "reg-other-city", children: [
+          "Other City ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "color-red", children: "*" })
+        ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-input-wrap", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "reg-input-icon", size: 18 }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
+              id: "reg-other-city",
               type: "text",
-              className: "reg-input",
+              className: `reg-input ${errors.other_city ? "reg-input-error" : ""}`,
               placeholder: "Enter other city",
               value: data.other_city,
               onChange: (e) => onChange("other_city", e.target.value)
             }
-          ),
-          errors.other_city && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.other_city })
-        ] })
+          )
+        ] }),
+        errors.other_city && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "reg-error", children: errors.other_city })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reg-field", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "reg-label", htmlFor: "reg-fullname", children: [

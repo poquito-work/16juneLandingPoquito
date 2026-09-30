@@ -12,9 +12,9 @@ import "../_libs/cookie-es.mjs";
 import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "../_libs/react-dom.mjs";
-import "async_hooks";
 import "util";
 import "crypto";
+import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
 function StartServer(props) {
@@ -81,7 +81,7 @@ function getResponse() {
 }
 var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 async function getStartManifest(matchedRoutes) {
-  const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-BuovhvyP.mjs");
+  const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-fzsKG1_2.mjs");
   const startManifest = tsrStartManifest();
   let routes = startManifest.routes;
   routes[rootRouteId];
@@ -1158,8 +1158,8 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
   const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-    import("./router-qYyEp5na.mjs"),
-    import("./start-BeyhE7aM.mjs"),
+    import("./router-CDakeO-9.mjs"),
+    import("./start-Dk-Ek7QA.mjs"),
     import("./empty-plugin-adapters-BFgPZ6_d.mjs")
   ]);
   return {

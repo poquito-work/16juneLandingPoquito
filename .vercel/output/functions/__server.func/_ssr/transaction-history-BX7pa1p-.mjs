@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-D5Yl7cSm.mjs";
+import { D as DashboardPage } from "./DashboardPage-BCIAs2RB.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -10,9 +10,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
-import "async_hooks";
 import "util";
 import "crypto";
+import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
 import "./Logo-CBqgdkSE.mjs";

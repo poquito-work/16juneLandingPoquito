@@ -860,15 +860,21 @@ function SubscriptionTab({
     if (!confirm.isConfirmed) return;
     setChanging(true);
     try {
-      await upgradeSubscription(planToApply.uuid);
-      await getUserProfile();
-      Swal.fire({
-        icon: "success",
-        title: "Plan Updated!",
-        text: `Your subscription upgraded`,
-        // text: `Your subscription will switch to the ${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"} Plan starting ${addOneDay(subscription?.current_period_end ?? null)}.`,
-        confirmButtonColor: "#b65a2f"
-      });
+      const res = await upgradeSubscription(planToApply.uuid);
+      const paymentUrl = res.data?.data?.razorpay_short_url || res.data?.razorpay_short_url;
+      if (paymentUrl) {
+        const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+        pollSubscriptionStatus(paymentWindow, planToApply.uuid);
+      } else {
+        await getUserProfile();
+        await onSubscriptionChanged?.();
+        Swal.fire({
+          icon: "success",
+          title: "Plan Updated!",
+          text: `Your subscription upgraded`,
+          confirmButtonColor: "#b65a2f"
+        });
+      }
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -964,19 +970,7 @@ function SubscriptionTab({
       /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-sub-plan-price", children: [
         "Next billing on ",
         formatDate(subscription?.next_billing_date)
-      ] }),
-      isTrialActive ? /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {}) : (
-        // <div className="dash-sub-meta">
-        //   <h3 className="">Free trial active</h3>
-        //   <p className="">
-        //     Your {trialDaysLeft}-day trial ends {formatDate(subscription.trial_end_at)}.
-        //   </p>
-        // </div>
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "dash-sub-meta", children: subscription.current_period_end && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-          "Renews/ends: ",
-          formatDate(subscription.current_period_end)
-        ] }) })
-      )
+      ] })
     ] }) }),
     !trialEndedWithoutSubscription && !subscription && isTrialActive && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "dash-sub-current", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-sub-current-left", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "dash-sub-plan-eyebrow", children: "Current Plan" }),
