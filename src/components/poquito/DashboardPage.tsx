@@ -357,12 +357,7 @@ function ProfileTab({
   const [open, setOpen] = useState(false);
   useEffect(() => {
     getPredefinedListByType("CITY",true)
-      .then((res) => {
-        const cities = res.data.content ?? [];
-        const other = cities.filter((c: any) => c.name.toLowerCase() === "other");
-        const rest = cities.filter((c: any) => c.name.toLowerCase() !== "other");
-        setCityList([...other, ...rest]);
-      })
+      .then((res) => setCityList(res.data.content ?? []))
       .catch(() => {});
   }, []);
 
@@ -1242,17 +1237,23 @@ function SubscriptionTab({
     setChanging(true);
 
     try {
-      await upgradeSubscription(planToApply.uuid);
+      const res = await upgradeSubscription(planToApply.uuid);
+      const paymentUrl = res.data?.data?.razorpay_short_url || res.data?.razorpay_short_url;
 
-      await getUserProfile();
+      if (paymentUrl) {
+        const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+        pollSubscriptionStatus(paymentWindow, planToApply.uuid);
+      } else {
+        await getUserProfile();
+        await onSubscriptionChanged?.();
 
-      Swal.fire({
-        icon: "success",
-        title: "Plan Updated!",
-        text:`Your subscription upgraded`,
-        // text: `Your subscription will switch to the ${planToApply.billing_cycle === "annual" ? "Annual" : "Monthly"} Plan starting ${addOneDay(subscription?.current_period_end ?? null)}.`,
-        confirmButtonColor: "#b65a2f",
-      });
+        Swal.fire({
+          icon: "success",
+          title: "Plan Updated!",
+          text: `Your subscription upgraded`,
+          confirmButtonColor: "#b65a2f",
+        });
+      }
     } catch (err: any) {
       Swal.fire({
         icon: "error",
@@ -1397,7 +1398,7 @@ function SubscriptionTab({
               )}
             </p> */}
 
-            {isTrialActive ? (
+            {/* {isTrialActive ? (
               <></>
             ) : (
               // <div className="dash-sub-meta">
@@ -1411,7 +1412,7 @@ function SubscriptionTab({
                   <span>Renews/ends: {formatDate(subscription.current_period_end)}</span>
                 )}
               </div>
-            )}
+            )} */}
           </div>
           {/* <div>
             <span
