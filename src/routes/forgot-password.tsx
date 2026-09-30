@@ -195,14 +195,14 @@ function RouteComponent() {
       setVerifying(true);
 
       await resetPassword(email, otp.join(""), newPassword);
-      Swal.fire({
-        icon: "success",
-        title: "Password Updated",
-        // text: "Your changes have been saved successfully.",
-        confirmButtonColor: "#143322",
-        timer: 2500,
-        timerProgressBar: true,
-      });
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "Password Updated",
+      //   // text: "Your changes have been saved successfully.",
+      //   confirmButtonColor: "#143322",
+      //   timer: 2500,
+      //   timerProgressBar: true,
+      // });
       window.location.assign("/#login");
     } catch (err: any) {
       setApiError(err?.response?.data?.message || "Something went wrong.");

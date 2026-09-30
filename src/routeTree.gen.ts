@@ -12,9 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as MyaccountRouteImport } from './routes/myaccount'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as MyAccountRouteImport } from './routes/MyAccount'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MyaccountTransactionHistoryRouteImport } from './routes/myaccount/transaction-history'
@@ -36,11 +36,6 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MyaccountRoute = MyaccountRouteImport.update({
-  id: '/myaccount',
-  path: '/myaccount',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
@@ -49,6 +44,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyAccountRoute = MyAccountRouteImport.update({
+  id: '/MyAccount',
+  path: '/MyAccount',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SplatRoute = SplatRouteImport.update({
@@ -63,28 +63,28 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const MyaccountTransactionHistoryRoute =
   MyaccountTransactionHistoryRouteImport.update({
-    id: '/transaction-history',
-    path: '/transaction-history',
-    getParentRoute: () => MyaccountRoute,
+    id: '/myaccount/transaction-history',
+    path: '/myaccount/transaction-history',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const MyaccountProfileRoute = MyaccountProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => MyaccountRoute,
+  id: '/myaccount/profile',
+  path: '/myaccount/profile',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const MyaccountManageSubscriptionRoute =
   MyaccountManageSubscriptionRouteImport.update({
-    id: '/manage-subscription',
-    path: '/manage-subscription',
-    getParentRoute: () => MyaccountRoute,
+    id: '/myaccount/manage-subscription',
+    path: '/myaccount/manage-subscription',
+    getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/MyAccount': typeof MyAccountRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/myaccount': typeof MyaccountRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
@@ -95,9 +95,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/MyAccount': typeof MyAccountRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/myaccount': typeof MyaccountRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
@@ -109,9 +109,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/MyAccount': typeof MyAccountRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/myaccount': typeof MyaccountRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
@@ -124,9 +124,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/MyAccount'
     | '/dashboard'
     | '/forgot-password'
-    | '/myaccount'
     | '/privacy'
     | '/register'
     | '/terms'
@@ -137,9 +137,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/MyAccount'
     | '/dashboard'
     | '/forgot-password'
-    | '/myaccount'
     | '/privacy'
     | '/register'
     | '/terms'
@@ -150,9 +150,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/MyAccount'
     | '/dashboard'
     | '/forgot-password'
-    | '/myaccount'
     | '/privacy'
     | '/register'
     | '/terms'
@@ -164,12 +164,15 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  MyAccountRoute: typeof MyAccountRoute
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
-  MyaccountRoute: typeof MyaccountRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
+  MyaccountManageSubscriptionRoute: typeof MyaccountManageSubscriptionRoute
+  MyaccountProfileRoute: typeof MyaccountProfileRoute
+  MyaccountTransactionHistoryRoute: typeof MyaccountTransactionHistoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -195,13 +198,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/myaccount': {
-      id: '/myaccount'
-      path: '/myaccount'
-      fullPath: '/myaccount'
-      preLoaderRoute: typeof MyaccountRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/forgot-password': {
       id: '/forgot-password'
       path: '/forgot-password'
@@ -214,6 +210,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/MyAccount': {
+      id: '/MyAccount'
+      path: '/MyAccount'
+      fullPath: '/MyAccount'
+      preLoaderRoute: typeof MyAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$': {
@@ -232,53 +235,40 @@ declare module '@tanstack/react-router' {
     }
     '/myaccount/transaction-history': {
       id: '/myaccount/transaction-history'
-      path: '/transaction-history'
+      path: '/myaccount/transaction-history'
       fullPath: '/myaccount/transaction-history'
       preLoaderRoute: typeof MyaccountTransactionHistoryRouteImport
-      parentRoute: typeof MyaccountRoute
+      parentRoute: typeof rootRouteImport
     }
     '/myaccount/profile': {
       id: '/myaccount/profile'
-      path: '/profile'
+      path: '/myaccount/profile'
       fullPath: '/myaccount/profile'
       preLoaderRoute: typeof MyaccountProfileRouteImport
-      parentRoute: typeof MyaccountRoute
+      parentRoute: typeof rootRouteImport
     }
     '/myaccount/manage-subscription': {
       id: '/myaccount/manage-subscription'
-      path: '/manage-subscription'
+      path: '/myaccount/manage-subscription'
       fullPath: '/myaccount/manage-subscription'
       preLoaderRoute: typeof MyaccountManageSubscriptionRouteImport
-      parentRoute: typeof MyaccountRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface MyaccountRouteChildren {
-  MyaccountManageSubscriptionRoute: typeof MyaccountManageSubscriptionRoute
-  MyaccountProfileRoute: typeof MyaccountProfileRoute
-  MyaccountTransactionHistoryRoute: typeof MyaccountTransactionHistoryRoute
-}
-
-const MyaccountRouteChildren: MyaccountRouteChildren = {
-  MyaccountManageSubscriptionRoute: MyaccountManageSubscriptionRoute,
-  MyaccountProfileRoute: MyaccountProfileRoute,
-  MyaccountTransactionHistoryRoute: MyaccountTransactionHistoryRoute,
-}
-
-const MyaccountRouteWithChildren = MyaccountRoute._addFileChildren(
-  MyaccountRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  MyAccountRoute: MyAccountRoute,
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
-  MyaccountRoute: MyaccountRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   TermsRoute: TermsRoute,
+  MyaccountManageSubscriptionRoute: MyaccountManageSubscriptionRoute,
+  MyaccountProfileRoute: MyaccountProfileRoute,
+  MyaccountTransactionHistoryRoute: MyaccountTransactionHistoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
