@@ -99,7 +99,8 @@ function DownloadButtons({
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       motion.a,
       {
-        href: "#",
+        href: "https://apps.apple.com/us/app/pocket-dragon-mahjong/id6808215426",
+        target: "_blank",
         whileHover: { scale: 1.04, boxShadow: "0 6px 18px rgba(20,51,34,0.08), " },
         transition: { type: "spring", stiffness: 340, damping: 22 },
         style: {
@@ -128,8 +129,9 @@ function DownloadButtons({
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       motion.a,
       {
-        href: "#",
+        href: "https://play.google.com/store/apps/details?id=com.app.poquito",
         whileHover: { scale: 1.04, y: -2, boxShadow: "0 6px 18px rgba(20,51,34,0.08), " },
+        target: "_blank",
         transition: { type: "spring", stiffness: 340, damping: 22 },
         style: {
           cursor: "pointer",
@@ -148,7 +150,7 @@ function DownloadButtons({
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: googlePlayLogo, alt: "Get it on Google Play", style: { height: 20, width: "auto", display: "block" } }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", lineHeight: 1 }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 9, fontWeight: 600, color: "rgb(20,51,34)" }, children: "Coming soon on" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 9, fontWeight: 600, color: "rgb(20,51,34)" }, children: "Now  on" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: 15, fontWeight: 600, color: "rgb(20,51,34)", marginTop: 2 }, children: "Play Store" })
           ] })
         ]
@@ -1477,12 +1479,14 @@ function LoginSection() {
 }
 const appStoreLogo = "/assets/appstore-CNw0Xi8t.png";
 const EASE = [0.22, 0.61, 0.36, 1];
-function StoreBadge({ icon, label, sub }) {
+function StoreBadge({ icon, label, sub, href }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     motion.a,
     {
-      href: "#",
-      className: "cursor-none flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream",
+      href,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: " flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream",
       whileHover: { scale: 1.03 },
       whileTap: { scale: 0.98 },
       children: [
@@ -1581,8 +1585,24 @@ function CTASection() {
               transition: { duration: 0.7, ease: EASE, delay: 0.3 },
               className: "flex flex-col sm:flex-row items-center justify-center gap-4",
               children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: appStoreLogo, label: "App Store", sub: "Now on" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(StoreBadge, { icon: googlePlayLogo, label: "Google Play", sub: "Coming Soon on" })
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  StoreBadge,
+                  {
+                    icon: appStoreLogo,
+                    label: "App Store",
+                    sub: "Now on",
+                    href: "https://apps.apple.com/us/app/pocket-dragon-mahjong/id6808215426"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  StoreBadge,
+                  {
+                    icon: googlePlayLogo,
+                    label: "Play Store",
+                    sub: "Now on",
+                    href: "https://play.google.com/store/apps/details?id=com.app.poquito"
+                  }
+                )
               ] })
             }
           )
