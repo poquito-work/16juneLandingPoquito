@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { P as PocketDragonLogo } from "./Logo-BVGl1KFU.mjs";
+import { P as PocketDragonLogo } from "./Logo-CBqgdkSE.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 const NAV = [
   { label: "Home", href: "#home" },

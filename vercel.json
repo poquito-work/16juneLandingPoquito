@@ -2,7 +2,7 @@
 
 
 {
-  "buildCommand": "npm run build && node scripts/patch-vercel-runtime.mjs",
+  "buildCommand": "npm run build",
   "installCommand": "npm ci",
   "framework": null,
   "build": {
