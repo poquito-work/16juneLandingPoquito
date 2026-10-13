@@ -9,13 +9,16 @@ interface StoreBadgeProps {
   icon: string
   label: string
   sub: string
+  href: string
 }
 
-function StoreBadge({ icon, label, sub }: StoreBadgeProps) {
+function StoreBadge({ icon, label, sub,href }: StoreBadgeProps) {
   return (
     <motion.a
-      href="#"
-      className="cursor-none flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream"
+      href={href}
+      target="_blank"
+    rel="noopener noreferrer"
+      className=" flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 rounded-xl px-4 py-2 text-left text-pq-cream"
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -118,12 +121,21 @@ export function CTASection() {
             Download Free
           </motion.a> */}
 
-          <div className="flex items-center gap-3">
-                        <StoreBadge icon={appStoreLogo} label="App Store" sub="Now on" />
+         <div className="flex items-center gap-3">
+  <StoreBadge
+    icon={appStoreLogo}
+    label="App Store"
+    sub="Now on"
+    href="https://apps.apple.com/us/app/pocket-dragon-mahjong/id6808215426"
+  />
 
-            <StoreBadge icon={googlePlayLogo} label="Google Play" sub="Coming Soon on" />
-
-          </div>
+  <StoreBadge
+    icon={googlePlayLogo}
+    label="Play Store"
+    sub="Now on"
+    href="https://play.google.com/store/apps/details?id=com.app.poquito"
+  />
+</div>
         </motion.div>
 
         {/* <div className="flex items-center gap-3">

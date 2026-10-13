@@ -13,7 +13,8 @@ export function DownloadButtons({
     <div className={className}>
       <div className={`flex flex-wrap items-center gap-3 ${justify}`}>
         <motion.a
-          href="#"
+          href="https://apps.apple.com/us/app/pocket-dragon-mahjong/id6808215426"
+          target="_blank"
           whileHover={{ scale: 1.04, boxShadow: "0 6px 18px rgba(20,51,34,0.08), " }}
           // whileTap={{ scale: 0.97 }}
           transition={{ type: "spring", stiffness: 340, damping: 22 }}
@@ -41,9 +42,10 @@ export function DownloadButtons({
           </div>
         </motion.a>
         <motion.a
-          href="#"
+          href="https://play.google.com/store/apps/details?id=com.app.poquito"
           whileHover={{ scale: 1.04, y: -2, boxShadow: "0 6px 18px rgba(20,51,34,0.08), " }}
           // whileTap={{ scale: 0.97 }}
+          target="_blank"
           transition={{ type: "spring", stiffness: 340, damping: 22 }}
           style={{
              cursor: "pointer",
@@ -62,7 +64,7 @@ export function DownloadButtons({
         >
           <img src={googlePlayLogo} alt="Get it on Google Play" style={{ height: 20, width: "auto", display: "block" }} />
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-            <span style={{ fontSize: 9, fontWeight: 600, color: "rgb(20,51,34)"}}>Coming soon on</span>
+            <span style={{ fontSize: 9, fontWeight: 600, color: "rgb(20,51,34)"}}>Now  on</span>
             <span style={{ fontSize: 15, fontWeight: 600, color: "rgb(20,51,34)", marginTop: 2 }}>Play Store</span>
           </div>
         </motion.a>
