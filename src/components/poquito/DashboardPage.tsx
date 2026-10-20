@@ -116,6 +116,15 @@ interface UserSubscription {
   next_billing_date:string | null;
   is_upgraded?: boolean;
   cancel_at_cycle_end?: boolean;
+  pending_plan_uuid?: string | null;
+  pending_change_type?: string | null;
+  pending_type?: string | null;
+  pending_change?: {
+    type?: string;
+    target_plan_uuid?: string;
+    effective_date?: string | null;
+    status?: string;
+  } | null;
 }
 // ─── Mock/fallback data helpers ───────────────────────────────────────────────
 
@@ -1378,6 +1387,17 @@ function SubscriptionTab({
 
   const isSubscriptionActive =
     subscription?.status === "active" || subscription?.status === "trialing";
+
+  const pendingChangeType = (
+    subscription?.pending_change_type ??
+    subscription?.pending_type ??
+    subscription?.pending_change?.type ??
+    ""
+  ).toLowerCase();
+
+  const isScheduledUpgradeCancelling =
+    subscription?.status?.toLowerCase() === "cancelling" &&
+    (pendingChangeType === "upgrade" || pendingChangeType === "upgarde");
   function addOneDay(date: string | null) {
     if (!date) return "—";
 
@@ -1812,9 +1832,15 @@ function SubscriptionTab({
           </div>
 
           {subscription &&
-            (subscription.status === "active" || subscription.status === "trialing") && (
+            (subscription.status === "active" ||
+              subscription.status === "trialing" ||
+              isScheduledUpgradeCancelling) && (
               <p className="dash-info-note">
-                To cancel your subscription,&nbsp;
+                {isScheduledUpgradeCancelling ? (
+                  <>To cancel your schedule subscription,&nbsp;</>
+                ) : (
+                  <>To cancel your subscription,&nbsp;</>
+                )}
                 <button
                   type="button"
                   onClick={handleCancelPlan}
