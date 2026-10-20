@@ -114,6 +114,7 @@ interface UserSubscription {
   cancel_deferred_to_next_cycle: boolean;
   plan: SubscriptionPlan;
   next_billing_date:string | null;
+  first_recurring_charge_date?: string | null;
    is_upgraded?: boolean;
 }
 // ─── Mock/fallback data helpers ───────────────────────────────────────────────
@@ -992,7 +993,21 @@ interface Plan {
 }
 function formatDate(iso: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("en-IN", {
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "—";
+  return d.toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function addOneDay(date: string | null) {
+  if (!date) return "—";
+  const nextDate = new Date(date);
+  if (isNaN(nextDate.getTime())) return "—";
+  nextDate.setDate(nextDate.getDate() + 1);
+  return nextDate.toLocaleDateString("en-IN", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -1377,18 +1392,40 @@ function SubscriptionTab({
 
   const isSubscriptionActive =
     subscription?.status === "active" || subscription?.status === "trialing";
-  function addOneDay(date: string | null) {
-    if (!date) return "—";
 
-    const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 1);
+  const effectiveTrialEnd = subscription?.trial_end_at || trialEndAt || null;
+  const isTrialEndFuture = effectiveTrialEnd
+    ? (() => {
+        const time = new Date(effectiveTrialEnd).getTime();
+        return !isNaN(time) && time > Date.now();
+      })()
+    : false;
 
-    return nextDate.toLocaleDateString("en-IN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  }
+  const isTrialSubActive =
+    Boolean(isTrialActive) &&
+    subscription?.status?.toUpperCase() === "TRIALING" &&
+    isTrialEndFuture;
+
+  const upcomingPlanName =
+    subscription?.plan?.name ||
+    (subscription?.plan?.billing_cycle === "annual" ? "Annual Plan" : "Monthly Plan");
+
+  const scheduledStartDate = effectiveTrialEnd ? addOneDay(effectiveTrialEnd) : "—";
+
+  const nextBillingDateDisplay = (() => {
+    if (subscription?.first_recurring_charge_date) {
+      const d = new Date(subscription.first_recurring_charge_date);
+      if (!isNaN(d.getTime())) {
+        return formatDate(subscription.first_recurring_charge_date);
+      }
+    }
+    // Via verified frontend scheduling logic: first recurring charge debits when paid subscription starts
+    // Do NOT silently assume next billing date equals the trial end date
+    if (effectiveTrialEnd) {
+      return addOneDay(effectiveTrialEnd);
+    }
+    return "—";
+  })();
   // const isDowngrade =
   //    isSubscriptionActive &&
   //   subscription?.plan?.billing_cycle === "annual" &&
@@ -1406,7 +1443,69 @@ function SubscriptionTab({
       </div>
 
       {/* Current plan card — hidden once trial ended with no subscription */}
-      {!trialEndedWithoutSubscription && subscription && (
+      {!trialEndedWithoutSubscription && subscription && isTrialSubActive && (
+        <div className="dash-sub-current" style={{ flexDirection: "column", alignItems: "stretch", gap: "1.25rem" }}>
+          {/* Current Plan Section */}
+          <div className="flex items-start justify-between flex-wrap gap-4">
+            <div className="dash-sub-current-left">
+              <span className="dash-sub-plan-eyebrow">Current Plan</span>
+              <p className="dash-sub-plan-name">FREE TRIAL</p>
+              <div className="dash-sub-meta trialText" style={{ marginTop: "0.35rem" }}>
+                <p style={{ margin: 0, fontSize: "0.85rem", color: "#f9f2e4" }}>
+                  Your free trial is currently active.
+                </p>
+                <p style={{ margin: "2px 0 0", fontSize: "0.85rem", color: "#f9f2e4", opacity: 0.9 }}>
+                  Trial ends on {formatDate(effectiveTrialEnd)}.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span style={{ fontSize: "0.78rem", color: "#f9f2e4", opacity: 0.85 }}>Status:</span>
+              <span
+                className="dash-chip"
+                style={{
+                  background: "rgba(34, 197, 94, 0.2)",
+                  color: "#4ade80",
+                  border: "1px solid rgba(74, 222, 128, 0.4)",
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                }}
+              >
+                Trial Active
+              </span>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div
+            style={{
+              height: "1px",
+              background: "rgba(249, 242, 228, 0.16)",
+              width: "100%",
+            }}
+          />
+
+          {/* Upcoming Subscription Section */}
+          <div className="flex items-start justify-between flex-wrap gap-5">
+            <div className="dash-sub-current-left">
+              <span className="dash-sub-plan-eyebrow">Upcoming Subscription</span>
+              <p className="dash-sub-plan-name" style={{ fontSize: "1.05rem" }}>
+                {upcomingPlanName}
+              </p>
+              <div className="dash-sub-meta" style={{ marginTop: "0.35rem" }}>
+                <p style={{ margin: 0, fontSize: "0.85rem", color: "#f9f2e4" }}>
+                  Your {upcomingPlanName} starts on {scheduledStartDate}.
+                </p>
+                <p style={{ margin: "2px 0 0", fontSize: "0.85rem", color: "#f9f2e4", opacity: 0.9 }}>
+                  Next billing date: {nextBillingDateDisplay}.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!trialEndedWithoutSubscription && subscription && !isTrialSubActive && (
         <div className="dash-sub-current">
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
@@ -1415,44 +1514,8 @@ function SubscriptionTab({
   <p className="dash-sub-plan-price">
     Next billing on {formatDate(subscription?.next_billing_date)}
   </p>
-) : null}            {/* <p className="dash-sub-plan-price">
-              ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
-              {subscription.plan.billing_cycle === "monthly" ? "month" : "year"}
-              {subscription.plan.gst_excluded && (
-                <span className="dash-sub-gst-note"> (incl. ₹{subscription.gst} GST)</span>
-              )}
-            </p> */}
-
-            {/* {isTrialActive ? (
-              <></>
-            ) : (
-              // <div className="dash-sub-meta">
-              //   <h3 className="">Free trial active</h3>
-              //   <p className="">
-              //     Your {trialDaysLeft}-day trial ends {formatDate(subscription.trial_end_at)}.
-              //   </p>
-              // </div>
-              <div className="dash-sub-meta">
-                {subscription.current_period_end && (
-                  <span>Renews/ends: {formatDate(subscription.current_period_end)}</span>
-                )}
-              </div>
-            )} */}
+) : null}
           </div>
-          {/* <div>
-            <span
-              className={`dash-chip ${(SUB_STATUS_MAP[subscription.status] ?? { label: subscription.status, cls: "dash-chip-pending" }).cls}`}
-            >
-              {
-                (
-                  SUB_STATUS_MAP[subscription.status] ?? {
-                    label: subscription.status,
-                    cls: "dash-chip-pending",
-                  }
-                ).label
-              }
-            </span>
-          </div> */}
         </div>
       )}
       
