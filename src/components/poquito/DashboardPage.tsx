@@ -114,7 +114,8 @@ interface UserSubscription {
   cancel_deferred_to_next_cycle: boolean;
   plan: SubscriptionPlan;
   next_billing_date:string | null;
-   is_upgraded?: boolean;
+  is_upgraded?: boolean;
+  cancel_at_cycle_end?: boolean;
 }
 // ─── Mock/fallback data helpers ───────────────────────────────────────────────
 
@@ -1411,11 +1412,15 @@ function SubscriptionTab({
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">{subscription.plan?.name}</p>
-{!subscription?.is_upgraded ? (
-  <p className="dash-sub-plan-price">
-    Next billing on {formatDate(subscription?.next_billing_date)}
-  </p>
-) : null}            {/* <p className="dash-sub-plan-price">
+            {subscription?.cancel_at_cycle_end ? (
+              <p className="dash-sub-plan-price">
+                Active Until {formatDate(subscription?.current_period_end)}
+              </p>
+            ) : !subscription?.is_upgraded ? (
+              <p className="dash-sub-plan-price">
+                Next billing on {formatDate(subscription?.next_billing_date)}
+              </p>
+            ) : null}            {/* <p className="dash-sub-plan-price">
               ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
               {subscription.plan.billing_cycle === "monthly" ? "month" : "year"}
               {subscription.plan.gst_excluded && (
