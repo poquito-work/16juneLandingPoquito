@@ -14,6 +14,7 @@ import {
 } from "@/services/auth";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { PaymentGatewayDialog, launchCashfreeFlow } from "./PaymentGatewayDialog";
 import Swal from "sweetalert2";
 import { Mail, Smartphone, MapPin, User, Lock, Trash2} from "lucide-react";
 import {
@@ -1035,6 +1036,12 @@ function SubscriptionTab({
   const [monthlyDialog, setMonthlyDialog] = useState(false);
   const [annualDialog, setAnnualDialog] = useState(false);
 
+  // Payment gateway selection dialog
+  const [gatewayDialogOpen, setGatewayDialogOpen] = useState(false);
+  const [gatewayDialogLoading, setGatewayDialogLoading] = useState(false);
+  const [pendingPlanId, setPendingPlanId] = useState<number | null>(null);
+
+
   function CancellationDialog({
     open,
     onClose,
@@ -1122,33 +1129,43 @@ function SubscriptionTab({
   const showSubscribeButton =
     !subscription || ["stopped", "expired", "cancelling"].includes(subscription.status);
 
-  async function handleSubscribe(planId: number) {
-    const selectedPlan = plans.find((p) => p.id === planId);
+  function handleSubscribe(planId: number) {
+    setPendingPlanId(planId);
+    setGatewayDialogOpen(true);
+  }
+
+  async function handleGatewayConfirm(gateway: "razorpay" | "cashfree") {
+    if (pendingPlanId === null) return;
+    const selectedPlan = plans.find((p) => p.id === pendingPlanId);
     if (!selectedPlan) return;
 
-    setChanging(true);
-    const profileRes = await getUserProfile();
-
-    const userUuid = profileRes.data.uuid;
+    setGatewayDialogLoading(true);
     try {
-      const res = await initializeSubscription(
-        userUuid, // current logged in user uuid
-        selectedPlan.uuid,
-      );
+      const profileRes = await getUserProfile();
+      const userUuid = profileRes.data.uuid;
 
-      const paymentUrl = res.data.razorpay_short_url;
+      const res = await initializeSubscription(userUuid, selectedPlan.uuid, gateway);
 
-      const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+      setGatewayDialogOpen(false);
+      setGatewayDialogLoading(false);
 
-      pollSubscriptionStatus(paymentWindow, selectedPlan.uuid);
+      if (gateway === "razorpay") {
+        const paymentUrl = res.data.razorpay_short_url;
+        const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+        pollSubscriptionStatus(paymentWindow, selectedPlan.uuid);
+      } else {
+        const subsSessionId = res.data.subscription_session_id;
+        // Pass payment_session_id only for non-trial users; trial users need mandate only
+        const paymentSessionId = isTrialActive ? null : res.data.payment_session_id;
+        await launchCashfreeFlow(subsSessionId, paymentSessionId);
+      }
     } catch (err: any) {
+      setGatewayDialogLoading(false);
       Swal.fire({
         icon: "error",
         title: "Failed",
         text: err?.response?.data?.message ?? "Unable to initialize subscription.",
       });
-    } finally {
-      setChanging(false);
     }
   }
 
@@ -1238,19 +1255,24 @@ function SubscriptionTab({
 
     try {
       const res = await upgradeSubscription(planToApply.uuid);
-      const paymentUrl = res.data?.data?.razorpay_short_url || res.data?.razorpay_short_url;
+      const data = res.data?.data ?? res.data;
 
-      if (paymentUrl) {
-        const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+      const cashfreeSubId = data?.cashfree_subscription_id;
+      const razorpayUrl = data?.razorpay_short_url;
+
+      if (cashfreeSubId) {
+        // Upgrade: mandate auth only, no payment
+        const subsSessionId = data.subscription_session_id;
+        await launchCashfreeFlow(subsSessionId);
+      } else if (razorpayUrl) {
+        const paymentWindow = window.open(razorpayUrl, "_blank", "width=900,height=700");
         pollSubscriptionStatus(paymentWindow, planToApply.uuid);
       } else {
-        await getUserProfile();
         await onSubscriptionChanged?.();
-
         Swal.fire({
           icon: "success",
           title: "Plan Updated!",
-          text: `Your subscription upgraded`,
+          text: "Your subscription has been upgraded.",
           confirmButtonColor: "#b65a2f",
         });
       }
@@ -1389,8 +1411,11 @@ function SubscriptionTab({
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">{subscription.plan?.name}</p>
-            <p className="dash-sub-plan-price">Next billing on {formatDate(subscription?.next_billing_date)}</p>
-            {/* <p className="dash-sub-plan-price">
+{!subscription?.is_upgraded ? (
+  <p className="dash-sub-plan-price">
+    Next billing on {formatDate(subscription?.next_billing_date)}
+  </p>
+) : null}            {/* <p className="dash-sub-plan-price">
               ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
               {subscription.plan.billing_cycle === "monthly" ? "month" : "year"}
               {subscription.plan.gst_excluded && (
@@ -1465,13 +1490,51 @@ function SubscriptionTab({
           {trialEndedWithoutSubscription || isTrialActive ? "Choose a Plan" : "Change Plan"}
         </p>
         {subscription && (
+  <p className="mb-8">
+    {subscription.is_upgraded ? (
+      <>
+        Your subscription has already been upgraded to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        Plan, your current{" "}
+        <strong>{subscription.plan?.name}</strong> will remain active until{" "}
+        <strong>{formatDate(subscription.current_period_end ?? null)}</strong>.
+        Starting{" "}
+        <strong>{addOneDay(subscription.current_period_end ?? null)}</strong>,
+        your subscription will automatically switch to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        plan.
+      </>
+    ) : (
+      <>
+        If you want to switch to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        Plan, your current{" "}
+        <strong>{subscription.plan?.name}</strong> will remain active until{" "}
+        <strong>{formatDate(subscription.current_period_end ?? null)}</strong>.
+        Starting{" "}
+        <strong>{addOneDay(subscription.current_period_end ?? null)}</strong>,
+        your subscription will automatically switch to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        plan.
+      </>
+    )}
+  </p>
+)}
+        {/* {subscription && (
           <p className="mb-8">
             If you want to switch to the{" "}
             <strong>{subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"}</strong>{" "}
             Plan, your current{" "}
             <strong>
               {subscription.plan?.name} 
-              {/* {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan */}
             </strong>{" "}
             will remain active until{" "}
             <strong>{formatDate(subscription?.current_period_end ?? null)}</strong>. Starting{" "}
@@ -1481,7 +1544,7 @@ function SubscriptionTab({
               {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan
             </strong>
           </p>
-        )}
+        )} */}
         <div className="">
           <div className="dash-sub-plans-grid">
             {plans
@@ -1845,6 +1908,15 @@ function SubscriptionTab({
         </Link>{" "}
         for cancellation policy.
       </p> */}
+
+      <PaymentGatewayDialog
+        open={gatewayDialogOpen}
+        onClose={() => { setGatewayDialogOpen(false); setPendingPlanId(null); }}
+        onConfirm={handleGatewayConfirm}
+        loading={gatewayDialogLoading}
+      />
+
+
     </div>
   );
 }
@@ -2019,6 +2091,7 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
     </div>
   </DialogContent>
 </Dialog>
+
     </div>
   );
 }

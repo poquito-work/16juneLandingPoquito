@@ -286,13 +286,16 @@ export const resetPassword = async (
 
 export const initializeSubscription = async (
   user_uuid: string,
-  plan_uuid: string
+  plan_uuid: string,
+  type: "razorpay" | "cashfree" = "razorpay"
 ) => {
   const response = await api.post(
     `${API_BASE_URL}/api/v1/subscriptions/`,
     {
       user_uuid,
       plan_uuid,
+      type,
+      currency: "INR",
     }
   );
 
