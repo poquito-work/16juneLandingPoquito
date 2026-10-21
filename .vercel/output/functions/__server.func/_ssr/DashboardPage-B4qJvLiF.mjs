@@ -694,14 +694,6 @@ function TransactionsTab() {
 }
 function formatDate(iso) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString(void 0, {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-}
-function formatDateNew(iso) {
-  if (!iso) return "—";
   const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(iso) ? iso : iso + "Z";
   return new Date(normalized).toLocaleDateString("en-IN", {
     year: "numeric",
@@ -796,6 +788,7 @@ function SubscriptionTab({
       const userUuid2 = profileRes.data.uuid;
       const res = await initializeSubscription(userUuid2, selectedPlan2.uuid, gateway);
       setGatewayDialogOpen(false);
+      setPendingPlanId(null);
       setGatewayDialogLoading(false);
       if (gateway === "razorpay") {
         const paymentUrl = res.data.razorpay_short_url;
@@ -807,6 +800,8 @@ function SubscriptionTab({
         await launchCashfreeFlow(subsSessionId, paymentSessionId);
       }
     } catch (err) {
+      setGatewayDialogOpen(false);
+      setPendingPlanId(null);
       setGatewayDialogLoading(false);
       Swal.fire({
         icon: "error",
@@ -978,8 +973,17 @@ function SubscriptionTab({
   const isScheduledUpgradeCancelling = subscription?.status?.toLowerCase() === "cancelling" && (pendingChangeType === "upgrade" || pendingChangeType === "upgarde");
   function addOneDay(date) {
     if (!date) return "—";
-    const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 1);
+    const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(date) ? date : date + "Z";
+    const istParts = new Intl.DateTimeFormat("en-IN", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).formatToParts(new Date(normalized));
+    const day = Number(istParts.find((p) => p.type === "day")?.value);
+    const month = Number(istParts.find((p) => p.type === "month")?.value) - 1;
+    const year = Number(istParts.find((p) => p.type === "year")?.value);
+    const nextDate = new Date(year, month, day + 1);
     return nextDate.toLocaleDateString("en-IN", {
       year: "numeric",
       month: "long",
@@ -996,10 +1000,10 @@ function SubscriptionTab({
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "dash-sub-plan-name", children: subscription.plan?.name }),
       subscription?.cancel_at_cycle_end ? /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-sub-plan-price", children: [
         "Active Until ",
-        formatDateNew(subscription?.current_period_end)
+        formatDate(subscription?.current_period_end)
       ] }) : !subscription?.is_upgraded ? /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-sub-plan-price", children: [
         "Next billing on ",
-        formatDateNew(subscription?.next_billing_date)
+        formatDate(subscription?.next_billing_date)
       ] }) : null,
       "            "
     ] }) }),
@@ -1024,7 +1028,7 @@ function SubscriptionTab({
         /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: subscription.plan?.name }),
         " will remain active until",
         " ",
-        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: formatDateNew(subscription.current_period_end ?? null) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: formatDate(subscription.current_period_end ?? null) }),
         ". Starting",
         " ",
         /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: addOneDay(subscription.current_period_end ?? null) }),
