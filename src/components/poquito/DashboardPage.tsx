@@ -1002,7 +1002,7 @@ interface Plan {
 }
 function formatDate(iso: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("en-IN", {
+  return new Date(iso).toLocaleDateString(undefined, {
     year: "numeric",
     month: "long",
     day: "numeric",
