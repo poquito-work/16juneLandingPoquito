@@ -694,10 +694,20 @@ function TransactionsTab() {
 }
 function formatDate(iso) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("en-IN", {
+  return new Date(iso).toLocaleDateString(void 0, {
     year: "numeric",
     month: "long",
     day: "numeric"
+  });
+}
+function formatDateNew(iso) {
+  if (!iso) return "—";
+  const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(iso) ? iso : iso + "Z";
+  return new Date(normalized).toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Kolkata"
   });
 }
 function SubscriptionTab({
@@ -964,6 +974,8 @@ function SubscriptionTab({
   !!subscription && selectedPlanId === subscription.plan.id;
   plans.find((p) => p.id === selectedPlanId);
   subscription?.status === "active" || subscription?.status === "trialing";
+  const pendingChangeType = (subscription?.pending_change_type ?? subscription?.pending_type ?? subscription?.pending_change?.type ?? "").toLowerCase();
+  const isScheduledUpgradeCancelling = subscription?.status?.toLowerCase() === "cancelling" && (pendingChangeType === "upgrade" || pendingChangeType === "upgarde");
   function addOneDay(date) {
     if (!date) return "—";
     const nextDate = new Date(date);
@@ -982,9 +994,12 @@ function SubscriptionTab({
     !trialEndedWithoutSubscription && subscription && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "dash-sub-current", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dash-sub-current-left", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "dash-sub-plan-eyebrow", children: "Current Plan" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "dash-sub-plan-name", children: subscription.plan?.name }),
-      !subscription?.is_upgraded ? /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-sub-plan-price", children: [
+      subscription?.cancel_at_cycle_end ? /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-sub-plan-price", children: [
+        "Active Until ",
+        formatDateNew(subscription?.current_period_end)
+      ] }) : !subscription?.is_upgraded ? /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-sub-plan-price", children: [
         "Next billing on ",
-        formatDate(subscription?.next_billing_date)
+        formatDateNew(subscription?.next_billing_date)
       ] }) : null,
       "            "
     ] }) }),
@@ -1009,7 +1024,7 @@ function SubscriptionTab({
         /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: subscription.plan?.name }),
         " will remain active until",
         " ",
-        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: formatDate(subscription.current_period_end ?? null) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: formatDateNew(subscription.current_period_end ?? null) }),
         ". Starting",
         " ",
         /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: addOneDay(subscription.current_period_end ?? null) }),
@@ -1204,8 +1219,8 @@ function SubscriptionTab({
             plan.id
           );
         }) }),
-        subscription && (subscription.status === "active" || subscription.status === "trialing") && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-info-note", children: [
-          "To cancel your subscription, ",
+        subscription && (subscription.status === "active" || subscription.status === "trialing" || isScheduledUpgradeCancelling) && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "dash-info-note", children: [
+          isScheduledUpgradeCancelling ? /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "To cancel your schedule subscription, " }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "To cancel your subscription, " }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
