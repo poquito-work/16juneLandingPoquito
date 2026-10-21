@@ -1000,16 +1000,16 @@ interface Plan {
    price_per_unit_equiv:number;
   price_unit:string;
 }
-function formatDate(iso: string | null) {
-  if (!iso) return "—";
-  return new Date(iso).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
+// function formatDate(iso: string | null) {
+//   if (!iso) return "—";
+//   return new Date(iso).toLocaleDateString(undefined, {
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric",
+//   });
+// }
 
-function formatDateNew(iso: string | null) {
+function formatDate(iso: string | null) {
   if (!iso) return "—";
   // Append Z if no timezone info present so it's parsed as UTC
   const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(iso) ? iso : iso + "Z";
@@ -1169,7 +1169,9 @@ function SubscriptionTab({
 
       const res = await initializeSubscription(userUuid, selectedPlan.uuid, gateway);
 
+      // Close dialog before any redirect or popup to prevent re-open on error dismissal
       setGatewayDialogOpen(false);
+      setPendingPlanId(null);
       setGatewayDialogLoading(false);
 
       if (gateway === "razorpay") {
@@ -1183,6 +1185,9 @@ function SubscriptionTab({
         await launchCashfreeFlow(subsSessionId, paymentSessionId);
       }
     } catch (err: any) {
+      // Close dialog and clear pending state so dismissing the error doesn't re-trigger
+      setGatewayDialogOpen(false);
+      setPendingPlanId(null);
       setGatewayDialogLoading(false);
       Swal.fire({
         icon: "error",
@@ -1411,18 +1416,31 @@ function SubscriptionTab({
   const isScheduledUpgradeCancelling =
     subscription?.status?.toLowerCase() === "cancelling" &&
     (pendingChangeType === "upgrade" || pendingChangeType === "upgarde");
-  function addOneDay(date: string | null) {
+  
+    function addOneDay(date: string | null) {
     if (!date) return "—";
-
-    const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 1);
-
+    // Normalize to UTC, then get the IST date string, then add 1 day on top of that
+    const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(date) ? date : date + "Z";
+    // Get the IST date parts first
+    const istParts = new Intl.DateTimeFormat("en-IN", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(new Date(normalized));
+    const day = Number(istParts.find((p) => p.type === "day")?.value);
+    const month = Number(istParts.find((p) => p.type === "month")?.value) - 1;
+    const year = Number(istParts.find((p) => p.type === "year")?.value);
+    // Build a local date from IST parts and add 1 day
+    const nextDate = new Date(year, month, day + 1);
     return nextDate.toLocaleDateString("en-IN", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
   }
+
+  
   // const isDowngrade =
   //    isSubscriptionActive &&
   //   subscription?.plan?.billing_cycle === "annual" &&
@@ -1447,11 +1465,11 @@ function SubscriptionTab({
             <p className="dash-sub-plan-name">{subscription.plan?.name}</p>
             {subscription?.cancel_at_cycle_end ? (
               <p className="dash-sub-plan-price">
-                Active Until {formatDateNew(subscription?.current_period_end)}
+                Active Until {formatDate(subscription?.current_period_end)}
               </p>
             ) : !subscription?.is_upgraded ? (
               <p className="dash-sub-plan-price">
-                Next billing on {formatDateNew(subscription?.next_billing_date)}
+                Next billing on {formatDate(subscription?.next_billing_date)}
               </p>
             ) : null}            {/* <p className="dash-sub-plan-price">
               ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
@@ -1537,7 +1555,7 @@ function SubscriptionTab({
         </strong>{" "}
         Plan, your current{" "}
         <strong>{subscription.plan?.name}</strong> will remain active until{" "}
-        <strong>{formatDateNew(subscription.current_period_end ?? null)}</strong>.
+        <strong>{formatDate(subscription.current_period_end ?? null)}</strong>.
         Starting{" "}
         <strong>{addOneDay(subscription.current_period_end ?? null)}</strong>,
         your subscription will automatically switch to the{" "}
