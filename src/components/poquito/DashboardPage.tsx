@@ -1009,6 +1009,19 @@ function formatDate(iso: string | null) {
   });
 }
 
+function formatDateNew(iso: string | null) {
+  if (!iso) return "—";
+  // Append Z if no timezone info present so it's parsed as UTC
+  const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(iso) ? iso : iso + "Z";
+  return new Date(normalized).toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Kolkata",
+  });
+}
+
+
 const SUB_STATUS_MAP: Record<string, { label: string; cls: string }> = {
   active: { label: "Active", cls: "dash-chip-success" },
   trialing: { label: "Trial", cls: "dash-chip-pending" },
@@ -1434,11 +1447,11 @@ function SubscriptionTab({
             <p className="dash-sub-plan-name">{subscription.plan?.name}</p>
             {subscription?.cancel_at_cycle_end ? (
               <p className="dash-sub-plan-price">
-                Active Until {formatDate(subscription?.current_period_end)}
+                Active Until {formatDateNew(subscription?.current_period_end)}
               </p>
             ) : !subscription?.is_upgraded ? (
               <p className="dash-sub-plan-price">
-                Next billing on {formatDate(subscription?.next_billing_date)}
+                Next billing on {formatDateNew(subscription?.next_billing_date)}
               </p>
             ) : null}            {/* <p className="dash-sub-plan-price">
               ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
@@ -1524,7 +1537,7 @@ function SubscriptionTab({
         </strong>{" "}
         Plan, your current{" "}
         <strong>{subscription.plan?.name}</strong> will remain active until{" "}
-        <strong>{formatDate(subscription.current_period_end ?? null)}</strong>.
+        <strong>{formatDateNew(subscription.current_period_end ?? null)}</strong>.
         Starting{" "}
         <strong>{addOneDay(subscription.current_period_end ?? null)}</strong>,
         your subscription will automatically switch to the{" "}
