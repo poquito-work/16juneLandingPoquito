@@ -1,8 +1,7 @@
-import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-Cb3QVne4.mjs";
-import { h as handleCashfreeReturn } from "./Footer-AUmt5NgC.mjs";
-import "../_libs/sweetalert2.mjs";
+import { j as jsxRuntimeExports } from "../_libs/react.mjs";
+import { D as DashboardPage } from "./DashboardPage-CH6-P7HX.mjs";
 import "../_libs/cashfreepayments__cashfree-js.mjs";
+import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
@@ -64,6 +63,7 @@ import "./pocketdragon-tm-d0kS12XR.mjs";
 import "../_libs/framer-motion.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
+import "./Footer-AUmt5NgC.mjs";
 import "./dialog-DyVH2Cto.mjs";
 import "../_libs/radix-ui__react-dialog.mjs";
 import "../_libs/radix-ui__primitive.mjs";
@@ -106,17 +106,7 @@ import "../_libs/class-variance-authority.mjs";
 import "../_libs/radix-ui__react-scroll-area.mjs";
 import "../_libs/radix-ui__react-direction.mjs";
 import "../_libs/radix-ui__number.mjs";
-function ManageSubscription() {
-  reactExports.useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has("order_id") || localStorage.getItem("cf_pending_return")) {
-      const cleanUrl = window.location.pathname + window.location.hash;
-      window.history.replaceState({}, "", cleanUrl);
-      handleCashfreeReturn();
-    }
-  }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "subscription" });
-}
+const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "transactions" });
 export {
-  ManageSubscription as component
+  SplitComponent as component
 };

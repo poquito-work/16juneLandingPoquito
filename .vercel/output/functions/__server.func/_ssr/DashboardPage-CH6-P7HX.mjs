@@ -782,6 +782,7 @@ function SubscriptionTab({
     if (pendingPlanId === null) return;
     const selectedPlan2 = plans.find((p) => p.id === pendingPlanId);
     if (!selectedPlan2) return;
+    const razorpayWindow = gateway === "razorpay" ? window.open("", "_blank", "width=900,height=700") : null;
     setGatewayDialogLoading(true);
     try {
       const profileRes = await getUserProfile();
@@ -792,14 +793,20 @@ function SubscriptionTab({
       setGatewayDialogLoading(false);
       if (gateway === "razorpay") {
         const paymentUrl = res.data.razorpay_short_url;
-        const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
-        pollSubscriptionStatus(paymentWindow, selectedPlan2.uuid);
+        if (razorpayWindow) {
+          razorpayWindow.location.href = paymentUrl;
+        } else {
+          window.open(paymentUrl, "_blank", "width=900,height=700");
+        }
+        pollSubscriptionStatus(razorpayWindow, selectedPlan2.uuid);
       } else {
+        if (razorpayWindow) razorpayWindow.close();
         const subsSessionId = res.data.subscription_session_id;
         const paymentSessionId = isTrialActive ? null : res.data.payment_session_id;
         await launchCashfreeFlow(subsSessionId, paymentSessionId);
       }
     } catch (err) {
+      if (razorpayWindow) razorpayWindow.close();
       setGatewayDialogOpen(false);
       setPendingPlanId(null);
       setGatewayDialogLoading(false);

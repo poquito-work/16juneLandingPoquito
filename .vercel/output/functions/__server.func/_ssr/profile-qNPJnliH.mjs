@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-Cb3QVne4.mjs";
+import { D as DashboardPage } from "./DashboardPage-CH6-P7HX.mjs";
 import "../_libs/cashfreepayments__cashfree-js.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
@@ -106,7 +106,7 @@ import "../_libs/class-variance-authority.mjs";
 import "../_libs/radix-ui__react-scroll-area.mjs";
 import "../_libs/radix-ui__react-direction.mjs";
 import "../_libs/radix-ui__number.mjs";
-const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "transactions" });
+const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "profile" });
 export {
   SplitComponent as component
 };

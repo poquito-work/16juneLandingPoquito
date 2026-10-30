@@ -1,1 +1,0 @@
-import{j as o}from"./index-VNi1b00G.js";import{D as t}from"./DashboardPage-CiQoYZRB.js";import"./createLucideIcon-BHo4wkwd.js";import"./pocketdragon-tm-BuFocJvG.js";import"./Footer-CZwAHELq.js";import"./dialog-D6JfzHEA.js";import"./button-YA00fg-a.js";import"./mail-tCloKDGg.js";const c=()=>o.jsx(t,{activeTab:"transactions"});export{c as component};
