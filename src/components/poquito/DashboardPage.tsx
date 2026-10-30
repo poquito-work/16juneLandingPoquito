@@ -1162,6 +1162,12 @@ function SubscriptionTab({
     const selectedPlan = plans.find((p) => p.id === pendingPlanId);
     if (!selectedPlan) return;
 
+    // Safari blocks window.open() after any await — open a blank window immediately
+    // while still in the synchronous user-gesture context, then set its URL after the API call
+    const razorpayWindow = gateway === "razorpay"
+      ? window.open("", "_blank", "width=900,height=700")
+      : null;
+
     setGatewayDialogLoading(true);
     try {
       const profileRes = await getUserProfile();
@@ -1176,15 +1182,22 @@ function SubscriptionTab({
 
       if (gateway === "razorpay") {
         const paymentUrl = res.data.razorpay_short_url;
-        const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
-        pollSubscriptionStatus(paymentWindow, selectedPlan.uuid);
+        if (razorpayWindow) {
+          razorpayWindow.location.href = paymentUrl;
+        } else {
+          window.open(paymentUrl, "_blank", "width=900,height=700");
+        }
+        pollSubscriptionStatus(razorpayWindow, selectedPlan.uuid);
       } else {
+        if (razorpayWindow) razorpayWindow.close();
         const subsSessionId = res.data.subscription_session_id;
         // Pass payment_session_id only for non-trial users; trial users need mandate only
         const paymentSessionId = isTrialActive ? null : res.data.payment_session_id;
         await launchCashfreeFlow(subsSessionId, paymentSessionId);
       }
     } catch (err: any) {
+      // Close the pre-opened window if API call failed
+      if (razorpayWindow) razorpayWindow.close();
       // Close dialog and clear pending state so dismissing the error doesn't re-trigger
       setGatewayDialogOpen(false);
       setPendingPlanId(null);
