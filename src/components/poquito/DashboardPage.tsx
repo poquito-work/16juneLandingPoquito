@@ -1703,13 +1703,17 @@ function SubscriptionTab({
                           / {plan.billing_cycle === "monthly" ? "month" : "year"}
                         </span>
                       </p>
-
+                          {plan.billing_cycle === "annual" && (
+                        <p className="mt-2 text-xs text-cream/75">
+                          {plan.gst_excluded ? "Excl GST" : ""}
+                        </p>
+                      )}
                       {plan.billing_cycle === "annual" && (
                         // <p className="reg-plan-save">
                         //   Save {plan.discount_percent}% | Rs{" "}
                         //   {plan.price_per_month_equiv}/month
                         // </p>
-
+                        
                         <p className="mt-2 text-xs text-cream/75">
                           {plan?.price_per_unit_equiv ? (
   <p className="mt-2 text-xs text-cream/75">
@@ -1728,11 +1732,7 @@ function SubscriptionTab({
                          
                    
 
-                      {plan.billing_cycle === "annual" && (
-                        <p className="mt-2 text-xs text-cream/75">
-                          {plan.gst_excluded ? "Excl GST" : ""}
-                        </p>
-                      )}
+                      
 
                       {plan.billing_cycle === "monthly" && (
                         <p className="mt-2 text-xs text-foreground/65">
