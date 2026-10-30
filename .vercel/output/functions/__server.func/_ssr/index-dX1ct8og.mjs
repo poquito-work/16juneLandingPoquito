@@ -470,16 +470,16 @@ function Subscriptions() {
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 text-sm text-cream/75", children: "/ year" })
           ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-2 text-xs text-cream/75", children: [
+            " ",
+            annualPlan?.gst_excluded ? "Excl GST" : ""
+          ] }),
           annualPlan?.price_per_unit_equiv ? /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-2 text-xs text-cream/75", children: [
             annualPlan?.discount_percent ? `Save ${annualPlan.discount_percent}% | ` : "",
             "Rs ",
             annualPlan.price_per_unit_equiv,
             annualPlan.price_unit ? `/${annualPlan.price_unit.toLowerCase()}` : ""
           ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xs text-cream/75", children: "Billed yearly. Cancel anytime." }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-2 text-xs text-cream/75", children: [
-            " ",
-            annualPlan?.gst_excluded ? "Excl GST" : ""
-          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "my-6 h-px w-full bg-cream/15" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
