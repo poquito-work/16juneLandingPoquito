@@ -67,9 +67,9 @@ export function PaymentGatewayDialog({
             onClick={() => setSelected("razorpay")}
           >
             <div>
-              <div style={{ fontWeight: 600, fontSize: 14, color: "#F9F2E4" }}>Razorpay</div>
-              <div style={{ fontSize: 11, color: "rgba(249,242,228,0.55)", marginTop: 2 }}>
-                Cards, Net Banking, Wallets &amp; UPI
+              {/* <div style={{ fontWeight: 600, fontSize: 14, color: "#F9F2E4" }}>Razorpay</div> */}
+              <div style={{ fontWeight: 600, fontSize: 14, color: "#F9F2E4" }}>
+                Cards & Net Banking
               </div>
             </div>
           </label>
@@ -94,9 +94,9 @@ export function PaymentGatewayDialog({
             onClick={() => setSelected("cashfree")}
           >
             <div>
-              <div style={{ fontWeight: 600, fontSize: 14, color: "#F9F2E4" }}>Cashfree</div>
-              <div style={{ fontSize: 11, color: "rgba(249,242,228,0.55)", marginTop: 2 }}>
-                UPI (recommended for UPI payments)
+              {/* <div style={{ fontWeight: 600, fontSize: 14, color: "#F9F2E4" }}>Cashfree</div> */}
+              <div style={{ fontWeight: 600, fontSize: 14, color: "#F9F2E4" }}>
+                UPI Payments
               </div>
             </div>
           </label>
