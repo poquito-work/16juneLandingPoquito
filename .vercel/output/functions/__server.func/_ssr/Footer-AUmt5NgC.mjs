@@ -44,10 +44,7 @@ function PaymentGatewayDialog({
                 transition: "all 0.18s ease"
               },
               onClick: () => setSelected("razorpay"),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontWeight: 600, fontSize: 14, color: "#F9F2E4" }, children: "Razorpay" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 11, color: "rgba(249,242,228,0.55)", marginTop: 2 }, children: "Cards, Net Banking, Wallets & UPI" })
-              ] })
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontWeight: 600, fontSize: 14, color: "#F9F2E4" }, children: "Cards & Net Banking" }) })
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -65,10 +62,7 @@ function PaymentGatewayDialog({
                 transition: "all 0.18s ease"
               },
               onClick: () => setSelected("cashfree"),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontWeight: 600, fontSize: 14, color: "#F9F2E4" }, children: "Cashfree" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: 11, color: "rgba(249,242,228,0.55)", marginTop: 2 }, children: "UPI (recommended for UPI payments)" })
-              ] })
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontWeight: 600, fontSize: 14, color: "#F9F2E4" }, children: "UPI Payments" }) })
             }
           )
         ] }),

@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { D as DashboardPage } from "./DashboardPage-B4qJvLiF.mjs";
+import { D as DashboardPage } from "./DashboardPage-BSHGp7ZF.mjs";
 import "../_libs/cashfreepayments__cashfree-js.mjs";
 import "../_libs/sweetalert2.mjs";
 import "../_libs/tanstack__react-router.mjs";
@@ -11,9 +11,9 @@ import "../_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "../_libs/react-dom.mjs";
-import "util";
 import "crypto";
 import "async_hooks";
+import "util";
 import "stream";
 import "../_libs/isbot.mjs";
 import "./Logo-Kha4aoDc.mjs";
@@ -63,7 +63,7 @@ import "./pocketdragon-tm-d0kS12XR.mjs";
 import "../_libs/framer-motion.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
-import "./Footer-CKGVKOBC.mjs";
+import "./Footer-AUmt5NgC.mjs";
 import "./dialog-DyVH2Cto.mjs";
 import "../_libs/radix-ui__react-dialog.mjs";
 import "../_libs/radix-ui__primitive.mjs";
@@ -106,7 +106,7 @@ import "../_libs/class-variance-authority.mjs";
 import "../_libs/radix-ui__react-scroll-area.mjs";
 import "../_libs/radix-ui__react-direction.mjs";
 import "../_libs/radix-ui__number.mjs";
-const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "transactions" });
+const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardPage, { activeTab: "profile" });
 export {
   SplitComponent as component
 };
