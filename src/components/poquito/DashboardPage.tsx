@@ -1202,10 +1202,15 @@ function SubscriptionTab({
       setGatewayDialogOpen(false);
       setPendingPlanId(null);
       setGatewayDialogLoading(false);
+      const rawMsg: string = err?.response?.data?.message ?? "Unable to initialize subscription.";
+      // Strip any markdown bold markers (**word**) and re-apply as HTML <strong>
+      const htmlMsg = rawMsg
+        .replace(/\*\*again\*\*/g, '<strong style="color:#000;font-weight:700">again</strong>')
+        .replace(/\bagain\b/g, '<strong style="color:#000;font-weight:700">again</strong>');
       Swal.fire({
         icon: "error",
         title: "Failed",
-        text: err?.response?.data?.message ?? "Unable to initialize subscription.",
+        html: htmlMsg,
       });
     }
   }
