@@ -143,7 +143,7 @@ export async function launchCashfreeFlow(subsSessionId: string, paymentSessionId
     localStorage.removeItem("cf_payment_session_id");
   }
 
-  const cashfree = await load({ mode: "production" });
+  const cashfree = await load({ mode: "sandbox" });
 
   cashfree.subscriptionsCheckout({
     subsSessionId,
@@ -163,7 +163,7 @@ export async function handleCashfreeReturn(): Promise<void> {
 
   if (!paymentSessionId) return;
 
-  const cashfree = await load({ mode: "production" });
+  const cashfree = await load({ mode: "sandbox" });
   cashfree.checkout({
     paymentSessionId,
     redirectTarget: "_self",
