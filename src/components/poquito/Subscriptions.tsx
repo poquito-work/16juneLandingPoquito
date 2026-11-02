@@ -232,6 +232,8 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
 </span>
               <span className="ml-1 text-sm text-cream/75">/ year</span>
             </div>
+                        <p className="mt-2 text-xs text-cream/75"> {annualPlan?.gst_excluded ? "Excl GST" : ""}</p>
+
             {annualPlan?.price_per_unit_equiv ? (
   <p className="mt-2 text-xs text-cream/75">
     {annualPlan?.discount_percent
@@ -251,7 +253,6 @@ const annualPlan = plans.find((p) => p.billing_cycle === "annual");
             {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}% | Rs 375/month </p> */}
                         {/* <p className="mt-2 text-xs text-cream/75">Save Rs {annualPlan.discount_percent}%  {annualPlan.price_per_month_equiv ? ` | Rs ${annualPlan.price_per_month_equiv}/month` : ""} */}
 
-            <p className="mt-2 text-xs text-cream/75"> {annualPlan?.gst_excluded ? "Excl GST" : ""}</p>
 
             <div className="my-6 h-px w-full bg-cream/15" />
 

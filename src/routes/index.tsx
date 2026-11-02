@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
+import { handleCashfreeReturn } from "@/components/poquito/PaymentGatewayDialog";
 import { Header } from "@/components/poquito/Header";
 import { Hero } from "@/components/poquito/Hero";
 import { Subscriptions } from "@/components/poquito/Subscriptions";
@@ -35,6 +36,16 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [isLoaderFinished, setIsLoaderFinished] = useState(false);
+
+  // Cashfree mandate redirect — Cashfree returns to /?order_id=... after mandate auth
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("order_id") || localStorage.getItem("cf_pending_return")) {
+      const cleanUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, "", cleanUrl);
+      handleCashfreeReturn();
+    }
+  }, []);
 
   useEffect(() => {
     if (!isLoaderFinished) return;

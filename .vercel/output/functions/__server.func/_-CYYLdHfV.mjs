@@ -8,9 +8,9 @@ import "./_libs/seroval-plugins.mjs";
 import "node:stream/web";
 import "node:stream";
 import "./_libs/react-dom.mjs";
+import "util";
 import "crypto";
 import "async_hooks";
-import "util";
 import "stream";
 import "./_libs/isbot.mjs";
 const SplitComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex min-h-screen items-center justify-center bg-background px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-md text-center", children: [

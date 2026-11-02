@@ -1,19 +1,19 @@
-// Post-build script: patches Nitro's generated .vc-config.json to use nodejs22.x
-// Nitro hardcodes nodejs20.x which conflicts with this project's node>=22.12.0 requirement,
-// causing tslib ERR_MODULE_NOT_FOUND at runtime on Vercel.
+// Post-build script: patches Nitro's generated config files to use nodejs22.x
+// Nitro hardcodes nodejs20.x which is discontinued on Vercel.
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
 
 const CWD = process.cwd();
+const TARGET = "nodejs22.x";
 console.log("[patch-vercel-runtime] Working directory:", CWD);
 
-// Find all .vc-config.json files under .vercel/output
-function findConfigs(dir, results = []) {
+// Patch .vc-config.json files (top-level runtime field)
+function findVcConfigs(dir, results = []) {
   if (!existsSync(dir)) return results;
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
     if (entry.isDirectory()) {
-      findConfigs(full, results);
+      findVcConfigs(full, results);
     } else if (entry.name === ".vc-config.json") {
       results.push(full);
     }
@@ -22,20 +22,33 @@ function findConfigs(dir, results = []) {
 }
 
 const outputDir = resolve(CWD, ".vercel/output");
-const configs = findConfigs(outputDir);
 
-if (configs.length === 0) {
-  console.log("[patch-vercel-runtime] No .vc-config.json files found under", outputDir);
-  process.exit(0);
+const vcConfigs = findVcConfigs(outputDir);
+for (const configPath of vcConfigs) {
+  const config = JSON.parse(readFileSync(configPath, "utf-8"));
+  if (config.runtime && config.runtime !== TARGET) {
+    config.runtime = TARGET;
+    writeFileSync(configPath, JSON.stringify(config, null, 2));
+    console.log("[patch-vercel-runtime] Patched .vc-config.json:", configPath);
+  } else {
+    console.log("[patch-vercel-runtime] OK .vc-config.json:", configPath);
+  }
 }
 
-for (const configPath of configs) {
-  const config = JSON.parse(readFileSync(configPath, "utf-8"));
-  if (config.runtime && config.runtime !== "nodejs22.x") {
-    config.runtime = "nodejs22.x";
-    writeFileSync(configPath, JSON.stringify(config, null, 2));
-    console.log("[patch-vercel-runtime] Patched:", configPath);
+// Patch nitro.json nested runtime (config.vercel.functions.runtime)
+const nitroJsonPath = resolve(CWD, ".vercel/output/nitro.json");
+if (existsSync(nitroJsonPath)) {
+  const nitro = JSON.parse(readFileSync(nitroJsonPath, "utf-8"));
+  const nested = nitro?.config?.vercel?.functions?.runtime;
+  if (nested && nested !== TARGET) {
+    nitro.config.vercel.functions.runtime = TARGET;
+    writeFileSync(nitroJsonPath, JSON.stringify(nitro, null, 2));
+    console.log("[patch-vercel-runtime] Patched nitro.json runtime");
   } else {
-    console.log("[patch-vercel-runtime] Already nodejs22.x or no runtime field:", configPath);
+    console.log("[patch-vercel-runtime] OK nitro.json runtime:", nested ?? "not set");
   }
+}
+
+if (vcConfigs.length === 0 && !existsSync(nitroJsonPath)) {
+  console.log("[patch-vercel-runtime] No config files found — skipping");
 }

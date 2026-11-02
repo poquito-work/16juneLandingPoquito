@@ -14,6 +14,7 @@ import {
 } from "@/services/auth";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { PaymentGatewayDialog, launchCashfreeFlow } from "./PaymentGatewayDialog";
 import Swal from "sweetalert2";
 import { Mail, Smartphone, MapPin, User, Lock, Trash2} from "lucide-react";
 import {
@@ -113,7 +114,17 @@ interface UserSubscription {
   cancel_deferred_to_next_cycle: boolean;
   plan: SubscriptionPlan;
   next_billing_date:string | null;
-   is_upgraded?: boolean;
+  is_upgraded?: boolean;
+  cancel_at_cycle_end?: boolean;
+  pending_plan_uuid?: string | null;
+  pending_change_type?: string | null;
+  pending_type?: string | null;
+  pending_change?: {
+    type?: string;
+    target_plan_uuid?: string;
+    effective_date?: string | null;
+    status?: string;
+  } | null;
 }
 // ─── Mock/fallback data helpers ───────────────────────────────────────────────
 
@@ -989,14 +1000,27 @@ interface Plan {
    price_per_unit_equiv:number;
   price_unit:string;
 }
+// function formatDate(iso: string | null) {
+//   if (!iso) return "—";
+//   return new Date(iso).toLocaleDateString(undefined, {
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric",
+//   });
+// }
+
 function formatDate(iso: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("en-IN", {
+  // Append Z if no timezone info present so it's parsed as UTC
+  const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(iso) ? iso : iso + "Z";
+  return new Date(normalized).toLocaleDateString("en-IN", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "Asia/Kolkata",
   });
 }
+
 
 const SUB_STATUS_MAP: Record<string, { label: string; cls: string }> = {
   active: { label: "Active", cls: "dash-chip-success" },
@@ -1034,6 +1058,12 @@ function SubscriptionTab({
   const [plans, setPlans] = useState<Plan[]>([]);
   const [monthlyDialog, setMonthlyDialog] = useState(false);
   const [annualDialog, setAnnualDialog] = useState(false);
+
+  // Payment gateway selection dialog
+  const [gatewayDialogOpen, setGatewayDialogOpen] = useState(false);
+  const [gatewayDialogLoading, setGatewayDialogLoading] = useState(false);
+  const [pendingPlanId, setPendingPlanId] = useState<number | null>(null);
+
 
   function CancellationDialog({
     open,
@@ -1122,33 +1152,61 @@ function SubscriptionTab({
   const showSubscribeButton =
     !subscription || ["stopped", "expired", "cancelling"].includes(subscription.status);
 
-  async function handleSubscribe(planId: number) {
-    const selectedPlan = plans.find((p) => p.id === planId);
+  function handleSubscribe(planId: number) {
+    setPendingPlanId(planId);
+    setGatewayDialogOpen(true);
+  }
+
+  async function handleGatewayConfirm(gateway: "razorpay" | "cashfree") {
+    if (pendingPlanId === null) return;
+    const selectedPlan = plans.find((p) => p.id === pendingPlanId);
     if (!selectedPlan) return;
 
-    setChanging(true);
-    const profileRes = await getUserProfile();
+    // Safari blocks window.open() after any await — open a blank window immediately
+    // while still in the synchronous user-gesture context, then set its URL after the API call
+    const razorpayWindow = gateway === "razorpay"
+      ? window.open("", "_blank", "width=900,height=700")
+      : null;
 
-    const userUuid = profileRes.data.uuid;
+    setGatewayDialogLoading(true);
     try {
-      const res = await initializeSubscription(
-        userUuid, // current logged in user uuid
-        selectedPlan.uuid,
-      );
+      const profileRes = await getUserProfile();
+      const userUuid = profileRes.data.uuid;
 
-      const paymentUrl = res.data.razorpay_short_url;
+      const res = await initializeSubscription(userUuid, selectedPlan.uuid, gateway);
 
-      const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+      // Close dialog before any redirect or popup to prevent re-open on error dismissal
+      setGatewayDialogOpen(false);
+      setPendingPlanId(null);
+      setGatewayDialogLoading(false);
 
-      pollSubscriptionStatus(paymentWindow, selectedPlan.uuid);
+      if (gateway === "razorpay") {
+        const paymentUrl = res.data.razorpay_short_url;
+        if (razorpayWindow) {
+          razorpayWindow.location.href = paymentUrl;
+        } else {
+          window.open(paymentUrl, "_blank", "width=900,height=700");
+        }
+        pollSubscriptionStatus(razorpayWindow, selectedPlan.uuid);
+      } else {
+        if (razorpayWindow) razorpayWindow.close();
+        const subsSessionId = res.data.subscription_session_id;
+        // Pass payment_session_id only for non-trial users; trial users need mandate only
+        const paymentSessionId = isTrialActive ? null : res.data.payment_session_id;
+        await launchCashfreeFlow(subsSessionId, paymentSessionId);
+      }
     } catch (err: any) {
+      // Close the pre-opened window if API call failed
+      if (razorpayWindow) razorpayWindow.close();
+      // Close dialog and clear pending state so dismissing the error doesn't re-trigger
+      setGatewayDialogOpen(false);
+      setPendingPlanId(null);
+      setGatewayDialogLoading(false);
       Swal.fire({
         icon: "error",
         title: "Failed",
         text: err?.response?.data?.message ?? "Unable to initialize subscription.",
       });
-    } finally {
-      setChanging(false);
     }
   }
 
@@ -1238,19 +1296,24 @@ function SubscriptionTab({
 
     try {
       const res = await upgradeSubscription(planToApply.uuid);
-      const paymentUrl = res.data?.data?.razorpay_short_url || res.data?.razorpay_short_url;
+      const data = res.data?.data ?? res.data;
 
-      if (paymentUrl) {
-        const paymentWindow = window.open(paymentUrl, "_blank", "width=900,height=700");
+      const cashfreeSubId = data?.cashfree_subscription_id;
+      const razorpayUrl = data?.razorpay_short_url;
+
+      if (cashfreeSubId) {
+        // Upgrade: mandate auth only, no payment
+        const subsSessionId = data.subscription_session_id;
+        await launchCashfreeFlow(subsSessionId);
+      } else if (razorpayUrl) {
+        const paymentWindow = window.open(razorpayUrl, "_blank", "width=900,height=700");
         pollSubscriptionStatus(paymentWindow, planToApply.uuid);
       } else {
-        await getUserProfile();
         await onSubscriptionChanged?.();
-
         Swal.fire({
           icon: "success",
           title: "Plan Updated!",
-          text: `Your subscription upgraded`,
+          text: "Your subscription has been upgraded.",
           confirmButtonColor: "#b65a2f",
         });
       }
@@ -1355,18 +1418,42 @@ function SubscriptionTab({
 
   const isSubscriptionActive =
     subscription?.status === "active" || subscription?.status === "trialing";
-  function addOneDay(date: string | null) {
+
+  const pendingChangeType = (
+    subscription?.pending_change_type ??
+    subscription?.pending_type ??
+    subscription?.pending_change?.type ??
+    ""
+  ).toLowerCase();
+
+  const isScheduledUpgradeCancelling =
+    subscription?.status?.toLowerCase() === "cancelling" &&
+    (pendingChangeType === "upgrade" || pendingChangeType === "upgarde");
+  
+    function addOneDay(date: string | null) {
     if (!date) return "—";
-
-    const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 1);
-
+    // Normalize to UTC, then get the IST date string, then add 1 day on top of that
+    const normalized = /[Zz]|[+-]\d{2}:\d{2}$/.test(date) ? date : date + "Z";
+    // Get the IST date parts first
+    const istParts = new Intl.DateTimeFormat("en-IN", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(new Date(normalized));
+    const day = Number(istParts.find((p) => p.type === "day")?.value);
+    const month = Number(istParts.find((p) => p.type === "month")?.value) - 1;
+    const year = Number(istParts.find((p) => p.type === "year")?.value);
+    // Build a local date from IST parts and add 1 day
+    const nextDate = new Date(year, month, day + 1);
     return nextDate.toLocaleDateString("en-IN", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
   }
+
+  
   // const isDowngrade =
   //    isSubscriptionActive &&
   //   subscription?.plan?.billing_cycle === "annual" &&
@@ -1389,8 +1476,15 @@ function SubscriptionTab({
           <div className="dash-sub-current-left">
             <span className="dash-sub-plan-eyebrow">Current Plan</span>
             <p className="dash-sub-plan-name">{subscription.plan?.name}</p>
-            <p className="dash-sub-plan-price">Next billing on {formatDate(subscription?.next_billing_date)}</p>
-            {/* <p className="dash-sub-plan-price">
+            {subscription?.cancel_at_cycle_end ? (
+              <p className="dash-sub-plan-price">
+                Active Until {formatDate(subscription?.current_period_end)}
+              </p>
+            ) : !subscription?.is_upgraded ? (
+              <p className="dash-sub-plan-price">
+                Next billing on {formatDate(subscription?.next_billing_date)}
+              </p>
+            ) : null}            {/* <p className="dash-sub-plan-price">
               ₹{subscription.total_amount.toLocaleString("en-IN")} /{" "}
               {subscription.plan.billing_cycle === "monthly" ? "month" : "year"}
               {subscription.plan.gst_excluded && (
@@ -1465,13 +1559,51 @@ function SubscriptionTab({
           {trialEndedWithoutSubscription || isTrialActive ? "Choose a Plan" : "Change Plan"}
         </p>
         {subscription && (
+  <p className="mb-8">
+    {subscription.is_upgraded ? (
+      <>
+        Your subscription has already been upgraded to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        Plan, your current{" "}
+        <strong>{subscription.plan?.name}</strong> will remain active until{" "}
+        <strong>{formatDate(subscription.current_period_end ?? null)}</strong>.
+        Starting{" "}
+        <strong>{addOneDay(subscription.current_period_end ?? null)}</strong>,
+        your subscription will automatically switch to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        plan.
+      </>
+    ) : (
+      <>
+        If you want to switch to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        Plan, your current{" "}
+        <strong>{subscription.plan?.name}</strong> will remain active until{" "}
+        <strong>{formatDate(subscription.current_period_end ?? null)}</strong>.
+        Starting{" "}
+        <strong>{addOneDay(subscription.current_period_end ?? null)}</strong>,
+        your subscription will automatically switch to the{" "}
+        <strong>
+          {subscription.plan?.billing_cycle === "monthly" ? "Annual" : "Monthly"}
+        </strong>{" "}
+        plan.
+      </>
+    )}
+  </p>
+)}
+        {/* {subscription && (
           <p className="mb-8">
             If you want to switch to the{" "}
             <strong>{subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"}</strong>{" "}
             Plan, your current{" "}
             <strong>
               {subscription.plan?.name} 
-              {/* {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan */}
             </strong>{" "}
             will remain active until{" "}
             <strong>{formatDate(subscription?.current_period_end ?? null)}</strong>. Starting{" "}
@@ -1481,7 +1613,7 @@ function SubscriptionTab({
               {subscription?.plan.billing_cycle === "monthly" ? "Annual" : "Monthly"} plan
             </strong>
           </p>
-        )}
+        )} */}
         <div className="">
           <div className="dash-sub-plans-grid">
             {plans
@@ -1584,13 +1716,17 @@ function SubscriptionTab({
                           / {plan.billing_cycle === "monthly" ? "month" : "year"}
                         </span>
                       </p>
-
+                          {plan.billing_cycle === "annual" && (
+                        <p className="mt-2 text-xs text-cream/75">
+                          {plan.gst_excluded ? "Excl GST" : ""}
+                        </p>
+                      )}
                       {plan.billing_cycle === "annual" && (
                         // <p className="reg-plan-save">
                         //   Save {plan.discount_percent}% | Rs{" "}
                         //   {plan.price_per_month_equiv}/month
                         // </p>
-
+                        
                         <p className="mt-2 text-xs text-cream/75">
                           {plan?.price_per_unit_equiv ? (
   <p className="mt-2 text-xs text-cream/75">
@@ -1609,11 +1745,7 @@ function SubscriptionTab({
                          
                    
 
-                      {plan.billing_cycle === "annual" && (
-                        <p className="mt-2 text-xs text-cream/75">
-                          {plan.gst_excluded ? "Excl GST" : ""}
-                        </p>
-                      )}
+                      
 
                       {plan.billing_cycle === "monthly" && (
                         <p className="mt-2 text-xs text-foreground/65">
@@ -1744,9 +1876,15 @@ function SubscriptionTab({
           </div>
 
           {subscription &&
-            (subscription.status === "active" || subscription.status === "trialing") && (
+            (subscription.status === "active" ||
+              subscription.status === "trialing" ||
+              isScheduledUpgradeCancelling) && (
               <p className="dash-info-note">
-                To cancel your subscription,&nbsp;
+                {isScheduledUpgradeCancelling ? (
+                  <>To cancel your schedule subscription,&nbsp;</>
+                ) : (
+                  <>To cancel your subscription,&nbsp;</>
+                )}
                 <button
                   type="button"
                   onClick={handleCancelPlan}
@@ -1845,6 +1983,15 @@ function SubscriptionTab({
         </Link>{" "}
         for cancellation policy.
       </p> */}
+
+      <PaymentGatewayDialog
+        open={gatewayDialogOpen}
+        onClose={() => { setGatewayDialogOpen(false); setPendingPlanId(null); }}
+        onConfirm={handleGatewayConfirm}
+        loading={gatewayDialogLoading}
+      />
+
+
     </div>
   );
 }
@@ -2019,6 +2166,7 @@ export function DashboardPage({ activeTab: initialTab }: { activeTab: Tab }) {
     </div>
   </DialogContent>
 </Dialog>
+
     </div>
   );
 }

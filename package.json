@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && node scripts/patch-vercel-runtime.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
@@ -16,6 +16,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@cashfreepayments/cashfree-js": "^1.0.7",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
