@@ -999,6 +999,7 @@ interface Plan {
   trial_days: number;
    price_per_unit_equiv:number;
   price_unit:string;
+  tag:string;
 }
 // function formatDate(iso: string | null) {
 //   if (!iso) return "—";
@@ -1273,11 +1274,11 @@ function SubscriptionTab({
       <div style="text-align:center; line-height:1.6">
         <p>
           
-          ${
-            planToApply.billing_cycle === "annual"
-              ? "<br><span style='color:#666'>Save 16% | Rs 416/month</span>"
-              : ""
-          }
+         ${
+  planToApply.billing_cycle === "annual"
+    ? `<br><span style="color:#666">${planToApply.tag}</span>`
+    : ""
+}
         </p>
 
        
