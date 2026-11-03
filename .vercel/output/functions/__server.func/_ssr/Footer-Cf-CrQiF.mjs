@@ -93,6 +93,7 @@ function PaymentGatewayDialog({
     }
   ) });
 }
+const cashfreeMode = "sandbox";
 async function launchCashfreeFlow(subsSessionId, paymentSessionId) {
   localStorage.setItem("cf_pending_return", "1");
   if (paymentSessionId) {
@@ -100,7 +101,7 @@ async function launchCashfreeFlow(subsSessionId, paymentSessionId) {
   } else {
     localStorage.removeItem("cf_payment_session_id");
   }
-  const cashfree = await load({ mode: "sandbox" });
+  const cashfree = await load({ mode: cashfreeMode });
   cashfree.subscriptionsCheckout({
     subsSessionId,
     redirectTarget: "_self"
@@ -111,7 +112,7 @@ async function handleCashfreeReturn() {
   const paymentSessionId = localStorage.getItem("cf_payment_session_id");
   localStorage.removeItem("cf_payment_session_id");
   if (!paymentSessionId) return;
-  const cashfree = await load({ mode: "sandbox" });
+  const cashfree = await load({ mode: cashfreeMode });
   cashfree.checkout({
     paymentSessionId,
     redirectTarget: "_self"

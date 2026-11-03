@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate } from "../_libs/tanstack__react-router.mjs";
 import { i as getUserProfile, d as getPredefinedListByType, j as getTransactionList, h as getPackageList, k as deleteAccount, u as updateUserProfile, m as upgradeSubscription, n as cancelSubscription, o as initializeSubscription } from "./Logo-Kha4aoDc.mjs";
-import { H as Header, F as Footer, P as PaymentGatewayDialog, c as launchCashfreeFlow } from "./Footer-AUmt5NgC.mjs";
+import { H as Header, F as Footer, P as PaymentGatewayDialog, c as launchCashfreeFlow } from "./Footer-Cf-CrQiF.mjs";
 import { S as Swal } from "../_libs/sweetalert2.mjs";
 import { D as Dialog, a as DialogContent, c as cn, b as DialogHeader, d as DialogTitle, e as DialogDescription } from "./dialog-DyVH2Cto.mjs";
 import { P as Popover, a as PopoverTrigger, B as Button, b as PopoverContent, C as Command, c as CommandInput, d as CommandEmpty, e as CommandGroup, f as CommandItem } from "./button-BkXM3wY8.mjs";
@@ -813,9 +813,18 @@ function SubscriptionTab({
       const rawMsg = err?.response?.data?.message ?? "Unable to initialize subscription.";
       const htmlMsg = rawMsg.replace(/\*\*again\*\*/g, '<strong style="color:#000;font-weight:700">again</strong>').replace(/\bagain\b/g, '<strong style="color:#000;font-weight:700">again</strong>');
       Swal.fire({
-        icon: "error",
-        title: "Failed",
-        html: htmlMsg
+        title: "",
+        html: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <span>${htmlMsg}</span>
+        </div>`,
+        confirmButtonColor: "#0b2316",
+        showCloseButton: true,
+        customClass: {
+          closeButton: "swal2-close-sm"
+        }
       });
     }
   }
@@ -856,7 +865,7 @@ function SubscriptionTab({
       <div style="text-align:center; line-height:1.6">
         <p>
           
-          ${planToApply.billing_cycle === "annual" ? "<br><span style='color:#666'>Save 25% | Rs 375/month</span>" : ""}
+          ${planToApply.billing_cycle === "annual" ? "<br><span style='color:#666'>Save 16% | Rs 416/month</span>" : ""}
         </p>
 
        
