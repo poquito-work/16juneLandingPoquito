@@ -128,6 +128,12 @@ export function PaymentGatewayDialog({
   );
 }
 
+// "production" when VITE_API_TARGET points to live API, "sandbox" for dev/staging
+const cashfreeMode: "production" | "sandbox" =
+  import.meta.env.VITE_API_TARGET === "https://api.pocketdragon.in"
+    ? "production"
+    : "sandbox";
+
 /**
  * Cashfree flow:
  * 1. subscriptionsCheckout — mandate auth (redirects away)
@@ -143,7 +149,7 @@ export async function launchCashfreeFlow(subsSessionId: string, paymentSessionId
     localStorage.removeItem("cf_payment_session_id");
   }
 
-  const cashfree = await load({ mode: "production" });
+  const cashfree = await load({ mode: cashfreeMode });
 
   cashfree.subscriptionsCheckout({
     subsSessionId,
@@ -163,7 +169,7 @@ export async function handleCashfreeReturn(): Promise<void> {
 
   if (!paymentSessionId) return;
 
-  const cashfree = await load({ mode: "production" });
+  const cashfree = await load({ mode: cashfreeMode });
   cashfree.checkout({
     paymentSessionId,
     redirectTarget: "_self",

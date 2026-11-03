@@ -3665,3 +3665,11 @@ div:where(.swal2-container).swal2-center>.swal2-popup{
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
   }
 }
+
+/* Swal2 error dialog — small close button */
+.swal2-close-sm.swal2-close {
+  font-size: 1rem !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  line-height: 1.5rem !important;
+}
