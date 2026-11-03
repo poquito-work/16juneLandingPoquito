@@ -865,7 +865,7 @@ function SubscriptionTab({
       <div style="text-align:center; line-height:1.6">
         <p>
           
-          ${planToApply.billing_cycle === "annual" ? "<br><span style='color:#666'>Save 16% | Rs 416/month</span>" : ""}
+         ${planToApply.billing_cycle === "annual" ? `<br><span style="color:#666">${planToApply.tag}</span>` : ""}
         </p>
 
        
