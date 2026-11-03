@@ -1208,9 +1208,18 @@ function SubscriptionTab({
         .replace(/\*\*again\*\*/g, '<strong style="color:#000;font-weight:700">again</strong>')
         .replace(/\bagain\b/g, '<strong style="color:#000;font-weight:700">again</strong>');
       Swal.fire({
-        icon: "error",
-        title: "Failed",
-        html: htmlMsg,
+        title: "",
+        html: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <span>${htmlMsg}</span>
+        </div>`,
+        confirmButtonColor: "#0b2316",
+        showCloseButton: true,
+        customClass: {
+          closeButton: "swal2-close-sm",
+        },
       });
     }
   }
@@ -1266,7 +1275,7 @@ function SubscriptionTab({
           
           ${
             planToApply.billing_cycle === "annual"
-              ? "<br><span style='color:#666'>Save 25% | Rs 375/month</span>"
+              ? "<br><span style='color:#666'>Save 16% | Rs 416/month</span>"
               : ""
           }
         </p>
