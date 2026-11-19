@@ -4,9 +4,9 @@ import { c as createRouter, a as createRootRouteWithContext, u as useRouter, L a
 import { Q as redirect } from "../_libs/tanstack__router-core.mjs";
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import "../_libs/react-dom.mjs";
-import "util";
 import "crypto";
 import "async_hooks";
+import "util";
 import "stream";
 import "node:stream";
 import "../_libs/isbot.mjs";
@@ -79,7 +79,7 @@ function ErrorComponent({ error, reset }) {
     ] })
   ] }) });
 }
-const Route$b = createRootRouteWithContext()({
+const Route$c = createRootRouteWithContext()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -181,21 +181,21 @@ function RootShell({ children }) {
   ] });
 }
 function RootComponent() {
-  const { queryClient } = Route$b.useRouteContext();
+  const { queryClient } = Route$c.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter$a = () => import("./terms-CqGbugcS.mjs");
-const Route$a = createFileRoute("/terms")({
+const $$splitComponentImporter$b = () => import("./terms-CqGbugcS.mjs");
+const Route$b = createFileRoute("/terms")({
   head: () => ({
     links: [{
       rel: "canonical",
       href: "https://pocketdragon.in/terms"
     }]
   }),
-  component: lazyRouteComponent($$splitComponentImporter$a, "component")
+  component: lazyRouteComponent($$splitComponentImporter$b, "component")
 });
-const $$splitComponentImporter$9 = () => import("./register-goFoi-LE.mjs");
-const Route$9 = createFileRoute("/register")({
+const $$splitComponentImporter$a = () => import("./register-goFoi-LE.mjs");
+const Route$a = createFileRoute("/register")({
   head: () => ({
     meta: [{
       title: "Create Account — Pocket Dragon"
@@ -208,30 +208,30 @@ const Route$9 = createFileRoute("/register")({
       href: "https://pocketdragon.in/register"
     }]
   }),
-  component: lazyRouteComponent($$splitComponentImporter$9, "component")
+  component: lazyRouteComponent($$splitComponentImporter$a, "component")
 });
-const $$splitComponentImporter$8 = () => import("./privacy-DnSHASsj.mjs");
-const Route$8 = createFileRoute("/privacy")({
+const $$splitComponentImporter$9 = () => import("./privacy-DnSHASsj.mjs");
+const Route$9 = createFileRoute("/privacy")({
   head: () => ({
     links: [{
       rel: "canonical",
       href: "https://pocketdragon.in/privacy"
     }]
   }),
-  component: lazyRouteComponent($$splitComponentImporter$8, "component")
+  component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
-const $$splitComponentImporter$7 = () => import("./forgot-password-0_OYMHZN.mjs");
-const Route$7 = createFileRoute("/forgot-password")({
+const $$splitComponentImporter$8 = () => import("./forgot-password-0_OYMHZN.mjs");
+const Route$8 = createFileRoute("/forgot-password")({
   head: () => ({
     links: [{
       rel: "canonical",
       href: "https://pocketdragon.in/forgot-password"
     }]
   }),
-  component: lazyRouteComponent($$splitComponentImporter$7, "component")
+  component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
-const $$splitComponentImporter$6 = () => import("./dashboard-BTU5dmpx.mjs");
-const Route$6 = createFileRoute("/dashboard")({
+const $$splitComponentImporter$7 = () => import("./dashboard-BTU5dmpx.mjs");
+const Route$7 = createFileRoute("/dashboard")({
   head: () => ({
     meta: [{
       title: "My Account — Pocket Dragon"
@@ -242,10 +242,10 @@ const Route$6 = createFileRoute("/dashboard")({
       to: "/myaccount/profile"
     });
   },
-  component: lazyRouteComponent($$splitComponentImporter$6, "component")
+  component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$5 = () => import("./MyAccount-BFsOu0JM.mjs");
-const Route$5 = createFileRoute("/MyAccount")({
+const $$splitComponentImporter$6 = () => import("./MyAccount-BFsOu0JM.mjs");
+const Route$6 = createFileRoute("/MyAccount")({
   head: () => ({
     meta: [{
       title: "My Account — Pocket Dragon"
@@ -265,14 +265,14 @@ const Route$5 = createFileRoute("/MyAccount")({
       }
     }
   },
+  component: lazyRouteComponent($$splitComponentImporter$6, "component")
+});
+const $$splitComponentImporter$5 = () => import("../_-CYYLdHfV.mjs");
+const Route$5 = createFileRoute("/$")({
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("../_-CYYLdHfV.mjs");
-const Route$4 = createFileRoute("/$")({
-  component: lazyRouteComponent($$splitComponentImporter$4, "component")
-});
-const $$splitComponentImporter$3 = () => import("./index-CSC3-mQc.mjs");
-const Route$3 = createFileRoute("/")({
+const $$splitComponentImporter$4 = () => import("./index-CSC3-mQc.mjs");
+const Route$4 = createFileRoute("/")({
   head: () => ({
     meta: [{
       title: "Pocket Dragon — Mahjong on your time, anywhere you are!"
@@ -293,10 +293,10 @@ const Route$3 = createFileRoute("/")({
       content: "summary_large_image"
     }]
   }),
-  component: lazyRouteComponent($$splitComponentImporter$3, "component")
+  component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$2 = () => import("./transaction-history-DcgsW9PA.mjs");
-const Route$2 = createFileRoute("/myaccount/transaction-history")({
+const $$splitComponentImporter$3 = () => import("./transaction-history-6p5_nRXw.mjs");
+const Route$3 = createFileRoute("/myaccount/transaction-history")({
   head: () => ({
     meta: [{
       title: "Transactions — Pocket Dragon"
@@ -306,10 +306,10 @@ const Route$2 = createFileRoute("/myaccount/transaction-history")({
       href: "https://pocketdragon.in/myaccount/transaction-history"
     }]
   }),
-  component: lazyRouteComponent($$splitComponentImporter$2, "component")
+  component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$1 = () => import("./profile-DwnJtSKy.mjs");
-const Route$1 = createFileRoute("/myaccount/profile")({
+const $$splitComponentImporter$2 = () => import("./profile-Cs0ckuZJ.mjs");
+const Route$2 = createFileRoute("/myaccount/profile")({
   head: () => ({
     meta: [{
       title: "Profile — Pocket Dragon"
@@ -319,10 +319,10 @@ const Route$1 = createFileRoute("/myaccount/profile")({
       href: "https://pocketdragon.in/myaccount/profile"
     }]
   }),
-  component: lazyRouteComponent($$splitComponentImporter$1, "component")
+  component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter = () => import("./manage-subscription-CRaHd6nb.mjs");
-const Route = createFileRoute("/myaccount/manage-subscription")({
+const $$splitComponentImporter$1 = () => import("./manage-subscription-B3X-TWzS.mjs");
+const Route$1 = createFileRoute("/myaccount/manage-subscription")({
   head: () => ({
     meta: [{
       title: "Subscription — Pocket Dragon"
@@ -332,62 +332,76 @@ const Route = createFileRoute("/myaccount/manage-subscription")({
       href: "https://pocketdragon.in/myaccount/manage-subscription"
     }]
   }),
+  component: lazyRouteComponent($$splitComponentImporter$1, "component")
+});
+const $$splitComponentImporter = () => import("../_referralCode-BTU5dmpx.mjs");
+const Route = createFileRoute("/join/$referralCode")({
+  beforeLoad: () => {
+    throw redirect({
+      to: "/"
+    });
+  },
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
-const TermsRoute = Route$a.update({
+const TermsRoute = Route$b.update({
   id: "/terms",
   path: "/terms",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const RegisterRoute = Route$9.update({
+const RegisterRoute = Route$a.update({
   id: "/register",
   path: "/register",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const PrivacyRoute = Route$8.update({
+const PrivacyRoute = Route$9.update({
   id: "/privacy",
   path: "/privacy",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const ForgotPasswordRoute = Route$7.update({
+const ForgotPasswordRoute = Route$8.update({
   id: "/forgot-password",
   path: "/forgot-password",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const DashboardRoute = Route$6.update({
+const DashboardRoute = Route$7.update({
   id: "/dashboard",
   path: "/dashboard",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const MyAccountRoute = Route$5.update({
+const MyAccountRoute = Route$6.update({
   id: "/MyAccount",
   path: "/MyAccount",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const SplatRoute = Route$4.update({
+const SplatRoute = Route$5.update({
   id: "/$",
   path: "/$",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const IndexRoute = Route$3.update({
+const IndexRoute = Route$4.update({
   id: "/",
   path: "/",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const MyaccountTransactionHistoryRoute = Route$2.update({
+const MyaccountTransactionHistoryRoute = Route$3.update({
   id: "/myaccount/transaction-history",
   path: "/myaccount/transaction-history",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const MyaccountProfileRoute = Route$1.update({
+const MyaccountProfileRoute = Route$2.update({
   id: "/myaccount/profile",
   path: "/myaccount/profile",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
 });
-const MyaccountManageSubscriptionRoute = Route.update({
+const MyaccountManageSubscriptionRoute = Route$1.update({
   id: "/myaccount/manage-subscription",
   path: "/myaccount/manage-subscription",
-  getParentRoute: () => Route$b
+  getParentRoute: () => Route$c
+});
+const JoinReferralCodeRoute = Route.update({
+  id: "/join/$referralCode",
+  path: "/join/$referralCode",
+  getParentRoute: () => Route$c
 });
 const rootRouteChildren = {
   IndexRoute,
@@ -398,11 +412,12 @@ const rootRouteChildren = {
   PrivacyRoute,
   RegisterRoute,
   TermsRoute,
+  JoinReferralCodeRoute,
   MyaccountManageSubscriptionRoute,
   MyaccountProfileRoute,
   MyaccountTransactionHistoryRoute
 };
-const routeTree = Route$b._addFileChildren(rootRouteChildren)._addFileTypes();
+const routeTree = Route$c._addFileChildren(rootRouteChildren)._addFileTypes();
 const getRouter = () => {
   const queryClient = new QueryClient();
   const router = createRouter({

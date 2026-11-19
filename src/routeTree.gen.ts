@@ -20,6 +20,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MyaccountTransactionHistoryRouteImport } from './routes/myaccount/transaction-history'
 import { Route as MyaccountProfileRouteImport } from './routes/myaccount/profile'
 import { Route as MyaccountManageSubscriptionRouteImport } from './routes/myaccount/manage-subscription'
+import { Route as JoinReferralCodeRouteImport } from './routes/join/$referralCode'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -78,6 +79,11 @@ const MyaccountManageSubscriptionRoute =
     path: '/myaccount/manage-subscription',
     getParentRoute: () => rootRouteImport,
   } as any)
+const JoinReferralCodeRoute = JoinReferralCodeRouteImport.update({
+  id: '/join/$referralCode',
+  path: '/join/$referralCode',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/join/$referralCode': typeof JoinReferralCodeRoute
   '/myaccount/manage-subscription': typeof MyaccountManageSubscriptionRoute
   '/myaccount/profile': typeof MyaccountProfileRoute
   '/myaccount/transaction-history': typeof MyaccountTransactionHistoryRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/join/$referralCode': typeof JoinReferralCodeRoute
   '/myaccount/manage-subscription': typeof MyaccountManageSubscriptionRoute
   '/myaccount/profile': typeof MyaccountProfileRoute
   '/myaccount/transaction-history': typeof MyaccountTransactionHistoryRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/join/$referralCode': typeof JoinReferralCodeRoute
   '/myaccount/manage-subscription': typeof MyaccountManageSubscriptionRoute
   '/myaccount/profile': typeof MyaccountProfileRoute
   '/myaccount/transaction-history': typeof MyaccountTransactionHistoryRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/join/$referralCode'
     | '/myaccount/manage-subscription'
     | '/myaccount/profile'
     | '/myaccount/transaction-history'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/join/$referralCode'
     | '/myaccount/manage-subscription'
     | '/myaccount/profile'
     | '/myaccount/transaction-history'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/join/$referralCode'
     | '/myaccount/manage-subscription'
     | '/myaccount/profile'
     | '/myaccount/transaction-history'
@@ -170,6 +182,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
+  JoinReferralCodeRoute: typeof JoinReferralCodeRoute
   MyaccountManageSubscriptionRoute: typeof MyaccountManageSubscriptionRoute
   MyaccountProfileRoute: typeof MyaccountProfileRoute
   MyaccountTransactionHistoryRoute: typeof MyaccountTransactionHistoryRoute
@@ -254,6 +267,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyaccountManageSubscriptionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/join/$referralCode': {
+      id: '/join/$referralCode'
+      path: '/join/$referralCode'
+      fullPath: '/join/$referralCode'
+      preLoaderRoute: typeof JoinReferralCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -266,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   TermsRoute: TermsRoute,
+  JoinReferralCodeRoute: JoinReferralCodeRoute,
   MyaccountManageSubscriptionRoute: MyaccountManageSubscriptionRoute,
   MyaccountProfileRoute: MyaccountProfileRoute,
   MyaccountTransactionHistoryRoute: MyaccountTransactionHistoryRoute,
